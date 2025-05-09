@@ -77,6 +77,7 @@ public class OcaTile : Tile
             if (gameBoard.TilesList[i] is OcaTile)
             {
                 gameBoard.MovePlayerTo(i);
+                break;
             }
         }
     }
