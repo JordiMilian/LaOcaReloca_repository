@@ -9,15 +9,16 @@ public enum GameState
 {
     Null, StartBoard, MovingPlayer, FreeMode, ReachedEnd, KilledEnemy, PlayerDied
 }
-public class GameController : MonoBehaviour
+public class GameController_C : MonoBehaviour
 {
-    public static GameController Instance;
+    public static GameController_C Instance;
     private void Awake()
     {
         Instance = this;
     }
 
-    public Board GameBoard;
+    Board_Data BoardData;
+    public Board_Controller BoardController;
     
     [SerializeField] int BoardWidth = 10;
     [SerializeField] int BoardHeight = 10;
@@ -32,6 +33,10 @@ public class GameController : MonoBehaviour
     List<GameObject> SpawnedTiles = new List<GameObject>();
     
     public GameState currentGameState = GameState.Null;
+
+    [Header("Enemy")]
+    [SerializeField] float Enemy_MaxHP;
+    [SerializeField] float Enemy_CurrentHP;
 
     private void Start()
     {
@@ -95,8 +100,7 @@ public class GameController : MonoBehaviour
     IEnumerator StartGameCoroutine()
     {
         CreateEmptyBoard();
-        yield return StartCoroutine(AppearStartingBoard(GameBoard));
-        UpdatePlayerPosition_Visual();
+        yield return StartCoroutine(AppearStartingBoard(BoardData));
 
         //introduce the enemy 
         //introduce the player
@@ -104,21 +108,20 @@ public class GameController : MonoBehaviour
     }
     public void CreateEmptyBoard()
     {
-        
         int totalTilesCount = BoardWidth * BoardHeight;
-        List<Tile> EmptyTiles = new List<Tile>();
-        GameBoard = new Board(EmptyTiles, 0, 0, 0);
+        List<Tile_Data> EmptyTiles = new List<Tile_Data>();
+        BoardData = new Board_Data(EmptyTiles, 0, 0, 0);
         for (int i = 0; i < totalTilesCount; i++)
         {
-            if(i == 0) { EmptyTiles.Add(new StartingTile(i, GameBoard)); continue; }
-            else if(i == totalTilesCount - 1) { EmptyTiles.Add(new EndTile(i, GameBoard)); continue;}
-            else if(i%4 == 0) { EmptyTiles.Add(new OcaTile(i, GameBoard)); continue; }
+            if(i == 0) { EmptyTiles.Add(new StartingTile(i, BoardData)); continue; }
+            else if(i == totalTilesCount - 1) { EmptyTiles.Add(new EndTile(i, BoardData)); continue;}
+            else if(i%4 == 0) { EmptyTiles.Add(new OcaTile(i, BoardData)); continue; }
 
-            EmptyTiles.Add(new EmptyTile(i, GameBoard));
+            EmptyTiles.Add(new EmptyTile(i, BoardData));
         }
-        GameBoard = new Board(EmptyTiles, 0, BoardWidth, BoardHeight);
+        BoardData = new Board_Data(EmptyTiles, 0, BoardWidth, BoardHeight);
     }
-    IEnumerator AppearStartingBoard(Board board)
+    IEnumerator AppearStartingBoard(Board_Data board)
     {
         int HeightCount = board.Height;
         int WidthCount = board.Width;
@@ -154,7 +157,7 @@ public class GameController : MonoBehaviour
                 movingHorizontaly = true;
             }
         }
-        void SpawnNewTile(Tile tileType)
+        void SpawnNewTile(Tile_Data tileType)
         {
             GameObject newTile = Instantiate(TilePrefab, nextTilePosition, tileRotation, Tf_BoardParent);
             Color tileColor = Color.Lerp(startColor, endColor, (float)spawnedTilesCount / (float)totalTilesCount);
@@ -227,18 +230,13 @@ public class GameController : MonoBehaviour
     IEnumerator OnReachedEnd_Coroutine()
     {
         yield return new WaitForSeconds(0.5f);
-        GameBoard.LandPlayerIn(0, out Tile landedTile);
-        UpdatePlayerPosition_Visual();
+        yield return StartCoroutine(BoardController.JumpPlayerTo(0));
+
         ChangeGameState(GameState.FreeMode);
     }
     #endregion
 
-    [SerializeField] GameObject PlayerPrefab;
-    private void UpdatePlayerPosition_Visual()
-    {
-        PlayerPrefab.transform.position = SpawnedTiles[GameBoard.PlayerIndex].transform.position;
-        //Dotween shit to move the player into position
-    }
+
     #region TEST ROLL
     [Header("Test roll")]
     [SerializeField] TextMeshProUGUI TMP_rolledDiceAmount;
@@ -254,16 +252,11 @@ public class GameController : MonoBehaviour
     }
     IEnumerator MovePlayer_VisualCoroutine(int amount)
     {
-        const float timeBetweenSteps = 0.2f;
-        for (int i = 0; i < Mathf.Abs(amount)-1; i++)
+        for (int i = 0; i < Mathf.Abs(amount); i++)
         {
-            GameBoard.StepPlayer(1 * (int)Mathf.Sign(amount), out Tile steppedTile);
-            UpdatePlayerPosition_Visual();
-            yield return new WaitForSeconds(timeBetweenSteps);
+            yield return StartCoroutine(BoardController.StepPlayer(amount > 0));
         }
-        GameBoard.LandPlayerIn(GameBoard.PlayerIndex + MathJ.SignZero(amount), out Tile landedTile);
-        UpdatePlayerPosition_Visual();
-        yield return null;
+        yield return StartCoroutine(BoardController.LandPlayerInCurrentPos());
     }
 
     #endregion

@@ -735,7 +735,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -346.99997}
+  m_AnchoredPosition: {x: 0, y: -188.99997}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &668100763
@@ -922,7 +922,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -297}
+  m_AnchoredPosition: {x: 0, y: -139}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &980770580
@@ -1185,7 +1185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb0c97519e386b44b914535b09cb74c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoardWidth: 8
+  BoardWidth: 6
   BoardHeight: 6
   TilePrefab: {fileID: 492072655}
   distanceBetweenTiles: 1
@@ -1194,6 +1194,8 @@ MonoBehaviour:
   TimeToCreateBoard: 1
   Tf_BoardParent: {fileID: 1747435069}
   currentGameState: 0
+  Enemy_MaxHP: 0
+  Enemy_CurrentHP: 0
   PlayerPrefab: {fileID: 595943830}
   TMP_rolledDiceAmount: {fileID: 668100763}
   RollDiceButton: {fileID: 980770580}
