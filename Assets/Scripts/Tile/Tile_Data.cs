@@ -5,29 +5,40 @@ using System.Collections.Generic;
 
 public abstract class Tile_Data
 {
-    public int Value;
-    public Board_Data Board;
+    public int ShopPrice;
+    protected Board_Data Board;
     public Vector2Int positionInBoard; //Not sure why I'd need this
     public int Index;
-    public Tile_Data(int index, Board_Data board) 
+    public Tile_Data(int index, Board_Data board)
     {
         Index = index;
         Board = board;
     }
-    public abstract IEnumerator OnPlayerStepped();
-    public abstract IEnumerator OnPlayerLanded();
+    public virtual IEnumerator OnPlayerStepped_logic()
+    {
+        yield break;
+    }
+    public virtual IEnumerator OnPlayerLanded_logic()
+    {
+        yield break;
+    }
     public abstract float GetDamageAmount();
+    public abstract string GetTooltipText();
 }
+
+
+
+
 public class EmptyTile : Tile_Data
 {
-    public EmptyTile(int index, Board_Data board) : base(index, board) { }
-
-    public override void OnPlayerStepped()
+    public EmptyTile(int index, Board_Data board) : base(index, board) 
     {
+        Index = index;
+        Board = board;
     }
-
-    public override void OnPlayerLanded()
+    public override IEnumerator OnPlayerStepped_logic()
     {
+        yield return GameControlle.Instance.AddAcumulatedDamage(1);
     }
     public override float GetDamageAmount()
     {
@@ -38,13 +49,6 @@ public class StartingTile : Tile_Data
 {
     public StartingTile(int index, Board_Data board) : base(index, board) { }
 
-    public override void OnPlayerStepped()
-    {
-    }
-
-    public override void OnPlayerLanded()
-    {
-    }
     public override float GetDamageAmount()
     {
         return 0;
@@ -54,14 +58,10 @@ public class EndTile : Tile_Data
 {
     public EndTile(int index, Board_Data board) : base(index, board) { }
 
-    public override void OnPlayerStepped()
+    public override IEnumerator OnPlayerLanded_logic()
     {
-       
-    }
-
-    public override void OnPlayerLanded()
-    {
-        GameController_C.Instance.ChangeGameState(GameState.ReachedEnd);
+        GameControlle.Instance.ChangeGameState(GameState.ReachedEnd);
+        yield break;
     }
     public override float GetDamageAmount()
     {
@@ -76,25 +76,25 @@ public class OcaTile : Tile_Data
         Board = board;
     }
 
-    public override void OnPlayerStepped()
+    public override IEnumerator OnPlayerStepped_logic()
     {
-
+        yield break;
     }
 
-    public override IEnumerator OnPlayerLanded()
+    public override IEnumerator OnPlayerLanded_logic()
     {
-        Board_Controller gameBoard = GameController_C.Instance.BoardController;
-        for (int i = Index +1; i < gameBoard.Data.TilesList.Count; i++)
+        for (int i = Index +1; i < Board.TilesList.Count; i++)
         {
-            if (gameBoard.Data.TilesList[i] is OcaTile)
+            if (Board.TilesList[i] is OcaTile)
             {
-                yield return gameBoard.JumpPlayerTo(i);
+                Board_Controller gameBoard = GameControlle.Instance.BoardController;
+                yield return gameBoard.JumpPlayerTo(i,false);
                 yield break;
             }
         }
     }
     public override float GetDamageAmount()
     {
-        return Index;
+        return 1;
     }
 }
