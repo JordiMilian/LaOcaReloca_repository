@@ -16,7 +16,7 @@ public class Tile_Oca_JumpToRandom : Tile_Oca
         {
             randomIndex = Random.Range(0, boardOcas.Count);
         }
-        while (boardOcas[randomIndex].indexInBoard != indexInBoard);
+        while (boardOcas[randomIndex].indexInBoard == indexInBoard);
 
        
         yield return BoardController.L_JumpPlayerTo(boardOcas[randomIndex].indexInBoard, false);
