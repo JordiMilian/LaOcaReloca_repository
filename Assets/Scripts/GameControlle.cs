@@ -19,7 +19,7 @@ public class GameControlle : MonoBehaviour
 
     Board_Data BoardData;
     public Board_Controller BoardController;
-    Board_View BoardView;
+    [SerializeField] Board_View BoardView;
     
     [SerializeField] int BoardWidth = 10;
     [SerializeField] int BoardHeight = 10;
@@ -30,7 +30,9 @@ public class GameControlle : MonoBehaviour
     [SerializeField] Color startColor, endColor;
     [SerializeField] float TimeToCreateBoard = 3;
     [SerializeField] Transform Tf_BoardParent;
-    
+
+ 
+
     public GameState currentGameState = GameState.Null;
 
     [Header("References")]
@@ -43,6 +45,10 @@ public class GameControlle : MonoBehaviour
     [SerializeField] Slider Slider_EnemyHp;
     [SerializeField] TextMeshProUGUI TMP_EnemyHp;
     [SerializeField] TextMeshProUGUI TMP_AcumulatedDamage;
+
+    [Header("Money")]
+    [SerializeField] float currentMoney;
+    [SerializeField] TextMeshProUGUI TMP_CurrentMoney;
     void UpdateEnemyHpUI()
     {
         Slider_EnemyHp.maxValue = Enemy_MaxHP;
@@ -50,6 +56,14 @@ public class GameControlle : MonoBehaviour
         TMP_EnemyHp.text = $"Enemy HP: {Enemy_CurrentHP.ToString("F2")}/{Enemy_MaxHP.ToString("F2")}";
         TMP_AcumulatedDamage.text = $"Acumulated damage:{AcumulatedDamage}";
     }
+    public IEnumerator AddMoney(int money)
+    {
+        currentMoney += money;
+        if (currentMoney < 0) { currentMoney = 0; }
+        TMP_CurrentMoney.text = currentMoney.ToString();
+        yield break;
+    }
+    public void SetMoney(int newMoney) { currentMoney = newMoney; if (currentMoney < 0) { currentMoney = 0; } }
     public IEnumerator AddAcumulatedDamage(float amount)
     {
         if (Mathf.Approximately(amount, 0)) { yield break; }

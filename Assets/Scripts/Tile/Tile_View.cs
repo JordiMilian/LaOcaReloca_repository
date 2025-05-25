@@ -14,9 +14,10 @@ public abstract class Tile_View : MonoBehaviour
     {
         float duration = 1;
         transform.localScale = Vector3.zero;
+        Debug.Log("until here");
         transform.DOScale(Vector3.one, duration).SetEase(Ease.OutBounce);
+        Debug.Log("?");
     }
-
     public enum textDisplay_type
     {
         AddMoney, AddDamage, MultiplyDamage, RegularText
@@ -27,6 +28,7 @@ public abstract class Tile_View : MonoBehaviour
     }
     public IEnumerator DisplayText(textDisplay_type type, textDisplay_intensity intensity, string text)
     {
-
+        Debug.Log(text);
+        yield break;
     }
 }

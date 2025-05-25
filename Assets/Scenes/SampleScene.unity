@@ -1992,6 +1992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BoardController: {fileID: 1747435070}
+  BoardView: {fileID: 1747435071}
   BoardWidth: 6
   BoardHeight: 6
   TilePrefab: {fileID: 492072655}
@@ -2008,6 +2009,8 @@ MonoBehaviour:
   Slider_EnemyHp: {fileID: 1032196446}
   TMP_EnemyHp: {fileID: 244708843}
   TMP_AcumulatedDamage: {fileID: 701552452}
+  currentMoney: 0
+  TMP_CurrentMoney: {fileID: 0}
   TMP_rolledDiceAmount: {fileID: 668100763}
   RollDiceButton: {fileID: 980770580}
 --- !u!224 &1686617619

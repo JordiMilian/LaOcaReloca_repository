@@ -2,6 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum SecundarySkillsEnum
+{
+    empty, extraMoney, extraDamage,
+}
 
 public abstract class Tile_Data
 {
@@ -9,6 +13,7 @@ public abstract class Tile_Data
     protected Board_Data Board;
     public Vector2Int positionInBoard; //Not sure why I'd need this
     public int Index;
+    public SecundarySkillsEnum secundarySkill = SecundarySkillsEnum.empty;
     public Tile_Data(int index, Board_Data board)
     {
         Index = index;
@@ -16,6 +21,17 @@ public abstract class Tile_Data
     }
     public virtual IEnumerator OnPlayerStepped_logic()
     {
+        switch(secundarySkill)
+        {
+            case SecundarySkillsEnum.extraDamage:
+                yield return GameControlle.Instance.AddAcumulatedDamage(20);
+                break;
+            case SecundarySkillsEnum.extraMoney:
+                yield return GameControlle.Instance.AddMoney(5);
+                break;
+            case SecundarySkillsEnum.empty:
+                break;
+        }
         yield break;
     }
     public virtual IEnumerator OnPlayerLanded_logic()
@@ -23,7 +39,7 @@ public abstract class Tile_Data
         yield break;
     }
     public abstract float GetDamageAmount();
-    public abstract string GetTooltipText();
+    //public abstract string GetTooltipText();
 }
 
 
@@ -38,6 +54,7 @@ public class EmptyTile : Tile_Data
     }
     public override IEnumerator OnPlayerStepped_logic()
     {
+        yield return base.OnPlayerStepped_logic();
         yield return GameControlle.Instance.AddAcumulatedDamage(1);
     }
     public override float GetDamageAmount()
@@ -97,4 +114,6 @@ public class OcaTile : Tile_Data
     {
         return 1;
     }
+
 }
+
