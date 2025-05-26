@@ -55,11 +55,12 @@ public class Board_Controller_simple : MonoBehaviour
 
         void SpawnAndAddNewTile(GameObject tilePrefab, int index)
         {
-            GameObject newTile = Instantiate(tilePrefab);
+            GameObject newTile = Instantiate(tilePrefab, transform);
             if(newTile.TryGetComponent(out Tile_Base tileInfo))
             {
                 tileInfo.indexInBoard = index;
                 tempTiles.Add(tileInfo);
+                tileInfo.UpdateTileVisuals();
             }
             else { Debug.LogError("ERROR: TilePrefab is missing a controller"); }
         }
