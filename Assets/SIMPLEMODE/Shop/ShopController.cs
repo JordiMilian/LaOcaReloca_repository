@@ -9,11 +9,11 @@ public class ShopController : MonoBehaviour
     public class ShopItem
     {
         public Tile_Base Item;
+        public GameObject TileGO;
         public int Price;
-        public bool isBought;
     }
     [SerializeField] List<Tile_Base> TilesAppeareableInShop = new();
-    public List<ShopItem> ShopItemsList = new(3);
+    public List<ShopItem> ShopItemsList;
     [SerializeField] int maxItemsInShop;
     [Header("UI")]
     [SerializeField] Button BuyItem01;
@@ -21,20 +21,30 @@ public class ShopController : MonoBehaviour
     [SerializeField] Button BuyItem03;
     [SerializeField] TextMeshProUGUI ItemName_01, ItemName_02, ItemName_03;
     [SerializeField] TextMeshProUGUI ItemPrice_01, ItemPrice_02, ItemPrice_03;
+    [SerializeField] Transform ItemPos01, ItemPos02, ItemPos03;
+
 
     const int placeholderPrice = 10;
     private void Start()
     {
+       /*
         FillShop();
         UpdateUI();
         //
         void FillShop()
         {
-            foreach (ShopItem item in ShopItemsList)
+            ShopItemsList = new();
+            for (int i = 0; i < maxItemsInShop; i++)
             {
+                ShopItem item = new ShopItem();
                 item.Item = getRandomAppearable();
+                item.Price = placeholderPrice;
+                item.TileGO = GameController_Simple.Instance.InstantiateNewTile(item.Item);
+
+                ShopItemsList.Add(item);
             }
         }
+       */
     }
     #region DISABLE SHOP
     public void DisableShop()
@@ -50,21 +60,6 @@ public class ShopController : MonoBehaviour
         BuyItem03.interactable = true;
     }
     #endregion
-    public void Button_BoughtItem(int index)
-    {
-        GameController_Simple gameController = GameController_Simple.Instance;
-        if(gameController.CanPurchase(placeholderPrice))
-        {
-            gameController.AttemptPurchase(placeholderPrice);
-            if (gameController.AttemptAddItemToHand(ShopItemsList[index].Item))
-            {
-                ShopItemsList[index].Item = getRandomAppearable();
-            }
-            else { Debug.Log("Not enought space"); }
-        }
-        Debug.Log("Not enought money");
-
-    }
     void UpdateUI()
     {
         ItemName_01.text = ShopItemsList[0].Item.name;
@@ -77,8 +72,9 @@ public class ShopController : MonoBehaviour
     }
 
     
-    Tile_Base getRandomAppearable()
+    public Tile_Base getRandomAppearable()
     {
         return TilesAppeareableInShop[Random.Range(0, TilesAppeareableInShop.Count)];
     }
+  
 }

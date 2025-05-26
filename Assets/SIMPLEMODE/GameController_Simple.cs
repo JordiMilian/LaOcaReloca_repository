@@ -172,33 +172,48 @@ public class GameController_Simple : MonoBehaviour
     #region HAND MANAGEMENT
     void PlaceTileFromHand(int indexInHand, int indexInBoard)
     {
+        //Get tile infos
         Tile_Base tileInHand = tilesInHand[indexInHand];
         Tile_Base tileInBoard = BoardController.TilesList[indexInBoard];
 
-        //create tile and place it in new place
-        GameObject BoardTileGO = tileInBoard.gameObject;
-        Destroy(tileInBoard);
-        Tile_Base instantiatedTile = (Tile_Base)BoardTileGO.AddComponent(tileInHand.GetType());
+        //Get position and rotation of the tile in Board
+        Vector3 position = tileInBoard.transform.position;
+        Quaternion rotation = tileInBoard.transform.rotation;
 
+        //Create new Tile in the proper position and destroy the last
+        GameObject newTileGO = InstantiateNewTile(tileInHand, indexInBoard);
+        newTileGO.transform.position = position;
+        newTileGO.transform.rotation = rotation;
+        Destroy(tileInBoard.gameObject);
 
-        //set up the tile and animate appearing
-        instantiatedTile.CopyVisualData(tileInHand);
-        instantiatedTile.indexInBoard = indexInBoard;
-        instantiatedTile.UpdateTileVisuals();
-        instantiatedTile.FirstAppeareanceAnim();
-
-        //retarget indexes, destroy stuff and remove references
-
+        //Get the references right and remove the tile from hand
+        Tile_Base instantiatedTile = newTileGO.GetComponent<Tile_Base>();
         BoardController.TilesList[indexInBoard] = instantiatedTile;
         tilesInHand.RemoveAt(indexInHand);
 
-    }
-    public bool AttemptAddItemToHand(Tile_Base tileInfo)
-    {
-        if(tilesInHand.Count >= maxHandTilesCount) { return false; }
+        //play animation
+        instantiatedTile.FirstAppeareanceAnim();
 
+    }
+    public GameObject InstantiateNewTile(Tile_Base tileInfo, int indexInBoard = 0)
+    {
+        GameObject newTileGO = Instantiate(EmptyTile);
+        Tile_Base newTileInfo = (Tile_Base)newTileGO.AddComponent(tileInfo.GetType());
+        newTileInfo.CopyVisualData(tileInfo);
+        newTileInfo.indexInBoard = indexInBoard;
+        newTileInfo.UpdateTileVisuals();
+        
+
+        return newTileGO;
+    }
+    public void AddItemToHand(Tile_Base tileInfo)
+    {
         tilesInHand.Add(tileInfo);
-        return true;
+        //Visual or whatever
+    }
+    public bool isHandFull()
+    {
+        return tilesInHand.Count >= maxHandTilesCount;
     }
     #endregion
     #region DAMAGE
@@ -264,4 +279,6 @@ public class GameController_Simple : MonoBehaviour
         TMP_CurrentMoney.text = currentMoney.ToString();
     }
     #endregion
+
+   
 }
