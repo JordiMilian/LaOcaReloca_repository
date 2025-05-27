@@ -198,6 +198,8 @@ public class GameController_Simple : MonoBehaviour
     public GameObject InstantiateNewTile(Tile_Base tileInfo, int indexInBoard = 0)
     {
         GameObject newTileGO = Instantiate(EmptyTile);
+        if(newTileGO == null) { Debug.Log("fukkk you==="); }
+        if(tileInfo == null) { Debug.Log("fukkk you===??"); }
         Tile_Base newTileInfo = (Tile_Base)newTileGO.AddComponent(tileInfo.GetType());
         newTileInfo.CopyVisualData(tileInfo);
         newTileInfo.indexInBoard = indexInBoard;
@@ -206,9 +208,9 @@ public class GameController_Simple : MonoBehaviour
 
         return newTileGO;
     }
-    public void AddItemToHand(Tile_Base tileInfo)
+    public void AddItemToHand(GameObject tileInfo)
     {
-        tilesInHand.Add(tileInfo);
+        tilesInHand.Add(tileInfo.GetComponent<Tile_Base>());
         //Visual or whatever
     }
     public bool isHandFull()

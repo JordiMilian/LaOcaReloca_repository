@@ -1,19 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 
 public class ShopController : MonoBehaviour
 {
-    public class ShopItem
-    {
-        public Tile_Base Item;
-        public GameObject TileGO;
-        public int Price;
-    }
+    
+
     [SerializeField] List<Tile_Base> TilesAppeareableInShop = new();
-    public List<ShopItem> ShopItemsList;
     [SerializeField] int maxItemsInShop;
     [Header("UI")]
     [SerializeField] Button BuyItem01;
@@ -62,9 +58,6 @@ public class ShopController : MonoBehaviour
     #endregion
     void UpdateUI()
     {
-        ItemName_01.text = ShopItemsList[0].Item.name;
-        ItemName_02.text = ShopItemsList[1].Item.name;
-        ItemName_03.text = ShopItemsList[2].Item.name;
 
         ItemPrice_01.text = placeholderPrice.ToString();
         ItemPrice_02.text = placeholderPrice.ToString();
@@ -74,7 +67,7 @@ public class ShopController : MonoBehaviour
     
     public Tile_Base getRandomAppearable()
     {
-        return TilesAppeareableInShop[Random.Range(0, TilesAppeareableInShop.Count)];
+        return TilesAppeareableInShop[UnityEngine.Random.Range(0, TilesAppeareableInShop.Count)];
     }
   
 }

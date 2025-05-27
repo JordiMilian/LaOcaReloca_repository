@@ -17,21 +17,25 @@ public class ShopItem_Controller : MonoBehaviour
     private void Start()
     {
         gameController = GameController_Simple.Instance;
-        ResetShopItem();
+        //ResetShopItem();
     }
+
 
     public void Button_OnBuyPressed()
     {
         if (!gameController.CanPurchase(Price)) { return; }
         if (gameController.isHandFull()) { return; }
+        gameController.AddItemToHand(TileGO);
+        gameController.AttemptPurchase(Price);
 
-        ResetShopItem();
+        //ResetShopItem();
     }
     void ResetShopItem()
     {
-        Item = shopController.getRandomAppearable();
         if(TileGO != null) { Destroy(TileGO); }
-        TileGO = gameController.InstantiateNewTile(Item);
+
+        TileGO = gameController.InstantiateNewTile(shopController.getRandomAppearable());
+        Item = TileGO.GetComponent<Tile_Base>();
         TileGO.transform.position = tilePrefabTf.position;
         TileGO.transform.rotation = tilePrefabTf.rotation;
     }
