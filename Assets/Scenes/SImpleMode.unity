@@ -1023,7 +1023,7 @@ MonoBehaviour:
   Tile_Start: {fileID: 1730741789483637130, guid: 2c9a1471cf9203542abf88b52d1481ef, type: 3}
   Tile_End: {fileID: 2072934515857922834, guid: 42679a2d5f5e00043b4283dcb108eb03, type: 3}
   Tile_Oca: {fileID: 1730741789483637130, guid: 5b09ccb2172c1f7439f65791f138f888, type: 3}
-  Tile_Money: {fileID: 1730741789483637130, guid: 3ba475549cea97544b5b5772ae684deb, type: 3}
+  Tile_Money: {fileID: 1730741789483637130, guid: acb139cde67efef49b7f3aa2e8602026, type: 3}
   TilesList: []
   PlayerPrefab: {fileID: 1266550042}
   Width: 5
@@ -1263,9 +1263,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Item: {fileID: 0}
   TileGO: {fileID: 0}
-  Price: 10
   tilePrefabTf: {fileID: 1145897136}
   shopController: {fileID: 1757594647}
+  TMP_Price: {fileID: 1703915019}
 --- !u!1 &693200711
 GameObject:
   m_ObjectHideFlags: 0
@@ -1886,9 +1886,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Item: {fileID: 0}
   TileGO: {fileID: 0}
-  Price: 10
   tilePrefabTf: {fileID: 1047302384}
   shopController: {fileID: 1757594647}
+  TMP_Price: {fileID: 1244470387}
 --- !u!1 &1145897135
 GameObject:
   m_ObjectHideFlags: 0
@@ -3317,6 +3317,8 @@ MonoBehaviour:
   - {fileID: 2477595380146192120, guid: 3ba475549cea97544b5b5772ae684deb, type: 3}
   - {fileID: -42720147704021356, guid: 7f61b157d5db5844b8b93081faaefb87, type: 3}
   - {fileID: 7125567045553348335, guid: 7b0f0416aa112ce47be6834b0dc908b3, type: 3}
+  - {fileID: -8656882045931485639, guid: 26d1233a3226d1b43a08111332688b3f, type: 3}
+  - {fileID: 1458967538795595496, guid: acb139cde67efef49b7f3aa2e8602026, type: 3}
   maxItemsInShop: 3
   BuyItem01: {fileID: 1158136713}
   BuyItem02: {fileID: 753789264}
@@ -3396,9 +3398,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Item: {fileID: 0}
   TileGO: {fileID: 0}
-  Price: 10
   tilePrefabTf: {fileID: 1318671255}
   shopController: {fileID: 1757594647}
+  TMP_Price: {fileID: 243377720}
 --- !u!1 &1938095774
 GameObject:
   m_ObjectHideFlags: 0

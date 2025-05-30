@@ -257,7 +257,7 @@ public class GameController_Simple : MonoBehaviour
         if(newTileGO == null) { Debug.Log("fukkk you==="); }
         if(tileInfo == null) { Debug.Log("fukkk you===??"); }
         Tile_Base newTileInfo = (Tile_Base)newTileGO.AddComponent(tileInfo.GetType());
-        newTileInfo.CopyVisualData(tileInfo);
+        newTileInfo.CopyData(tileInfo);
         newTileInfo.indexInBoard = indexInBoard;
         newTileInfo.UpdateTileVisuals();
         

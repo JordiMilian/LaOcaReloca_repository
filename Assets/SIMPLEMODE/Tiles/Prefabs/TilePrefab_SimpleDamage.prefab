@@ -91,6 +91,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   secundarySkill: 0
+  tileState: 0
+  rarity: 2
   indexInBoard: 0
+  IndexInHand: 0
   tileColor: {r: 1, g: 0.08, b: 0, a: 1}
+  tileMovement: {fileID: 0}
   damage: 50

@@ -1,13 +1,14 @@
+using TMPro;
 using UnityEngine;
 
 public class ShopItem_Controller : MonoBehaviour
 {
     public Tile_Base Item;
     public GameObject TileGO;
-    public int Price = 10;
     [SerializeField] Transform tilePrefabTf;
     GameController_Simple gameController;
     [SerializeField] ShopController shopController;
+    [SerializeField] TextMeshProUGUI TMP_Price;
 
     private void Start()
     {
@@ -17,9 +18,9 @@ public class ShopItem_Controller : MonoBehaviour
 
     public void Button_OnBuyPressed()
     {
-        if (!gameController.CanPurchase(Price)) { return; }
+        if (!gameController.CanPurchase(Item.GetBuyingPrice())) { return; }
         if (gameController.isHandFull()) { return; }
-        gameController.Purchase(Price);
+        gameController.Purchase(Item.GetBuyingPrice());
         gameController.AddTileToHand(TileGO);
 
         ResetShopItem();
@@ -31,6 +32,8 @@ public class ShopItem_Controller : MonoBehaviour
         Item = TileGO.GetComponent<Tile_Base>();
         TileGO.transform.position = tilePrefabTf.position;
         TileGO.transform.rotation = tilePrefabTf.rotation;
+
+        TMP_Price.text = Item.GetBuyingPrice().ToString();
 
         Item.tileMovement.canBeDragged = false;
 

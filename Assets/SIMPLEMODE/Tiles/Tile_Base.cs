@@ -16,10 +16,15 @@ public enum TileState
 {
     none, InShop, InHand, Dragged, InBoard
 }
+public enum Rarity
+{
+    none, Common, Rare, Legendary, Unique
+}
 public class Tile_Base : MonoBehaviour
 {
     [SerializeField] SecundarySkills secundarySkill;
     public TileState tileState = TileState.none;
+    public Rarity rarity = Rarity.none;
     public int indexInBoard;
     public int IndexInHand;
 
@@ -45,9 +50,10 @@ public class Tile_Base : MonoBehaviour
         mainCamera = Camera.main;
         tileMovement = GetComponent<TileMovement>();
     }
-    public void CopyVisualData(Tile_Base copyingTile)
+    public void CopyData(Tile_Base copyingTile)
     {
         tileColor = copyingTile.tileColor;
+        rarity = copyingTile.rarity;
     }
     public void UpdateTileVisuals()
     {
@@ -114,4 +120,28 @@ public class Tile_Base : MonoBehaviour
     {
         return 0;
     }
+    #region BUY/SELL
+    public int GetBuyingPrice()
+    {
+        switch(rarity)
+        {
+            case Rarity.Common: { return 2; }
+            case Rarity.Rare: { return 4; }
+            case Rarity.Legendary: { return 8; }
+            default: { Debug.LogError($"ERROR: Pls set a valid rarity to this {GetType()}"); return 0; } 
+        }
+    }
+    public int GetSellingPrice()
+    {
+        switch (rarity)
+        {
+            case Rarity.Common: { return 1; }
+            case Rarity.Rare: { return 2; }
+            case Rarity.Legendary: { return 4; }
+            default: { Debug.LogError("ERROR: Pls set a valid rarity to this Tile"); return 0; }
+        }
+    }
+
+
+    #endregion
 }

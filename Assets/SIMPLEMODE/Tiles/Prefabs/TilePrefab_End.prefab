@@ -91,6 +91,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   secundarySkill: 0
+  tileState: 0
+  rarity: 4
   indexInBoard: 0
+  IndexInHand: 0
   tileColor: {r: 0.227451, g: 0.04705883, b: 0.04705883, a: 1}
-  tileTestSprite: {fileID: 0}
+  tileMovement: {fileID: 0}

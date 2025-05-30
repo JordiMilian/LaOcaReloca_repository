@@ -92,6 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   secundarySkill: 0
   tileState: 0
+  rarity: 2
   indexInBoard: 0
   IndexInHand: 0
   tileColor: {r: 0.41509432, g: 0, b: 0, a: 1}

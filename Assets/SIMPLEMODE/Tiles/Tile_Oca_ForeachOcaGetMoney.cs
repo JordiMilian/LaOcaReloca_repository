@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Tile_Oca_ForeachOcaGetMoney : Tile_Oca
 {
-    [SerializeField] int moneyPerOca = 3;
+    [SerializeField] int moneyPerOca = 1;
     public override IEnumerator OnPlayerLanded()
     {
         yield return base.OnPlayerLanded();
