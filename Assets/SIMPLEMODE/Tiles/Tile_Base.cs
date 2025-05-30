@@ -8,10 +8,20 @@ public enum Intensity
 {
     empty, low, mid, large
 }
+public enum SecundarySkills
+{
+    empty, extraMoney, extraDamage
+}
+public enum TileState
+{
+    none, InShop, InHand, Dragged, InBoard
+}
 public class Tile_Base : MonoBehaviour
 {
-    [SerializeField] SecundarySkillsEnum secundarySkill;
+    [SerializeField] SecundarySkills secundarySkill;
+    public TileState tileState = TileState.none;
     public int indexInBoard;
+    public int IndexInHand;
 
     [Header("Color testing")]
     public Color tileColor;
@@ -20,6 +30,8 @@ public class Tile_Base : MonoBehaviour
 
     protected GameController_Simple GameController;
     protected Board_Controller_simple BoardController;
+    Camera mainCamera;
+   [HideInInspector] public TileMovement tileMovement;
     private void Awake()
     {
         GameController = GameController_Simple.Instance;
@@ -29,13 +41,14 @@ public class Tile_Base : MonoBehaviour
         TMP_IndexDisplay = GetComponentInChildren<TextMeshPro>();
 
         UpdateTileVisuals();
-       
+
+        mainCamera = Camera.main;
+        tileMovement = GetComponent<TileMovement>();
     }
     public void CopyVisualData(Tile_Base copyingTile)
     {
         tileColor = copyingTile.tileColor;
     }
-
     public void UpdateTileVisuals()
     {
         tileTestSprite = GetComponentInChildren<SpriteRenderer>();
@@ -48,6 +61,8 @@ public class Tile_Base : MonoBehaviour
         transform.localScale = Vector3.zero;
         transform.DOScale(Vector3.one, duration).SetEase(Ease.OutBounce);
     }
+   
+
     public IEnumerator OnPlacedInBoard() { yield break; } //animation only, the logic should be handled by the board_controller
     public IEnumerator OnReplacedInBoard() { yield break; }
     void shakeTile(Intensity intensity)
@@ -66,19 +81,20 @@ public class Tile_Base : MonoBehaviour
                 break;
         }
     }
+    
     public virtual IEnumerator OnPlayerStepped()
     {
         switch (secundarySkill)
         {
-            case SecundarySkillsEnum.extraDamage:
+            case SecundarySkills.extraDamage:
                 shakeTile(Intensity.low);
                 yield return GameController_Simple.Instance.AddAcumulatedDamage(20);
                 break;
-            case SecundarySkillsEnum.extraMoney:
+            case SecundarySkills.extraMoney:
                 shakeTile(Intensity.low);
                  GameController_Simple.Instance.AddMoney(5);
                 break;
-            case SecundarySkillsEnum.empty:
+            case SecundarySkills.empty:
                 break;
         }
         yield break;

@@ -85,10 +85,10 @@ public class Board_Controller_simple : MonoBehaviour
         int iterationsNeeded = (Mathf.Min(HeightCount, WidthCount) * 2) - 1;
         int placedTilesCount = 0;
 
-        Vector2Int movingDirection = Vector2Int.right;
+        Vector3Int movingDirection = Vector3Int.right;
         Quaternion tileRotation = Quaternion.identity;
-        Quaternion halfRotation = Quaternion.AngleAxis(45, Vector3.forward);
-        Vector2 nextTilePosition = transform.position;
+        Quaternion halfRotation = Quaternion.AngleAxis(-45, Vector3.up);
+        Vector3 nextTilePosition = transform.position;
 
         for (int t = 0; t < iterationsNeeded + 1; t++)
         {
@@ -130,8 +130,9 @@ public class Board_Controller_simple : MonoBehaviour
         void RotateForNextDirection()
         {
             tileRotation = halfRotation * tileRotation;
-            movingDirection = MathJ.rotateVectorUnclockwise90Degrees(movingDirection);
-            nextTilePosition += (Vector2)movingDirection * distanceBetweenTiles;
+            movingDirection = new Vector3Int(-movingDirection.z, 0, movingDirection.x);
+            //movingDirection = MathJ.rotateVectorUnclockwise90Degrees(movingDirection);
+            nextTilePosition += (Vector3)movingDirection * distanceBetweenTiles;
         }
         bool PlaceInDirection(int Count)
         {
@@ -151,7 +152,7 @@ public class Board_Controller_simple : MonoBehaviour
                 else
                 {
                     PlaceNewTile();
-                    nextTilePosition += (Vector2)movingDirection * distanceBetweenTiles;
+                    nextTilePosition += (Vector3)movingDirection * distanceBetweenTiles;
                 }
             }
             return true;
@@ -213,16 +214,36 @@ public class Board_Controller_simple : MonoBehaviour
         const float duration = 0.25f;
         Vector3 newPos = TilesList[PlayerIndex].transform.position;
 
+        float jumpHeight = .5f;
         Sequence seq =
             DOTween.Sequence().
-                Append(PlayerPrefab.transform.DOMove(newPos, duration)).SetEase(Ease.InCubic)
+                Append(PlayerPrefab.transform.DOJump(
+                    newPos,
+                    jumpHeight,
+                    1,
+                    duration
+                    ));
+
                 ;
         yield return new WaitForSeconds(duration);
     }
-    IEnumerator V_JumpPlayerToNewPos(int startingIndex)//move the player but jump over all the tiles that skiped. Maybe implement it later, not prioritized
+    IEnumerator V_JumpPlayerToNewPos(int startingIndex)
     {
-        yield return V_StepPlayerToNewPos();//placeholder, pls make it cooler
-        yield break;
+        const float duration = .5f;
+        Vector3 newPos = TilesList[PlayerIndex].transform.position;
+
+        float jumpHeight = 1;
+        Sequence seq =
+            DOTween.Sequence().
+                Append(PlayerPrefab.transform.DOJump(
+                    newPos,
+                    jumpHeight,
+                    1,
+                    duration
+                    ));
+
+        ;
+        yield return new WaitForSeconds(duration);
     }
     void V_ShakePlayer()
     {

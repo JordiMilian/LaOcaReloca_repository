@@ -4,7 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System;
+using System.Data;
+using UnityEngine.WSA;
 
+public enum GameState
+{
+    Empty, StartBoard, MovingPlayer, FreeMode, ReachedEnd, KilledEnemy, PlayerDied
+}
 public class GameController_Simple : MonoBehaviour
 {
     [SerializeField] GameState currentGameState;
@@ -17,7 +24,6 @@ public class GameController_Simple : MonoBehaviour
 
     [Header("Hand Tiles")]
     [SerializeField] int maxHandTilesCount = 5;
-    [SerializeField] List<Tile_Base> tilesInHand = new();
     [SerializeField] float distanceBetweenHandTiles = 1;
 
     [Header("Place tiles debug")]
@@ -25,8 +31,7 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] int indexInBoard;
     [SerializeField] int indexInHand;
 
-    bool isSelectingHandTile;
-    Tile_Base SelectedTile;
+   
 
     [SerializeField] GameObject EmptyTile;
 
@@ -34,11 +39,14 @@ public class GameController_Simple : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        mainCamera = Camera.main;
     }
     private void Start()
     {
         ChangeGameState(GameState.StartBoard);
     }
+    Camera mainCamera;
+    [SerializeField] List<Tile_Base> intersecticTiles;
     private void Update()
     {
         if (Keyboard.current[Key.Space].wasPressedThisFrame)
@@ -48,12 +56,24 @@ public class GameController_Simple : MonoBehaviour
         if(triggerTestPlace)
         {
             triggerTestPlace = false;
-            PlaceTileFromHand(indexInHand, indexInBoard);
+            PlaceTileFromHandToBoard(indexInHand, indexInBoard);
+        }
+
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit[] hitsArray;
+        intersecticTiles = new();
+        hitsArray = Physics.RaycastAll(ray);
+        foreach (RaycastHit hit in hitsArray)
+        {
+            if(hit.collider.TryGetComponent(out Tile_Base tileBase))
+            {
+                intersecticTiles.Add(tileBase);
+            }
         }
     }
-    
-    
 
+
+   
     public void ChangeGameState(GameState newState)
     {
         //On EXIT this State
@@ -170,10 +190,42 @@ public class GameController_Simple : MonoBehaviour
     #endregion
 
     #region HAND MANAGEMENT
-    void PlaceTileFromHand(int indexInHand, int indexInBoard)
+    Tile_Base SelectedTile;
+    int SelectedTileIndexInHand;
+    public void SelectedNewTile(Tile_Base tile)
+    {
+        SelectedTile = tile;
+        SelectedTileIndexInHand = tile.IndexInHand;
+    }
+    public bool CanPlaceTile()
+    {
+        if(intersecticTiles.Count <= 1) { return false; }
+
+        Tile_Base tileInBoard = null;
+        foreach (Tile_Base tile in intersecticTiles)
+        {
+            if (tile == SelectedTile) { continue; }
+            tileInBoard = tile;
+            break;
+        }
+        if(tileInBoard is Tile_End || tileInBoard is Tile_Start) { return false; }
+        return true;
+    }
+    public void PlaceTile()
+    {
+        Tile_Base tileInBoard = null;
+        foreach (Tile_Base tile in intersecticTiles)
+        {
+            if(tile == SelectedTile) { continue; }
+            tileInBoard = tile;
+            break;
+        }
+        PlaceTileFromHandToBoard(SelectedTileIndexInHand, tileInBoard.indexInBoard);
+    }
+    void PlaceTileFromHandToBoard(int indexInHand, int indexInBoard)
     {
         //Get tile infos
-        Tile_Base tileInHand = tilesInHand[indexInHand];
+        Tile_Base tileInHand = HandPositions[indexInHand].filledTileInfo;
         Tile_Base tileInBoard = BoardController.TilesList[indexInBoard];
 
         //Get position and rotation of the tile in Board
@@ -181,18 +233,22 @@ public class GameController_Simple : MonoBehaviour
         Quaternion rotation = tileInBoard.transform.rotation;
 
         //Create new Tile in the proper position and destroy the last
-        GameObject newTileGO = InstantiateNewTile(tileInHand, indexInBoard);
-        newTileGO.transform.position = position;
-        newTileGO.transform.rotation = rotation;
+        GameObject newTileGO = tileInHand.gameObject;
+        
         Destroy(tileInBoard.gameObject);
 
         //Get the references right and remove the tile from hand
-        Tile_Base instantiatedTile = newTileGO.GetComponent<Tile_Base>();
-        BoardController.TilesList[indexInBoard] = instantiatedTile;
-        tilesInHand.RemoveAt(indexInHand);
+        BoardController.TilesList[indexInBoard] = tileInHand;
+        BoardController.TilesList[indexInBoard].indexInBoard = indexInBoard;
+        BoardController.TilesList[indexInBoard].UpdateTileVisuals();
 
-        //play animation
-        instantiatedTile.FirstAppeareanceAnim();
+        RemoveTileInHand(indexInHand);
+
+        //play animations
+        newTileGO.transform.rotation = rotation;
+        tileInHand.GetComponent<TileMovement>().MoveTileTo(position); //this should handle rotation
+        tileInHand.tileMovement.canBeDragged = false;
+        tileInHand.tileState = TileState.InBoard;
 
     }
     public GameObject InstantiateNewTile(Tile_Base tileInfo, int indexInBoard = 0)
@@ -208,14 +264,49 @@ public class GameController_Simple : MonoBehaviour
 
         return newTileGO;
     }
-    public void AddItemToHand(GameObject tileInfo)
+    public HandHolder[] HandPositions;
+    [Serializable]
+    public class HandHolder
     {
-        tilesInHand.Add(tileInfo.GetComponent<Tile_Base>());
-        //Visual or whatever
+        public Transform TilePositionTf;
+        public bool isFilled;
+        public Tile_Base filledTileInfo;
+    }
+    public int GetEmptyHandIndex()
+    {
+        for (int i = 0; i < HandPositions.Length; i++)
+        {
+            if (!HandPositions[i].isFilled) { return i; }
+        }
+        return -1;
+    }
+    public void AddTileToHand(GameObject Tile)
+    {
+        int emptyHandIndex = GetEmptyHandIndex();
+        HandHolder hand = HandPositions[emptyHandIndex];
+        if (hand == null) { return; }
+
+        hand.filledTileInfo = Tile.GetComponent<Tile_Base>();
+        hand.filledTileInfo.tileMovement.MoveTileTo(hand.TilePositionTf.position);
+        hand.filledTileInfo.tileMovement.canBeDragged = true;
+        hand.filledTileInfo.IndexInHand = emptyHandIndex;
+        hand.isFilled = true;
+    }
+    void RemoveTileInHand(int index)
+    {
+        HandHolder holder = HandPositions[index];
+        holder.isFilled = false;
+        holder.filledTileInfo = null;
+
     }
     public bool isHandFull()
     {
-        return tilesInHand.Count >= maxHandTilesCount;
+        foreach (HandHolder holder in HandPositions)
+        {
+            if (!holder.isFilled) { return false; }
+        }
+        return true;
+
     }
     #endregion
     #region DAMAGE
@@ -233,6 +324,7 @@ public class GameController_Simple : MonoBehaviour
         UpdateEnemyHpUI();
         yield break;
     }
+    public float GetCurrentAcumulatedDamage() { return AcumulatedDamage; }
     IEnumerator DealAcumulatedDamage()
     {
         yield return new WaitForSeconds(0.1f);
@@ -269,12 +361,10 @@ public class GameController_Simple : MonoBehaviour
         UpdateMoneyUI();
     }
     public bool CanPurchase(int price) { return price <= currentMoney; }
-    public bool AttemptPurchase(int price)
+    public void Purchase(int price)
     {
-        if(price > currentMoney) { return false; }
         currentMoney -= price;
         UpdateMoneyUI();
-        return true;
     }
     void UpdateMoneyUI()
     {

@@ -7,9 +7,8 @@ using TMPro;
 
 public class ShopController : MonoBehaviour
 {
-    
-
-    [SerializeField] List<Tile_Base> TilesAppeareableInShop = new();
+    //[SerializeField] Tile_Base[] TilesAppeareableInShop;
+    [SerializeField] Tile_Base[] TilesAppeareableTest;
     [SerializeField] int maxItemsInShop;
     [Header("UI")]
     [SerializeField] Button BuyItem01;
@@ -67,7 +66,7 @@ public class ShopController : MonoBehaviour
     
     public Tile_Base getRandomAppearable()
     {
-        return TilesAppeareableInShop[UnityEngine.Random.Range(0, TilesAppeareableInShop.Count)];
+        return TilesAppeareableTest[UnityEngine.Random.Range(0, TilesAppeareableTest.Length)];
     }
   
 }

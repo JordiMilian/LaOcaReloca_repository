@@ -10,6 +10,7 @@ public static class MathJ
     {
         return new Vector2Int(-VectorToRotate.y, VectorToRotate.x);
     }
+
     public static int SignZero(int amount) //The same as Mathf.Sign but returns a zero if given a 0 and it works with INTs
     {
         if (amount == 0) { return 0; }

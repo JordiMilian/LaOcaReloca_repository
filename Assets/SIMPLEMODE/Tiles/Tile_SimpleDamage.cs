@@ -9,6 +9,6 @@ public class Tile_SimpleDamage : Tile_Base
     {
         yield return base.OnPlayerLanded();
         yield return GameController.AddAcumulatedDamage(damage);
-        yield return BoardController.L_JumpPlayerTo(indexInBoard - 1, true);
+        yield return BoardController.L_JumpPlayerTo(indexInBoard + 1, true);
     }
 }
