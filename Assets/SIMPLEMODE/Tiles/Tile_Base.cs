@@ -14,7 +14,7 @@ public enum SecundarySkills
 }
 public enum TileState
 {
-    none, InShop, InHand, Dragged, InBoard
+    none, InShop, InHand, InBoard
 }
 public enum Rarity
 {
@@ -42,13 +42,17 @@ public class Tile_Base : MonoBehaviour
         GameController = GameController_Simple.Instance;
         BoardController = Board_Controller_simple.Instance;
 
-        tileTestSprite = GetComponentInChildren<SpriteRenderer>();
+        tileTestSprite = GetComponentInChildren<SpriteRenderer>(); //remember placeholder
         TMP_IndexDisplay = GetComponentInChildren<TextMeshPro>();
-
-        UpdateTileVisuals();
 
         mainCamera = Camera.main;
         tileMovement = GetComponent<TileMovement>();
+
+        tileTestSprite = GetComponentInChildren<SpriteRenderer>();
+    }
+    private void Start()
+    {
+        UpdateTileVisuals();
     }
     public void CopyData(Tile_Base copyingTile)
     {
@@ -57,37 +61,76 @@ public class Tile_Base : MonoBehaviour
     }
     public void UpdateTileVisuals()
     {
-        tileTestSprite = GetComponentInChildren<SpriteRenderer>();
         tileTestSprite.color = tileColor;
         TMP_IndexDisplay.text = indexInBoard.ToString();
     }
+
+    public void SetTileState(TileState newState)
+    {
+        if(newState == tileState) { return; }
+
+        //EXIT
+        switch(tileState)
+        {
+            case TileState.InBoard:
+                BoardController.OnPlayerMoved.RemoveListener(CheckForDraggability);
+                break;
+        }
+
+        //ENTER
+        switch (newState)
+        {
+            case TileState.none:
+                break;
+            case TileState.InShop: //TO DO: InShop_Affordable, InShop_Unaffordable maybe
+                tileMovement.canBeMoved = false;
+                break;
+            case TileState.InHand: 
+                tileMovement.canBeMoved = true;
+                break;
+            case TileState.InBoard:
+                if(this is Tile_End || this is Tile_Start) { tileMovement.canBeMoved = false; break; }
+                tileMovement.canBeMoved = true;
+                BoardController.OnPlayerMoved.AddListener(CheckForDraggability);
+                CheckForDraggability(0, BoardController.PlayerIndex);
+                break;
+        }
+        tileState = newState;
+    }
+    public bool isBehindPlayer;
+    void CheckForDraggability(int from, int to)
+    {
+        isBehindPlayer = BoardController.PlayerIndex >= indexInBoard;
+        if (isBehindPlayer) { tileTestSprite.color = Color.black; }
+        else { tileTestSprite.color = tileColor; }
+    }
+
+    #region generic animations
+    //maybe move this into tileMovement
     public void FirstAppeareanceAnim()
     {
         float duration = 1;
         transform.localScale = Vector3.zero;
         transform.DOScale(Vector3.one, duration).SetEase(Ease.OutBounce);
     }
-   
-
-    public IEnumerator OnPlacedInBoard() { yield break; } //animation only, the logic should be handled by the board_controller
-    public IEnumerator OnReplacedInBoard() { yield break; }
     void shakeTile(Intensity intensity)
     {
         switch (intensity)
         {
             case Intensity.empty: break;
             case Intensity.low:
-                transform.DOShakeRotation(0.2f, .1f, 1);
+                transform.DOShakeRotation(0.2f, 5f, 4);
                 break;
             case Intensity.mid:
-                transform.DOShakeRotation(0.4f, .3f, 1);
+                transform.DOShakeRotation(0.4f, 10f, 8);
                 break;
             case Intensity.large:
-                transform.DOShakeRotation(0.6f, .4f, 1);
+                transform.DOShakeRotation(0.6f, 20f, 10);
                 break;
         }
     }
-    
+    #endregion
+    #region MAIN VIRTUAL LOGIC METHODS
     public virtual IEnumerator OnPlayerStepped()
     {
         switch (secundarySkill)
@@ -120,6 +163,15 @@ public class Tile_Base : MonoBehaviour
     {
         return 0;
     }
+    public virtual string GetTooltipText()
+    {
+        return $"No tooltip text implemented for {gameObject.name}";
+    }
+    public virtual string GetTitleText()
+    {
+        return "Base tile";
+    }
+    #endregion
     #region BUY/SELL
     public int GetBuyingPrice()
     {

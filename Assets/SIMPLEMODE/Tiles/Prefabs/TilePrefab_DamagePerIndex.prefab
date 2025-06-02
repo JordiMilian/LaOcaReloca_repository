@@ -71,9 +71,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -8656882045931485639}
-    - targetCorrespondingSourceObject: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2597741306765244972}
   m_SourcePrefab: {fileID: 100100000, guid: 13f06a96ebf842547919b71594469744, type: 3}
 --- !u!1 &1730741789483637130 stripped
@@ -81,26 +78,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
   m_PrefabInstance: {fileID: 2540219223134451909}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-8656882045931485639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1730741789483637130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4ac12450af6a7a41bb3029d02097e66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  secundarySkill: 0
-  tileState: 0
-  rarity: 1
-  indexInBoard: 0
-  IndexInHand: 0
-  tileColor: {r: 1, g: 0.08, b: 0, a: 1}
-  tileMovement: {fileID: 0}
-  damage: 50
 --- !u!114 &2597741306765244972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   secundarySkill: 0
   tileState: 0
-  rarity: 0
+  rarity: 1
   indexInBoard: 0
   IndexInHand: 0
   tileColor: {r: 0.6981132, g: 0.28290692, b: 0.10866857, a: 1}

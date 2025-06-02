@@ -11,8 +11,8 @@ public class Tile_Oca_ForeachOcaGetMoney : Tile_Oca
         foreach (Tile_Base tile in BoardController.TilesList)
         {
             if (tile is Tile_Oca) { OcasCount++; }
-
-            GameController.AddMoney(moneyPerOca * OcasCount);
         }
+        GameController.AddMoney(moneyPerOca * OcasCount);
+        Debug.Log($"Found {OcasCount} ocas");
     }
 }

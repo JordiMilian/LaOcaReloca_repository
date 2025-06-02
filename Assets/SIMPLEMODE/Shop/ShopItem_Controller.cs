@@ -27,15 +27,15 @@ public class ShopItem_Controller : MonoBehaviour
     }
     void ResetShopItem()
     {
-
         TileGO = gameController.InstantiateNewTile(shopController.getRandomAppearable());
         Item = TileGO.GetComponent<Tile_Base>();
-        TileGO.transform.position = tilePrefabTf.position;
-        TileGO.transform.rotation = tilePrefabTf.rotation;
+        Item.tileMovement.SetOriginTransformWithTransform(tilePrefabTf);
+        Item.tileMovement.PlaceTileInOrigin();
+        Item.SetTileState(TileState.InShop);
 
         TMP_Price.text = Item.GetBuyingPrice().ToString();
 
-        Item.tileMovement.canBeDragged = false;
+        Item.tileMovement.canBeMoved = false;
 
     }
 }

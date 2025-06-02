@@ -1,35 +1,74 @@
 using DG.Tweening;
 using UnityEngine;
+using TMPro;
 
+public struct transformStats
+{
+    public Vector3 position;
+    public Quaternion rotation;
+    public Vector3 scale;
+}
 public class TileMovement : MonoBehaviour
 {
     Camera mainCamera;
-    Vector3 originPosition;
-    public bool canBeDragged = true;
+    [HideInInspector] public transformStats originTransform;
+    public bool canBeMoved = true;
     [SerializeField] float heightWhileDragged = .5f;
     [SerializeField] float secondsToReturnAfterDrag = .3f;
     GameController_Simple gameController;
+    [HideInInspector] public Tile_Base tileBase;
     
     private void Awake()
     {
         mainCamera = Camera.main;
         gameController = GameController_Simple.Instance;
+        tileBase = GetComponent<Tile_Base>();
     }
-    #region VISUALS
+    private void Start()
+    {
+        HideTooltip();
+    }
+    #region Set Origin
+    public void SetOriginTransformWithTransform(Transform originTf)
+    {
+        originTransform.position = originTf.position;
+        originTransform.rotation = originTf.rotation;
+        originTransform.scale = originTf.localScale;
+    }
+    public void SetOriginTransformWithStats(transformStats stats)
+    {
+        originTransform.position = stats.position;
+        originTransform.rotation = stats.rotation;
+        originTransform.scale = stats.scale;
+    }
+    #endregion
+    public void MoveTileToOrigin()
+    {
+        transform.DOMove(originTransform.position, .3f).SetEase(Ease.OutBounce);
+        transform.rotation = originTransform.rotation;
+    }
+    public void PlaceTileInOrigin()
+    {
+        transform.position = originTransform.position;
+        transform.rotation = originTransform.rotation;
+    }
+    #region MOUSE INPUTS
     private void OnMouseDown()
     {
-        originPosition = transform.position;
+        if (!canBeMoved) { return; }
+        if (tileBase == null) { tileBase = GetComponent<Tile_Base>();}
+        if (tileBase.isBehindPlayer) { return; }
 
         if(TryGetComponent(out Tile_Base tile))
         {
             gameController.SelectedNewTile(tile);
         }
-        
-
+        HideTooltip();
     }
     private void OnMouseDrag()
     {
-        if (!canBeDragged) { return; }
+        if (!canBeMoved) { return; }
+        if (tileBase.isBehindPlayer) { return; }
 
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -45,18 +84,34 @@ public class TileMovement : MonoBehaviour
     }
     private void OnMouseUp()
     {
-        if(gameController.CanPlaceTile())
+        if (!canBeMoved) { return; }
+        if (tileBase.isBehindPlayer) { return; }
+
+        if (gameController.CanPlaceTile())
         {
             gameController.PlaceTile();
         }
         else
         {
-            MoveTileTo(originPosition);
+            MoveTileToOrigin();
         }   
     }
-    public void MoveTileTo(Vector3 newPos)
+    [Header("Tooltip")]
+    [SerializeField] GameObject TooltipRootGO;
+    [SerializeField] TextMeshPro TMP_tooltip;
+    private void OnMouseEnter() { ShowTooltip(); }
+    private void OnMouseExit() { HideTooltip(); }
+
+    void HideTooltip()
     {
-        transform.DOMove(newPos, .3f).SetEase(Ease.OutBounce);
+        TooltipRootGO.SetActive(false);
+    }
+    void ShowTooltip()
+    {
+        TMP_tooltip.text = tileBase.GetTooltipText();
+        TooltipRootGO.SetActive(true);
     }
     #endregion
+
+
 }

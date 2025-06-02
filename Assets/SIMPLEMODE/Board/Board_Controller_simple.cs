@@ -2,13 +2,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEngine.Events;
 
 
 public class Board_Controller_simple : MonoBehaviour
 {
     [SerializeField] GameObject Tile_Empty, Tile_Start, Tile_End, Tile_Oca, Tile_Money;
     public List<Tile_Base> TilesList = new();
-    int PlayerIndex;
+    public int PlayerIndex { get; private set; }
 
     public static Board_Controller_simple Instance;
     private void Awake()
@@ -23,6 +24,7 @@ public class Board_Controller_simple : MonoBehaviour
     public int Height;
     [SerializeField] float distanceBetweenTiles;
     [SerializeField] float TimeToCreateBoard;
+    public UnityEvent<int, int> OnPlayerMoved; //(from, to)
 
     #region STARTING BOARD CREATION
     public IEnumerator StartBoard() //called from game controller
@@ -32,6 +34,7 @@ public class Board_Controller_simple : MonoBehaviour
         yield return AnimateStartingTiles();
 
         PlayerIndex = 0;
+        OnPlayerMoved?.Invoke(0, 0);
         yield return V_StepPlayerToNewPos();
     }
     List<Tile_Base> CreateStartingBoardData()
@@ -61,6 +64,7 @@ public class Board_Controller_simple : MonoBehaviour
                 tileInfo.indexInBoard = index;
                 tempTiles.Add(tileInfo);
                 tileInfo.UpdateTileVisuals();
+                tileInfo.SetTileState(TileState.InBoard);
             }
             else { Debug.LogError("ERROR: TilePrefab is missing a controller"); }
         }
@@ -73,7 +77,6 @@ public class Board_Controller_simple : MonoBehaviour
             if(tile is Tile_Oca) { ocaTiles.Add(tile as Tile_Oca); }
         }
         return ocaTiles;
-
     }
     void PlaceTiles()
     {
@@ -120,8 +123,14 @@ public class Board_Controller_simple : MonoBehaviour
         void PlaceNewTile()
         {
             Tile_Base thisTile = TilesList[placedTilesCount];
-            thisTile.transform.position = nextTilePosition;
-            thisTile.transform.rotation = tileRotation;
+
+            transformStats newTileTransformStats = new();
+            newTileTransformStats.position = nextTilePosition;
+            newTileTransformStats.rotation = tileRotation;
+            newTileTransformStats.scale = Vector3.one;
+
+            thisTile.tileMovement.SetOriginTransformWithStats(newTileTransformStats);
+            thisTile.tileMovement.MoveTileToOrigin();
 
             placedTilesCount++;
 
@@ -183,6 +192,8 @@ public class Board_Controller_simple : MonoBehaviour
         int stepAmount = positiveStep ? 1 : -1;
         PlayerIndex += stepAmount;
 
+        OnPlayerMoved?.Invoke(PlayerIndex - stepAmount, PlayerIndex);
+
         yield return V_StepPlayerToNewPos();
         yield return TilesList[PlayerIndex].OnPlayerStepped();
     }
@@ -200,6 +211,7 @@ public class Board_Controller_simple : MonoBehaviour
         if(IndexOfTile > TilesList.Count - 1) { Debug.LogWarning($"WARNING: {IndexOfTile} is not a valid index to jump"); IndexOfTile = TilesList.Count - 1; }
         int originalIndex = PlayerIndex;
         PlayerIndex = IndexOfTile;
+        OnPlayerMoved?.Invoke(originalIndex, PlayerIndex);
 
         yield return V_JumpPlayerToNewPos(originalIndex);
         V_ShakePlayer();

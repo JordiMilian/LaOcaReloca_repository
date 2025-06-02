@@ -4,13 +4,15 @@ using System.Collections.Generic;
 
 public class Tile_End : Tile_Base
 {
-    public override IEnumerator OnPlayerLanded()
+
+    public override IEnumerator OnPlayerStepped()
     {
-        yield return base.OnPlayerLanded();
+        yield return base.OnPlayerStepped();
+        yield return GameController.AddAcumulatedDamage(50);
         GameController_Simple.Instance.ChangeGameState(GameState.ReachedEnd);
     }
     public override float GetLandedDamageAmount()
     {
-        return 100;
+        return 0;
     }
 }

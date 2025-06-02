@@ -26,12 +26,7 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] int maxHandTilesCount = 5;
     [SerializeField] float distanceBetweenHandTiles = 1;
 
-    [Header("Place tiles debug")]
-    [SerializeField] bool triggerTestPlace;
-    [SerializeField] int indexInBoard;
-    [SerializeField] int indexInHand;
 
-   
 
     [SerializeField] GameObject EmptyTile;
 
@@ -44,6 +39,8 @@ public class GameController_Simple : MonoBehaviour
     private void Start()
     {
         ChangeGameState(GameState.StartBoard);
+        UpdateMoneyUI();
+        UpdateEnemyHpUI();
     }
     Camera mainCamera;
     [SerializeField] List<Tile_Base> intersecticTiles;
@@ -52,11 +49,6 @@ public class GameController_Simple : MonoBehaviour
         if (Keyboard.current[Key.Space].wasPressedThisFrame)
         {
             if (RollDiceButton.interactable) { Button_RollDicesTestButton(); }
-        }
-        if(triggerTestPlace)
-        {
-            triggerTestPlace = false;
-            PlaceTileFromHandToBoard(indexInHand, indexInBoard);
         }
 
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -73,7 +65,7 @@ public class GameController_Simple : MonoBehaviour
     }
 
 
-   
+    #region GAME FLOW
     public void ChangeGameState(GameState newState)
     {
         //On EXIT this State
@@ -171,7 +163,7 @@ public class GameController_Simple : MonoBehaviour
     #region REACHED END
     IEnumerator OnReachedEnd_Coroutine()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f); 
         yield return DealAcumulatedDamage();
         yield return StartCoroutine(BoardController.L_JumpPlayerTo(0, false));
 
@@ -181,6 +173,7 @@ public class GameController_Simple : MonoBehaviour
     #region KILLED ENEMY
     IEnumerator KilledEnemy_Coroutine()
     {
+        AddMoney(10);
         yield return BoardController.L_JumpPlayerTo(0, false);
         Enemy_MaxHP *= 1.2f;
         Enemy_CurrentHP = Enemy_MaxHP;
@@ -188,30 +181,35 @@ public class GameController_Simple : MonoBehaviour
         ChangeGameState(GameState.FreeMode);
     }
     #endregion
+    #endregion
 
-    #region HAND MANAGEMENT
+    #region PLACE AND MOVE TILES
     Tile_Base SelectedTile;
-    int SelectedTileIndexInHand;
+
     public void SelectedNewTile(Tile_Base tile)
     {
         SelectedTile = tile;
-        SelectedTileIndexInHand = tile.IndexInHand;
     }
     public bool CanPlaceTile()
     {
         if(intersecticTiles.Count <= 1) { return false; }
 
-        Tile_Base tileInBoard = null;
+        Tile_Base tileBelow = null;
         foreach (Tile_Base tile in intersecticTiles)
         {
             if (tile == SelectedTile) { continue; }
-            tileInBoard = tile;
+            tileBelow = tile;
             break;
         }
-        if(tileInBoard is Tile_End || tileInBoard is Tile_Start) { return false; }
+
+        if(tileBelow.tileState != TileState.InBoard) { return false; }
+        if (!tileBelow.tileMovement.canBeMoved) { return false; }
+        if (tileBelow.isBehindPlayer && SelectedTile.tileState == TileState.InBoard) { return false; }
+       
+        if(tileBelow is Tile_End || tileBelow is Tile_Start) { return false; }
         return true;
     }
-    public void PlaceTile()
+    public void PlaceTile() //Called from TileMovement OnMouseUp
     {
         Tile_Base tileInBoard = null;
         foreach (Tile_Base tile in intersecticTiles)
@@ -220,7 +218,37 @@ public class GameController_Simple : MonoBehaviour
             tileInBoard = tile;
             break;
         }
-        PlaceTileFromHandToBoard(SelectedTileIndexInHand, tileInBoard.indexInBoard);
+        if(SelectedTile.tileState == TileState.InBoard)
+        {
+            MoveTilesInBoard(SelectedTile.indexInBoard, tileInBoard.indexInBoard);
+        }
+        else if(SelectedTile.tileState == TileState.InHand)
+        {
+            PlaceTileFromHandToBoard(SelectedTile.IndexInHand, tileInBoard.indexInBoard);
+        }
+    }
+    void MoveTilesInBoard(int indexAtoB, int indexBtoA)
+    {
+        Tile_Base tileAtoB = BoardController.TilesList[indexAtoB];
+        Tile_Base tileBtoA = BoardController.TilesList[indexBtoA];
+
+        transformStats ghostStatsA = tileAtoB.tileMovement.originTransform;
+
+        BoardController.TilesList[indexAtoB] = tileBtoA;
+        BoardController.TilesList[indexBtoA] = tileAtoB;
+        tileBtoA.indexInBoard = indexAtoB;
+        tileAtoB.indexInBoard = indexBtoA;
+
+
+        tileAtoB.tileMovement.SetOriginTransformWithTransform(tileBtoA.transform);
+        tileAtoB.tileMovement.MoveTileToOrigin();
+
+        tileBtoA.tileMovement.SetOriginTransformWithStats(ghostStatsA);
+        tileBtoA.tileMovement.MoveTileToOrigin();
+
+        tileAtoB.UpdateTileVisuals();
+        tileBtoA.UpdateTileVisuals();
+
     }
     void PlaceTileFromHandToBoard(int indexInHand, int indexInBoard)
     {
@@ -229,8 +257,7 @@ public class GameController_Simple : MonoBehaviour
         Tile_Base tileInBoard = BoardController.TilesList[indexInBoard];
 
         //Get position and rotation of the tile in Board
-        Vector3 position = tileInBoard.transform.position;
-        Quaternion rotation = tileInBoard.transform.rotation;
+        transformStats inBoardTransformStats = tileInBoard.tileMovement.originTransform;
 
         //Create new Tile in the proper position and destroy the last
         GameObject newTileGO = tileInHand.gameObject;
@@ -245,21 +272,21 @@ public class GameController_Simple : MonoBehaviour
         RemoveTileInHand(indexInHand);
 
         //play animations
-        newTileGO.transform.rotation = rotation;
-        tileInHand.GetComponent<TileMovement>().MoveTileTo(position); //this should handle rotation
-        tileInHand.tileMovement.canBeDragged = false;
-        tileInHand.tileState = TileState.InBoard;
-
+        TileMovement newTileMovement = tileInHand.GetComponent<TileMovement>();
+        newTileMovement.SetOriginTransformWithStats(inBoardTransformStats);
+        newTileMovement.MoveTileToOrigin(); 
+        tileInHand.SetTileState(TileState.InBoard);
     }
     public GameObject InstantiateNewTile(Tile_Base tileInfo, int indexInBoard = 0)
     {
         GameObject newTileGO = Instantiate(EmptyTile);
-        if(newTileGO == null) { Debug.Log("fukkk you==="); }
-        if(tileInfo == null) { Debug.Log("fukkk you===??"); }
+
         Tile_Base newTileInfo = (Tile_Base)newTileGO.AddComponent(tileInfo.GetType());
         newTileInfo.CopyData(tileInfo);
         newTileInfo.indexInBoard = indexInBoard;
         newTileInfo.UpdateTileVisuals();
+
+        newTileGO.GetComponent<TileMovement>().tileBase = newTileInfo;
         
 
         return newTileGO;
@@ -287,9 +314,11 @@ public class GameController_Simple : MonoBehaviour
         if (hand == null) { return; }
 
         hand.filledTileInfo = Tile.GetComponent<Tile_Base>();
-        hand.filledTileInfo.tileMovement.MoveTileTo(hand.TilePositionTf.position);
-        hand.filledTileInfo.tileMovement.canBeDragged = true;
+        hand.filledTileInfo.tileMovement.SetOriginTransformWithTransform(hand.TilePositionTf);
+        hand.filledTileInfo.tileMovement.MoveTileToOrigin();
+        hand.filledTileInfo.tileMovement.canBeMoved = true;
         hand.filledTileInfo.IndexInHand = emptyHandIndex;
+        hand.filledTileInfo.SetTileState(TileState.InHand);
         hand.isFilled = true;
     }
     void RemoveTileInHand(int index)
@@ -316,6 +345,7 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] float Enemy_CurrentHP;
     [SerializeField] TextMeshProUGUI TMP_EnemyHp;
     [SerializeField] TextMeshProUGUI TMP_AcumulatedDamage;
+    [SerializeField] Slider slider_EnemyHP;
     public IEnumerator AddAcumulatedDamage(float amount)
     {
         if (Mathf.Approximately(amount, 0)) { yield break; }
@@ -341,8 +371,10 @@ public class GameController_Simple : MonoBehaviour
     }
     void UpdateEnemyHpUI()
     {
-        TMP_EnemyHp.text = $"{Enemy_CurrentHP.ToString("F2")}/{Enemy_MaxHP.ToString("F2")}";
-        TMP_AcumulatedDamage.text = $"Acumulated damage:{AcumulatedDamage}";
+        slider_EnemyHP.maxValue = Enemy_MaxHP;
+        slider_EnemyHP.value = Enemy_CurrentHP;
+        TMP_EnemyHp.text = $"{Enemy_CurrentHP.ToString("F1")}/{Enemy_MaxHP.ToString("F1")}";
+        TMP_AcumulatedDamage.text = $"{AcumulatedDamage}";
     }
     #endregion
     #region MONEY
