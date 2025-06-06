@@ -527,6 +527,7 @@ GameObject:
   - component: {fileID: 268553342}
   - component: {fileID: 268553341}
   - component: {fileID: 268553344}
+  - component: {fileID: 268553345}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -652,6 +653,22 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &268553345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 268553340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c49b4cc203aa6414fae5c798d1d0e7d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &269246723
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,6 +1047,9 @@ MonoBehaviour:
   Height: 5
   distanceBetweenTiles: 1.5
   TimeToCreateBoard: 2
+  OnPlayerMoved:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &466753542
 Transform:
   m_ObjectHideFlags: 0
@@ -3559,9 +3579,6 @@ MonoBehaviour:
   dicesController: {fileID: 1386617554}
   maxHandTilesCount: 6
   distanceBetweenHandTiles: 1
-  triggerTestPlace: 0
-  indexInBoard: 5
-  indexInHand: 0
   EmptyTile: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
   intersecticTiles: []
   HandPositions:
@@ -4519,18 +4536,18 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 268553343}
-  - {fileID: 1246852223}
-  - {fileID: 1715485039}
   - {fileID: 466753542}
+  - {fileID: 1715485039}
   - {fileID: 1266550046}
   - {fileID: 1250209749}
   - {fileID: 1386617555}
   - {fileID: 1757594648}
-  - {fileID: 701891187}
   - {fileID: 1318671255}
   - {fileID: 1145897136}
   - {fileID: 1047302384}
   - {fileID: 1790437}
   - {fileID: 1660438489}
   - {fileID: 269246724}
+  - {fileID: 268553343}
+  - {fileID: 1246852223}
+  - {fileID: 701891187}
