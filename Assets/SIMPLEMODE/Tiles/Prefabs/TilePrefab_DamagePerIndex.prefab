@@ -99,3 +99,4 @@ MonoBehaviour:
   tileColor: {r: 0.6981132, g: 0.28290692, b: 0.10866857, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0
+  damagePerIndex: 2

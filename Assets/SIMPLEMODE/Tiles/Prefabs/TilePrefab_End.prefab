@@ -96,6 +96,6 @@ MonoBehaviour:
   rarity: 4
   indexInBoard: 0
   IndexInHand: 0
-  tileColor: {r: 0.227451, g: 0.04705883, b: 0.04705883, a: 1}
+  tileColor: {r: 0.14716971, g: 0.14716971, b: 0.14716971, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0

@@ -1,9 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tile_Oca_ForeachOcaGetMoney : Tile_Oca
+public class Tile_Oca_ForeachOcaGetDamage : Tile_Oca
 {
-    [SerializeField] int moneyPerOca = 1;
+    [SerializeField] int damagePerOca = 1;
     public override IEnumerator OnPlayerLanded()
     {
         yield return base.OnPlayerLanded();
@@ -12,7 +12,7 @@ public class Tile_Oca_ForeachOcaGetMoney : Tile_Oca
         {
             if (tile is Tile_Oca) { OcasCount++; }
         }
-        GameController.AddMoney(moneyPerOca * OcasCount);
+        GameController.AddAcumulatedDamage(damagePerOca * OcasCount);
         Debug.Log($"Found {OcasCount} ocas");
     }
 }

@@ -92,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   secundarySkill: 0
   tileState: 0
-  addedDamageOnCrossed: 5
+  addedDamageOnCrossed: 15
   rarity: 1
   indexInBoard: 0
   IndexInHand: 0
