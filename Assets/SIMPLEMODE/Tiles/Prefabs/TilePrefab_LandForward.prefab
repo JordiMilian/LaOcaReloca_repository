@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
       propertyPath: m_Name
-      value: TilePrefab_SimpleDamage
+      value: TilePrefab_LandForward
       objectReference: {fileID: 0}
     - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
       propertyPath: m_LocalPosition.x
@@ -92,9 +92,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   secundarySkill: 0
   tileState: 0
+  addedDamageOnCrossed: 0
   rarity: 2
   indexInBoard: 0
   IndexInHand: 0
   tileColor: {r: 1, g: 0.08, b: 0, a: 1}
   tileMovement: {fileID: 0}
-  damage: 50
+  isBehindPlayer: 0

@@ -23,20 +23,20 @@ public enum Rarity
 public class Tile_Base : MonoBehaviour
 {
     [SerializeField] SecundarySkills secundarySkill;
-    public TileState tileState = TileState.none;
+    [HideInInspector] public TileState tileState = TileState.none;
+    [SerializeField] float addedDamageOnCrossed = 1;
     public Rarity rarity = Rarity.none;
-    public int indexInBoard;
-    public int IndexInHand;
+    [HideInInspector] public int indexInBoard;
+    [HideInInspector] public int IndexInHand;
 
     [Header("Color testing")]
     public Color tileColor;
-     SpriteRenderer tileTestSprite;
+    SpriteRenderer tileTestSprite;
     TextMeshPro TMP_IndexDisplay;
 
     protected GameController_Simple GameController;
     protected Board_Controller_simple BoardController;
-    Camera mainCamera;
-   [HideInInspector] public TileMovement tileMovement;
+    [HideInInspector] public TileMovement tileMovement;
     private void Awake()
     {
         GameController = GameController_Simple.Instance;
@@ -45,7 +45,6 @@ public class Tile_Base : MonoBehaviour
         tileTestSprite = GetComponentInChildren<SpriteRenderer>(); //remember placeholder
         TMP_IndexDisplay = GetComponentInChildren<TextMeshPro>();
 
-        mainCamera = Camera.main;
         tileMovement = GetComponent<TileMovement>();
 
         tileTestSprite = GetComponentInChildren<SpriteRenderer>();
@@ -62,7 +61,7 @@ public class Tile_Base : MonoBehaviour
     public void UpdateTileVisuals()
     {
         tileTestSprite.color = tileColor;
-        TMP_IndexDisplay.text = indexInBoard.ToString();
+        TMP_IndexDisplay.text = GetCrossedDamageAmount().ToString();
     }
 
     public void SetTileState(TileState newState)
@@ -97,11 +96,12 @@ public class Tile_Base : MonoBehaviour
         }
         tileState = newState;
     }
-    public bool isBehindPlayer;
+
+    [HideInInspector] public bool isBehindPlayer;
     void CheckForDraggability(int from, int to)
     {
         isBehindPlayer = BoardController.PlayerIndex >= indexInBoard;
-        if (isBehindPlayer) { tileTestSprite.color = Color.black; }
+        if (isBehindPlayer) { tileTestSprite.color = new Color(tileColor.r, tileColor.g, tileColor.b, 0.75f); }
         else { tileTestSprite.color = tileColor; }
     }
 
@@ -133,6 +133,7 @@ public class Tile_Base : MonoBehaviour
     #region MAIN VIRTUAL LOGIC METHODS
     public virtual IEnumerator OnPlayerStepped()
     {
+        yield return GameController.AddAcumulatedDamage(GetCrossedDamageAmount());
         switch (secundarySkill)
         {
             case SecundarySkills.extraDamage:
@@ -159,9 +160,9 @@ public class Tile_Base : MonoBehaviour
         shakeTile(Intensity.mid);
         yield break;
     }
-    public virtual float GetLandedDamageAmount()
+    public virtual float GetCrossedDamageAmount()
     {
-        return 0;
+        return addedDamageOnCrossed;
     }
     public virtual string GetTooltipText()
     {

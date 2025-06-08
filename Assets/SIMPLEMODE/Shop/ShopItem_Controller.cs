@@ -18,24 +18,32 @@ public class ShopItem_Controller : MonoBehaviour
 
     public void Button_OnBuyPressed()
     {
-        if (!gameController.CanPurchase(Item.GetBuyingPrice())) { return; }
-        if (gameController.isHandFull()) { return; }
+        if (TileGO == null) { return; } //item already bought, empty shop
+        if (gameController.isHandFull()) { return; } //hand full
+        if (!gameController.CanPurchase(Item.GetBuyingPrice())) { return; } //no money
+        
+        
+
         gameController.Purchase(Item.GetBuyingPrice());
         gameController.AddTileToHand(TileGO);
 
-        ResetShopItem();
+        Item = null;
+        TileGO = null;
+
+        TMP_Price.text = "";
+
     }
-    void ResetShopItem()
+    public void ResetShopItem()
     {
-        TileGO = gameController.InstantiateNewTile(shopController.getRandomAppearable());
+        if(TileGO != null) { Destroy(TileGO); }
+
+        TileGO = Instantiate(shopController.getRandomTilePrefab(), shopController.transform);
         Item = TileGO.GetComponent<Tile_Base>();
         Item.tileMovement.SetOriginTransformWithTransform(tilePrefabTf);
         Item.tileMovement.PlaceTileInOrigin();
         Item.SetTileState(TileState.InShop);
 
         TMP_Price.text = Item.GetBuyingPrice().ToString();
-
-        Item.tileMovement.canBeMoved = false;
 
     }
 }

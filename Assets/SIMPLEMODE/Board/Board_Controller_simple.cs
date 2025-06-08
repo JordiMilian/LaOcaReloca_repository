@@ -30,7 +30,8 @@ public class Board_Controller_simple : MonoBehaviour
     public IEnumerator StartBoard() //called from game controller
     {
         TilesList = CreateStartingBoardData();
-        PlaceTiles();
+        CreateUnderTiles();
+        PlaceTilesOverUnderTile();
         yield return AnimateStartingTiles();
 
         PlayerIndex = 0;
@@ -69,17 +70,18 @@ public class Board_Controller_simple : MonoBehaviour
             else { Debug.LogError("ERROR: TilePrefab is missing a controller"); }
         }
     }
-    public List<Tile_Oca> GetAllOcaTiles()
+   
+    [Header("UnderTiles")]
+    [SerializeField] GameObject UnderTilePrefab_Start;
+    [SerializeField] GameObject UnderTilePrefab_Straight;
+    [SerializeField] GameObject UnderTilePrefab_Curve;
+    [SerializeField] Color undertile_StartColor, undertile_EndColor;
+    public enum UnderTileTypes { Start, Straight, Curve }
+    List<GameObject> underTilesList;
+    void CreateUnderTiles()
     {
-        List<Tile_Oca> ocaTiles = new();
-        foreach(Tile_Base tile in TilesList)
-        {
-            if(tile is Tile_Oca) { ocaTiles.Add(tile as Tile_Oca); }
-        }
-        return ocaTiles;
-    }
-    void PlaceTiles()
-    {
+        underTilesList = new();
+
         int HeightCount = Height;
         int WidthCount = Width;
         int totalTilesCount = HeightCount * WidthCount;
@@ -90,18 +92,16 @@ public class Board_Controller_simple : MonoBehaviour
 
         Vector3Int movingDirection = Vector3Int.right;
         Quaternion tileRotation = Quaternion.identity;
-        Quaternion halfRotation = Quaternion.AngleAxis(-45, Vector3.up);
+        Quaternion halfRotation = Quaternion.AngleAxis(-90, Vector3.up);
         Vector3 nextTilePosition = transform.position;
 
         for (int t = 0; t < iterationsNeeded + 1; t++)
         {
             if (movingHorizontaly)
             {
-                if (!PlaceInDirection(WidthCount)) //try to spawn, if negative(count 0), then finish
-                {
-                    return;
-                }
-                ;
+                if(WidthCount == 0) { return; }
+
+                PlaceInDirection(WidthCount);
                 RotateForNextDirection();
 
                 HeightCount--;
@@ -109,33 +109,17 @@ public class Board_Controller_simple : MonoBehaviour
             }
             else
             {
-                if (!PlaceInDirection(HeightCount))
-                {
-                    return;
-                }
+                if(HeightCount == 0) { return; }
 
+                PlaceInDirection(HeightCount);
                 RotateForNextDirection();
 
                 WidthCount--;
                 movingHorizontaly = true;
             }
         }
-        void PlaceNewTile()
-        {
-            Tile_Base thisTile = TilesList[placedTilesCount];
 
-            transformStats newTileTransformStats = new();
-            newTileTransformStats.position = nextTilePosition;
-            newTileTransformStats.rotation = tileRotation;
-            newTileTransformStats.scale = Vector3.one;
-
-            thisTile.tileMovement.SetOriginTransformWithStats(newTileTransformStats);
-            thisTile.tileMovement.MoveTileToOrigin();
-
-            placedTilesCount++;
-
-            Debug.Log($"Spawned Tile {placedTilesCount}/{totalTilesCount}");
-        }
+        //
         void RotateForNextDirection()
         {
             tileRotation = halfRotation * tileRotation;
@@ -143,28 +127,66 @@ public class Board_Controller_simple : MonoBehaviour
             //movingDirection = MathJ.rotateVectorUnclockwise90Degrees(movingDirection);
             nextTilePosition += (Vector3)movingDirection * distanceBetweenTiles;
         }
-        bool PlaceInDirection(int Count)
+        void  PlaceInDirection(int Count)
         {
-            if (Count == 0) { return false; }
-
             for (int r = 0; r < Count; r++)
             {
-                // if its the last in the series, rotate and spawn, else spawn and make a step
+                if(placedTilesCount == 0) 
+                { 
+                    InstantiateUnderTile(UnderTileTypes.Start, nextTilePosition, tileRotation);
+                    nextTilePosition += (Vector3)movingDirection * distanceBetweenTiles; 
+                    continue; 
+                }
+                if(placedTilesCount == totalTilesCount-1)
+                {
+                    tileRotation = halfRotation * tileRotation;
+                    tileRotation = halfRotation * tileRotation;
+                    InstantiateUnderTile(UnderTileTypes.Start, nextTilePosition, tileRotation);
+                    return; }
+
+                // if its the last in the series, spawn curve, else spawn straight
                 if (r == Count - 1)
                 {
-                    if (placedTilesCount != totalTilesCount - 1) //do not rotate the exit piece
-                    {
-                        tileRotation = halfRotation * tileRotation;
-                    }
-                    PlaceNewTile();
+                    InstantiateUnderTile(UnderTileTypes.Curve,nextTilePosition,tileRotation);
+                    
                 }
                 else
                 {
-                    PlaceNewTile();
+                    InstantiateUnderTile(UnderTileTypes.Straight, nextTilePosition, tileRotation);
                     nextTilePosition += (Vector3)movingDirection * distanceBetweenTiles;
                 }
             }
-            return true;
+        }
+        void InstantiateUnderTile(UnderTileTypes undertileType, Vector3 position, Quaternion rotation)
+        {
+            placedTilesCount++;
+            GameObject prefabToSpawn = null;
+            switch (undertileType)
+            {
+                case UnderTileTypes.Start:
+                    prefabToSpawn = UnderTilePrefab_Start;
+                    break;
+                case UnderTileTypes.Straight:
+                    prefabToSpawn = UnderTilePrefab_Straight;
+                    break;
+                case UnderTileTypes.Curve:
+                    prefabToSpawn = UnderTilePrefab_Curve;
+                    break;
+            }
+            GameObject newUndertile = Instantiate(prefabToSpawn, position, rotation);
+            newUndertile.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(undertile_StartColor, undertile_EndColor, (float)placedTilesCount / (float)totalTilesCount);
+
+            underTilesList.Add(newUndertile);
+        }
+    }
+    void PlaceTilesOverUnderTile()
+    {
+        for (int i = 0; i < underTilesList.Count; i++)
+        {
+            Tile_Base thisTile = TilesList[i];
+            TileMovement movement = thisTile.tileMovement;
+            movement.SetOriginTransformWithTransform(underTilesList[i].transform);
+            movement.PlaceTileInOrigin();
         }
     }
     IEnumerator AnimateStartingTiles()
@@ -202,7 +224,7 @@ public class Board_Controller_simple : MonoBehaviour
         Debug.Log($"Landed in:{PlayerIndex}");
         V_ShakePlayer();
         Tile_Base thisTile = TilesList[PlayerIndex];
-        yield return GameController_Simple.Instance.AddAcumulatedDamage(thisTile.GetLandedDamageAmount());
+
         yield return TilesList[PlayerIndex].OnPlayerLanded();
     }
     public IEnumerator L_JumpPlayerTo(int IndexOfTile, bool triggerLanded)
@@ -224,7 +246,7 @@ public class Board_Controller_simple : MonoBehaviour
     IEnumerator V_StepPlayerToNewPos()//step the player to new pos
     {
         const float duration = 0.25f;
-        Vector3 newPos = TilesList[PlayerIndex].transform.position;
+        Vector3 newPos = TilesList[PlayerIndex].tileMovement.originTransform.position;
 
         float jumpHeight = .5f;
         Sequence seq =
@@ -242,7 +264,7 @@ public class Board_Controller_simple : MonoBehaviour
     IEnumerator V_JumpPlayerToNewPos(int startingIndex)
     {
         const float duration = .5f;
-        Vector3 newPos = TilesList[PlayerIndex].transform.position;
+        Vector3 newPos = TilesList[PlayerIndex].tileMovement.originTransform.position;
 
         float jumpHeight = 1;
         Sequence seq =
@@ -263,5 +285,5 @@ public class Board_Controller_simple : MonoBehaviour
     }
 
     #endregion
-   
+
 }

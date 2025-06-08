@@ -2,13 +2,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Tile_SimpleDamage : Tile_Base
+public class Tile_LandForward : Tile_Base
 {
-    [SerializeField] float damage = 50;
     public override IEnumerator OnPlayerLanded()
     {
         yield return base.OnPlayerLanded();
-        yield return GameController.AddAcumulatedDamage(damage);
+        yield return GameController.AddAcumulatedDamage(-GameController.GetCurrentAcumulatedDamage());
         yield return BoardController.L_JumpPlayerTo(indexInBoard + 1, true);
     }
 }

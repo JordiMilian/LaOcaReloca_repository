@@ -14,7 +14,6 @@ public class TileMovement : MonoBehaviour
     [HideInInspector] public transformStats originTransform;
     public bool canBeMoved = true;
     [SerializeField] float heightWhileDragged = .5f;
-    [SerializeField] float secondsToReturnAfterDrag = .3f;
     GameController_Simple gameController;
     [HideInInspector] public Tile_Base tileBase;
     
@@ -58,6 +57,7 @@ public class TileMovement : MonoBehaviour
         if (!canBeMoved) { return; }
         if (tileBase == null) { tileBase = GetComponent<Tile_Base>();}
         if (tileBase.isBehindPlayer) { return; }
+       
 
         if(TryGetComponent(out Tile_Base tile))
         {
@@ -69,6 +69,7 @@ public class TileMovement : MonoBehaviour
     {
         if (!canBeMoved) { return; }
         if (tileBase.isBehindPlayer) { return; }
+        if (GameController_Simple.Instance.currentGameState == GameState.MovingPlayer) { MoveTileToOrigin(); return; }
 
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 

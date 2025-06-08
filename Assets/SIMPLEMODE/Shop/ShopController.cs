@@ -7,66 +7,48 @@ using TMPro;
 
 public class ShopController : MonoBehaviour
 {
-    //[SerializeField] Tile_Base[] TilesAppeareableInShop;
-    [SerializeField] Tile_Base[] TilesAppeareableTest;
-    [SerializeField] int maxItemsInShop;
+    [SerializeField] GameObject[] TilesAppeareable;
     [Header("UI")]
-    [SerializeField] Button BuyItem01;
-    [SerializeField] Button BuyItem02;
-    [SerializeField] Button BuyItem03;
-    [SerializeField] TextMeshProUGUI ItemName_01, ItemName_02, ItemName_03;
-    [SerializeField] TextMeshProUGUI ItemPrice_01, ItemPrice_02, ItemPrice_03;
-    [SerializeField] Transform ItemPos01, ItemPos02, ItemPos03;
+    [SerializeField] ShopItem_Controller[] shopItems;
+    List<Button> shopItemsButtons = new();
+    [SerializeField] int rerollPrice = 5;
+    [SerializeField] Button button_Reroll;
 
-
-    const int placeholderPrice = 10;
-    private void Start()
+    private void Awake()
     {
-       /*
-        FillShop();
-        UpdateUI();
-        //
-        void FillShop()
+        foreach(ShopItem_Controller item in shopItems)
         {
-            ShopItemsList = new();
-            for (int i = 0; i < maxItemsInShop; i++)
-            {
-                ShopItem item = new ShopItem();
-                item.Item = getRandomAppearable();
-                item.Price = placeholderPrice;
-                item.TileGO = GameController_Simple.Instance.InstantiateNewTile(item.Item);
-
-                ShopItemsList.Add(item);
-            }
+            shopItemsButtons.Add(item.GetComponentInChildren<Button>());
         }
-       */
     }
     #region DISABLE SHOP
     public void DisableShop()
     {
-        BuyItem01.interactable = false;
-        BuyItem02.interactable = false;
-        BuyItem03.interactable = false;
+        foreach(Button button in shopItemsButtons) { button.interactable = false; }
+        button_Reroll.interactable = false;
     }
     public void EnableShop()
     {
-        BuyItem01.interactable = true;
-        BuyItem02.interactable = true;
-        BuyItem03.interactable = true;
+        foreach (Button button in shopItemsButtons) { button.interactable = true; }
+        button_Reroll.interactable = false;
     }
     #endregion
-    void UpdateUI()
+    public void Button_ReRollShop()
     {
+        GameController_Simple gameController = GameController_Simple.Instance;
 
-        ItemPrice_01.text = placeholderPrice.ToString();
-        ItemPrice_02.text = placeholderPrice.ToString();
-        ItemPrice_03.text = placeholderPrice.ToString();
+        if(gameController.CanPurchase(rerollPrice))
+        {
+            gameController.Purchase(rerollPrice);
+            foreach (ShopItem_Controller item in shopItems)
+            {
+                item.ResetShopItem();
+            }
+        }
     }
-
-    
-    public Tile_Base getRandomAppearable()
+    public GameObject getRandomTilePrefab()
     {
-        return TilesAppeareableTest[UnityEngine.Random.Range(0, TilesAppeareableTest.Length)];
+        return TilesAppeareable[UnityEngine.Random.Range(0, TilesAppeareable.Length)];
     }
   
 }

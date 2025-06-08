@@ -25,7 +25,7 @@ public class Tile_Oca : Tile_Base
         }
     }
     public IEnumerator basePlayerLanded() { yield return base.OnPlayerLanded(); }
-    public override float GetLandedDamageAmount()
+    public override float GetCrossedDamageAmount()
     {
         return 0;
     }

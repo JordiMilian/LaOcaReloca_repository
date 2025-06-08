@@ -5,17 +5,15 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System;
-using System.Data;
-using UnityEngine.WSA;
-
 public enum GameState
 {
     Empty, StartBoard, MovingPlayer, FreeMode, ReachedEnd, KilledEnemy, PlayerDied
 }
 public class GameController_Simple : MonoBehaviour
 {
-    [SerializeField] GameState currentGameState;
+    public GameState currentGameState { get; private set; }
     [SerializeField] Board_Controller_simple BoardController;
+    Camera mainCamera;
 
     [Header("Test roll")]
     [SerializeField] TextMeshProUGUI TMP_rolledDiceAmount;
@@ -25,8 +23,6 @@ public class GameController_Simple : MonoBehaviour
     [Header("Hand Tiles")]
     [SerializeField] int maxHandTilesCount = 5;
     [SerializeField] float distanceBetweenHandTiles = 1;
-
-
 
     [SerializeField] GameObject EmptyTile;
 
@@ -42,30 +38,35 @@ public class GameController_Simple : MonoBehaviour
         UpdateMoneyUI();
         UpdateEnemyHpUI();
     }
-    Camera mainCamera;
-    [SerializeField] List<Tile_Base> intersecticTiles;
     private void Update()
     {
         if (Keyboard.current[Key.Space].wasPressedThisFrame)
         {
             if (RollDiceButton.interactable) { Button_RollDicesTestButton(); }
         }
-
+        GetIntersectingTilesToMouse();
+        
+    }
+    #region INTERSECTING TILES WITH MOUSE
+    [SerializeField] List<Tile_Base> intersecticTiles;
+    void GetIntersectingTilesToMouse()
+    {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit[] hitsArray;
         intersecticTiles = new();
         hitsArray = Physics.RaycastAll(ray);
         foreach (RaycastHit hit in hitsArray)
         {
-            if(hit.collider.TryGetComponent(out Tile_Base tileBase))
+            if (hit.collider.TryGetComponent(out Tile_Base tileBase))
             {
                 intersecticTiles.Add(tileBase);
             }
         }
     }
-
+        #endregion
 
     #region GAME FLOW
+
     public void ChangeGameState(GameState newState)
     {
         //On EXIT this State
@@ -139,16 +140,24 @@ public class GameController_Simple : MonoBehaviour
     Coroutine regularMovingCoroutine;
     //This mode is entered when the dices are rolled
     //during this whole coroutine, if we change state the movement coroutine is canceled, so dont worry about switching into FreeMode after all
+    public int remainingStepsToTake;
     IEnumerator OnMovingPlayer_Coroutine()
     {
         RollDiceButton.interactable = false;
-        int rolledAmount = dicesController.RollDices();
-        TMP_rolledDiceAmount.text = rolledAmount.ToString();
+        remainingStepsToTake = dicesController.RollDices();
+        TMP_rolledDiceAmount.text = remainingStepsToTake.ToString();
 
-        for (int i = 0; i < Mathf.Abs(rolledAmount); i++)
+        while(remainingStepsToTake > 0)
         {
-            yield return BoardController.L_StepPlayer(rolledAmount > 0);
+            yield return BoardController.L_StepPlayer(true);
+            remainingStepsToTake--;
         }
+        while (remainingStepsToTake < 0)
+        {
+            yield return BoardController.L_StepPlayer(false);
+            remainingStepsToTake++;
+        }
+
         yield return BoardController.L_LandPlayerInCurrentPos();
 
         yield return DealAcumulatedDamage();
@@ -276,20 +285,6 @@ public class GameController_Simple : MonoBehaviour
         newTileMovement.SetOriginTransformWithStats(inBoardTransformStats);
         newTileMovement.MoveTileToOrigin(); 
         tileInHand.SetTileState(TileState.InBoard);
-    }
-    public GameObject InstantiateNewTile(Tile_Base tileInfo, int indexInBoard = 0)
-    {
-        GameObject newTileGO = Instantiate(EmptyTile);
-
-        Tile_Base newTileInfo = (Tile_Base)newTileGO.AddComponent(tileInfo.GetType());
-        newTileInfo.CopyData(tileInfo);
-        newTileInfo.indexInBoard = indexInBoard;
-        newTileInfo.UpdateTileVisuals();
-
-        newTileGO.GetComponent<TileMovement>().tileBase = newTileInfo;
-        
-
-        return newTileGO;
     }
     public HandHolder[] HandPositions;
     [Serializable]

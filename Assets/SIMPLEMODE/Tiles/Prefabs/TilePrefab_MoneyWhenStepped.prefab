@@ -92,9 +92,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   secundarySkill: 0
   tileState: 0
+  addedDamageOnCrossed: 1
   rarity: 1
   indexInBoard: 0
   IndexInHand: 0
   tileColor: {r: 0.6792453, g: 0.6002343, b: 0.37486652, a: 1}
   tileMovement: {fileID: 0}
+  isBehindPlayer: 0
   money: 1
