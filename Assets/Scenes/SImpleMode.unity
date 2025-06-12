@@ -1043,13 +1043,14 @@ MonoBehaviour:
   Tile_Money: {fileID: 1730741789483637130, guid: acb139cde67efef49b7f3aa2e8602026, type: 3}
   TilesList: []
   PlayerPrefab: {fileID: 1266550042}
-  Width: 5
-  Height: 5
+  Width: 4
+  Height: 4
   distanceBetweenTiles: 1.5
   TimeToCreateBoard: 2
   OnPlayerMoved:
     m_PersistentCalls:
       m_Calls: []
+  vectorsInOrder: []
   UnderTilePrefab_Start: {fileID: 1127392097886386256, guid: 589936b875e9472448b7d83ed02c697c, type: 3}
   UnderTilePrefab_Straight: {fileID: 1127392097886386256, guid: f7b0d41314368824cbf8976663619730, type: 3}
   UnderTilePrefab_Curve: {fileID: 1127392097886386256, guid: 6ba42ef30bb394a4787acfa26abd2e5a, type: 3}
@@ -3754,12 +3755,12 @@ MonoBehaviour:
     isFilled: 0
     filledTileInfo: {fileID: 0}
   AcumulatedDamage: 0
-  Enemy_MaxHP: 100
-  Enemy_CurrentHP: 100
+  Enemy_MaxHP: 15
+  Enemy_CurrentHP: 15
   TMP_EnemyHp: {fileID: 2010041318}
   TMP_AcumulatedDamage: {fileID: 977100660}
   slider_EnemyHP: {fileID: 2110384526}
-  currentMoney: 20
+  currentMoney: 10
   TMP_CurrentMoney: {fileID: 1986439319}
 --- !u!4 &1715485039
 Transform:
@@ -3815,11 +3816,15 @@ MonoBehaviour:
   - {fileID: 1730741789483637130, guid: 3ba475549cea97544b5b5772ae684deb, type: 3}
   - {fileID: 4718749425601199319, guid: e7b3601049fb4b04b9e0f9048a0c7e38, type: 3}
   - {fileID: 4718749425601199319, guid: 9d8950ab96dcfc541a4658f19fd836d3, type: 3}
+  - {fileID: 4718749425601199319, guid: 641d85f88cfd0ac43bceaff5a25ab5a6, type: 3}
+  - {fileID: 4718749425601199319, guid: 4b000d4b1911daa449ced1ad43063863, type: 3}
+  - {fileID: 4718749425601199319, guid: bc90e0651c3728849a079bff0686b0f4, type: 3}
+  - {fileID: 4718749425601199319, guid: b3ff04347efb7c4468bcdeaaa5c14351, type: 3}
   shopItems:
   - {fileID: 1905117379}
   - {fileID: 650615072}
   - {fileID: 1077489522}
-  rerollPrice: 5
+  rerollPrice: 3
   button_Reroll: {fileID: 1862571179}
 --- !u!4 &1757594648
 Transform:

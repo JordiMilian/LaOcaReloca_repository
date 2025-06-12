@@ -6,4 +6,8 @@ public class Tile_Start : Tile_Base
     {
         return 0;
     }
+    public override string GetTooltipText()
+    {
+        return "START";
+    }
 }

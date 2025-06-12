@@ -10,4 +10,8 @@ public class Tile_LandForward : Tile_Base
         yield return GameController.AddAcumulatedDamage(-GameController.GetCurrentAcumulatedDamage());
         yield return BoardController.L_JumpPlayerTo(indexInBoard + 1, true);
     }
+    public override string GetTooltipText()
+    {
+        return "On Landed: remove all current damage and LAND on the tile forward";
+    }
 }

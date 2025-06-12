@@ -9,8 +9,8 @@ public class Tile_SkipStep : Tile_Base
         yield return base.OnPlayerStepped();
         GameController.remainingStepsToTake++;
     }
-    public override float GetCrossedDamageAmount()
+    public override string GetTooltipText()
     {
-        return 0;
+        return "On Crossed: Skip this step";
     }
 }

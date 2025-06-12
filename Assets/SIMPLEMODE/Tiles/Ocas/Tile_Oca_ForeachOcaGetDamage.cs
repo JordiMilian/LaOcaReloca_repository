@@ -15,4 +15,8 @@ public class Tile_Oca_ForeachOcaGetDamage : Tile_Oca
         GameController.AddAcumulatedDamage(damagePerOca * OcasCount);
         Debug.Log($"Found {OcasCount} ocas");
     }
+    public override string GetTooltipText()
+    {
+        return $"(Oca) On Landed: Add {damagePerOca} damage per Oca";
+    }
 }

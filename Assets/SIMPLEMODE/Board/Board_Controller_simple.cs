@@ -8,7 +8,9 @@ using UnityEngine.Events;
 public class Board_Controller_simple : MonoBehaviour
 {
     [SerializeField] GameObject Tile_Empty, Tile_Start, Tile_End, Tile_Oca, Tile_Money;
+
     public List<Tile_Base> TilesList = new();
+    public Dictionary<Vector2Int, Tile_Base> TilesByPosition = new();
     public int PlayerIndex { get; private set; }
 
     public static Board_Controller_simple Instance;
@@ -25,6 +27,8 @@ public class Board_Controller_simple : MonoBehaviour
     [SerializeField] float distanceBetweenTiles;
     [SerializeField] float TimeToCreateBoard;
     public UnityEvent<int, int> OnPlayerMoved; //(from, to)
+
+    [SerializeField] List<Vector2Int> vectorsInOrder = new(); //this is created to store the vectors when creating the undertiles and then passing the info into the tilesByPosition dictionary
 
     #region STARTING BOARD CREATION
     public IEnumerator StartBoard() //called from game controller
@@ -94,6 +98,7 @@ public class Board_Controller_simple : MonoBehaviour
         Quaternion tileRotation = Quaternion.identity;
         Quaternion halfRotation = Quaternion.AngleAxis(-90, Vector3.up);
         Vector3 nextTilePosition = transform.position;
+        Vector2Int CurrentVector = new Vector2Int(0, 0);
 
         for (int t = 0; t < iterationsNeeded + 1; t++)
         {
@@ -126,34 +131,37 @@ public class Board_Controller_simple : MonoBehaviour
             movingDirection = new Vector3Int(-movingDirection.z, 0, movingDirection.x);
             //movingDirection = MathJ.rotateVectorUnclockwise90Degrees(movingDirection);
             nextTilePosition += (Vector3)movingDirection * distanceBetweenTiles;
+            CurrentVector += new Vector2Int(movingDirection.x, movingDirection.z);
         }
         void  PlaceInDirection(int Count)
         {
             for (int r = 0; r < Count; r++)
             {
-                if(placedTilesCount == 0) 
+                if(placedTilesCount == 0) //START tile
                 { 
                     InstantiateUnderTile(UnderTileTypes.Start, nextTilePosition, tileRotation);
-                    nextTilePosition += (Vector3)movingDirection * distanceBetweenTiles; 
+                    nextTilePosition += (Vector3)movingDirection * distanceBetweenTiles;
+                    CurrentVector += new Vector2Int(movingDirection.x,movingDirection.z);
                     continue; 
                 }
-                if(placedTilesCount == totalTilesCount-1)
+                if(placedTilesCount == totalTilesCount-1) //END tile
                 {
                     tileRotation = halfRotation * tileRotation;
                     tileRotation = halfRotation * tileRotation;
                     InstantiateUnderTile(UnderTileTypes.Start, nextTilePosition, tileRotation);
                     return; }
 
-                // if its the last in the series, spawn curve, else spawn straight
-                if (r == Count - 1)
+
+                if (r == Count - 1) //last tile in the series
                 {
                     InstantiateUnderTile(UnderTileTypes.Curve,nextTilePosition,tileRotation);
                     
                 }
-                else
+                else //straight tile
                 {
                     InstantiateUnderTile(UnderTileTypes.Straight, nextTilePosition, tileRotation);
                     nextTilePosition += (Vector3)movingDirection * distanceBetweenTiles;
+                    CurrentVector += new Vector2Int(movingDirection.x, movingDirection.z);
                 }
             }
         }
@@ -177,6 +185,7 @@ public class Board_Controller_simple : MonoBehaviour
             newUndertile.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(undertile_StartColor, undertile_EndColor, (float)placedTilesCount / (float)totalTilesCount);
 
             underTilesList.Add(newUndertile);
+            vectorsInOrder.Add(CurrentVector);
         }
     }
     void PlaceTilesOverUnderTile()
@@ -186,7 +195,13 @@ public class Board_Controller_simple : MonoBehaviour
             Tile_Base thisTile = TilesList[i];
             TileMovement movement = thisTile.tileMovement;
             movement.SetOriginTransformWithTransform(underTilesList[i].transform);
+
+            movement.originTransform.rotation = Quaternion.identity; //reset rotation to 0 so it faces forward. maybe change at some point
+
             movement.PlaceTileInOrigin();
+
+            TilesByPosition.Add(vectorsInOrder[i], thisTile);
+            thisTile.vectorInBoard = vectorsInOrder[i];
         }
     }
     IEnumerator AnimateStartingTiles()

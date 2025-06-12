@@ -9,4 +9,8 @@ public class Tile_MultiplyDamage : Tile_Base
         yield return base.OnPlayerLanded();
         yield return GameController.AddAcumulatedDamage(GameController.GetCurrentAcumulatedDamage()); //multiply the current damage X2
     }
+    public override string GetTooltipText()
+    {
+        return "On Landed: multiply the current damage by 2";
+    }
 }

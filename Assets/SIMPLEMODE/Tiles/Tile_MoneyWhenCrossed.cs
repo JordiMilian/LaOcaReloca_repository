@@ -9,4 +9,8 @@ public class Tile_MoneyWhenCrossed : Tile_Base
         yield return base.OnPlayerStepped();
         GameController.AddMoney(money);
     }
+    public override string GetTooltipText()
+    {
+        return $"On Crossed: Gain {money} money";
+    }
 }

@@ -31,4 +31,8 @@ public class Tile_Oca_JumpToRandom : Tile_Oca
         }
         return ocaTiles;
     }
+    public override string GetTooltipText()
+    {
+        return  "(Oca) On Landed: Jump to another ramdom Oca";
+    }
 }

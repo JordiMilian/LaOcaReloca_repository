@@ -243,6 +243,14 @@ public class GameController_Simple : MonoBehaviour
 
         transformStats ghostStatsA = tileAtoB.tileMovement.originTransform;
 
+        Vector2Int vectorAtoB = tileAtoB.vectorInBoard;
+        Vector2Int vectorBtoA = tileBtoA.vectorInBoard;
+        tileAtoB.vectorInBoard = vectorBtoA;
+        tileBtoA.vectorInBoard = vectorAtoB;
+        BoardController.TilesByPosition[vectorAtoB] = tileBtoA;
+        BoardController.TilesByPosition[vectorBtoA] = tileAtoB;
+
+
         BoardController.TilesList[indexAtoB] = tileBtoA;
         BoardController.TilesList[indexBtoA] = tileAtoB;
         tileBtoA.indexInBoard = indexAtoB;
@@ -265,6 +273,8 @@ public class GameController_Simple : MonoBehaviour
         Tile_Base tileInHand = HandPositions[indexInHand].filledTileInfo;
         Tile_Base tileInBoard = BoardController.TilesList[indexInBoard];
 
+        Vector2Int vectorInBoard = tileInBoard.vectorInBoard;
+
         //Get position and rotation of the tile in Board
         transformStats inBoardTransformStats = tileInBoard.tileMovement.originTransform;
 
@@ -275,10 +285,14 @@ public class GameController_Simple : MonoBehaviour
 
         //Get the references right and remove the tile from hand
         BoardController.TilesList[indexInBoard] = tileInHand;
+        BoardController.TilesByPosition[vectorInBoard] = tileInHand;
         BoardController.TilesList[indexInBoard].indexInBoard = indexInBoard;
+        BoardController.TilesList[indexInBoard].vectorInBoard = vectorInBoard;
         BoardController.TilesList[indexInBoard].UpdateTileVisuals();
 
         RemoveTileInHand(indexInHand);
+
+        BoardController.TilesList[indexInBoard].transform.parent = BoardController.transform;
 
         //play animations
         TileMovement newTileMovement = tileInHand.GetComponent<TileMovement>();

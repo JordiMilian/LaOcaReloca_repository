@@ -10,4 +10,8 @@ public class Tile_End : Tile_Base
         yield return base.OnPlayerStepped();
         GameController_Simple.Instance.ChangeGameState(GameState.ReachedEnd);
     }
+    public override string GetTooltipText()
+    {
+        return "END";
+    }
 }

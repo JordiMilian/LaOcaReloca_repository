@@ -10,4 +10,8 @@ public class Tile_simpleMoney : Tile_Base
         yield return base.OnPlayerLanded();
         GameController.AddMoney(moneyAmount);
     }
+    public override string GetTooltipText()
+    {
+        return $"On Landed: Add {moneyAmount} money";
+    }
 }

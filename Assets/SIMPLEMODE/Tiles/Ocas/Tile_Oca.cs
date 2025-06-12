@@ -25,13 +25,9 @@ public class Tile_Oca : Tile_Base
         }
     }
     public IEnumerator basePlayerLanded() { yield return base.OnPlayerLanded(); }
-    public override float GetCrossedDamageAmount()
-    {
-        return 0;
-    }
     public override string GetTooltipText()
     {
-        return "ON LANDED: jump to the next nearest Oca";
+        return "(Oca) On Landed: jump to the next nearest Oca";
     }
     public override string GetTitleText()
     {

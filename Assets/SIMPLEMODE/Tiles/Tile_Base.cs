@@ -20,14 +20,21 @@ public enum Rarity
 {
     none, Common, Rare, Legendary, Unique
 }
+public enum TileTags
+{
+    EmptyTile, Oca
+}
 public class Tile_Base : MonoBehaviour
 {
+    public TileTags[] tileTags;
     [SerializeField] SecundarySkills secundarySkill;
     [HideInInspector] public TileState tileState = TileState.none;
-    [SerializeField] float addedDamageOnCrossed = 1;
+    [SerializeField] float defaultCrossedDamage = 1;
     public Rarity rarity = Rarity.none;
     [HideInInspector] public int indexInBoard;
     [HideInInspector] public int IndexInHand;
+     public Vector2Int vectorInBoard;
+    [HideInInspector] public Vector2 positionInBoardAxis;
 
     [Header("Color testing")]
     public Color tileColor;
@@ -63,7 +70,15 @@ public class Tile_Base : MonoBehaviour
         tileTestSprite.color = tileColor;
         TMP_IndexDisplay.text = GetCrossedDamageAmount().ToString();
     }
-
+    public float GetDefaultCrossedDamage()
+    {
+        return defaultCrossedDamage;
+    }
+    public void SetDefaultCrossingDamage(float newDamage)
+    {
+        defaultCrossedDamage = newDamage;
+        TMP_IndexDisplay.text = GetCrossedDamageAmount().ToString();
+    }
     public void SetTileState(TileState newState)
     {
         if(newState == tileState) { return; }
@@ -113,7 +128,7 @@ public class Tile_Base : MonoBehaviour
         transform.localScale = Vector3.zero;
         transform.DOScale(Vector3.one, duration).SetEase(Ease.OutBounce);
     }
-    void shakeTile(Intensity intensity)
+    public void shakeTile(Intensity intensity)
     {
         switch (intensity)
         {
@@ -133,6 +148,7 @@ public class Tile_Base : MonoBehaviour
     #region MAIN VIRTUAL LOGIC METHODS
     public virtual IEnumerator OnPlayerStepped()
     {
+        UpdateTileVisuals();
         yield return GameController.AddAcumulatedDamage(GetCrossedDamageAmount());
         switch (secundarySkill)
         {
@@ -162,11 +178,11 @@ public class Tile_Base : MonoBehaviour
     }
     public virtual float GetCrossedDamageAmount()
     {
-        return addedDamageOnCrossed;
+        return defaultCrossedDamage;
     }
     public virtual string GetTooltipText()
     {
-        return $"No tooltip text implemented for {gameObject.name}";
+        return $"EMPTY TILE";
     }
     public virtual string GetTitleText()
     {
