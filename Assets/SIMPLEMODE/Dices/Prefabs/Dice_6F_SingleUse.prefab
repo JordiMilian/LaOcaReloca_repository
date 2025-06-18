@@ -78,5 +78,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 829be2ed421773248952b97a0d411930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceFaces:
+  - faceValue: 0
+    faceTransform: {fileID: 0}
+  - faceValue: 0
+    faceTransform: {fileID: 0}
   isSelectedForRoll: 1
-  faces: 010000000200000003000000040000000500000006000000
+  faceUpValue: 0

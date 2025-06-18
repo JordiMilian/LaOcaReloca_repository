@@ -181,7 +181,7 @@ public class Board_Controller_simple : MonoBehaviour
                     prefabToSpawn = UnderTilePrefab_Curve;
                     break;
             }
-            GameObject newUndertile = Instantiate(prefabToSpawn, position, rotation);
+            GameObject newUndertile = Instantiate(prefabToSpawn, position, rotation,transform);
             newUndertile.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(undertile_StartColor, undertile_EndColor, (float)placedTilesCount / (float)totalTilesCount);
 
             underTilesList.Add(newUndertile);

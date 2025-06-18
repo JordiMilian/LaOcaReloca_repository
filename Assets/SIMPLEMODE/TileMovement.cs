@@ -54,6 +54,7 @@ public class TileMovement : MonoBehaviour
     #region MOUSE INPUTS
     private void OnMouseDown()
     {
+        Debug.Log("WTF");
         if (!canBeMoved) { return; }
         if (tileBase == null) { tileBase = GetComponent<Tile_Base>();}
         if (tileBase.isBehindPlayer) { return; }

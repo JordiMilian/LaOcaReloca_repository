@@ -77,13 +77,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5269f8cd518d04993dff5d24eca075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileTags: 
   secundarySkill: 0
   tileState: 0
-  addedDamageOnCrossed: 10
+  defaultCrossedDamage: 1
   rarity: 2
   indexInBoard: 0
   IndexInHand: 0
+  vectorInBoard: {x: 0, y: 0}
+  positionInBoardAxis: {x: 0, y: 0}
   tileColor: {r: 0.38146168, g: 0.645283, b: 0.35916692, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0
-  DicePrefab: {fileID: 3033933879432237550, guid: 179a9e1c98ee93744b91ed1e468323bc, type: 3}
+  DicePrefab: {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}

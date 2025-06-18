@@ -115,6 +115,7 @@ public class GameController_Simple : MonoBehaviour
                 //called when not killing the dude before X turns
                 //SHow game over screen
                 //restart game
+                ChangeGameState(GameState.StartBoard);
                 break;
         }
         currentGameState = newState;
@@ -143,8 +144,11 @@ public class GameController_Simple : MonoBehaviour
     public int remainingStepsToTake;
     IEnumerator OnMovingPlayer_Coroutine()
     {
+        currentAvailableRolls--;
         RollDiceButton.interactable = false;
-        remainingStepsToTake = dicesController.RollDices();
+        yield return dicesController.RollDicesCoroutine();
+        remainingStepsToTake = dicesController.LastRolledValue;
+
         TMP_rolledDiceAmount.text = remainingStepsToTake.ToString();
 
         while(remainingStepsToTake > 0)
@@ -162,7 +166,9 @@ public class GameController_Simple : MonoBehaviour
 
         yield return DealAcumulatedDamage();
 
-        ChangeGameState(GameState.FreeMode);
+        if(currentAvailableRolls <= 0) { ChangeGameState(GameState.PlayerDied); }
+        else { ChangeGameState(GameState.FreeMode); }
+            
     }
     public void Button_RollDicesTestButton()
     {
@@ -187,6 +193,7 @@ public class GameController_Simple : MonoBehaviour
         Enemy_MaxHP *= 1.2f;
         Enemy_CurrentHP = Enemy_MaxHP;
         UpdateEnemyHpUI();
+        currentAvailableRolls += AddedRollsOnKilledEnemy;
         ChangeGameState(GameState.FreeMode);
     }
     #endregion
@@ -412,6 +419,11 @@ public class GameController_Simple : MonoBehaviour
         TMP_CurrentMoney.text = currentMoney.ToString();
     }
     #endregion
+    #region ROLLS AVAILABLE
+    public int currentAvailableRolls = 5;
+    [SerializeField] int AddedRollsOnKilledEnemy = 3;
 
-   
+    #endregion
+
+
 }
