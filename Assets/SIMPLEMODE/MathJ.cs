@@ -16,4 +16,35 @@ public static class MathJ
         if (amount == 0) { return 0; }
         return (int)Mathf.Sign(amount);
     }
+
+    public static string FloatToString(float value, int maxDecimals)
+    {
+        string result = value.ToString("F" + maxDecimals);
+
+        if(maxDecimals == 0) { return result; }
+
+        //remove innecessary zeros behind
+        for (int i = result.Length - 1; i >= 0; i--)
+        {
+            char c = result[i];
+            if (c == ',' || c== '.') 
+            {
+                if (i == result.Length - 1)
+                {
+                   result = result.Remove(i);
+                }
+                return result;
+            }
+            //As long as we keep finding 0, remove them, if not zero, stop
+            if(c == '0')
+            {
+                result = result.Remove(i);
+            }
+            else
+            {
+                return result;
+            }
+        }
+        return result;
+    }
 }

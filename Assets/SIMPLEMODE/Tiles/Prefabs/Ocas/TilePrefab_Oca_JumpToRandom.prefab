@@ -90,10 +90,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44789d45fef95a54dbd090c087260828, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TitleText: OCA
+  tileTags: 
   secundarySkill: 0
   tileState: 0
+  defaultCrossedDamage: 1
   rarity: 2
   indexInBoard: 0
   IndexInHand: 0
+  vectorInBoard: {x: 0, y: 0}
+  positionInBoardAxis: {x: 0, y: 0}
   tileColor: {r: 0.735849, g: 0.015272322, b: 0.33430833, a: 1}
   tileMovement: {fileID: 0}
+  isBehindPlayer: 0

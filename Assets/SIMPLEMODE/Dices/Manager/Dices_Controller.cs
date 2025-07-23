@@ -81,6 +81,5 @@ public class Dices_Controller : MonoBehaviour
             }
         }
         LastRolledValue = addedValue;
-
     }
 }

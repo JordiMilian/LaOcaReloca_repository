@@ -54,7 +54,6 @@ public class TileMovement : MonoBehaviour
     #region MOUSE INPUTS
     private void OnMouseDown()
     {
-        Debug.Log("WTF");
         if (!canBeMoved) { return; }
         if (tileBase == null) { tileBase = GetComponent<Tile_Base>();}
         if (tileBase.isBehindPlayer) { return; }
@@ -100,7 +99,8 @@ public class TileMovement : MonoBehaviour
     }
     [Header("Tooltip")]
     [SerializeField] GameObject TooltipRootGO;
-    [SerializeField] TextMeshPro TMP_tooltip;
+    [SerializeField] TextMeshProUGUI TMP_description;
+    [SerializeField] TextMeshProUGUI TMP_title;
     private void OnMouseEnter() { ShowTooltip(); }
     private void OnMouseExit() { HideTooltip(); }
 
@@ -110,10 +110,31 @@ public class TileMovement : MonoBehaviour
     }
     void ShowTooltip()
     {
-        TMP_tooltip.text = tileBase.GetTooltipText();
+        TMP_description.text = tileBase.GetTooltipText();
+        TMP_title.text = tileBase.TitleText;
         TooltipRootGO.SetActive(true);
     }
     #endregion
+    [SerializeField] float verticalShakeForce = 0.02f;
+    float shakeDuration = 1;
+    float lastShakeTime = 0;
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+        if(collision.gameObject.TryGetComponent(out Dice dice))
+        {
+            if(collision.contacts[0].impulse.y > 4f && lastShakeTime + shakeDuration < Time.time)
+            {
+                lastShakeTime = Time.time;
+               transform.DOShakePosition(
+               1,
+               Vector3.up * verticalShakeForce,
+               5
+               );
+            }
+           
+        }
+    }
 
 
 }

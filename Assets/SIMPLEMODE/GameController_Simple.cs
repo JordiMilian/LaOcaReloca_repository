@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System;
+using UnityEngine.Playables;
 public enum GameState
 {
     Empty, StartBoard, MovingPlayer, FreeMode, ReachedEnd, KilledEnemy, PlayerDied
@@ -142,6 +143,11 @@ public class GameController_Simple : MonoBehaviour
     //This mode is entered when the dices are rolled
     //during this whole coroutine, if we change state the movement coroutine is canceled, so dont worry about switching into FreeMode after all
     public int remainingStepsToTake;
+    [Header("stepping audio")]
+    [SerializeField] AudioSource StepSound;
+    [SerializeField] float addPitchPerStep;
+    [Space]
+    public List<Func<IEnumerator>> OnRolledDice_Event = new();
     IEnumerator OnMovingPlayer_Coroutine()
     {
         currentAvailableRolls--;
@@ -151,8 +157,18 @@ public class GameController_Simple : MonoBehaviour
 
         TMP_rolledDiceAmount.text = remainingStepsToTake.ToString();
 
-        while(remainingStepsToTake > 0)
+        //Call RolledDiceEvent
+        foreach (Func<IEnumerator> coro in OnRolledDice_Event)
         {
+            yield return coro();
+        }
+
+        float basePitch = StepSound.pitch;
+
+        while (remainingStepsToTake > 0)
+        {
+            StepSound.pitch += addPitchPerStep;
+            StepSound.Play();
             yield return BoardController.L_StepPlayer(true);
             remainingStepsToTake--;
         }
@@ -161,6 +177,7 @@ public class GameController_Simple : MonoBehaviour
             yield return BoardController.L_StepPlayer(false);
             remainingStepsToTake++;
         }
+        StepSound.pitch = basePitch;
 
         yield return BoardController.L_LandPlayerInCurrentPos();
 
@@ -186,9 +203,14 @@ public class GameController_Simple : MonoBehaviour
     }
     #endregion
     #region KILLED ENEMY
+    [SerializeField] PlayableDirector Timeline_KilledEnemy;
     IEnumerator KilledEnemy_Coroutine()
     {
-        AddMoney(10);
+        Timeline_KilledEnemy.Play();
+        float timelineDuration = (float)Timeline_KilledEnemy.duration;
+        yield return new WaitForSeconds(timelineDuration);
+
+        AddMoney(6);
         yield return BoardController.L_JumpPlayerTo(0, false);
         Enemy_MaxHP *= 1.2f;
         Enemy_CurrentHP = Enemy_MaxHP;
@@ -287,7 +309,8 @@ public class GameController_Simple : MonoBehaviour
 
         //Create new Tile in the proper position and destroy the last
         GameObject newTileGO = tileInHand.gameObject;
-        
+
+        tileInBoard.OnRemovedFromBoard();
         Destroy(tileInBoard.gameObject);
 
         //Get the references right and remove the tile from hand
@@ -306,6 +329,8 @@ public class GameController_Simple : MonoBehaviour
         newTileMovement.SetOriginTransformWithStats(inBoardTransformStats);
         newTileMovement.MoveTileToOrigin(); 
         tileInHand.SetTileState(TileState.InBoard);
+
+        tileInHand.OnPlacedInBoard();
     }
     public HandHolder[] HandPositions;
     [Serializable]
@@ -359,9 +384,8 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] float AcumulatedDamage;
     [SerializeField] float Enemy_MaxHP;
     [SerializeField] float Enemy_CurrentHP;
-    [SerializeField] TextMeshProUGUI TMP_EnemyHp;
     [SerializeField] TextMeshProUGUI TMP_AcumulatedDamage;
-    [SerializeField] Slider slider_EnemyHP;
+    [SerializeField] Healthbar healthbar;
     public IEnumerator AddAcumulatedDamage(float amount)
     {
         if (Mathf.Approximately(amount, 0)) { yield break; }
@@ -383,14 +407,13 @@ public class GameController_Simple : MonoBehaviour
             ChangeGameState(GameState.KilledEnemy);
             yield break;
         }
+        else if(Enemy_CurrentHP > Enemy_MaxHP) { Enemy_CurrentHP = Enemy_MaxHP; }
         UpdateEnemyHpUI();
     }
     void UpdateEnemyHpUI()
     {
-        slider_EnemyHP.maxValue = Enemy_MaxHP;
-        slider_EnemyHP.value = Enemy_CurrentHP;
-        TMP_EnemyHp.text = $"{Enemy_CurrentHP.ToString("F1")}/{Enemy_MaxHP.ToString("F1")}";
-        TMP_AcumulatedDamage.text = $"{AcumulatedDamage}";
+        healthbar.UpdateHealthbar(Enemy_CurrentHP, Enemy_MaxHP);
+        TMP_AcumulatedDamage.text = MathJ.FloatToString(AcumulatedDamage, 1);
     }
     #endregion
     #region MONEY

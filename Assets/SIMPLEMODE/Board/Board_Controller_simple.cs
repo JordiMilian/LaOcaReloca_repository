@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class Board_Controller_simple : MonoBehaviour
 {
-    [SerializeField] GameObject Tile_Empty, Tile_Start, Tile_End, Tile_Oca, Tile_Money;
+    [SerializeField] GameObject Tile_Empty, Tile_Start, Tile_End, Tile_Oca;
 
     public List<Tile_Base> TilesList = new();
     public Dictionary<Vector2Int, Tile_Base> TilesByPosition = new();
@@ -29,6 +29,7 @@ public class Board_Controller_simple : MonoBehaviour
     public UnityEvent<int, int> OnPlayerMoved; //(from, to)
 
     [SerializeField] List<Vector2Int> vectorsInOrder = new(); //this is created to store the vectors when creating the undertiles and then passing the info into the tilesByPosition dictionary
+    [SerializeField] Vector3 tilePosOffset;
 
     #region STARTING BOARD CREATION
     public IEnumerator StartBoard() //called from game controller
@@ -194,9 +195,12 @@ public class Board_Controller_simple : MonoBehaviour
         {
             Tile_Base thisTile = TilesList[i];
             TileMovement movement = thisTile.tileMovement;
-            movement.SetOriginTransformWithTransform(underTilesList[i].transform);
-
-            movement.originTransform.rotation = Quaternion.identity; //reset rotation to 0 so it faces forward. maybe change at some point
+            movement.SetOriginTransformWithStats(new transformStats
+            {
+                position = underTilesList[i].transform.position + tilePosOffset,
+                rotation = Quaternion.identity,
+                scale = underTilesList[i].transform.localScale
+            });
 
             movement.PlaceTileInOrigin();
 

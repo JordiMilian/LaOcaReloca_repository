@@ -8,10 +8,6 @@ public enum Intensity
 {
     empty, low, mid, large
 }
-public enum SecundarySkills
-{
-    empty, extraMoney, extraDamage
-}
 public enum TileState
 {
     none, InShop, InHand, InBoard
@@ -26,8 +22,8 @@ public enum TileTags
 }
 public class Tile_Base : MonoBehaviour
 {
+    public string TitleText = "NO NAME";
     public TileTags[] tileTags;
-    [SerializeField] SecundarySkills secundarySkill;
     [HideInInspector] public TileState tileState = TileState.none;
     [SerializeField] float defaultCrossedDamage = 1;
     public Rarity rarity = Rarity.none;
@@ -68,7 +64,7 @@ public class Tile_Base : MonoBehaviour
     public void UpdateTileVisuals()
     {
         tileTestSprite.color = tileColor;
-        TMP_IndexDisplay.text = GetCrossedDamageAmount().ToString();
+        TMP_IndexDisplay.text = MathJ.FloatToString(GetCrossedDamageAmount(),1);
     }
     public float GetDefaultCrossedDamage()
     {
@@ -77,7 +73,7 @@ public class Tile_Base : MonoBehaviour
     public void SetDefaultCrossingDamage(float newDamage)
     {
         defaultCrossedDamage = newDamage;
-        TMP_IndexDisplay.text = GetCrossedDamageAmount().ToString();
+        TMP_IndexDisplay.text = MathJ.FloatToString(GetCrossedDamageAmount(), 1);
     }
     public void SetTileState(TileState newState)
     {
@@ -150,20 +146,6 @@ public class Tile_Base : MonoBehaviour
     {
         UpdateTileVisuals();
         yield return GameController.AddAcumulatedDamage(GetCrossedDamageAmount());
-        switch (secundarySkill)
-        {
-            case SecundarySkills.extraDamage:
-                shakeTile(Intensity.low);
-                yield return GameController_Simple.Instance.AddAcumulatedDamage(20);
-                break;
-            case SecundarySkills.extraMoney:
-                shakeTile(Intensity.low);
-                 GameController_Simple.Instance.AddMoney(5);
-                break;
-            case SecundarySkills.empty:
-                break;
-        }
-        yield break;
 
         //INHERITEDS
         //gamelogic
@@ -176,6 +158,9 @@ public class Tile_Base : MonoBehaviour
         shakeTile(Intensity.mid);
         yield break;
     }
+    public virtual void OnPlacedInBoard() { }
+    public virtual void OnRemovedFromBoard() { }
+
     public virtual float GetCrossedDamageAmount()
     {
         return defaultCrossedDamage;
@@ -183,10 +168,6 @@ public class Tile_Base : MonoBehaviour
     public virtual string GetTooltipText()
     {
         return $"EMPTY TILE";
-    }
-    public virtual string GetTitleText()
-    {
-        return "Base tile";
     }
     #endregion
     #region BUY/SELL

@@ -29,8 +29,4 @@ public class Tile_Oca : Tile_Base
     {
         return "(Oca) On Landed: jump to the next nearest Oca";
     }
-    public override string GetTitleText()
-    {
-        return "OCA";
-    }
 }

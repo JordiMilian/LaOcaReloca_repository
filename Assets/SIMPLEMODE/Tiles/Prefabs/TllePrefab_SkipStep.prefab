@@ -80,10 +80,12 @@ MonoBehaviour:
   tileTags: 
   secundarySkill: 0
   tileState: 0
-  defaultCrossedDamage: 1
+  defaultCrossedDamage: 3
   rarity: 3
   indexInBoard: 0
   IndexInHand: 0
+  vectorInBoard: {x: 0, y: 0}
+  positionInBoardAxis: {x: 0, y: 0}
   tileColor: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0

@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
       propertyPath: m_Name
-      value: TilePrefab_Oca_MoneyPerOca
+      value: TilePrefab_Oca_DamagePerOca
       objectReference: {fileID: 0}
     - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
       propertyPath: m_LocalPosition.x
@@ -90,11 +90,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd0d13f258a9a941b6187d99767e6f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TitleText: OCA
+  tileTags: 
   secundarySkill: 0
   tileState: 0
+  defaultCrossedDamage: 1
   rarity: 2
   indexInBoard: 0
   IndexInHand: 0
+  vectorInBoard: {x: 0, y: 0}
+  positionInBoardAxis: {x: 0, y: 0}
   tileColor: {r: 0.8989335, g: 0.3726415, b: 1, a: 1}
   tileMovement: {fileID: 0}
-  moneyPerOca: 1
+  isBehindPlayer: 0
+  damagePerOca: 1

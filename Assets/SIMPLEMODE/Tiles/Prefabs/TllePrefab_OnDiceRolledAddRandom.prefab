@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8806826499406372248
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_Name
+      value: TllePrefab_OnDiceRolledAddRandom
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 126541473513353879}
+  m_SourcePrefab: {fileID: 100100000, guid: 13f06a96ebf842547919b71594469744, type: 3}
+--- !u!1 &4718749425601199319 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
+  m_PrefabInstance: {fileID: 8806826499406372248}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &126541473513353879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4718749425601199319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e298d8ae265ee4bab7a690cfe19b70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TitleText: NO NAME
+  tileTags: 
+  tileState: 0
+  defaultCrossedDamage: 4
+  rarity: 2
+  indexInBoard: 0
+  IndexInHand: 0
+  vectorInBoard: {x: 0, y: 0}
+  positionInBoardAxis: {x: 0, y: 0}
+  tileColor: {r: 0.3972499, g: 0.745283, b: 0.54414076, a: 1}
+  tileMovement: {fileID: 0}
+  isBehindPlayer: 0
