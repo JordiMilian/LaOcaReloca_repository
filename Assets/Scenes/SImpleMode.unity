@@ -6755,6 +6755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 026b4d7600e7add4db4c3ecf59f9721f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentGameState: 0
   BoardController: {fileID: 466753541}
   TMP_rolledDiceAmount: {fileID: 2078382948}
   RollDiceButton: {fileID: 295868723}
@@ -6766,6 +6767,7 @@ MonoBehaviour:
   remainingStepsToTake: 0
   StepSound: {fileID: 798376506}
   addPitchPerStep: 0.05
+  MoneyToRoll: 1
   Timeline_KilledEnemy: {fileID: 1325522183}
   HandPositions:
   - TilePositionTf: {fileID: 318254324}
@@ -6781,8 +6783,8 @@ MonoBehaviour:
     isFilled: 0
     filledTileInfo: {fileID: 0}
   AcumulatedDamage: 0
-  Enemy_MaxHP: 15
-  Enemy_CurrentHP: 15
+  Enemy_MaxHP: 100
+  Enemy_CurrentHP: 50
   TMP_AcumulatedDamage: {fileID: 977100660}
   healthbar: {fileID: 890606827}
   currentMoney: 10
@@ -6997,7 +6999,7 @@ MonoBehaviour:
   - {fileID: 1905117379}
   - {fileID: 650615072}
   - {fileID: 1077489522}
-  rerollPrice: 3
+  rerollPrice: 1
   button_Reroll: {fileID: 1862571179}
 --- !u!4 &1757594648
 Transform:

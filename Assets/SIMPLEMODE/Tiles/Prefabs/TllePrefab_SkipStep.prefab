@@ -77,10 +77,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70831e06992c5c44bbbf70f5d632c325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TitleText: NO NAME
   tileTags: 
-  secundarySkill: 0
   tileState: 0
-  defaultCrossedDamage: 3
+  defaultCrossedDamage: 10
   rarity: 3
   indexInBoard: 0
   IndexInHand: 0

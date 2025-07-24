@@ -9,7 +9,6 @@ public class Healthbar : MonoBehaviour
     [SerializeField] TextMeshProUGUI TMP_HP;
     public void UpdateHealthbar(float value, float maxValue)
     {
-
         DOTween.To(
             () => healthbarImage.fillAmount,
             x => { healthbarImage.fillAmount = x; },

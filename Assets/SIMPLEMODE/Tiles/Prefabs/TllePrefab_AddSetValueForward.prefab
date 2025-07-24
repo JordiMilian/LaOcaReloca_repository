@@ -91,7 +91,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleText: NO NAME
   tileTags: 
-  secundarySkill: 0
   tileState: 0
   defaultCrossedDamage: 5
   rarity: 1
@@ -102,4 +101,4 @@ MonoBehaviour:
   tileColor: {r: 0.4269758, g: 0.8011664, b: 0.9528302, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0
-  Amount: 2
+  Amount: 5

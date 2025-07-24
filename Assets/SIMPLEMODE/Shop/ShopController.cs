@@ -39,7 +39,7 @@ public class ShopController : MonoBehaviour
 
         if(gameController.CanPurchase(rerollPrice))
         {
-            gameController.Purchase(rerollPrice);
+            gameController.RemoveMoney(rerollPrice);
             foreach (ShopItem_Controller item in shopItems)
             {
                 item.ResetShopItem();

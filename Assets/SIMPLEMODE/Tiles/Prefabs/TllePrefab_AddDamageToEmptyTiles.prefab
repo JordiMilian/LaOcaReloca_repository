@@ -77,8 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d890b512efada2c4db20567c4bad2c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TitleText: NO NAME
   tileTags: 
-  secundarySkill: 0
   tileState: 0
   defaultCrossedDamage: 1
   rarity: 2
@@ -89,4 +89,4 @@ MonoBehaviour:
   tileColor: {r: 0.46226418, g: 0.46226418, b: 0.62352943, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0
-  addedDamageToEmptyTiles: 2
+  addedDamageToEmptyTiles: 5

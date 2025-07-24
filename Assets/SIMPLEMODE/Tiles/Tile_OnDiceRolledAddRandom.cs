@@ -6,12 +6,12 @@ public class Tile_OnDiceRolledAddRandom : Tile_Base
     public override void OnPlacedInBoard()
     {
         base.OnPlacedInBoard();
-        GameController.OnRolledDice_Event.Add(AddRolledValueToRandomTile);
+        GameController.OnRolledDice_CardEffects.AddEffect(AddRolledValueToRandomTile);
     }
     public override void OnRemovedFromBoard()
     {
         base.OnRemovedFromBoard();
-        GameController.OnRolledDice_Event.Remove(AddRolledValueToRandomTile);
+        GameController.OnRolledDice_CardEffects.RemoveEffect(AddRolledValueToRandomTile);
     }
     IEnumerator AddRolledValueToRandomTile()
     {

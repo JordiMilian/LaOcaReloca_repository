@@ -90,10 +90,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4ac12450af6a7a41bb3029d02097e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TitleText: NO NAME
   tileTags: 
-  secundarySkill: 0
   tileState: 0
-  defaultCrossedDamage: 1
+  defaultCrossedDamage: 0
   rarity: 2
   indexInBoard: 0
   IndexInHand: 0

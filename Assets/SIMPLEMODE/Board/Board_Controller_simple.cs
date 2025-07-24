@@ -260,6 +260,11 @@ public class Board_Controller_simple : MonoBehaviour
         if (triggerLanded) yield return L_LandPlayerInCurrentPos();
         
     }
+    public IEnumerator JumpPlayerToStartTile()
+    {
+        yield return L_JumpPlayerTo(0, true);
+        yield return GameController_Simple.Instance.OnReachedStartTile_CardEffects.ActivateEffects();
+    }
     #endregion
     #region PLAYER VISUALS
     IEnumerator V_StepPlayerToNewPos()//step the player to new pos

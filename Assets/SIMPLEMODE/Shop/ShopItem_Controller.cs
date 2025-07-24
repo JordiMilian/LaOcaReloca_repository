@@ -24,7 +24,7 @@ public class ShopItem_Controller : MonoBehaviour
         
         
 
-        gameController.Purchase(Item.GetBuyingPrice());
+        gameController.RemoveMoney(Item.GetBuyingPrice());
         gameController.AddTileToHand(TileGO);
 
         Item = null;

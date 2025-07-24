@@ -6,13 +6,14 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System;
 using UnityEngine.Playables;
+using DG.Tweening;
 public enum GameState
 {
     Empty, StartBoard, MovingPlayer, FreeMode, ReachedEnd, KilledEnemy, PlayerDied
 }
 public class GameController_Simple : MonoBehaviour
 {
-    public GameState currentGameState { get; private set; }
+    public GameState currentGameState;
     [SerializeField] Board_Controller_simple BoardController;
     Camera mainCamera;
 
@@ -26,6 +27,11 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] float distanceBetweenHandTiles = 1;
 
     [SerializeField] GameObject EmptyTile;
+
+    //COROUTINE EVENTS
+    public CardEffectsDelegate OnRolledDice_CardEffects = new();
+    public CardEffectsDelegate OnKilledEnemy_CardEffects = new();
+    public CardEffectsDelegate OnReachedStartTile_CardEffects = new();
 
     public static GameController_Simple Instance;
     private void Awake()
@@ -41,12 +47,7 @@ public class GameController_Simple : MonoBehaviour
     }
     private void Update()
     {
-        if (Keyboard.current[Key.Space].wasPressedThisFrame)
-        {
-            if (RollDiceButton.interactable) { Button_RollDicesTestButton(); }
-        }
-        GetIntersectingTilesToMouse();
-        
+        GetIntersectingTilesToMouse();   
     }
     #region INTERSECTING TILES WITH MOUSE
     [SerializeField] List<Tile_Base> intersecticTiles;
@@ -65,7 +66,6 @@ public class GameController_Simple : MonoBehaviour
         }
     }
         #endregion
-
     #region GAME FLOW
 
     public void ChangeGameState(GameState newState)
@@ -116,7 +116,8 @@ public class GameController_Simple : MonoBehaviour
                 //called when not killing the dude before X turns
                 //SHow game over screen
                 //restart game
-                ChangeGameState(GameState.StartBoard);
+                Debug.Log("PlayerDied");
+                RollDiceButton.interactable = false;
                 break;
         }
         currentGameState = newState;
@@ -146,22 +147,18 @@ public class GameController_Simple : MonoBehaviour
     [Header("stepping audio")]
     [SerializeField] AudioSource StepSound;
     [SerializeField] float addPitchPerStep;
-    [Space]
-    public List<Func<IEnumerator>> OnRolledDice_Event = new();
+    [Header("Money to Roll")]
+    [SerializeField] int MoneyToRoll = 1;
     IEnumerator OnMovingPlayer_Coroutine()
     {
-        currentAvailableRolls--;
+        RemoveMoney(MoneyToRoll);
         RollDiceButton.interactable = false;
         yield return dicesController.RollDicesCoroutine();
         remainingStepsToTake = dicesController.LastRolledValue;
 
         TMP_rolledDiceAmount.text = remainingStepsToTake.ToString();
 
-        //Call RolledDiceEvent
-        foreach (Func<IEnumerator> coro in OnRolledDice_Event)
-        {
-            yield return coro();
-        }
+        yield return OnRolledDice_CardEffects.ActivateEffects();
 
         float basePitch = StepSound.pitch;
 
@@ -183,8 +180,7 @@ public class GameController_Simple : MonoBehaviour
 
         yield return DealAcumulatedDamage();
 
-        if(currentAvailableRolls <= 0) { ChangeGameState(GameState.PlayerDied); }
-        else { ChangeGameState(GameState.FreeMode); }
+        ChangeGameState(GameState.FreeMode); 
             
     }
     public void Button_RollDicesTestButton()
@@ -197,7 +193,7 @@ public class GameController_Simple : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f); 
         yield return DealAcumulatedDamage();
-        yield return StartCoroutine(BoardController.L_JumpPlayerTo(0, false));
+        yield return BoardController.JumpPlayerToStartTile();
 
         ChangeGameState(GameState.FreeMode);
     }
@@ -210,17 +206,19 @@ public class GameController_Simple : MonoBehaviour
         float timelineDuration = (float)Timeline_KilledEnemy.duration;
         yield return new WaitForSeconds(timelineDuration);
 
-        AddMoney(6);
-        yield return BoardController.L_JumpPlayerTo(0, false);
+        AddMoney(10);
         Enemy_MaxHP *= 1.2f;
         Enemy_CurrentHP = Enemy_MaxHP;
         UpdateEnemyHpUI();
-        currentAvailableRolls += AddedRollsOnKilledEnemy;
+
+        yield return BoardController.JumpPlayerToStartTile();
+
+        yield return OnKilledEnemy_CardEffects.ActivateEffects();
+
         ChangeGameState(GameState.FreeMode);
     }
     #endregion
     #endregion
-
     #region PLACE AND MOVE TILES
     Tile_Base SelectedTile;
 
@@ -392,15 +390,30 @@ public class GameController_Simple : MonoBehaviour
 
         AcumulatedDamage += amount;
         UpdateEnemyHpUI();
-        yield break;
+
+        float shakeDuration = .15f;
+        TMP_AcumulatedDamage.rectTransform.DOShakeRotation(shakeDuration, 30);
+        yield return new WaitForSeconds(shakeDuration);
     }
     public float GetCurrentAcumulatedDamage() { return AcumulatedDamage; }
     IEnumerator DealAcumulatedDamage()
     {
-        yield return new WaitForSeconds(0.1f);
         Enemy_CurrentHP -= AcumulatedDamage;
+        Enemy_CurrentHP = Mathf.Clamp(Enemy_CurrentHP, 0, Enemy_MaxHP);
         AcumulatedDamage = 0;
-        if (Enemy_CurrentHP <= 0)
+
+        UpdateEnemyHpUI();
+
+        float shakeDuration = .4f;
+        Sequence shakeSequence = DOTween.Sequence();
+
+        shakeSequence.Append(TMP_AcumulatedDamage.rectTransform.DOShakeRotation(shakeDuration, 30));
+        shakeSequence.Join(TMP_AcumulatedDamage.rectTransform.DOScale(1.3f, shakeDuration / 2));
+        shakeSequence.Append(TMP_AcumulatedDamage.rectTransform.DOScale(1f, shakeDuration / 2));
+
+        yield return new WaitForSeconds(shakeDuration);
+
+        if (Enemy_CurrentHP == 0)
         {
             Enemy_CurrentHP = 0;
             UpdateEnemyHpUI();
@@ -408,7 +421,7 @@ public class GameController_Simple : MonoBehaviour
             yield break;
         }
         else if(Enemy_CurrentHP > Enemy_MaxHP) { Enemy_CurrentHP = Enemy_MaxHP; }
-        UpdateEnemyHpUI();
+        
     }
     void UpdateEnemyHpUI()
     {
@@ -419,24 +432,19 @@ public class GameController_Simple : MonoBehaviour
     #region MONEY
     [Header("Money")]
     [SerializeField] int currentMoney;
+
     [SerializeField] TextMeshProUGUI TMP_CurrentMoney;
-    public void AddMoney(int money)
-    {
-        currentMoney += money;
+    public void AddMoney(int money) { SetMoney(currentMoney + money); }
+    public void RemoveMoney(int money) { SetMoney(currentMoney - money); }
+    void SetMoney(int newMoney)
+    { 
+        currentMoney = newMoney; 
         if (currentMoney < 0) { currentMoney = 0; }
         UpdateMoneyUI();
-    }
-    void SetMoney(int newMoney)
-    { currentMoney = newMoney; 
-      if (currentMoney < 0) { currentMoney = 0; }
-        UpdateMoneyUI();
+
+        if (currentMoney < MoneyToRoll) { ChangeGameState(GameState.PlayerDied); }
     }
     public bool CanPurchase(int price) { return price <= currentMoney; }
-    public void Purchase(int price)
-    {
-        currentMoney -= price;
-        UpdateMoneyUI();
-    }
     void UpdateMoneyUI()
     {
         TMP_CurrentMoney.text = currentMoney.ToString();

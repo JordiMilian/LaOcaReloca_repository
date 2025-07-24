@@ -9,7 +9,7 @@ public class Tile_ImparesHater : Tile_Base
         {
             SetDefaultCrossingDamage(GetDefaultCrossedDamage());
         }
-        else
+        else 
         {
             SetDefaultCrossingDamage(-GetDefaultCrossedDamage());
         }
