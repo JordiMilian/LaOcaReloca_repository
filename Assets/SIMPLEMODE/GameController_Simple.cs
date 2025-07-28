@@ -22,9 +22,6 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] Button RollDiceButton;
     public Dices_Controller dicesController;
 
-    [Header("Hand Tiles")]
-    [SerializeField] int maxHandTilesCount = 5;
-    [SerializeField] float distanceBetweenHandTiles = 1;
 
     [SerializeField] GameObject EmptyTile;
 
@@ -141,19 +138,27 @@ public class GameController_Simple : MonoBehaviour
     #endregion
     #region MOVING PLAYER 
     Coroutine regularMovingCoroutine;
-    //This mode is entered when the dices are rolled
+    //This mode is entered when the rolling dice button is pressed
     //during this whole coroutine, if we change state the movement coroutine is canceled, so dont worry about switching into FreeMode after all
     public int remainingStepsToTake;
     [Header("stepping audio")]
     [SerializeField] AudioSource StepSound;
     [SerializeField] float addPitchPerStep;
     [Header("Money to Roll")]
-    [SerializeField] int MoneyToRoll = 1;
+    public int MoneyToRoll = 1;
     IEnumerator OnMovingPlayer_Coroutine()
     {
+        if(dicesController.GetDicesToRoll().Count == 0)
+        {
+            Debug.LogWarning("No dices to roll, please select at least one");
+            ChangeGameState(GameState.FreeMode);
+            yield break;
+        }
         RemoveMoney(MoneyToRoll);
+        dicesController.SetDicesDraggable(false);
         RollDiceButton.interactable = false;
         yield return dicesController.RollDicesCoroutine();
+        dicesController.SetDicesDraggable(true);
         remainingStepsToTake = dicesController.LastRolledValue;
 
         TMP_rolledDiceAmount.text = remainingStepsToTake.ToString();
@@ -449,11 +454,6 @@ public class GameController_Simple : MonoBehaviour
     {
         TMP_CurrentMoney.text = currentMoney.ToString();
     }
-    #endregion
-    #region ROLLS AVAILABLE
-    public int currentAvailableRolls = 5;
-    [SerializeField] int AddedRollsOnKilledEnemy = 3;
-
     #endregion
 
 

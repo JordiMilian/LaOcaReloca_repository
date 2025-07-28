@@ -25,11 +25,11 @@ public class Tile_Base : MonoBehaviour
     public string TitleText = "NO NAME";
     public TileTags[] tileTags;
     [HideInInspector] public TileState tileState = TileState.none;
-    [SerializeField] float defaultCrossedDamage = 1;
+    public float defaultCrossedDamage = 1;
     public Rarity rarity = Rarity.none;
     [HideInInspector] public int indexInBoard;
     [HideInInspector] public int IndexInHand;
-     public Vector2Int vectorInBoard;
+    [HideInInspector] public Vector2Int vectorInBoard;
     [HideInInspector] public Vector2 positionInBoardAxis;
 
     [Header("Color testing")]
@@ -173,22 +173,39 @@ public class Tile_Base : MonoBehaviour
     #region BUY/SELL
     public int GetBuyingPrice()
     {
-        switch(rarity)
+        int repeatedCards = 0;
+        foreach (Tile_Base tile in BoardController.TilesList)
+        {
+            if (tile.GetType() == this.GetType()) { repeatedCards++; }
+        }
+        foreach(GameController_Simple.HandHolder handPOs in GameController.HandPositions)
+        {
+            if(handPOs.isFilled && handPOs.filledTileInfo.GetType() == this.GetType())
+            {
+                repeatedCards++;
+            }
+        }
+
+        int baseValue = 0;
+        switch (rarity)
+        {
+            case Rarity.Common: { baseValue = 2; break; }
+            case Rarity.Rare: { baseValue = 4; break; }
+            case Rarity.Legendary: { baseValue = 10; break; }
+            default: { Debug.LogError("ERROR: Pls set a valid rarity to this Tile"); return 0; }
+        }
+        return MathJ.GetFibonacciValue(baseValue, repeatedCards);
+
+    }
+    public int GetSellingPrice()
+    {
+
+        switch (rarity)
         {
             case Rarity.Common: { return 2; }
             case Rarity.Rare: { return 4; }
             case Rarity.Legendary: { return 8; }
-            default: { Debug.LogError($"ERROR: Pls set a valid rarity to this {GetType()}"); return 0; } 
-        }
-    }
-    public int GetSellingPrice()
-    {
-        switch (rarity)
-        {
-            case Rarity.Common: { return 1; }
-            case Rarity.Rare: { return 2; }
-            case Rarity.Legendary: { return 4; }
-            default: { Debug.LogError("ERROR: Pls set a valid rarity to this Tile"); return 0; }
+            default: { Debug.LogError($"ERROR: Pls set a valid rarity to this {GetType()}"); return 0; }
         }
     }
 

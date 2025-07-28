@@ -93,7 +93,7 @@ MonoBehaviour:
   TitleText: OCA
   tileTags: 
   tileState: 0
-  defaultCrossedDamage: 8
+  defaultCrossedDamage: 15
   rarity: 1
   indexInBoard: 0
   IndexInHand: 0

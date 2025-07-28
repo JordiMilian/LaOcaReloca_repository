@@ -7,7 +7,7 @@ using TMPro;
 
 public class ShopController : MonoBehaviour
 {
-    [SerializeField] GameObject[] TilesAppeareable;
+    public List<GameObject> TilesAppeareable;
     [Header("UI")]
     [SerializeField] ShopItem_Controller[] shopItems;
     List<Button> shopItemsButtons = new();
@@ -48,7 +48,18 @@ public class ShopController : MonoBehaviour
     }
     public GameObject getRandomTilePrefab()
     {
-        return TilesAppeareable[UnityEngine.Random.Range(0, TilesAppeareable.Length)];
+        return TilesAppeareable[UnityEngine.Random.Range(0, TilesAppeareable.Count)];
     }
-  
+
+    public void UpdatePrices()
+    {
+        foreach(ShopItem_Controller item in shopItems)
+        {
+            if(item.Item != null)
+            {
+                item.UpdatePriceTag();
+            }
+        }
+    }
+
 }

@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6715aa6838cc2004590fcf3d169be615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TitleText: NO NAME
+  TitleText: EMPTY
   tileTags: 00000000
   tileState: 0
   defaultCrossedDamage: 10

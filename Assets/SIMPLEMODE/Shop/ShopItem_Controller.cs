@@ -32,6 +32,7 @@ public class ShopItem_Controller : MonoBehaviour
 
         TMP_Price.text = "";
 
+        shopController.UpdatePrices();
     }
     public void ResetShopItem()
     {
@@ -43,7 +44,11 @@ public class ShopItem_Controller : MonoBehaviour
         Item.tileMovement.PlaceTileInOrigin();
         Item.SetTileState(TileState.InShop);
 
-        TMP_Price.text = Item.GetBuyingPrice().ToString();
-
+        UpdatePriceTag();
     }
+    public void UpdatePriceTag()
+    {
+        TMP_Price.text = Item.GetBuyingPrice().ToString();
+    }
+
 }

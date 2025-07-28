@@ -90,13 +90,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0075ee004943614cb00595d99cec4b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TitleText: END TILE
   tileTags: 
-  secundarySkill: 0
   tileState: 0
-  defaultCrossedDamage: 10
+  defaultCrossedDamage: 30
   rarity: 4
   indexInBoard: 0
   IndexInHand: 0
+  vectorInBoard: {x: 0, y: 0}
   positionInBoardAxis: {x: 0, y: 0}
   tileColor: {r: 0.14716971, g: 0.14716971, b: 0.14716971, a: 1}
   tileMovement: {fileID: 0}

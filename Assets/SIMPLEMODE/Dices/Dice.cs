@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-public class Dice : MonoBehaviour
+using UnityEngine.EventSystems;
+using System.Collections;
+public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
 {
     [Serializable]
     public struct DiceFaces
@@ -15,6 +17,12 @@ public class Dice : MonoBehaviour
     public Rigidbody rb;
     public bool isMoving;
 
+    Camera mainCamera;
+    private void Awake()
+    {
+        mainCamera = Camera.main;
+        rb = GetComponent<Rigidbody>();
+    }
     public virtual int GetRollDiceValue()
     {
         return diceFaces[UnityEngine.Random.Range(0, diceFaces.Length)].faceValue;
@@ -23,7 +31,7 @@ public class Dice : MonoBehaviour
     {
         isMoving = !rb.IsSleeping();
 
-        if(!isMoving)
+        if (!isMoving)
         {
             float highestHeight = Mathf.NegativeInfinity;
             int highestIndex = -1;
@@ -39,7 +47,55 @@ public class Dice : MonoBehaviour
             }
             faceUpValue = diceFaces[highestIndex].faceValue;
         }
-       
+
+    }
+
+    [Header("Dragging")]
+    [SerializeField] LayerMask layerMask;
+    public bool canBeDragged = true;
+    [SerializeField] float heightWhileDragged;
+    Coroutine dragging;
+    
+    void AttemptStartDragging()
+    {
+        if(!canBeDragged) { return; }
+        dragging = StartCoroutine(draggingCoroutine());
+        IEnumerator draggingCoroutine()
+        {
+            while(true)
+            {
+                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+                Plane plane = new Plane(Vector3.up, Vector3.up * heightWhileDragged);
+
+
+                if (plane.Raycast(ray, out float distance))
+                {
+                    Vector3 mousePosInPlane = ray.GetPoint(distance);
+                    Debug.DrawLine(transform.position, mousePosInPlane);
+                    transform.position = Vector3.MoveTowards(transform.position, mousePosInPlane, 1);
+                }
+                yield return null;
+            }
+        }
+    }
+    void StopDragging()
+    {
+        if(dragging != null)
+        {
+            StopCoroutine(dragging);
+            dragging = null;
+        }
+    }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Debug.Log("clicked dice");
+        AttemptStartDragging();
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        StopDragging();
     }
 }
 

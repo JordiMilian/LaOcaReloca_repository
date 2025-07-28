@@ -47,4 +47,22 @@ public static class MathJ
         }
         return result;
     }
+
+    public static string BoldText(string text)
+    {
+        return $"<b>{text}</b>";
+    }
+    public static int GetFibonacciValue(int n, int iterations)
+    {
+        int finalValue = n;
+        int previousValue = n;
+        int twoPreviousValue = n/2;
+        for (int i = 0; i < iterations; i++)
+        {
+            finalValue += twoPreviousValue;
+            twoPreviousValue = previousValue;
+            previousValue = finalValue;
+        }
+        return finalValue;
+    } 
 }

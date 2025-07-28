@@ -15,7 +15,9 @@ public class Tile_Oca : Tile_Base
             if (boardController.TilesList[i] is Tile_Oca)
             {
                 yield return boardController.L_JumpPlayerTo(i, false);
+                GameController.AddMoney(GameController.MoneyToRoll);
                 yield break;
+
             }
             if(boardController.TilesList[i] is Tile_End)
             {
@@ -23,10 +25,11 @@ public class Tile_Oca : Tile_Base
                 yield break;
             }
         }
+
     }
-    public IEnumerator basePlayerLanded() { yield return base.OnPlayerLanded(); }
+    public IEnumerator basePlayerLanded() { yield return base.OnPlayerLanded(); } //use this in case you create an Oca that doesnt jump to the next Oca 
     public override string GetTooltipText()
     {
-        return "(Oca) On Landed: jump to the next nearest Oca";
+        return $"{MathJ.BoldText("ON LANDED: ")}jump to the next nearest Oca and gain {GameController.MoneyToRoll} money";
     }
 }

@@ -90,10 +90,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44789d45fef95a54dbd090c087260828, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TitleText: OCA
+  TitleText: DIZZY OCA
   tileTags: 
   tileState: 0
-  defaultCrossedDamage: 8
+  defaultCrossedDamage: 15
   rarity: 2
   indexInBoard: 0
   IndexInHand: 0
