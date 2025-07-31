@@ -28,7 +28,7 @@ public class CardsCreator_Editor : Editor
         displayName = serializedObject.FindProperty("DisplayName");
         shopController = serializedObject.FindProperty("shopController");
         cardRarity = serializedObject.FindProperty("cardRarity");
-        tileTagsProp = serializedObject.FindProperty("tileTags");
+        tileTagsProp = serializedObject.FindProperty("tileTag");
     }
     string EditingTileName = "test";
     public override void OnInspectorGUI()
@@ -139,6 +139,7 @@ public class CardsCreator_Editor : Editor
             tileLogic.TitleText = displayName.stringValue;
             tileLogic.defaultCrossedDamage = crossedDamage.floatValue;
             tileLogic.rarity = (Rarity)cardRarity.enumValueIndex;
+            tileLogic.tileTag = (TileTags)tileTagsProp.enumValueIndex;
             //set tile tags somehow
 
             ShopController shop = shopController.objectReferenceValue as ShopController;
@@ -162,6 +163,16 @@ public class CardsCreator_Editor : Editor
         EditorGUILayout.EndHorizontal();
 
         serializedObject.ApplyModifiedProperties();
+
+    }
+    Rect sceneGUIArea = new Rect(10, 10, 200, 100);
+    private void OnSceneGUI()
+    {
+        Handles.BeginGUI();
+        GUILayout.BeginArea(sceneGUIArea, GUI.skin.FindStyle("Box"));
+        GUILayout.EndArea();
+
+        Handles.EndGUI();
     }
     string GetEmptyScriptContent(string scriptName)
     {

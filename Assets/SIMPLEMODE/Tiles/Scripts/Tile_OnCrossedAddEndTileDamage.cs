@@ -9,7 +9,7 @@ public class Tile_OnCrossedAddEndTileDamage : Tile_Base
         yield return base.OnPlayerStepped();
         Tile_Base endTile = BoardController.TilesList[BoardController.TilesList.Count - 1];
 
-        endTile.SetDefaultCrossingDamage(endTile.GetDefaultCrossedDamage() + damageToAdd);
+        endTile.AddDefaultCrossingDamage(damageToAdd);
     }
     public override string GetTooltipText()
     {

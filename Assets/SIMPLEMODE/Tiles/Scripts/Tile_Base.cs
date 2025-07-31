@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
+using System;
 
 public enum Intensity
 {
@@ -18,12 +19,12 @@ public enum Rarity
 }
 public enum TileTags
 {
-    EmptyTile, Oca
+    NoTag,EmptyTile, Oca
 }
 public class Tile_Base : MonoBehaviour
 {
     public string TitleText = "NO NAME";
-    public TileTags[] tileTags;
+    public TileTags tileTag;
     [HideInInspector] public TileState tileState = TileState.none;
     public float defaultCrossedDamage = 1;
     public Rarity rarity = Rarity.none;
@@ -66,15 +67,29 @@ public class Tile_Base : MonoBehaviour
         tileTestSprite.color = tileColor;
         TMP_IndexDisplay.text = MathJ.FloatToString(GetCrossedDamageAmount(),1);
     }
+    #region CROSSING DAMAGE
     public float GetDefaultCrossedDamage()
     {
         return defaultCrossedDamage;
     }
-    public void SetDefaultCrossingDamage(float newDamage)
+    void SetDefaultCrossingDamage(float newDamage)
     {
         defaultCrossedDamage = newDamage;
         TMP_IndexDisplay.text = MathJ.FloatToString(GetCrossedDamageAmount(), 1);
     }
+    public void AddDefaultCrossingDamage(float addedDamage)
+    {
+        SetDefaultCrossingDamage(defaultCrossedDamage + addedDamage);
+        shakeTile(Intensity.mid);
+        //Number display could be cool
+    }
+    public void MultiplyCrossingDamage(float mult)
+    {
+        SetDefaultCrossingDamage(defaultCrossedDamage * mult);
+        shakeTile(Intensity.mid);
+        //Number display
+    }
+    #endregion
     public void SetTileState(TileState newState)
     {
         if(newState == tileState) { return; }
@@ -211,4 +226,45 @@ public class Tile_Base : MonoBehaviour
 
 
     #endregion
+    #region TOOLTIP INTRO
+    protected enum On
+    {
+        OnCrossed, OnLanded, OnRolledDice, OnReached
+    }
+    protected string OnSomething(On on)
+    {
+        switch (on)
+        {
+            case On.OnCrossed: return "<b>ON CROSSED:<b>";
+            case On.OnLanded: return "<b>ON LANDED:<b>";
+            case On.OnRolledDice: return "<b>ON ROLLED DICES:<b>";
+            case On.OnReached:return "<b>ON REACHED:<b>";
+            default: return "";
+
+        }
+    }
+    #endregion
+    protected List<Tile_Base> GetTilesAround(bool ignoreSelf)
+    {
+        List<Tile_Base> tilesAround = new();
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                Vector2Int tileIndex = vectorInBoard + new Vector2Int(i, j);
+
+                if (i == 0 && j == 0)
+                {
+                    if(!ignoreSelf){ tilesAround.Add(BoardController.TilesByPosition[tileIndex]); }
+                    continue;
+                }   
+
+                if (BoardController.TilesByPosition.ContainsKey(tileIndex))
+                {
+                    tilesAround.Add(BoardController.TilesByPosition[tileIndex]);
+                }
+            }
+        }
+        return tilesAround;
+    }
 }

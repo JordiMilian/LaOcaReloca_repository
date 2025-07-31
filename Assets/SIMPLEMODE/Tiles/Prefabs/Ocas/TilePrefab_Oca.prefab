@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TitleText: OCA
-  tileTags: 
+  tileTag: 2
   tileState: 0
   defaultCrossedDamage: 15
   rarity: 1

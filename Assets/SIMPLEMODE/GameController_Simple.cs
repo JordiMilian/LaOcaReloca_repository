@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using System;
 using UnityEngine.Playables;
 using DG.Tweening;
+using UnityEngine.Events;
 public enum GameState
 {
     Empty, StartBoard, MovingPlayer, FreeMode, ReachedEnd, KilledEnemy, PlayerDied
@@ -436,6 +437,7 @@ public class GameController_Simple : MonoBehaviour
     #endregion
     #region MONEY
     [Header("Money")]
+    public UnityEvent<int> OnMoneyUpdated;
     [SerializeField] int currentMoney;
 
     [SerializeField] TextMeshProUGUI TMP_CurrentMoney;
@@ -446,9 +448,11 @@ public class GameController_Simple : MonoBehaviour
         currentMoney = newMoney; 
         if (currentMoney < 0) { currentMoney = 0; }
         UpdateMoneyUI();
+        OnMoneyUpdated.Invoke(currentMoney);
 
         if (currentMoney < MoneyToRoll) { ChangeGameState(GameState.PlayerDied); }
     }
+    public int GetCurrentMoney() { return currentMoney; }
     public bool CanPurchase(int price) { return price <= currentMoney; }
     void UpdateMoneyUI()
     {

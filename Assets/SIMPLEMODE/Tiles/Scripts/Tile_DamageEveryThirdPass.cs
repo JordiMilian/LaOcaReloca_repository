@@ -11,7 +11,7 @@ public class Tile_DamageEveryThirdPass : Tile_Base
         timesCrossed++;
         if(timesCrossed >= timesNeededToCross)
         {
-            SetDefaultCrossingDamage(GetDefaultCrossedDamage() * multiplyCurrentDamageBy); ;
+            MultiplyCrossingDamage(multiplyCurrentDamageBy); ;
             timesCrossed = 0;
         }
         yield return base.OnPlayerStepped();

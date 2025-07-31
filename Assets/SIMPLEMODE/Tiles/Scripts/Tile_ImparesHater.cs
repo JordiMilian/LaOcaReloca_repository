@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class Tile_ImparesHater : Tile_Base
 {
+    //I dont like this tile, reconsider pls
     public override IEnumerator OnPlayerStepped()
     {
         if(GameController.dicesController.LastRolledValue%2 == 0)
         {
-            SetDefaultCrossingDamage(GetDefaultCrossedDamage());
+            AddDefaultCrossingDamage(10);
         }
         else 
         {
-            SetDefaultCrossingDamage(-GetDefaultCrossedDamage());
+            AddDefaultCrossingDamage(-10);
         }
-        shakeTile(Intensity.mid);
         yield return new WaitForSeconds(0.3f);
 
         yield return base.OnPlayerStepped();

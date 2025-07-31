@@ -10,6 +10,6 @@ public class CardsCreator : MonoBehaviour
     [HideInInspector][SerializeField] Color CardColor = Color.white;
     [HideInInspector][SerializeField] ShopController shopController;
     [HideInInspector][SerializeField] Rarity cardRarity = Rarity.Common;
-    [HideInInspector][SerializeField] TileTags[] tileTags;
+    [HideInInspector][SerializeField] TileTags tileTag = TileTags.NoTag;
 
 }

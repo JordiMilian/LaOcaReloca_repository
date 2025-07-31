@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TitleText: EMPTY
-  tileTags: 00000000
+  tileTag: 1
   tileState: 0
   defaultCrossedDamage: 10
   rarity: 4

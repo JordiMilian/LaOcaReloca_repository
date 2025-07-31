@@ -26,13 +26,11 @@ public class Tile_OnDiceRolledAddRandom : Tile_Base
         while (randomTile == this);
 
 
-        randomTile.SetDefaultCrossingDamage(randomTile.GetDefaultCrossedDamage() + lastRolledvalue);
+        randomTile.AddDefaultCrossingDamage(lastRolledvalue);
 
         //Feedback
         shakeTile(Intensity.mid);
-        yield return new WaitForSeconds(0.2f);
-        randomTile.shakeTile(Intensity.large);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
     }
     public override string GetTooltipText()
     {

@@ -10,9 +10,8 @@ public class Tile_AddOwnValueForward : Tile_Base
         Tile_Base nextTile = BoardController.TilesList[indexInBoard + 1];
         if(nextTile != null)
         {
-            nextTile.SetDefaultCrossingDamage
-                (nextTile.GetDefaultCrossedDamage() + (GetDefaultCrossedDamage() * (PercentageToAdd /100)));
-            nextTile.shakeTile(Intensity.mid);
+            nextTile.AddDefaultCrossingDamage
+                (GetDefaultCrossedDamage() * (PercentageToAdd /100));
             yield return new WaitForSeconds(0.3f);
         }
     }

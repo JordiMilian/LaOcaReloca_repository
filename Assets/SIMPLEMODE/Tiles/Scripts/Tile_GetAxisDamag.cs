@@ -40,7 +40,7 @@ public class Tile_GetAxisDamag : Tile_Base
         IEnumerator addTileDamage(Tile_Base tile)
         {
             totalDamage += tile.GetCrossedDamageAmount();
-            tile.shakeTile(Intensity.large);
+            tile.shakeTile(Intensity.mid);
             yield return new WaitForSeconds(0.05f);
         }
     }

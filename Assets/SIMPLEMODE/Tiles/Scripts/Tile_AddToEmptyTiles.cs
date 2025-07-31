@@ -10,10 +10,9 @@ public class Tile_AddToEmptyTiles : Tile_Base
     {
         foreach(Tile_Base tile in BoardController.TilesList)
         {
-            if(tile.tileTags.Contains(TileTags.EmptyTile))
+            if(tile.tileTag == TileTags.EmptyTile)
             {
-                tile.SetDefaultCrossingDamage(tile.GetDefaultCrossedDamage() + addedDamageToEmptyTiles);
-                tile.shakeTile(Intensity.large);
+                tile.AddDefaultCrossingDamage(addedDamageToEmptyTiles);
                 yield return new WaitForSeconds(0.1f);
             }
         }

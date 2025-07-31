@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine.Events;
 using DG.Tweening;
 using TreeEditor;
+using TMPro;
 
 [DefaultExecutionOrder(-1)]
 public class Dices_Controller : MonoBehaviour
@@ -18,16 +19,22 @@ public class Dices_Controller : MonoBehaviour
     [SerializeField] float multiplyDicesRotationForce = 2, verticalDiceForce = 1;
     [SerializeField] Transform diceSpawnPoint;
     [SerializeField] float RollDicePos_Radius = 2, SpawnPos_Radius = 1;
+    GameController_Simple gameController;
 
     private void Awake()
     {
         GetChildDices();
         Instance = this;
     }
+    private void Start()
+    {
+        gameController = GameController_Simple.Instance;
+    }
     public void GetChildDices()
     {
         availableDices = GetComponentsInChildren<Dice>().ToList();
     }
+   
     public IEnumerator RollDicesCoroutine()
     {
         //Group up the dices into transform position
@@ -77,8 +84,32 @@ public class Dices_Controller : MonoBehaviour
             addedValue += dice.faceUpValue;
         }
         LastRolledValue = addedValue;
+
+        TMP_boughtRollValue.rectTransform.DOShakeRotation(.1f, 10);
+        yield return new WaitForSeconds(0.1f);
+        LastRolledValue += boughtRollValue;
+        ResetBoughtValue();
+
         OnDicesRolled.Invoke(LastRolledValue);
     }
+    #region BUY ROLL VALUE
+    int boughtRollValue = 0;
+    [SerializeField] TextMeshProUGUI TMP_boughtRollValue;
+    public void Button_BuyExtraRollValue()
+    {
+        if (gameController.GetCurrentMoney() == 0) { return; }
+
+        boughtRollValue++;
+        GameController_Simple.Instance.RemoveMoney(1);
+        TMP_boughtRollValue.text = "+" + boughtRollValue.ToString();
+    }
+    void ResetBoughtValue()
+    {
+        boughtRollValue = 0;
+        TMP_boughtRollValue.text = "+0";
+
+    }
+    #endregion
 
     public void SetDicesDraggable(bool draggability)
     {
