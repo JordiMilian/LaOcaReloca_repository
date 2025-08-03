@@ -21,6 +21,10 @@ public enum TileTags
 {
     NoTag,EmptyTile, Oca
 }
+public enum TileMessageType
+{
+    Neutral, Good, Bad, VeryGood
+}
 public class Tile_Base : MonoBehaviour
 {
     public string TitleText = "NO NAME";
@@ -36,22 +40,19 @@ public class Tile_Base : MonoBehaviour
     [Header("Color testing")]
     public Color tileColor;
     SpriteRenderer tileTestSprite;
-    TextMeshPro TMP_IndexDisplay;
 
     protected GameController_Simple GameController;
     protected Board_Controller_simple BoardController;
-    [HideInInspector] public TileMovement tileMovement;
+    [HideInInspector] public TileSharedVisuals tileMovement;
     private void Awake()
     {
         GameController = GameController_Simple.Instance;
         BoardController = Board_Controller_simple.Instance;
 
         tileTestSprite = GetComponentInChildren<SpriteRenderer>(); //remember placeholder
-        TMP_IndexDisplay = GetComponentInChildren<TextMeshPro>();
 
-        tileMovement = GetComponent<TileMovement>();
+        tileMovement = GetComponent<TileSharedVisuals>();
 
-        tileTestSprite = GetComponentInChildren<SpriteRenderer>();
     }
     private void Start()
     {
@@ -65,7 +66,7 @@ public class Tile_Base : MonoBehaviour
     public void UpdateTileVisuals()
     {
         tileTestSprite.color = tileColor;
-        TMP_IndexDisplay.text = MathJ.FloatToString(GetCrossedDamageAmount(),1);
+        tileMovement.UpdateDmgDisplayText();
     }
     #region CROSSING DAMAGE
     public float GetDefaultCrossedDamage()
@@ -75,18 +76,26 @@ public class Tile_Base : MonoBehaviour
     void SetDefaultCrossingDamage(float newDamage)
     {
         defaultCrossedDamage = newDamage;
-        TMP_IndexDisplay.text = MathJ.FloatToString(GetCrossedDamageAmount(), 1);
+        tileMovement.UpdateDmgDisplayText();
     }
     public void AddDefaultCrossingDamage(float addedDamage)
     {
         SetDefaultCrossingDamage(defaultCrossedDamage + addedDamage);
-        shakeTile(Intensity.mid);
-        //Number display could be cool
+        tileMovement.shakeTile(Intensity.mid);
+        if (Mathf.Approximately(addedDamage, 0)) { return; }
+        if(addedDamage >= 0)
+        {
+            tileMovement.DisplayMessage("+" + MathJ.FloatToString(addedDamage, 1), TileMessageType.Good);
+        }
+        else
+        {
+            tileMovement.DisplayMessage(MathJ.FloatToString(addedDamage, 1), TileMessageType.Bad);
+        }
     }
     public void MultiplyCrossingDamage(float mult)
     {
         SetDefaultCrossingDamage(defaultCrossedDamage * mult);
-        shakeTile(Intensity.mid);
+        tileMovement.shakeTile(Intensity.mid);
         //Number display
     }
     #endregion
@@ -108,7 +117,7 @@ public class Tile_Base : MonoBehaviour
             case TileState.none:
                 break;
             case TileState.InShop: //TO DO: InShop_Affordable, InShop_Unaffordable maybe
-                tileMovement.canBeMoved = false;
+                tileMovement.canBeMoved = true;
                 break;
             case TileState.InHand: 
                 tileMovement.canBeMoved = true;
@@ -130,47 +139,16 @@ public class Tile_Base : MonoBehaviour
         if (isBehindPlayer) { tileTestSprite.color = new Color(tileColor.r, tileColor.g, tileColor.b, 0.75f); }
         else { tileTestSprite.color = tileColor; }
     }
-
-    #region generic animations
-    //maybe move this into tileMovement
-    public void FirstAppeareanceAnim()
-    {
-        float duration = 1;
-        transform.localScale = Vector3.zero;
-        transform.DOScale(Vector3.one, duration).SetEase(Ease.OutBounce);
-    }
-    public void shakeTile(Intensity intensity)
-    {
-        switch (intensity)
-        {
-            case Intensity.empty: break;
-            case Intensity.low:
-                transform.DOShakeRotation(0.2f, 5f, 4);
-                break;
-            case Intensity.mid:
-                transform.DOShakeRotation(0.4f, 10f, 8);
-                break;
-            case Intensity.large:
-                transform.DOShakeRotation(0.6f, 20f, 10);
-                break;
-        }
-    }
-    #endregion
     #region MAIN VIRTUAL LOGIC METHODS
     public virtual IEnumerator OnPlayerStepped()
     {
         UpdateTileVisuals();
         yield return GameController.AddAcumulatedDamage(GetCrossedDamageAmount());
 
-        //INHERITEDS
-        //gamelogic
-        //visual feedback
-        //further logic
-
     }
     public virtual IEnumerator OnPlayerLanded()
     {
-        shakeTile(Intensity.mid);
+        tileMovement.shakeTile(Intensity.mid);
         yield break;
     }
     public virtual void OnPlacedInBoard() { }
@@ -231,7 +209,7 @@ public class Tile_Base : MonoBehaviour
     {
         OnCrossed, OnLanded, OnRolledDice, OnReached
     }
-    protected string OnSomething(On on)
+    protected string ON(On on)
     {
         switch (on)
         {

@@ -29,7 +29,7 @@ public class Tile_OnDiceRolledAddRandom : Tile_Base
         randomTile.AddDefaultCrossingDamage(lastRolledvalue);
 
         //Feedback
-        shakeTile(Intensity.mid);
+        tileMovement.shakeTile(Intensity.mid);
         yield return new WaitForSeconds(0.25f);
     }
     public override string GetTooltipText()

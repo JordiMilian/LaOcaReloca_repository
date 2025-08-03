@@ -9,28 +9,39 @@ public class ShopController : MonoBehaviour
 {
     public List<GameObject> TilesAppeareable;
     [Header("UI")]
-    [SerializeField] ShopItem_Controller[] shopItems;
+    public ShopItem_Controller[] shopItems;
     List<Button> shopItemsButtons = new();
     [SerializeField] int rerollPrice = 5;
     [SerializeField] Button button_Reroll;
 
-    private void Awake()
+    public ShopItem_Controller GetShopItem(Tile_Base tile)
     {
-        foreach(ShopItem_Controller item in shopItems)
+        foreach(ShopItem_Controller shopItem in shopItems)
         {
-            shopItemsButtons.Add(item.GetComponentInChildren<Button>());
+            if(shopItem.Item == tile)
+            {
+                return shopItem;
+            }
         }
+        return null;
     }
     #region DISABLE SHOP
     public void DisableShop()
     {
-        foreach(Button button in shopItemsButtons) { button.interactable = false; }
+        foreach(ShopItem_Controller shopItem in shopItems)
+        {
+            if(shopItem.Item != null) { shopItem.Item.tileMovement.canBeMoved = false; }
+            
+        }
         button_Reroll.interactable = false;
     }
     public void EnableShop()
     {
-        foreach (Button button in shopItemsButtons) { button.interactable = true; }
-        button_Reroll.interactable = false;
+        foreach (ShopItem_Controller shopItem in shopItems)
+        {
+            if (shopItem.Item != null) { shopItem.Item.tileMovement.canBeMoved = true; }
+        }
+        button_Reroll.interactable = true;
     }
     #endregion
     public void Button_ReRollShop()
@@ -40,10 +51,14 @@ public class ShopController : MonoBehaviour
         if(gameController.CanPurchase(rerollPrice))
         {
             gameController.RemoveMoney(rerollPrice);
-            foreach (ShopItem_Controller item in shopItems)
-            {
-                item.ResetShopItem();
-            }
+            ResetShopItems();
+        }
+    }
+    public void ResetShopItems() // this is called at start game to create the initial shop too
+    {
+        foreach (ShopItem_Controller item in shopItems)
+        {
+            item.ResetShopItem();
         }
     }
     public GameObject getRandomTilePrefab()

@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TitleText: "PI\xD1ATA"
-  tileTags: 
+  tileTag: 0
   tileState: 0
   defaultCrossedDamage: 5
   rarity: 2
@@ -89,4 +89,4 @@ MonoBehaviour:
   tileColor: {r: 1, g: 0.5545753, b: 0.1273585, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0
-  addedDmg: 3
+  addedDmg: 2

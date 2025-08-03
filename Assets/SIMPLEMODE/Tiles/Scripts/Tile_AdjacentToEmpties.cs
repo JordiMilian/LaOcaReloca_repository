@@ -7,8 +7,11 @@ public class Tile_AdjacentToEmpties : Tile_Base
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
-    //public virtual string GetTooltipText() { }
-
+    public override string GetTooltipText() 
+    {
+        return $"{ON(On.OnCrossed)} if surrounded by EMPTY TILES, add {AddedDamageAround} to all of them";
+    }
+    [SerializeField] float AddedDamageAround = 10;
     public override IEnumerator OnPlayerStepped()
     {
         bool isSurrounded = true;
@@ -25,7 +28,7 @@ public class Tile_AdjacentToEmpties : Tile_Base
         {
             foreach (Tile_Base tile in adjacentEmpties)
             {
-                tile.AddDefaultCrossingDamage(10);
+                tile.AddDefaultCrossingDamage(AddedDamageAround);
             }
         }
 

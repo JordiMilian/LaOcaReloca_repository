@@ -13,7 +13,6 @@ public class ShopItem_Controller : MonoBehaviour
     private void Start()
     {
         gameController = GameController_Simple.Instance;
-        ResetShopItem();
     }
 
     public void Button_OnBuyPressed()
@@ -23,7 +22,6 @@ public class ShopItem_Controller : MonoBehaviour
         if (!gameController.CanPurchase(Item.GetBuyingPrice())) { return; } //no money
         
         
-
         gameController.RemoveMoney(Item.GetBuyingPrice());
         gameController.AddTileToHand(TileGO);
 
@@ -33,6 +31,12 @@ public class ShopItem_Controller : MonoBehaviour
         TMP_Price.text = "";
 
         shopController.UpdatePrices();
+    }
+    public void RemoveItem()
+    {
+        Item = null;
+        TileGO = null;
+        TMP_Price.text = "";
     }
     public void ResetShopItem()
     {
@@ -48,7 +52,7 @@ public class ShopItem_Controller : MonoBehaviour
     }
     public void UpdatePriceTag()
     {
-        TMP_Price.text = Item.GetBuyingPrice().ToString();
+        TMP_Price.text = "$"+Item.GetBuyingPrice().ToString();
     }
 
 }

@@ -8,7 +8,7 @@ public struct transformStats
     public Quaternion rotation;
     public Vector3 scale;
 }
-public class TileMovement : MonoBehaviour
+public class TileSharedVisuals : MonoBehaviour
 {
     Camera mainCamera;
     [HideInInspector] public transformStats originTransform;
@@ -16,6 +16,7 @@ public class TileMovement : MonoBehaviour
     [SerializeField] float heightWhileDragged = .5f;
     GameController_Simple gameController;
     [HideInInspector] public Tile_Base tileBase;
+    [SerializeField] TextMeshPro TMP_DamageDisplay;
     
     private void Awake()
     {
@@ -50,6 +51,10 @@ public class TileMovement : MonoBehaviour
     {
         transform.position = originTransform.position;
         transform.rotation = originTransform.rotation;
+    }
+    public void UpdateDmgDisplayText()
+    {
+        TMP_DamageDisplay.text = MathJ.FloatToString(tileBase.GetDefaultCrossedDamage(), 1);
     }
     #region MOUSE INPUTS
     private void OnMouseDown()
@@ -135,6 +140,59 @@ public class TileMovement : MonoBehaviour
            
         }
     }
+    #region SHARED ANIMATIONS
+    public void FirstAppeareanceAnim()
+    {
+        float duration = 1;
+        transform.localScale = Vector3.zero;
+        transform.DOScale(Vector3.one, duration).SetEase(Ease.OutBounce);
+    }
+    public void shakeTile(Intensity intensity)
+    {
+        switch (intensity)
+        {
+            case Intensity.empty: break;
+            case Intensity.low:
+                transform.DOShakeRotation(0.2f, 5f, 4);
+                break;
+            case Intensity.mid:
+                transform.DOShakeRotation(0.4f, 10f, 8);
+                break;
+            case Intensity.large:
+                transform.DOShakeRotation(0.6f, 20f, 10);
+                break;
+        }
+    }
+    [Header("Message display")]
+    [SerializeField] TextMeshProUGUI messageDisplay;
+    public void DisplayMessage(string message, TileMessageType messageType)
+    {
+        Color msgColor = Color.white;
+        switch (messageType)
+        {
+            case TileMessageType.Neutral:
+                msgColor = Color.white;
+                break;
+            case TileMessageType.Good:
+                msgColor = Color.cyan;
+                break;
+            case TileMessageType.Bad:
+                msgColor = Color.red;
+                break;
+            case TileMessageType.VeryGood:
+                msgColor = Color.blue;
+                break;
+        }
+        messageDisplay.color = msgColor;
+        messageDisplay.text = message;
+
+        Sequence msgSeq = DOTween.Sequence();
+        msgSeq.Append(messageDisplay.rectTransform.DOScale(1, 0.5f)).
+            Append(messageDisplay.rectTransform.DOShakeRotation(.2f, 10)).
+            Append(messageDisplay.rectTransform.DOScale(0, 0.2f));
+
+    }
+    #endregion
 
 
 }

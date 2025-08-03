@@ -32,7 +32,7 @@ public class Tile_GetAxisDamag : Tile_Base
             yield return addTileDamage(tile);
         }
        
-        shakeTile(Intensity.large);
+        tileMovement.shakeTile(Intensity.large);
         yield return GameController.AddAcumulatedDamage(totalDamage);
 
 
@@ -40,7 +40,7 @@ public class Tile_GetAxisDamag : Tile_Base
         IEnumerator addTileDamage(Tile_Base tile)
         {
             totalDamage += tile.GetCrossedDamageAmount();
-            tile.shakeTile(Intensity.mid);
+            tile.tileMovement.shakeTile(Intensity.mid);
             yield return new WaitForSeconds(0.05f);
         }
     }

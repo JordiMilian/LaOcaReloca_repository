@@ -194,7 +194,7 @@ public class Board_Controller_simple : MonoBehaviour
         for (int i = 0; i < underTilesList.Count; i++)
         {
             Tile_Base thisTile = TilesList[i];
-            TileMovement movement = thisTile.tileMovement;
+            TileSharedVisuals movement = thisTile.tileMovement;
             movement.SetOriginTransformWithStats(new transformStats
             {
                 position = underTilesList[i].transform.position + tilePosOffset,
@@ -220,7 +220,7 @@ public class Board_Controller_simple : MonoBehaviour
         {
             yield return new WaitForSeconds(delayBetweenTiles);
             tile.gameObject.SetActive(true);
-            tile.FirstAppeareanceAnim();
+            tile.tileMovement. FirstAppeareanceAnim();
         }
     }
     #endregion

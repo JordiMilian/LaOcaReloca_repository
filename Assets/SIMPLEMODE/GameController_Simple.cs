@@ -17,6 +17,7 @@ public class GameController_Simple : MonoBehaviour
     public GameState currentGameState;
     [SerializeField] Board_Controller_simple BoardController;
     Camera mainCamera;
+    [SerializeField] ShopController shopController;
 
     [Header("Test roll")]
     [SerializeField] TextMeshProUGUI TMP_rolledDiceAmount;
@@ -72,7 +73,6 @@ public class GameController_Simple : MonoBehaviour
         switch (currentGameState)
         {
             case GameState.StartBoard:
-                //Nothing?
                 break;
             case GameState.MovingPlayer:
                 if (regularMovingCoroutine != null) { StopCoroutine(regularMovingCoroutine); }
@@ -123,6 +123,8 @@ public class GameController_Simple : MonoBehaviour
     #region START GAME
     IEnumerator StartGameCoroutine()
     {
+        shopController.ResetShopItems();
+        OnFreeModeExit();
         yield return BoardController.StartBoard();
         ChangeGameState(GameState.FreeMode);
     }
@@ -131,10 +133,12 @@ public class GameController_Simple : MonoBehaviour
     void OnFreeModeEnter()
     {
         RollDiceButton.interactable = true;
+        shopController.EnableShop();
     }
     void OnFreeModeExit()
     {
         RollDiceButton.interactable = false;
+        shopController.DisableShop();
     }
     #endregion
     #region MOVING PLAYER 
@@ -247,6 +251,11 @@ public class GameController_Simple : MonoBehaviour
         if(tileBelow.tileState != TileState.InBoard) { return false; }
         if (!tileBelow.tileMovement.canBeMoved) { return false; }
         if (tileBelow.isBehindPlayer && SelectedTile.tileState == TileState.InBoard) { return false; }
+        if(SelectedTile.tileState == TileState.InShop)
+        {
+            ShopItem_Controller shopItem = shopController.GetShopItem(SelectedTile);
+            if (!CanPurchase(shopItem.Item.GetBuyingPrice())) { return false; }
+        }
        
         if(tileBelow is Tile_End || tileBelow is Tile_Start) { return false; }
         return true;
@@ -254,11 +263,16 @@ public class GameController_Simple : MonoBehaviour
     public void PlaceTile() //Called from TileMovement OnMouseUp
     {
         Tile_Base tileInBoard = null;
-        foreach (Tile_Base tile in intersecticTiles)
+        foreach (Tile_Base tile in intersecticTiles) //Search for the tile in board
         {
             if(tile == SelectedTile) { continue; }
             tileInBoard = tile;
             break;
+        }
+        //Depending on state, do something
+        if(SelectedTile.tileState == TileState.InShop && tileInBoard.tileState == TileState.InBoard)
+        {
+            PlaceTileFromShopToBoard(tileInBoard, SelectedTile); //The price check is done in the CanPlace()
         }
         if(SelectedTile.tileState == TileState.InBoard)
         {
@@ -268,6 +282,7 @@ public class GameController_Simple : MonoBehaviour
         {
             PlaceTileFromHandToBoard(SelectedTile.IndexInHand, tileInBoard.indexInBoard);
         }
+
     }
     void MoveTilesInBoard(int indexAtoB, int indexBtoA)
     {
@@ -306,35 +321,38 @@ public class GameController_Simple : MonoBehaviour
         Tile_Base tileInHand = HandPositions[indexInHand].filledTileInfo;
         Tile_Base tileInBoard = BoardController.TilesList[indexInBoard];
 
-        Vector2Int vectorInBoard = tileInBoard.vectorInBoard;
-
-        //Get position and rotation of the tile in Board
-        transformStats inBoardTransformStats = tileInBoard.tileMovement.originTransform;
-
-        //Create new Tile in the proper position and destroy the last
-        GameObject newTileGO = tileInHand.gameObject;
-
-        tileInBoard.OnRemovedFromBoard();
-        Destroy(tileInBoard.gameObject);
-
-        //Get the references right and remove the tile from hand
-        BoardController.TilesList[indexInBoard] = tileInHand;
-        BoardController.TilesByPosition[vectorInBoard] = tileInHand;
-        BoardController.TilesList[indexInBoard].indexInBoard = indexInBoard;
-        BoardController.TilesList[indexInBoard].vectorInBoard = vectorInBoard;
-        BoardController.TilesList[indexInBoard].UpdateTileVisuals();
-
+        ReplaceTileInBoard(tileInBoard, tileInHand);
         RemoveTileInHand(indexInHand);
 
-        BoardController.TilesList[indexInBoard].transform.parent = BoardController.transform;
+    }
+    void PlaceTileFromShopToBoard(Tile_Base tileInBoard, Tile_Base boughtTile)
+    {
+        ReplaceTileInBoard(tileInBoard, boughtTile);
+        ShopItem_Controller boughtItem = shopController.GetShopItem(SelectedTile);
+        RemoveMoney(SelectedTile.GetBuyingPrice());
+        boughtItem.RemoveItem();
 
-        //play animations
-        TileMovement newTileMovement = tileInHand.GetComponent<TileMovement>();
-        newTileMovement.SetOriginTransformWithStats(inBoardTransformStats);
-        newTileMovement.MoveTileToOrigin(); 
-        tileInHand.SetTileState(TileState.InBoard);
+        shopController.UpdatePrices();
+    }
+    public void ReplaceTileInBoard(Tile_Base tileInBoard, Tile_Base newTile)
+    {
+        tileInBoard.OnRemovedFromBoard();
+        BoardController.TilesList[tileInBoard.indexInBoard] = newTile;
+        BoardController.TilesByPosition[tileInBoard.vectorInBoard] = newTile;
+        newTile.indexInBoard = tileInBoard.indexInBoard;
+        newTile.vectorInBoard = tileInBoard.vectorInBoard;
 
-        tileInHand.OnPlacedInBoard();
+        newTile.transform.parent = BoardController.transform;
+
+        newTile.tileMovement.SetOriginTransformWithStats(tileInBoard.tileMovement.originTransform);
+        newTile.tileMovement.MoveTileToOrigin();
+        newTile.SetTileState(TileState.InBoard);
+
+        newTile.OnPlacedInBoard();
+
+        Destroy(tileInBoard.gameObject);
+
+        newTile.UpdateTileVisuals();//Esto sobre casi segur
     }
     public HandHolder[] HandPositions;
     [Serializable]

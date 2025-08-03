@@ -184,7 +184,7 @@ public class CardsCreator_Editor : Editor
             "   //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }\n" +
             "   //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }\n" +
             "   //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }\n" +
-            "   //public virtual string GetTooltipText() { }\n" +
+            "   //public override string GetTooltipText() { }\n" +
             "}";
     }
 }
