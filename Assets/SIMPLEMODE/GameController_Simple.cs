@@ -327,9 +327,9 @@ public class GameController_Simple : MonoBehaviour
     }
     void PlaceTileFromShopToBoard(Tile_Base tileInBoard, Tile_Base boughtTile)
     {
+        RemoveMoney(SelectedTile.GetBuyingPrice());
         ReplaceTileInBoard(tileInBoard, boughtTile);
         ShopItem_Controller boughtItem = shopController.GetShopItem(SelectedTile);
-        RemoveMoney(SelectedTile.GetBuyingPrice());
         boughtItem.RemoveItem();
 
         shopController.UpdatePrices();

@@ -9,28 +9,22 @@ public class Tile_AdjacentToEmpties : Tile_Base
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
     public override string GetTooltipText() 
     {
-        return $"{ON(On.OnCrossed)} if surrounded by EMPTY TILES, add {AddedDamageAround} to all of them";
+        return $"{ON(On.OnCrossed)} for each surrounding EMPTY TILES, add {AddedDamagePerEmpty} to this tile";
     }
-    [SerializeField] float AddedDamageAround = 10;
+    [SerializeField] float AddedDamagePerEmpty = 10;
     public override IEnumerator OnPlayerStepped()
     {
-        bool isSurrounded = true;
         List<Tile_Base> adjacentEmpties = GetTilesAround(true);
-        foreach(Tile_Base tile in adjacentEmpties)
+        int emptiesCount = 0;
+        foreach (Tile_Base tile in adjacentEmpties)
         {
-            if(tile.tileTag != TileTags.EmptyTile) 
+            if(tile.tileTag == TileTags.EmptyTile) 
             {
-                isSurrounded = false;
-                break;
+                emptiesCount++;
+                tile.tileMovement.shakeTile(Intensity.low);
             }
         }
-        if(isSurrounded)
-        {
-            foreach (Tile_Base tile in adjacentEmpties)
-            {
-                tile.AddDefaultCrossingDamage(AddedDamageAround);
-            }
-        }
+        AddDefaultCrossingDamage(AddedDamagePerEmpty * emptiesCount);
 
         yield return base.OnPlayerStepped();
     }
