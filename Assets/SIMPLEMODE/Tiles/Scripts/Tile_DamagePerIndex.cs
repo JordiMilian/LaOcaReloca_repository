@@ -7,7 +7,7 @@ public class Tile_DamagePerIndex : Tile_Base
     public override IEnumerator OnPlayerLanded()
     {
         yield return base.OnPlayerLanded();
-        yield return GameController.AddAcumulatedDamage(indexInBoard * damagePerIndex);
+        yield return GameController.Co_AddAcumulatedDamage(indexInBoard * damagePerIndex);
     }
     public override string GetTooltipText()
     {

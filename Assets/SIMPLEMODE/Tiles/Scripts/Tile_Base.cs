@@ -23,7 +23,7 @@ public enum TileTags
 }
 public enum TileMessageType
 {
-    Neutral, Good, Bad, VeryGood
+    Neutral, AddDamage, AddMultiplier, AddPermaDamage
 }
 public class Tile_Base : MonoBehaviour
 {
@@ -78,18 +78,18 @@ public class Tile_Base : MonoBehaviour
         defaultCrossedDamage = newDamage;
         tileMovement.UpdateDmgDisplayText();
     }
-    public void AddDefaultCrossingDamage(float addedDamage)
+    public void AddPermaDamage(float addedDamage)
     {
         SetDefaultCrossingDamage(defaultCrossedDamage + addedDamage);
         tileMovement.shakeTile(Intensity.mid);
         if (Mathf.Approximately(addedDamage, 0)) { return; }
         if(addedDamage >= 0)
         {
-            tileMovement.DisplayMessage("+" + MathJ.FloatToString(addedDamage, 1), TileMessageType.Good);
+            tileMovement.DisplayMessage("+" + MathJ.FloatToString(addedDamage, 1), TileMessageType.AddPermaDamage);
         }
         else
         {
-            tileMovement.DisplayMessage(MathJ.FloatToString(addedDamage, 1), TileMessageType.Bad);
+            tileMovement.DisplayMessage(MathJ.FloatToString(addedDamage, 1), TileMessageType.AddPermaDamage);
         }
     }
     public void MultiplyCrossingDamage(float mult)
@@ -143,7 +143,7 @@ public class Tile_Base : MonoBehaviour
     public virtual IEnumerator OnPlayerStepped()
     {
         UpdateTileVisuals();
-        yield return GameController.AddAcumulatedDamage(GetCrossedDamageAmount());
+        yield return GameController.Co_AddAcumulatedDamage(GetCrossedDamageAmount());
 
     }
     public virtual IEnumerator OnPlayerLanded()

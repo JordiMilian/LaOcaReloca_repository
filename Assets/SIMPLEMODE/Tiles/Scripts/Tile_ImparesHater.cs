@@ -8,11 +8,11 @@ public class Tile_ImparesHater : Tile_Base
     {
         if(GameController.dicesController.LastRolledValue%2 == 0)
         {
-            AddDefaultCrossingDamage(10);
+            AddPermaDamage(10);
         }
         else 
         {
-            AddDefaultCrossingDamage(-10);
+            AddPermaDamage(-10);
         }
         yield return new WaitForSeconds(0.3f);
 

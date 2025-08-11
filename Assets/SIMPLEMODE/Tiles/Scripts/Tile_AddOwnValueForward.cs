@@ -10,7 +10,7 @@ public class Tile_AddOwnValueForward : Tile_Base
         Tile_Base nextTile = BoardController.TilesList[indexInBoard + 1];
         if(nextTile != null)
         {
-            nextTile.AddDefaultCrossingDamage
+            nextTile.AddPermaDamage
                 (GetDefaultCrossedDamage() * (PercentageToAdd /100));
             yield return new WaitForSeconds(0.3f);
         }

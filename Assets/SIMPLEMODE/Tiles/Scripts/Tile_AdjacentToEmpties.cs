@@ -9,7 +9,7 @@ public class Tile_AdjacentToEmpties : Tile_Base
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
     public override string GetTooltipText() 
     {
-        return $"{ON(On.OnCrossed)} for each surrounding EMPTY TILES, add {AddedDamagePerEmpty} to this tile";
+        return $"{ON(On.OnCrossed)} for each surrounding EMPTY TILES, {MathJ.AddMultiplier(AddedDamagePerEmpty)}";
     }
     [SerializeField] float AddedDamagePerEmpty = 10;
     public override IEnumerator OnPlayerStepped()
@@ -22,10 +22,10 @@ public class Tile_AdjacentToEmpties : Tile_Base
             {
                 emptiesCount++;
                 tile.tileMovement.shakeTile(Intensity.low);
+                tile.tileMovement.DisplayMessage($"+{AddedDamagePerEmpty}", TileMessageType.AddMultiplier);
             }
         }
-        AddDefaultCrossingDamage(AddedDamagePerEmpty * emptiesCount);
-
+        yield return GameController.Co_AddAcumulatedMultiplier(AddedDamagePerEmpty * emptiesCount);
         yield return base.OnPlayerStepped();
     }
 }

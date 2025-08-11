@@ -27,7 +27,7 @@ public class Tile_AddDmgAround : Tile_Base
                 {
                     Tile_Base adjacentTile = BoardController.TilesByPosition[vectorInBoard + new Vector2Int(i, j)];
                     if(adjacentTile is Tile_Start) { continue; } 
-                    adjacentTile.AddDefaultCrossingDamage(addedDmg);
+                    adjacentTile.AddPermaDamage(addedDmg);
                 }
 
             }

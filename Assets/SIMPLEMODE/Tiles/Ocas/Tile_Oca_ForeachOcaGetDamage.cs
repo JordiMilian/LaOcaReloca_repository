@@ -11,7 +11,7 @@ public class Tile_Oca_ForeachOcaGetDamage : Tile_Oca
         {
             if (tile is Tile_Oca) { OcasCount++; }
         }
-        yield return GameController.AddAcumulatedDamage(damagePerOca * OcasCount);
+        yield return GameController.Co_AddAcumulatedDamage(damagePerOca * OcasCount);
         Debug.Log($"Found {OcasCount} ocas");
 
         yield return base.OnPlayerLanded();

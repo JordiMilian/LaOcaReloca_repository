@@ -173,13 +173,13 @@ public class TileSharedVisuals : MonoBehaviour
             case TileMessageType.Neutral:
                 msgColor = Color.white;
                 break;
-            case TileMessageType.Good:
+            case TileMessageType.AddPermaDamage:
                 msgColor = Color.cyan;
                 break;
-            case TileMessageType.Bad:
+            case TileMessageType.AddMultiplier:
                 msgColor = Color.red;
                 break;
-            case TileMessageType.VeryGood:
+            case TileMessageType.AddDamage:
                 msgColor = Color.blue;
                 break;
         }

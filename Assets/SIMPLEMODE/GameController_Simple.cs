@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using System;
 using UnityEngine.Playables;
 using DG.Tweening;
@@ -42,7 +41,8 @@ public class GameController_Simple : MonoBehaviour
     {
         ChangeGameState(GameState.StartBoard);
         UpdateMoneyUI();
-        UpdateEnemyHpUI();
+        UpdateAcumulatedDamageDisplay();
+        UpdateEnemyHPBar();
     }
     private void Update()
     {
@@ -188,7 +188,7 @@ public class GameController_Simple : MonoBehaviour
 
         yield return BoardController.L_LandPlayerInCurrentPos();
 
-        yield return DealAcumulatedDamage();
+        yield return DealTotalDamage();
 
         ChangeGameState(GameState.FreeMode); 
             
@@ -202,7 +202,7 @@ public class GameController_Simple : MonoBehaviour
     IEnumerator OnReachedEnd_Coroutine()
     {
         yield return new WaitForSeconds(0.5f); 
-        yield return DealAcumulatedDamage();
+        yield return DealTotalDamage();
         yield return BoardController.JumpPlayerToStartTile();
 
         ChangeGameState(GameState.FreeMode);
@@ -219,7 +219,7 @@ public class GameController_Simple : MonoBehaviour
         AddMoney(10);
         Enemy_MaxHP *= 1.2f;
         Enemy_CurrentHP = Enemy_MaxHP;
-        UpdateEnemyHpUI();
+        UpdateEnemyHPBar();
 
         yield return BoardController.JumpPlayerToStartTile();
 
@@ -404,31 +404,46 @@ public class GameController_Simple : MonoBehaviour
     #region DAMAGE
     [Header("Enemy HP")]
     [SerializeField] float AcumulatedDamage;
+    [SerializeField] float AcumulatedMultiplier;
     [SerializeField] float Enemy_MaxHP;
     [SerializeField] float Enemy_CurrentHP;
     [SerializeField] TextMeshProUGUI TMP_AcumulatedDamage;
     [SerializeField] Healthbar healthbar;
-    public IEnumerator AddAcumulatedDamage(float amount)
+    public IEnumerator Co_AddAcumulatedDamage(float amount)
     {
         if (Mathf.Approximately(amount, 0)) { yield break; }
 
         AcumulatedDamage += amount;
-        UpdateEnemyHpUI();
+        UpdateAcumulatedDamageDisplay();
 
-        float shakeDuration = .15f;
+        const float shakeDuration = .15f;
+        TMP_AcumulatedDamage.rectTransform.DOShakeRotation(shakeDuration, 30);
+        yield return new WaitForSeconds(shakeDuration);
+    }
+    public IEnumerator Co_AddAcumulatedMultiplier(float amount)
+    {
+        if (Mathf.Approximately(amount, 0)) { yield break; }
+
+        AcumulatedMultiplier += amount;
+        UpdateAcumulatedDamageDisplay();
+
+        const float shakeDuration = .15f;
         TMP_AcumulatedDamage.rectTransform.DOShakeRotation(shakeDuration, 30);
         yield return new WaitForSeconds(shakeDuration);
     }
     public float GetCurrentAcumulatedDamage() { return AcumulatedDamage; }
-    IEnumerator DealAcumulatedDamage()
+    IEnumerator DealTotalDamage()
     {
-        Enemy_CurrentHP -= AcumulatedDamage;
+        float totalDamage = AcumulatedDamage * AcumulatedMultiplier;
+        Enemy_CurrentHP -= totalDamage;
         Enemy_CurrentHP = Mathf.Clamp(Enemy_CurrentHP, 0, Enemy_MaxHP);
         AcumulatedDamage = 0;
+        AcumulatedMultiplier = 1;
 
-        UpdateEnemyHpUI();
+        TMP_AcumulatedDamage.text = $"<color=purple>{MathJ.FloatToString(totalDamage, 1)}";
+        UpdateEnemyHPBar();
 
-        float shakeDuration = .4f;
+        float shakeDuration = .5f;
         Sequence shakeSequence = DOTween.Sequence();
 
         shakeSequence.Append(TMP_AcumulatedDamage.rectTransform.DOShakeRotation(shakeDuration, 30));
@@ -436,21 +451,21 @@ public class GameController_Simple : MonoBehaviour
         shakeSequence.Append(TMP_AcumulatedDamage.rectTransform.DOScale(1f, shakeDuration / 2));
 
         yield return new WaitForSeconds(shakeDuration);
-
-        if (Enemy_CurrentHP == 0)
-        {
-            Enemy_CurrentHP = 0;
-            UpdateEnemyHpUI();
-            ChangeGameState(GameState.KilledEnemy);
-            yield break;
-        }
-        else if(Enemy_CurrentHP > Enemy_MaxHP) { Enemy_CurrentHP = Enemy_MaxHP; }
         
+
+        if (Mathf.Approximately( Enemy_CurrentHP,0))
+        {
+            ChangeGameState(GameState.KilledEnemy);
+        }
     }
-    void UpdateEnemyHpUI()
+    void UpdateAcumulatedDamageDisplay()
+    {
+        
+        TMP_AcumulatedDamage.text = $"<color=blue>{MathJ.FloatToString(AcumulatedDamage, 1)}<color=white> x <color=red>{MathJ.FloatToString(AcumulatedMultiplier,1)}";
+    }
+    void UpdateEnemyHPBar()
     {
         healthbar.UpdateHealthbar(Enemy_CurrentHP, Enemy_MaxHP);
-        TMP_AcumulatedDamage.text = MathJ.FloatToString(AcumulatedDamage, 1);
     }
     #endregion
     #region MONEY

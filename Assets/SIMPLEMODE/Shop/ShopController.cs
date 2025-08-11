@@ -10,7 +10,6 @@ public class ShopController : MonoBehaviour
     public List<GameObject> TilesAppeareable;
     [Header("UI")]
     public ShopItem_Controller[] shopItems;
-    List<Button> shopItemsButtons = new();
     [SerializeField] int rerollPrice = 5;
     [SerializeField] Button button_Reroll;
 
@@ -28,12 +27,7 @@ public class ShopController : MonoBehaviour
     #region DISABLE SHOP
     public void DisableShop()
     {
-        foreach(ShopItem_Controller shopItem in shopItems)
-        {
-            if(shopItem.Item != null) { shopItem.Item.tileMovement.canBeMoved = false; }
-            
-        }
-        button_Reroll.interactable = false;
+        
     }
     public void EnableShop()
     {

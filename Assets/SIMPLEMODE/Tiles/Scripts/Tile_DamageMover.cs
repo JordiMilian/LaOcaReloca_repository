@@ -10,8 +10,8 @@ public class Tile_DamageMover : Tile_Base
         if(tileBehind is not Tile_Start)
         {
             Tile_Base tileForward = BoardController.TilesList[indexInBoard + 1];
-            tileForward.AddDefaultCrossingDamage(tileBehind.GetCrossedDamageAmount());
-            tileBehind.AddDefaultCrossingDamage(-tileBehind.GetDefaultCrossedDamage());
+            tileForward.AddPermaDamage(tileBehind.GetCrossedDamageAmount());
+            tileBehind.AddPermaDamage(-tileBehind.GetDefaultCrossedDamage());
             yield return new WaitForSeconds(0.3f);
         }
     }

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 public class Tile_AddToEmptyTiles : Tile_Base
@@ -12,7 +11,7 @@ public class Tile_AddToEmptyTiles : Tile_Base
         {
             if(tile.tileTag == TileTags.EmptyTile)
             {
-                tile.AddDefaultCrossingDamage(addedDamageToEmptyTiles);
+                tile.AddPermaDamage(addedDamageToEmptyTiles);
                 yield return new WaitForSeconds(0.1f);
             }
         }
