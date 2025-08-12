@@ -2,16 +2,11 @@ using DG.Tweening;
 using UnityEngine;
 using TMPro;
 
-public struct transformStats
-{
-    public Vector3 position;
-    public Quaternion rotation;
-    public Vector3 scale;
-}
+
 public class TileSharedVisuals : MonoBehaviour
 {
     Camera mainCamera;
-    [HideInInspector] public transformStats originTransform;
+    [HideInInspector] public transformData originTransform;
     public bool canBeMoved = true;
     [SerializeField] float heightWhileDragged = .5f;
     GameController_Simple gameController;
@@ -31,16 +26,17 @@ public class TileSharedVisuals : MonoBehaviour
         HideTooltip();
     }
     #region Set Origin
+    //The rotation of a Tile is ALWAYS identity so its always facing the player
     public void SetOriginTransformWithTransform(Transform originTf)
     {
         originTransform.position = originTf.position;
-        originTransform.rotation = originTf.rotation;
+        originTransform.rotation = Quaternion.identity;
         originTransform.scale = originTf.localScale;
     }
-    public void SetOriginTransformWithStats(transformStats stats)
+    public void SetOriginTransformWithStats(transformData stats)
     {
         originTransform.position = stats.position;
-        originTransform.rotation = stats.rotation;
+        originTransform.rotation = Quaternion.identity;
         originTransform.scale = stats.scale;
     }
     #endregion

@@ -160,7 +160,7 @@ public class Tile_Base : MonoBehaviour
     }
     #endregion
     #region BUY/SELL
-    public int GetBuyingPrice()
+    public virtual int GetBuyingPrice()
     {
         int repeatedCards = 0;
         foreach (Tile_Base tile in BoardController.TilesList)

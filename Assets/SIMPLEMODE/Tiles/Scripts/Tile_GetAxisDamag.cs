@@ -14,16 +14,26 @@ public class Tile_GetAxisDamag : Tile_Base
             yield return addTileDamage(tile);
         }
         //tiles to the right
-        for (int i = vectorInBoard.x + 1; i < BoardController.Width; i++)
+        for (int i = vectorInBoard.x + 1; i < 10; i++)
         {
-            Tile_Base tile = BoardController.TilesByPosition[new Vector2Int(i, vectorInBoard.y)];
-            yield return addTileDamage(tile);
+            if(BoardController.TilesByPosition.ContainsKey(new Vector2Int(i, vectorInBoard.y)))
+            {
+                Tile_Base tile = BoardController.TilesByPosition[new Vector2Int(i, vectorInBoard.y)];
+                yield return addTileDamage(tile);
+            }
+            else { break; }
+            
         }
         //tiles over
-        for (int i = vectorInBoard.y+1; i < BoardController.Height; i++)
+        for (int i = vectorInBoard.y+1; i < 10; i++)
         {
-            Tile_Base tile = BoardController.TilesByPosition[new Vector2Int(vectorInBoard.x, i)];
-            yield return addTileDamage(tile);
+            if(BoardController.TilesByPosition.ContainsKey(new Vector2Int(vectorInBoard.x, i)))
+            {
+                Tile_Base tile = BoardController.TilesByPosition[new Vector2Int(vectorInBoard.x, i)];
+                yield return addTileDamage(tile);
+            }
+            else { break; };
+            
         }
         //tiles to the left
         for (int i = vectorInBoard.x - 1; i >= 0; i--)

@@ -276,45 +276,15 @@ public class GameController_Simple : MonoBehaviour
         }
         if(SelectedTile.tileState == TileState.InBoard)
         {
-            MoveTilesInBoard(SelectedTile.indexInBoard, tileInBoard.indexInBoard);
+            BoardController.MoveTileInBoard(SelectedTile.indexInBoard, tileInBoard.indexInBoard);
+            //MoveTilesInBoard(SelectedTile.indexInBoard, tileInBoard.indexInBoard);
         }
-
-    }
-    void MoveTilesInBoard(int indexAtoB, int indexBtoA)
-    {
-        Tile_Base tileAtoB = BoardController.TilesList[indexAtoB];
-        Tile_Base tileBtoA = BoardController.TilesList[indexBtoA];
-
-        transformStats ghostStatsA = tileAtoB.tileMovement.originTransform;
-
-        Vector2Int vectorAtoB = tileAtoB.vectorInBoard;
-        Vector2Int vectorBtoA = tileBtoA.vectorInBoard;
-        tileAtoB.vectorInBoard = vectorBtoA;
-        tileBtoA.vectorInBoard = vectorAtoB;
-        BoardController.TilesByPosition[vectorAtoB] = tileBtoA;
-        BoardController.TilesByPosition[vectorBtoA] = tileAtoB;
-
-
-        BoardController.TilesList[indexAtoB] = tileBtoA;
-        BoardController.TilesList[indexBtoA] = tileAtoB;
-        tileBtoA.indexInBoard = indexAtoB;
-        tileAtoB.indexInBoard = indexBtoA;
-
-
-        tileAtoB.tileMovement.SetOriginTransformWithTransform(tileBtoA.transform);
-        tileAtoB.tileMovement.MoveTileToOrigin();
-
-        tileBtoA.tileMovement.SetOriginTransformWithStats(ghostStatsA);
-        tileBtoA.tileMovement.MoveTileToOrigin();
-
-        tileAtoB.UpdateTileVisuals();
-        tileBtoA.UpdateTileVisuals();
-
     }
     void PlaceTileFromShopToBoard(Tile_Base tileInBoard, Tile_Base boughtTile)
     {
         RemoveMoney(SelectedTile.GetBuyingPrice());
-        BoardController.ReplaceTileInBoard(tileInBoard, boughtTile);
+        //BoardController.ReplaceTileInBoard(tileInBoard, boughtTile);
+        BoardController.AddNewTile(boughtTile, tileInBoard.indexInBoard);
         ShopItem_Controller boughtItem = shopController.GetShopItem(SelectedTile);
         boughtItem.RemoveItem();
 

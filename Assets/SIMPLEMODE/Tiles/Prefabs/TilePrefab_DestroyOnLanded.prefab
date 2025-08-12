@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8806826499406372248
+--- !u!1001 &4822435512175257914
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
       propertyPath: m_Name
-      value: TllePrefab_Empty
+      value: TilePrefab_DestroyOnLanded
       objectReference: {fileID: 0}
     - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
       propertyPath: m_LocalPosition.x
@@ -58,34 +58,34 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3206638602691674025}
+      addedObject: {fileID: -3483695694639034142}
   m_SourcePrefab: {fileID: 100100000, guid: 13f06a96ebf842547919b71594469744, type: 3}
---- !u!1 &4718749425601199319 stripped
+--- !u!1 &8766472299784947829 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
-  m_PrefabInstance: {fileID: 8806826499406372248}
+  m_PrefabInstance: {fileID: 4822435512175257914}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3206638602691674025
+--- !u!114 &-3483695694639034142
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4718749425601199319}
+  m_GameObject: {fileID: 8766472299784947829}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f59fa2e076235542b0468b7be3bd2c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 316b67398c82fac438f7f15e558a0e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TitleText: EMPTY
-  tileTag: 1
+  TitleText: Destroyer
+  tileTag: 0
   tileState: 0
-  defaultCrossedDamage: 10
-  rarity: 0
+  defaultCrossedDamage: 50
+  rarity: 2
   indexInBoard: 0
   IndexInHand: 0
   vectorInBoard: {x: 0, y: 0}
-  tileColor: {r: 1, g: 1, b: 1, a: 1}
+  tileColor: {r: 0.4056604, g: 0.047837302, b: 0.06801249, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0
-  BuyingPrice: 1
+  MultiplierAdded: 20

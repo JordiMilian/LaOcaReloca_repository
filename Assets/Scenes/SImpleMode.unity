@@ -2205,20 +2205,18 @@ MonoBehaviour:
   Tile_Oca: {fileID: 1730741789483637130, guid: 5b09ccb2172c1f7439f65791f138f888, type: 3}
   TilesList: []
   PlayerPrefab: {fileID: 1266550042}
-  Width: 5
-  Height: 5
+  StartingTilesCount: 9
   distanceBetweenTiles: 1.5
   TimeToCreateBoard: 2
   OnPlayerMoved:
     m_PersistentCalls:
       m_Calls: []
-  vectorsInOrder: []
-  tilePosOffset: {x: 0, y: 0.2, z: 0}
   UnderTilePrefab_Start: {fileID: 1127392097886386256, guid: 589936b875e9472448b7d83ed02c697c, type: 3}
   UnderTilePrefab_Straight: {fileID: 1127392097886386256, guid: f7b0d41314368824cbf8976663619730, type: 3}
   UnderTilePrefab_Curve: {fileID: 1127392097886386256, guid: 6ba42ef30bb394a4787acfa26abd2e5a, type: 3}
   undertile_StartColor: {r: 1, g: 0.9605925, b: 0.58679235, a: 1}
   undertile_EndColor: {r: 0.78113204, g: 0.19307224, b: 0.19307224, a: 1}
+  underTiles_VerticalOffset: -0.1
 --- !u!4 &466753542
 Transform:
   m_ObjectHideFlags: 0
@@ -2228,7 +2226,7 @@ Transform:
   m_GameObject: {fileID: 466753540}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.9600003, y: 0.101, z: -3.2000003}
+  m_LocalPosition: {x: 0, y: 0.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6868,6 +6866,8 @@ MonoBehaviour:
   - {fileID: 4718749425601199319, guid: fb0e08f96f77efd4f985e6bf48d180dd, type: 3}
   - {fileID: 8766472299784947829, guid: 2081cf1d72f2ab74e929fd6f38753df1, type: 3}
   - {fileID: 8766472299784947829, guid: 071569633a33a8e43ae9ef8d28e0bb2e, type: 3}
+  - {fileID: 8766472299784947829, guid: b8c17fe68e1a86a4a90a9784e4df2107, type: 3}
+  - {fileID: 4718749425601199319, guid: 24ee097d7e611794db661c73b24ccec0, type: 3}
   shopItems:
   - {fileID: 1309579213}
   - {fileID: 1169025460}

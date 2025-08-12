@@ -4,56 +4,63 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.Events;
 
-
+public struct transformData
+{
+    public Vector3 position;
+    public Quaternion rotation;
+    public Vector3 scale;
+    public Vector2Int vector;
+}
 public class Board_Controller_simple : MonoBehaviour
 {
     [SerializeField] GameObject Tile_Empty, Tile_Start, Tile_End, Tile_Oca;
 
     public List<Tile_Base> TilesList = new();
+    public List<transformData> Tiles_TfData_List = new();
     public Dictionary<Vector2Int, Tile_Base> TilesByPosition = new();
     public int PlayerIndex { get; private set; }
 
+    Transform tilesHolder, UnderTilesHolder;
     public static Board_Controller_simple Instance;
     private void Awake()
     {
         Instance = this;
+        tilesHolder = transform.Find("TilesHolder");
+        UnderTilesHolder = transform.Find("UndertilesHolder");
     }
     [Header("Player")]
     [SerializeField] GameObject PlayerPrefab;
 
     [Header("Board visualization")]
-    public int Width;
-    public int Height;
+    public int StartingTilesCount = 9;
     [SerializeField] float distanceBetweenTiles;
     [SerializeField] float TimeToCreateBoard;
     public UnityEvent<int, int> OnPlayerMoved; //(from, to)
 
-    [SerializeField] List<Vector2Int> vectorsInOrder = new(); //this is created to store the vectors when creating the undertiles and then passing the info into the tilesByPosition dictionary
-    [SerializeField] Vector3 tilePosOffset;
 
     #region STARTING BOARD CREATION
     public IEnumerator StartBoard() //called from game controller
     {
-        TilesList = CreateStartingBoardData();
-        CreateUnderTiles();
-        PlaceTilesOverUnderTile();
-        yield return AnimateStartingTiles();
+        TilesList = InstantiateStartingTiles();
+        UpdateTfData_ByTilesList();
+        MoveTiles_ToTfData(false);
+        UpdateUndertiles_ByTfData();
+        yield return Co_AnimateStartingTiles();
+
 
         PlayerIndex = 0;
         OnPlayerMoved?.Invoke(0, 0);
         yield return V_StepPlayerToNewPos();
     }
-    List<Tile_Base> CreateStartingBoardData()
+    private List<Tile_Base> InstantiateStartingTiles()
     {
-        int totalTilesCount = Width * Height;
-
         List<Tile_Base> tempTiles = new();
 
-        for (int i = 0; i < totalTilesCount; i++)
+        for (int i = 0; i < StartingTilesCount; i++)
         {
             GameObject prefabToSpawn;
             if (i == 0) { prefabToSpawn = Tile_Start; }
-            else if (i == totalTilesCount - 1) { prefabToSpawn = Tile_End; }
+            else if (i == StartingTilesCount - 1) { prefabToSpawn = Tile_End; }
             else if (i % 4 == 0) { prefabToSpawn = Tile_Oca; }
             //else if(i % 3 == 0) { prefabToSpawn = Tile_Money; }
             else { prefabToSpawn = Tile_Empty; }
@@ -64,7 +71,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         void SpawnAndAddNewTile(GameObject tilePrefab, int index)
         {
-            GameObject newTile = Instantiate(tilePrefab, transform);
+            GameObject newTile = Instantiate(tilePrefab, tilesHolder);
             if(newTile.TryGetComponent(out Tile_Base tileInfo))
             {
                 tileInfo.indexInBoard = index;
@@ -75,100 +82,113 @@ public class Board_Controller_simple : MonoBehaviour
             else { Debug.LogError("ERROR: TilePrefab is missing a controller"); }
         }
     }
-   
+    private void UpdateTfData_ByTilesList()
+    {
+        Tiles_TfData_List = new();
+
+        Vector3Int moveingDirection = Vector3Int.left;
+
+        Vector3 nextPosition = transform.position;
+        Vector2Int nextVector = new Vector2Int(0, 0);
+        Quaternion nextRotation = Quaternion.identity;
+
+        Quaternion halfRotation = Quaternion.AngleAxis(90, Vector3.up);
+
+        int amountToMove = 1;
+        int amountMovedInDirection = 0;
+
+        for (int i = TilesList.Count - 1; i >= 0; i--)
+        {
+            transformData newTfStat = new();
+
+            //place tile in this position
+            newTfStat.position = nextPosition;
+            newTfStat.rotation = nextRotation;
+            newTfStat.scale = Vector3.one; //TODO: set the scale of the tile here
+            newTfStat.vector = nextVector;
+            Tiles_TfData_List.Add(newTfStat);
+
+
+            //rotate if reached end
+            if (amountMovedInDirection == amountToMove)
+            {
+                if (moveingDirection == Vector3Int.forward || moveingDirection == Vector3Int.back)
+                {
+                    amountToMove++;
+                }
+                amountMovedInDirection = 0;
+                moveingDirection = rotateVectorClockwise90Degrees(moveingDirection);
+
+                nextRotation = halfRotation * nextRotation;
+            }
+
+            //move next position
+            nextPosition += (Vector3)moveingDirection * distanceBetweenTiles;
+            nextVector += BoardVector3ToVector2Int(moveingDirection);
+
+            amountMovedInDirection++;
+
+        }
+        Tiles_TfData_List.Reverse();
+
+        //
+        Vector3Int rotateVectorClockwise90Degrees(Vector3Int VectorToRotate)
+        {
+            return new Vector3Int(VectorToRotate.z, 0, -VectorToRotate.x);
+        }
+        Vector2Int BoardVector3ToVector2Int(Vector3Int v) { return new Vector2Int(v.x, v.z); }
+    }
+
     [Header("UnderTiles")]
     [SerializeField] GameObject UnderTilePrefab_Start;
     [SerializeField] GameObject UnderTilePrefab_Straight;
     [SerializeField] GameObject UnderTilePrefab_Curve;
     [SerializeField] Color undertile_StartColor, undertile_EndColor;
+    [SerializeField] float underTiles_VerticalOffset = -0.25f;
+    List<GameObject> undertiles_List = new();
     public enum UnderTileTypes { Start, Straight, Curve }
-    List<GameObject> underTilesList;
-    void CreateUnderTiles()
+    IEnumerator Co_AnimateStartingTiles()
     {
-        underTilesList = new();
+        float delayBetweenTiles = TimeToCreateBoard / TilesList.Count;
 
-        int HeightCount = Height;
-        int WidthCount = Width;
-        int totalTilesCount = HeightCount * WidthCount;
-
-        bool movingHorizontaly = true; //if false, means we are moving vertically
-        int iterationsNeeded = (Mathf.Min(HeightCount, WidthCount) * 2) - 1;
-        int placedTilesCount = 0;
-
-        Vector3Int movingDirection = Vector3Int.right;
-        Quaternion tileRotation = Quaternion.identity;
-        Quaternion halfRotation = Quaternion.AngleAxis(-90, Vector3.up);
-        Vector3 nextTilePosition = transform.position;
-        Vector2Int CurrentVector = new Vector2Int(0, 0);
-
-        for (int t = 0; t < iterationsNeeded + 1; t++)
+        foreach (Tile_Base tile in TilesList)
         {
-            if (movingHorizontaly)
+            tile.gameObject.SetActive(false);
+        }
+        foreach (Tile_Base tile in TilesList)
+        {
+            yield return new WaitForSeconds(delayBetweenTiles);
+            tile.gameObject.SetActive(true);
+            tile.tileMovement. FirstAppeareanceAnim();
+        }
+    }
+    void UpdateUndertiles_ByTfData()
+    {
+        for(int i = undertiles_List.Count - 1; i >= 0; i--)
+        {
+            Destroy(undertiles_List[i]);
+        }
+
+        InstantiateUnderTile(UnderTileTypes.Start, Tiles_TfData_List[0].position, Tiles_TfData_List[0].rotation,0);
+
+        for (int i = 1;i < Tiles_TfData_List.Count;i++)
+        {
+            transformData thisTf = Tiles_TfData_List[i];
+            if(i == Tiles_TfData_List.Count -1)
             {
-                if(WidthCount == 0) { return; }
-
-                PlaceInDirection(WidthCount);
-                RotateForNextDirection();
-
-                HeightCount--;
-                movingHorizontaly = false;
+                InstantiateUnderTile(UnderTileTypes.Straight, thisTf.position, thisTf.rotation, i);
+            }
+            else if(thisTf.rotation != Tiles_TfData_List[i - 1].rotation)
+            {
+                InstantiateUnderTile(UnderTileTypes.Curve, thisTf.position,thisTf.rotation, i);
             }
             else
             {
-                if(HeightCount == 0) { return; }
-
-                PlaceInDirection(HeightCount);
-                RotateForNextDirection();
-
-                WidthCount--;
-                movingHorizontaly = true;
+                InstantiateUnderTile(UnderTileTypes.Straight, thisTf.position, thisTf.rotation, i);
             }
         }
-
-        //
-        void RotateForNextDirection()
+        void InstantiateUnderTile(UnderTileTypes undertileType, Vector3 position, Quaternion rotation, int index)
         {
-            tileRotation = halfRotation * tileRotation;
-            movingDirection = new Vector3Int(-movingDirection.z, 0, movingDirection.x);
-            //movingDirection = MathJ.rotateVectorUnclockwise90Degrees(movingDirection);
-            nextTilePosition += (Vector3)movingDirection * distanceBetweenTiles;
-            CurrentVector += new Vector2Int(movingDirection.x, movingDirection.z);
-        }
-        void  PlaceInDirection(int Count)
-        {
-            for (int r = 0; r < Count; r++)
-            {
-                if(placedTilesCount == 0) //START tile
-                { 
-                    InstantiateUnderTile(UnderTileTypes.Start, nextTilePosition, tileRotation);
-                    nextTilePosition += (Vector3)movingDirection * distanceBetweenTiles;
-                    CurrentVector += new Vector2Int(movingDirection.x,movingDirection.z);
-                    continue; 
-                }
-                if(placedTilesCount == totalTilesCount-1) //END tile
-                {
-                    tileRotation = halfRotation * tileRotation;
-                    tileRotation = halfRotation * tileRotation;
-                    InstantiateUnderTile(UnderTileTypes.Start, nextTilePosition, tileRotation);
-                    return; }
-
-
-                if (r == Count - 1) //last tile in the series
-                {
-                    InstantiateUnderTile(UnderTileTypes.Curve,nextTilePosition,tileRotation);
-                    
-                }
-                else //straight tile
-                {
-                    InstantiateUnderTile(UnderTileTypes.Straight, nextTilePosition, tileRotation);
-                    nextTilePosition += (Vector3)movingDirection * distanceBetweenTiles;
-                    CurrentVector += new Vector2Int(movingDirection.x, movingDirection.z);
-                }
-            }
-        }
-        void InstantiateUnderTile(UnderTileTypes undertileType, Vector3 position, Quaternion rotation)
-        {
-            placedTilesCount++;
             GameObject prefabToSpawn = null;
             switch (undertileType)
             {
@@ -182,45 +202,32 @@ public class Board_Controller_simple : MonoBehaviour
                     prefabToSpawn = UnderTilePrefab_Curve;
                     break;
             }
-            GameObject newUndertile = Instantiate(prefabToSpawn, position, rotation,transform);
-            newUndertile.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(undertile_StartColor, undertile_EndColor, (float)placedTilesCount / (float)totalTilesCount);
+            Vector3 underTilePos = position + (Vector3.up * underTiles_VerticalOffset);
+            GameObject newUndertile = Instantiate(prefabToSpawn, underTilePos, rotation, UnderTilesHolder);
+            undertiles_List.Add(newUndertile);
+            newUndertile.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(undertile_StartColor, undertile_EndColor, (float)index / (float)Tiles_TfData_List.Count);
 
-            underTilesList.Add(newUndertile);
-            vectorsInOrder.Add(CurrentVector);
         }
     }
-    void PlaceTilesOverUnderTile()
+    void MoveTiles_ToTfData(bool withMovement)
     {
-        for (int i = 0; i < underTilesList.Count; i++)
+        TilesByPosition = new();
+        for (int i = 0; i < TilesList.Count; i++)
         {
-            Tile_Base thisTile = TilesList[i];
-            TileSharedVisuals movement = thisTile.tileMovement;
-            movement.SetOriginTransformWithStats(new transformStats
+            Tile_Base tile = TilesList[i];
+            transformData tfStat = Tiles_TfData_List[i];
+            tile.tileMovement.SetOriginTransformWithStats(tfStat);
+            tile.indexInBoard = i;
+            tile.vectorInBoard = tfStat.vector;
+            TilesByPosition.Add(tfStat.vector, tile);
+            if (withMovement)
             {
-                position = underTilesList[i].transform.position + tilePosOffset,
-                rotation = Quaternion.identity,
-                scale = underTilesList[i].transform.localScale
-            });
-
-            movement.PlaceTileInOrigin();
-
-            TilesByPosition.Add(vectorsInOrder[i], thisTile);
-            thisTile.vectorInBoard = vectorsInOrder[i];
-        }
-    }
-    IEnumerator AnimateStartingTiles()
-    {
-        float delayBetweenTiles = TimeToCreateBoard / TilesList.Count;
-
-        foreach (Tile_Base tile in TilesList)
-        {
-            tile.gameObject.SetActive(false);
-        }
-        foreach (Tile_Base tile in TilesList)
-        {
-            yield return new WaitForSeconds(delayBetweenTiles);
-            tile.gameObject.SetActive(true);
-            tile.tileMovement. FirstAppeareanceAnim();
+                tile.tileMovement.MoveTileToOrigin();
+            }
+            else
+            {
+                tile.tileMovement.PlaceTileInOrigin();
+            }
         }
     }
     #endregion
@@ -335,12 +342,41 @@ public class Board_Controller_simple : MonoBehaviour
     public void AddNewTile(Tile_Base tile, int index)
     {
         TilesList.Insert(index, tile);
-        if (PlayerIndex >= index) { PlayerIndex++; }
-        //actualizar vectors de cada tile_Base i el Index
-        //update Origin transforms of all Tile_movements i moure els tiles de index menor 
 
+        UpdateTfData_ByTilesList();
+
+        MoveTiles_ToTfData(true);
+        UpdateUndertiles_ByTfData();
+        if (PlayerIndex >= index) { PlayerIndex++; }
+        StartCoroutine(V_StepPlayerToNewPos());
+
+        tile.SetTileState(TileState.InBoard);
+        tile.OnPlacedInBoard();
+
+        tile.transform.parent = tilesHolder;
 
         //actualitzar escala (mes endavant)
+    }  
+    public void RemoveTile(int index)
+    {
+        Tile_Base tileToRemove = TilesList[index];
+        TilesList.RemoveAt(index);
+
+        Destroy(tileToRemove.gameObject);
+
+        UpdateTfData_ByTilesList();
+        MoveTiles_ToTfData(true);
+        UpdateUndertiles_ByTfData();
+        if(index < PlayerIndex) { PlayerIndex--; }
+        StartCoroutine(V_StepPlayerToNewPos());
+    }
+    public void MoveTileInBoard(int from, int to)
+    {
+        Tile_Base tileMoved = TilesList[from];
+        TilesList.RemoveAt(from);
+        TilesList.Insert(to, tileMoved );
+
+        MoveTiles_ToTfData(true);
     }
     #endregion
 

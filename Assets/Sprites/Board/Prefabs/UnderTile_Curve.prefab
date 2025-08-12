@@ -52,6 +52,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5614062474855064917, guid: 0e2a68ec9bf10b3479c3feac4ddcf545, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614062474855064917, guid: 0e2a68ec9bf10b3479c3feac4ddcf545, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614062474855064917, guid: 0e2a68ec9bf10b3479c3feac4ddcf545, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614062474855064917, guid: 0e2a68ec9bf10b3479c3feac4ddcf545, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614062474855064917, guid: 0e2a68ec9bf10b3479c3feac4ddcf545, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 7565762789573532062, guid: 0e2a68ec9bf10b3479c3feac4ddcf545, type: 3}
       propertyPath: m_Name
       value: UnderTile_Curve
