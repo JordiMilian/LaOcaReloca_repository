@@ -11,7 +11,7 @@ public enum Intensity
 }
 public enum TileState
 {
-    none, InShop, InHand, InBoard
+    none, InShop, InBoard
 }
 public enum Rarity
 {
@@ -35,7 +35,6 @@ public class Tile_Base : MonoBehaviour
     [HideInInspector] public int indexInBoard;
     [HideInInspector] public int IndexInHand;
     [HideInInspector] public Vector2Int vectorInBoard;
-    [HideInInspector] public Vector2 positionInBoardAxis;
 
     [Header("Color testing")]
     public Color tileColor;
@@ -116,10 +115,7 @@ public class Tile_Base : MonoBehaviour
         {
             case TileState.none:
                 break;
-            case TileState.InShop: //TO DO: InShop_Affordable, InShop_Unaffordable maybe
-                tileMovement.canBeMoved = true;
-                break;
-            case TileState.InHand: 
+            case TileState.InShop: 
                 tileMovement.canBeMoved = true;
                 break;
             case TileState.InBoard:
@@ -170,13 +166,6 @@ public class Tile_Base : MonoBehaviour
         foreach (Tile_Base tile in BoardController.TilesList)
         {
             if (tile.GetType() == this.GetType()) { repeatedCards++; }
-        }
-        foreach(GameController_Simple.HandHolder handPOs in GameController.HandPositions)
-        {
-            if(handPOs.isFilled && handPOs.filledTileInfo.GetType() == this.GetType())
-            {
-                repeatedCards++;
-            }
         }
 
         int baseValue = 0;

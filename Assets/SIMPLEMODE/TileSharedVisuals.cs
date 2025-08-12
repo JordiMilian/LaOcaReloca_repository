@@ -15,6 +15,7 @@ public class TileSharedVisuals : MonoBehaviour
     public bool canBeMoved = true;
     [SerializeField] float heightWhileDragged = .5f;
     GameController_Simple gameController;
+    Board_Controller_simple boardController;
     [HideInInspector] public Tile_Base tileBase;
     [SerializeField] TextMeshPro TMP_DamageDisplay;
     
@@ -22,6 +23,7 @@ public class TileSharedVisuals : MonoBehaviour
     {
         mainCamera = Camera.main;
         gameController = GameController_Simple.Instance;
+        boardController = Board_Controller_simple.Instance;
         tileBase = GetComponent<Tile_Base>();
     }
     private void Start()

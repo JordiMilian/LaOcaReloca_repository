@@ -224,6 +224,8 @@ public class Board_Controller_simple : MonoBehaviour
         }
     }
     #endregion
+
+    
     #region MAIN PUBLIC METHODS FOR BOARD MOVEMENT
     public IEnumerator L_StepPlayer(bool positiveStep) //If false, its negative step
     {
@@ -308,6 +310,38 @@ public class Board_Controller_simple : MonoBehaviour
         PlayerPrefab.transform.DOShakePosition(0.2f, .1f, 1);
     }
 
+    #endregion
+    #region BOARD EDITING
+    public void ReplaceTileInBoard(Tile_Base oldTileInBoard, Tile_Base newTile)
+    {
+        oldTileInBoard.OnRemovedFromBoard();
+        TilesList[oldTileInBoard.indexInBoard] = newTile;
+        TilesByPosition[oldTileInBoard.vectorInBoard] = newTile;
+        newTile.indexInBoard = oldTileInBoard.indexInBoard;
+        newTile.vectorInBoard = oldTileInBoard.vectorInBoard;
+
+        newTile.transform.parent = transform;
+
+        newTile.tileMovement.SetOriginTransformWithStats(oldTileInBoard.tileMovement.originTransform);
+        newTile.tileMovement.MoveTileToOrigin();
+        newTile.SetTileState(TileState.InBoard);
+
+        newTile.OnPlacedInBoard();
+
+        Destroy(oldTileInBoard.gameObject);
+
+        newTile.UpdateTileVisuals();//Esto sobre casi segur
+    }
+    public void AddNewTile(Tile_Base tile, int index)
+    {
+        TilesList.Insert(index, tile);
+        if (PlayerIndex >= index) { PlayerIndex++; }
+        //actualizar vectors de cada tile_Base i el Index
+        //update Origin transforms of all Tile_movements i moure els tiles de index menor 
+
+
+        //actualitzar escala (mes endavant)
+    }
     #endregion
 
 }

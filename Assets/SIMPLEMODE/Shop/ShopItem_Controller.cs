@@ -14,24 +14,6 @@ public class ShopItem_Controller : MonoBehaviour
     {
         gameController = GameController_Simple.Instance;
     }
-
-    public void Button_OnBuyPressed()
-    {
-        if (TileGO == null) { return; } //item already bought, empty shop
-        if (gameController.isHandFull()) { return; } //hand full
-        if (!gameController.CanPurchase(Item.GetBuyingPrice())) { return; } //no money
-        
-        
-        gameController.RemoveMoney(Item.GetBuyingPrice());
-        gameController.AddTileToHand(TileGO);
-
-        Item = null;
-        TileGO = null;
-
-        TMP_Price.text = "";
-
-        shopController.UpdatePrices();
-    }
     public void RemoveItem()
     {
         Item = null;

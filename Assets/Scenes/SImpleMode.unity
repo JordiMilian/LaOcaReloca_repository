@@ -6651,20 +6651,8 @@ MonoBehaviour:
   addPitchPerStep: 0.05
   MoneyToRoll: 1
   Timeline_KilledEnemy: {fileID: 1325522183}
-  HandPositions:
-  - TilePositionTf: {fileID: 318254324}
-    isFilled: 0
-    filledTileInfo: {fileID: 0}
-  - TilePositionTf: {fileID: 2139157828}
-    isFilled: 0
-    filledTileInfo: {fileID: 0}
-  - TilePositionTf: {fileID: 712726471}
-    isFilled: 0
-    filledTileInfo: {fileID: 0}
-  - TilePositionTf: {fileID: 1938095775}
-    isFilled: 0
-    filledTileInfo: {fileID: 0}
   AcumulatedDamage: 0
+  AcumulatedMultiplier: 1
   Enemy_MaxHP: 100
   Enemy_CurrentHP: 100
   TMP_AcumulatedDamage: {fileID: 977100660}

@@ -278,10 +278,6 @@ public class GameController_Simple : MonoBehaviour
         {
             MoveTilesInBoard(SelectedTile.indexInBoard, tileInBoard.indexInBoard);
         }
-        else if(SelectedTile.tileState == TileState.InHand)
-        {
-            PlaceTileFromHandToBoard(SelectedTile.IndexInHand, tileInBoard.indexInBoard);
-        }
 
     }
     void MoveTilesInBoard(int indexAtoB, int indexBtoA)
@@ -315,90 +311,14 @@ public class GameController_Simple : MonoBehaviour
         tileBtoA.UpdateTileVisuals();
 
     }
-    void PlaceTileFromHandToBoard(int indexInHand, int indexInBoard)
-    {
-        //Get tile infos
-        Tile_Base tileInHand = HandPositions[indexInHand].filledTileInfo;
-        Tile_Base tileInBoard = BoardController.TilesList[indexInBoard];
-
-        ReplaceTileInBoard(tileInBoard, tileInHand);
-        RemoveTileInHand(indexInHand);
-
-    }
     void PlaceTileFromShopToBoard(Tile_Base tileInBoard, Tile_Base boughtTile)
     {
         RemoveMoney(SelectedTile.GetBuyingPrice());
-        ReplaceTileInBoard(tileInBoard, boughtTile);
+        BoardController.ReplaceTileInBoard(tileInBoard, boughtTile);
         ShopItem_Controller boughtItem = shopController.GetShopItem(SelectedTile);
         boughtItem.RemoveItem();
 
         shopController.UpdatePrices();
-    }
-    public void ReplaceTileInBoard(Tile_Base tileInBoard, Tile_Base newTile)
-    {
-        tileInBoard.OnRemovedFromBoard();
-        BoardController.TilesList[tileInBoard.indexInBoard] = newTile;
-        BoardController.TilesByPosition[tileInBoard.vectorInBoard] = newTile;
-        newTile.indexInBoard = tileInBoard.indexInBoard;
-        newTile.vectorInBoard = tileInBoard.vectorInBoard;
-
-        newTile.transform.parent = BoardController.transform;
-
-        newTile.tileMovement.SetOriginTransformWithStats(tileInBoard.tileMovement.originTransform);
-        newTile.tileMovement.MoveTileToOrigin();
-        newTile.SetTileState(TileState.InBoard);
-
-        newTile.OnPlacedInBoard();
-
-        Destroy(tileInBoard.gameObject);
-
-        newTile.UpdateTileVisuals();//Esto sobre casi segur
-    }
-    public HandHolder[] HandPositions;
-    [Serializable]
-    public class HandHolder
-    {
-        public Transform TilePositionTf;
-        public bool isFilled;
-        public Tile_Base filledTileInfo;
-    }
-    public int GetEmptyHandIndex()
-    {
-        for (int i = 0; i < HandPositions.Length; i++)
-        {
-            if (!HandPositions[i].isFilled) { return i; }
-        }
-        return -1;
-    }
-    public void AddTileToHand(GameObject Tile)
-    {
-        int emptyHandIndex = GetEmptyHandIndex();
-        HandHolder hand = HandPositions[emptyHandIndex];
-        if (hand == null) { return; }
-
-        hand.filledTileInfo = Tile.GetComponent<Tile_Base>();
-        hand.filledTileInfo.tileMovement.SetOriginTransformWithTransform(hand.TilePositionTf);
-        hand.filledTileInfo.tileMovement.MoveTileToOrigin();
-        hand.filledTileInfo.tileMovement.canBeMoved = true;
-        hand.filledTileInfo.IndexInHand = emptyHandIndex;
-        hand.filledTileInfo.SetTileState(TileState.InHand);
-        hand.isFilled = true;
-    }
-    void RemoveTileInHand(int index)
-    {
-        HandHolder holder = HandPositions[index];
-        holder.isFilled = false;
-        holder.filledTileInfo = null;
-
-    }
-    public bool isHandFull()
-    {
-        foreach (HandHolder holder in HandPositions)
-        {
-            if (!holder.isFilled) { return false; }
-        }
-        return true;
-
     }
     #endregion
     #region DAMAGE
