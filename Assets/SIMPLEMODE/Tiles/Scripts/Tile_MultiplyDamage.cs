@@ -3,14 +3,16 @@ using UnityEngine;
 
 public class Tile_MultiplyDamage : Tile_Base
 {
-
-    public override IEnumerator OnPlayerLanded()
+    [SerializeField] float multiplierAdded = 2;
+    public override IEnumerator OnPlayerStepped()
     {
-        yield return base.OnPlayerLanded();
-        yield return GameController.Co_AddAcumulatedDamage(GameController.GetCurrentAcumulatedDamage()); //multiply the current damage X2
-    }
+        
+        yield return GameController.Co_AddAcumulatedMultiplier(GameController.GetCurrentAcumulatedDamage()); //multiply the current damage X2
+        yield return base.OnPlayerStepped();
+    } 
+
     public override string GetTooltipText()
     {
-        return "On Landed: multiply the current damage by 2";
+        return $"{On.OnCrossed} Add {MathJ.AddMultiplier(multiplierAdded)} multiplier";
     }
 }

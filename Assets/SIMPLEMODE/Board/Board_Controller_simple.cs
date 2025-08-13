@@ -82,7 +82,7 @@ public class Board_Controller_simple : MonoBehaviour
             else { Debug.LogError("ERROR: TilePrefab is missing a controller"); }
         }
     }
-    private void UpdateTfData_ByTilesList()
+    public void UpdateTfData_ByTilesList()
     {
         Tiles_TfData_List = new();
 
@@ -209,7 +209,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         }
     }
-    void MoveTiles_ToTfData(bool withMovement)
+    public void MoveTiles_ToTfData(bool withMovement)
     {
         TilesByPosition = new();
         for (int i = 0; i < TilesList.Count; i++)

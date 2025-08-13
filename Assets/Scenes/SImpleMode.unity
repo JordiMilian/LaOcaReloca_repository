@@ -2422,12 +2422,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923f8008a0b95654ab9aa22ebcaa1b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AssetName: 
-  DisplayName: COMMUNITY
+  AssetName: TilesShuffler
+  DisplayName: SHUFFLER
   DefaultCrossedDamage: 5
   BaseCardPrefab: {fileID: 8766472299784947829, guid: 7b89b9a7ad44cc54fab4bd2154cf4715, type: 3}
-  TargetPrefab: {fileID: 8766472299784947829, guid: 071569633a33a8e43ae9ef8d28e0bb2e, type: 3}
-  CardColor: {r: 0.9339623, g: 0.86414623, b: 0.7973923, a: 1}
+  TargetPrefab: {fileID: 8766472299784947829, guid: 5b39ff61b91c819479aa60c2296bed6b, type: 3}
+  CardColor: {r: 0.58569777, g: 0.43961373, b: 0.8396226, a: 1}
   shopController: {fileID: 1757594647}
   cardRarity: 2
   tileTag: 1
@@ -6267,7 +6267,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Reroll - 1$
+  m_text: Reroll - 5$
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6868,11 +6868,12 @@ MonoBehaviour:
   - {fileID: 8766472299784947829, guid: 071569633a33a8e43ae9ef8d28e0bb2e, type: 3}
   - {fileID: 8766472299784947829, guid: b8c17fe68e1a86a4a90a9784e4df2107, type: 3}
   - {fileID: 4718749425601199319, guid: 24ee097d7e611794db661c73b24ccec0, type: 3}
+  - {fileID: 8766472299784947829, guid: 5b39ff61b91c819479aa60c2296bed6b, type: 3}
   shopItems:
   - {fileID: 1309579213}
   - {fileID: 1169025460}
   - {fileID: 248396317}
-  rerollPrice: 1
+  rerollPrice: 5
   button_Reroll: {fileID: 1862571179}
 --- !u!4 &1757594648
 Transform:
