@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.EventSystems;
 using System.Collections;
-public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler 
+public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, IBuyable
 {
     [Serializable]
     public struct DiceFaces
@@ -16,6 +16,8 @@ public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
     public int faceUpValue;
     public Rigidbody rb;
     public bool isMoving;
+    protected bool isInShop = false;
+    [SerializeField] int PriceInShop = 5;
 
     Camera mainCamera;
     private void Awake()
@@ -59,6 +61,10 @@ public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
     void AttemptStartDragging()
     {
         if(!canBeDragged) { return; }
+        if(isInShop && GameController_Simple.Instance.CanPurchase(GetBuyingPrice()))
+        {
+            OnDiceBought();
+        }
         dragging = StartCoroutine(draggingCoroutine());
         IEnumerator draggingCoroutine()
         {
@@ -97,15 +103,36 @@ public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
     {
         StopDragging();
     }
-
+    #region BUYING DICES
     public int GetBuyingPrice()
     {
-        return 5;
+        return PriceInShop;
+    }
+    
+    public void OnAppearInShop(ShopItem_Controller shopItemController)
+    {
+       transform.position = shopItemController.buyablePositionTf.position;
+       isInShop = true;
     }
 
-    public int GetSellingPrice()
+    public void OnEnablePurchase()
     {
-        return 5;
+        canBeDragged = true;
     }
+
+    public void OnDisablePurchase()
+    {
+        canBeDragged = false;
+    }
+    void OnDiceBought()
+    {
+        GameController_Simple gameController = GameController_Simple.Instance;
+        gameController.RemoveMoney(GetBuyingPrice());
+        gameController.shopController.GetShopItem(this).RemoveItem();
+        Dices_Controller.Instance.availableDices.Add(this);
+        isInShop = false;
+        isSelectedForRoll = true;
+    }
+    #endregion
 }
 

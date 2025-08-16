@@ -318,6 +318,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36591817}
   m_CullTransparentMesh: 1
+--- !u!4 &80659061 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4583852719513462409, guid: 1e1e625af65764d419658d3034cf9729, type: 3}
+  m_PrefabInstance: {fileID: 1388464545}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &95895075
 GameObject:
   m_ObjectHideFlags: 0
@@ -4453,6 +4458,11 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!4 &1128332514 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4583852719513462409, guid: 1e1e625af65764d419658d3034cf9729, type: 3}
+  m_PrefabInstance: {fileID: 2356786492484578012}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1169025459 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4654895978821762175, guid: 1e1e625af65764d419658d3034cf9729, type: 3}
@@ -5512,6 +5522,10 @@ PrefabInstance:
       propertyPath: shopController
       value: 
       objectReference: {fileID: 1757594647}
+    - target: {fileID: 8806448779545299604, guid: 1e1e625af65764d419658d3034cf9729, type: 3}
+      propertyPath: buyablePositionTf
+      value: 
+      objectReference: {fileID: 80659061}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6934,6 +6948,7 @@ MonoBehaviour:
   - {fileID: 4718749425601199319, guid: bce279f9f29699648a1d01767e356425, type: 3}
   - {fileID: 4718749425601199319, guid: bd36cbbd7e4c7d24f8a6dc013fbd5092, type: 3}
   - {fileID: 4718749425601199319, guid: b3ff04347efb7c4468bcdeaaa5c14351, type: 3}
+  - {fileID: 1547170513799009516, guid: 7ec2b73cc20355a4e9572735718b9fa1, type: 3}
   shopItems:
   - {fileID: 1309579213}
   - {fileID: 1169025460}
@@ -7460,6 +7475,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1898419248}
   m_CullTransparentMesh: 1
+--- !u!4 &1900780658 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4583852719513462409, guid: 1e1e625af65764d419658d3034cf9729, type: 3}
+  m_PrefabInstance: {fileID: 1902301538}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1902301538
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7516,6 +7536,10 @@ PrefabInstance:
       propertyPath: shopController
       value: 
       objectReference: {fileID: 1757594647}
+    - target: {fileID: 8806448779545299604, guid: 1e1e625af65764d419658d3034cf9729, type: 3}
+      propertyPath: buyablePositionTf
+      value: 
+      objectReference: {fileID: 1900780658}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8430,6 +8454,10 @@ PrefabInstance:
       propertyPath: shopController
       value: 
       objectReference: {fileID: 1757594647}
+    - target: {fileID: 8806448779545299604, guid: 1e1e625af65764d419658d3034cf9729, type: 3}
+      propertyPath: buyablePositionTf
+      value: 
+      objectReference: {fileID: 1128332514}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

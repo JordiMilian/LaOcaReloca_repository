@@ -1,9 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
-using TMPro;
-using System;
 
 public enum Intensity
 {
@@ -25,7 +22,7 @@ public enum TileMessageType
 {
     Neutral, AddDamage, AddMultiplier, AddPermaDamage
 }
-public class Tile_Base : MonoBehaviour
+public class Tile_Base : MonoBehaviour, IBuyable
 {
     public string TitleText = "NO NAME";
     public TileTags tileTag;
@@ -189,7 +186,21 @@ public class Tile_Base : MonoBehaviour
             default: { Debug.LogError($"ERROR: Pls set a valid rarity to this {GetType()}"); return 0; }
         }
     }
+    public void OnAppearInShop(ShopItem_Controller shopItemController)
+    {
+        tileMovement.SetOriginTransformWithTransform(shopItemController.buyablePositionTf);
+        tileMovement.PlaceTileInOrigin();
+        SetTileState(TileState.InShop);
+    }
+    public void OnEnablePurchase()
+    {
+        tileMovement.canBeMoved = true;
+    }
 
+    public void OnDisablePurchase()
+    {
+        tileMovement.canBeMoved = false;
+    }
 
     #endregion
     #region TOOLTIP INTRO

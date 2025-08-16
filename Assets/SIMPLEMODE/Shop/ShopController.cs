@@ -12,12 +12,13 @@ public class ShopController : MonoBehaviour
     public ShopItem_Controller[] shopItems;
     [SerializeField] int rerollPrice = 5;
     [SerializeField] Button button_Reroll;
+    bool shopEnabled = true;
 
-    public ShopItem_Controller GetShopItem(Tile_Base tile)
+    public ShopItem_Controller GetShopItem(IBuyable buyable)
     {
         foreach(ShopItem_Controller shopItem in shopItems)
         {
-            if(shopItem.Item == tile)
+            if(shopItem.buyable == buyable)
             {
                 return shopItem;
             }
@@ -27,15 +28,19 @@ public class ShopController : MonoBehaviour
     #region DISABLE SHOP
     public void DisableShop()
     {
-        
+        foreach (ShopItem_Controller shopItem in shopItems)
+        {
+            if (shopItem.buyable != null) { shopItem.buyable.OnDisablePurchase(); }
+        }
+        shopEnabled = false;
     }
     public void EnableShop()
     {
         foreach (ShopItem_Controller shopItem in shopItems)
         {
-            if (shopItem.Item != null) { shopItem.Item.tileMovement.canBeMoved = true; }
+            if (shopItem.buyable != null) { shopItem.buyable.OnEnablePurchase(); }
         }
-        button_Reroll.interactable = true;
+        shopEnabled = true;
     }
     #endregion
     public void Button_ReRollShop()
@@ -45,10 +50,17 @@ public class ShopController : MonoBehaviour
         if(gameController.CanPurchase(rerollPrice))
         {
             gameController.RemoveMoney(rerollPrice);
-            ResetShopItems();
+            ResetAllShopItems();
+            if(shopEnabled == false)
+            {
+                foreach (ShopItem_Controller item in shopItems)
+                {
+                    item.buyable.OnDisablePurchase();
+                }
+            }
         }
     }
-    public void ResetShopItems() // this is called at start game to create the initial shop too
+    public void ResetAllShopItems() // this is called at start game to create the initial shop too
     {
         foreach (ShopItem_Controller item in shopItems)
         {
@@ -64,7 +76,7 @@ public class ShopController : MonoBehaviour
     {
         foreach(ShopItem_Controller item in shopItems)
         {
-            if(item.Item != null)
+            if(item.buyable != null)
             {
                 item.UpdatePriceTag();
             }

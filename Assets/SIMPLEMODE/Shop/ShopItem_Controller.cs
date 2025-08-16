@@ -3,33 +3,31 @@ using UnityEngine;
 
 public class ShopItem_Controller : MonoBehaviour
 {
-    public Tile_Base Item;
-    public GameObject TileGO;
-    [SerializeField] Transform tilePrefabTf;
+    public IBuyable buyable;
+    public GameObject buyableGO;
+    public Transform buyablePositionTf;
     [SerializeField] ShopController shopController;
     [SerializeField] TextMeshProUGUI TMP_Price;
     
     public void RemoveItem()
     {
-        Item = null;
-        TileGO = null;
+        buyable = null;
+        buyableGO = null;
         TMP_Price.text = "";
     }
     public void ResetShopItem()
     {
-        if(TileGO != null) { Destroy(TileGO); }
+        if(buyableGO != null) { Destroy(buyableGO); }
 
-        TileGO = Instantiate(shopController.getRandomBuyable(), shopController.transform);
-        Item = TileGO.GetComponent<Tile_Base>();
-        Item.tileMovement.SetOriginTransformWithTransform(tilePrefabTf);
-        Item.tileMovement.PlaceTileInOrigin();
-        Item.SetTileState(TileState.InShop);
+        buyableGO = Instantiate(shopController.getRandomBuyable(), shopController.transform);
+        buyable = buyableGO.GetComponent<IBuyable>();
+        buyable.OnAppearInShop(this);
 
         UpdatePriceTag();
     }
     public void UpdatePriceTag()
     {
-        TMP_Price.text = "$"+Item.GetBuyingPrice().ToString();
+        TMP_Price.text = "$"+buyable.GetBuyingPrice().ToString();
     }
 
 }

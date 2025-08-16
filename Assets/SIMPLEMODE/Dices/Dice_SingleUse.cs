@@ -14,7 +14,7 @@ public class Dice_SingleUse : Dice
     }
     void OnDicesRolled(int i)
     {
-        if(isSelectedForRoll)
+        if(isSelectedForRoll && !isInShop)
         {
             Dices_Controller.Instance.availableDices.Remove(this);
             StartCoroutine(DestroyItself());

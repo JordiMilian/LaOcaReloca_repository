@@ -16,7 +16,7 @@ public class GameController_Simple : MonoBehaviour
     public GameState currentGameState;
     [SerializeField] Board_Controller_simple BoardController;
     Camera mainCamera;
-    [SerializeField] ShopController shopController;
+    public ShopController shopController;
 
     [Header("Test roll")]
     [SerializeField] TextMeshProUGUI TMP_rolledDiceAmount;
@@ -123,7 +123,7 @@ public class GameController_Simple : MonoBehaviour
     #region START GAME
     IEnumerator StartGameCoroutine()
     {
-        shopController.ResetShopItems();
+        shopController.ResetAllShopItems();
         OnFreeModeExit();
         yield return BoardController.StartBoard();
         ChangeGameState(GameState.FreeMode);
@@ -254,7 +254,7 @@ public class GameController_Simple : MonoBehaviour
         if(SelectedTile.tileState == TileState.InShop)
         {
             ShopItem_Controller shopItem = shopController.GetShopItem(SelectedTile);
-            if (!CanPurchase(shopItem.Item.GetBuyingPrice() +1)) { return false; }
+            if (!CanPurchase(shopItem.buyable.GetBuyingPrice() +1)) { return false; }
         }
        
         if(tileBelow is Tile_End || tileBelow is Tile_Start) { return false; }
