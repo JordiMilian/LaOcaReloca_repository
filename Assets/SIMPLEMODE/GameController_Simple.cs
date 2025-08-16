@@ -231,7 +231,6 @@ public class GameController_Simple : MonoBehaviour
     #endregion
     #region PLACE AND MOVE TILES
     Tile_Base SelectedTile;
-
     public void SelectedNewTile(Tile_Base tile)
     {
         SelectedTile = tile;

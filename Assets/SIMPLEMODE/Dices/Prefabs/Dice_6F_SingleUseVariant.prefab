@@ -99,6 +99,7 @@ MonoBehaviour:
   faceUpValue: 0
   rb: {fileID: 0}
   isMoving: 0
+  PriceInShop: 3
   layerMask:
     serializedVersion: 2
     m_Bits: 0

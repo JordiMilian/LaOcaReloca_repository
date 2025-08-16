@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 
 public class InterfacesStorage
 {
@@ -10,4 +11,9 @@ public interface IBuyable
     public void OnEnablePurchase();
     public void OnDisablePurchase();
    
+}
+public interface IEncounter
+{
+    public IEnumerator OnEncounterEnter();
+    public IEnumerator OnEncounterExit();
 }
