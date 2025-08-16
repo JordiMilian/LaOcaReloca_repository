@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
       propertyPath: m_Name
-      value: TilePrefab_Base
+      value: TilePrefab_BaseVariant
       objectReference: {fileID: 0}
     - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
       propertyPath: m_LocalPosition.x

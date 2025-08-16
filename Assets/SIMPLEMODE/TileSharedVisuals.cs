@@ -42,13 +42,18 @@ public class TileSharedVisuals : MonoBehaviour
     #endregion
     public void MoveTileToOrigin()
     {
-        transform.DOMove(originTransform.position, .3f).SetEase(Ease.OutBounce);
-        transform.rotation = originTransform.rotation;
+        float duration = .3f;
+        Sequence sequence = DOTween.Sequence();
+        sequence.
+            Append(transform.DOMove(originTransform.position, duration).SetEase(Ease.OutBack)).
+            Join(transform.DOScale(originTransform.scale, duration).SetEase(Ease.OutCubic)).
+            Join(transform.DORotateQuaternion(originTransform.rotation, duration).SetEase(Ease.OutBounce));
     }
     public void PlaceTileInOrigin()
     {
         transform.position = originTransform.position;
         transform.rotation = originTransform.rotation;
+        transform.localScale = originTransform.scale;
     }
     public void UpdateDmgDisplayText()
     {
@@ -143,7 +148,7 @@ public class TileSharedVisuals : MonoBehaviour
     {
         float duration = 1;
         transform.localScale = Vector3.zero;
-        transform.DOScale(Vector3.one, duration).SetEase(Ease.OutBounce);
+        transform.DOScale(originTransform.scale, duration).SetEase(Ease.OutBounce);
     }
     public void shakeTile(Intensity intensity)
     {

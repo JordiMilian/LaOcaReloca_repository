@@ -143,7 +143,7 @@ public class CardsCreator_Editor : Editor
             //set tile tags somehow
 
             ShopController shop = shopController.objectReferenceValue as ShopController;
-            shop.TilesAppeareable.Add(targetPrefab_GO);
+            shop.AllBuyables.Add(targetPrefab_GO);
 
             EditorUtility.SetDirty(shop);
             EditorUtility.SetDirty(targetPrefab_GO);

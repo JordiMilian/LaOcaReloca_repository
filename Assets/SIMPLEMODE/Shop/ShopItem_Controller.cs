@@ -6,14 +6,9 @@ public class ShopItem_Controller : MonoBehaviour
     public Tile_Base Item;
     public GameObject TileGO;
     [SerializeField] Transform tilePrefabTf;
-    GameController_Simple gameController;
     [SerializeField] ShopController shopController;
     [SerializeField] TextMeshProUGUI TMP_Price;
-
-    private void Start()
-    {
-        gameController = GameController_Simple.Instance;
-    }
+    
     public void RemoveItem()
     {
         Item = null;
@@ -24,7 +19,7 @@ public class ShopItem_Controller : MonoBehaviour
     {
         if(TileGO != null) { Destroy(TileGO); }
 
-        TileGO = Instantiate(shopController.getRandomTilePrefab(), shopController.transform);
+        TileGO = Instantiate(shopController.getRandomBuyable(), shopController.transform);
         Item = TileGO.GetComponent<Tile_Base>();
         Item.tileMovement.SetOriginTransformWithTransform(tilePrefabTf);
         Item.tileMovement.PlaceTileInOrigin();

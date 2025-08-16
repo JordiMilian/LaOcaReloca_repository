@@ -7,7 +7,7 @@ using TMPro;
 
 public class ShopController : MonoBehaviour
 {
-    public List<GameObject> TilesAppeareable;
+    public List<GameObject> AllBuyables;
     [Header("UI")]
     public ShopItem_Controller[] shopItems;
     [SerializeField] int rerollPrice = 5;
@@ -55,9 +55,9 @@ public class ShopController : MonoBehaviour
             item.ResetShopItem();
         }
     }
-    public GameObject getRandomTilePrefab()
+    public GameObject getRandomBuyable()
     {
-        return TilesAppeareable[UnityEngine.Random.Range(0, TilesAppeareable.Count)];
+        return AllBuyables[UnityEngine.Random.Range(0, AllBuyables.Count)];
     }
 
     public void UpdatePrices()

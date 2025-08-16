@@ -26,7 +26,7 @@ public class Tile_TilesShuffler : Tile_Base
                 int randomIndex = Random.Range(BoardController.PlayerIndex + 1, BoardController.TilesList.Count - 1);
                 BoardController.TilesList.Insert(randomIndex, tile);
             }
-            BoardController.UpdateTfData_ByTilesList();
+            BoardController.UpdateTfData();
 
             BoardController.MoveTiles_ToTfData(true);
 

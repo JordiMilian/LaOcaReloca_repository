@@ -90,12 +90,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046e3a93e1c020749b3f3d4bc7eb3fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secundarySkill: 0
+  TitleText: NO NAME
+  tileTag: 0
   tileState: 0
-  addedDamageOnCrossed: 5
+  defaultCrossedDamage: 1
   rarity: 1
   indexInBoard: 0
   IndexInHand: 0
+  vectorInBoard: {x: 0, y: 0}
   tileColor: {r: 0.6981132, g: 0.28290692, b: 0.10866857, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0

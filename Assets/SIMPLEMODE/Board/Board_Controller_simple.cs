@@ -16,7 +16,7 @@ public class Board_Controller_simple : MonoBehaviour
     [SerializeField] GameObject Tile_Empty, Tile_Start, Tile_End, Tile_Oca;
 
     public List<Tile_Base> TilesList = new();
-    public List<transformData> Tiles_TfData_List = new();
+    public List<transformData> TfData = new();
     public Dictionary<Vector2Int, Tile_Base> TilesByPosition = new();
     public int PlayerIndex { get; private set; }
 
@@ -33,7 +33,7 @@ public class Board_Controller_simple : MonoBehaviour
 
     [Header("Board visualization")]
     public int StartingTilesCount = 9;
-    [SerializeField] float distanceBetweenTiles;
+    [SerializeField] float boardSideSize = 6;
     [SerializeField] float TimeToCreateBoard;
     public UnityEvent<int, int> OnPlayerMoved; //(from, to)
 
@@ -42,7 +42,7 @@ public class Board_Controller_simple : MonoBehaviour
     public IEnumerator StartBoard() //called from game controller
     {
         TilesList = InstantiateStartingTiles();
-        UpdateTfData_ByTilesList();
+        UpdateTfData();
         MoveTiles_ToTfData(false);
         UpdateUndertiles_ByTfData();
         yield return Co_AnimateStartingTiles();
@@ -82,18 +82,24 @@ public class Board_Controller_simple : MonoBehaviour
             else { Debug.LogError("ERROR: TilePrefab is missing a controller"); }
         }
     }
-    public void UpdateTfData_ByTilesList()
+    public void UpdateTfData()
     {
-        Tiles_TfData_List = new();
+        TfData = new();
 
         Vector3Int moveingDirection = Vector3Int.left;
 
         Vector3 nextPosition = transform.position;
         Vector2Int nextVector = new Vector2Int(0, 0);
         Quaternion nextRotation = Quaternion.identity;
-
         Quaternion halfRotation = Quaternion.AngleAxis(90, Vector3.up);
 
+        int tilesPerSide = GetMinSquareSides(TilesList.Count);
+        float scaleMultiplier = boardSideSize / (float)tilesPerSide;
+        float distanceBetween = scaleMultiplier;
+        if(tilesPerSide % 2 == 0) 
+        {
+            nextPosition += new Vector3(distanceBetween / 2, 0, -distanceBetween/2);        
+        }
         int amountToMove = 1;
         int amountMovedInDirection = 0;
 
@@ -104,9 +110,9 @@ public class Board_Controller_simple : MonoBehaviour
             //place tile in this position
             newTfStat.position = nextPosition;
             newTfStat.rotation = nextRotation;
-            newTfStat.scale = Vector3.one; //TODO: set the scale of the tile here
+            newTfStat.scale = Vector3.one * scaleMultiplier;
             newTfStat.vector = nextVector;
-            Tiles_TfData_List.Add(newTfStat);
+            TfData.Add(newTfStat);
 
 
             //rotate if reached end
@@ -123,13 +129,13 @@ public class Board_Controller_simple : MonoBehaviour
             }
 
             //move next position
-            nextPosition += (Vector3)moveingDirection * distanceBetweenTiles;
+            nextPosition += (Vector3)moveingDirection * distanceBetween;
             nextVector += BoardVector3ToVector2Int(moveingDirection);
 
             amountMovedInDirection++;
 
         }
-        Tiles_TfData_List.Reverse();
+        TfData.Reverse();
 
         //
         Vector3Int rotateVectorClockwise90Degrees(Vector3Int VectorToRotate)
@@ -137,6 +143,18 @@ public class Board_Controller_simple : MonoBehaviour
             return new Vector3Int(VectorToRotate.z, 0, -VectorToRotate.x);
         }
         Vector2Int BoardVector3ToVector2Int(Vector3Int v) { return new Vector2Int(v.x, v.z); }
+        int GetMinSquareSides(int tilesCount)
+        {
+            int maxSides = 10;
+            for (int i = 2; i < maxSides; i++)
+            {
+                if (tilesCount <= Mathf.Pow(i, 2))
+                {
+                    return i;
+                }
+            }
+            return maxSides; //return the max square side if tiles are too many
+        }
     }
 
     [Header("UnderTiles")]
@@ -169,16 +187,17 @@ public class Board_Controller_simple : MonoBehaviour
             Destroy(undertiles_List[i]);
         }
 
-        InstantiateUnderTile(UnderTileTypes.Start, Tiles_TfData_List[0].position, Tiles_TfData_List[0].rotation,0);
+        InstantiateUnderTile(UnderTileTypes.Start, TfData[0].position, TfData[0].rotation,0);
 
-        for (int i = 1;i < Tiles_TfData_List.Count;i++)
+        for (int i = 1;i < TfData.Count;i++)
         {
-            transformData thisTf = Tiles_TfData_List[i];
-            if(i == Tiles_TfData_List.Count -1)
+            transformData thisTf = TfData[i];
+            if(i == TfData.Count -1)
             {
-                InstantiateUnderTile(UnderTileTypes.Straight, thisTf.position, thisTf.rotation, i);
+                Quaternion finalQuaterion = thisTf.rotation * Quaternion.AngleAxis(180, Vector3.up);
+                InstantiateUnderTile(UnderTileTypes.Start, thisTf.position, finalQuaterion, i);
             }
-            else if(thisTf.rotation != Tiles_TfData_List[i - 1].rotation)
+            else if(thisTf.rotation != TfData[i - 1].rotation)
             {
                 InstantiateUnderTile(UnderTileTypes.Curve, thisTf.position,thisTf.rotation, i);
             }
@@ -204,8 +223,9 @@ public class Board_Controller_simple : MonoBehaviour
             }
             Vector3 underTilePos = position + (Vector3.up * underTiles_VerticalOffset);
             GameObject newUndertile = Instantiate(prefabToSpawn, underTilePos, rotation, UnderTilesHolder);
+            newUndertile.transform.localScale = TfData[index].scale;
             undertiles_List.Add(newUndertile);
-            newUndertile.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(undertile_StartColor, undertile_EndColor, (float)index / (float)Tiles_TfData_List.Count);
+            newUndertile.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(undertile_StartColor, undertile_EndColor, (float)index / (float)TfData.Count);
 
         }
     }
@@ -215,7 +235,7 @@ public class Board_Controller_simple : MonoBehaviour
         for (int i = 0; i < TilesList.Count; i++)
         {
             Tile_Base tile = TilesList[i];
-            transformData tfStat = Tiles_TfData_List[i];
+            transformData tfStat = TfData[i];
             tile.tileMovement.SetOriginTransformWithStats(tfStat);
             tile.indexInBoard = i;
             tile.vectorInBoard = tfStat.vector;
@@ -231,8 +251,6 @@ public class Board_Controller_simple : MonoBehaviour
         }
     }
     #endregion
-
-    
     #region MAIN PUBLIC METHODS FOR BOARD MOVEMENT
     public IEnumerator L_StepPlayer(bool positiveStep) //If false, its negative step
     {
@@ -343,7 +361,7 @@ public class Board_Controller_simple : MonoBehaviour
     {
         TilesList.Insert(index, tile);
 
-        UpdateTfData_ByTilesList();
+        UpdateTfData();
 
         MoveTiles_ToTfData(true);
         UpdateUndertiles_ByTfData();
@@ -364,7 +382,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         Destroy(tileToRemove.gameObject);
 
-        UpdateTfData_ByTilesList();
+        UpdateTfData();
         MoveTiles_ToTfData(true);
         UpdateUndertiles_ByTfData();
         if(index < PlayerIndex) { PlayerIndex--; }

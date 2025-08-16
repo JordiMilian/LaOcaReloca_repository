@@ -254,7 +254,7 @@ public class GameController_Simple : MonoBehaviour
         if(SelectedTile.tileState == TileState.InShop)
         {
             ShopItem_Controller shopItem = shopController.GetShopItem(SelectedTile);
-            if (!CanPurchase(shopItem.Item.GetBuyingPrice())) { return false; }
+            if (!CanPurchase(shopItem.Item.GetBuyingPrice() +1)) { return false; }
         }
        
         if(tileBelow is Tile_End || tileBelow is Tile_Start) { return false; }
@@ -301,7 +301,7 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] Healthbar healthbar;
     public IEnumerator Co_AddAcumulatedDamage(float amount)
     {
-        if (Mathf.Approximately(amount, 0)) { yield break; }
+        //if (Mathf.Approximately(amount, 0)) { yield break; }
 
         AcumulatedDamage += amount;
         UpdateAcumulatedDamageDisplay();

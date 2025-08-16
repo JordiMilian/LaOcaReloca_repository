@@ -181,7 +181,6 @@ public class Tile_Base : MonoBehaviour
     }
     public int GetSellingPrice()
     {
-
         switch (rarity)
         {
             case Rarity.Common: { return 2; }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.EventSystems;
 using System.Collections;
-public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
+public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler 
 {
     [Serializable]
     public struct DiceFaces
@@ -96,6 +96,16 @@ public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
     public void OnPointerUp(PointerEventData eventData)
     {
         StopDragging();
+    }
+
+    public int GetBuyingPrice()
+    {
+        return 5;
+    }
+
+    public int GetSellingPrice()
+    {
+        return 5;
     }
 }
 
