@@ -17,3 +17,7 @@ public interface IEncounter
     public IEnumerator OnEncounterEnter();
     public IEnumerator OnEncounterExit();
 }
+public interface IFightEncounter
+{
+
+}

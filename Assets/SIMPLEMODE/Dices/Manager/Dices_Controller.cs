@@ -22,8 +22,7 @@ public class Dices_Controller : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI TMP_ButtonText;
     public Button Button_RollDice;
-    [Header("Money to Roll")]
-    public int MoneyToRoll = 1;
+
     private void Awake()
     {
         availableDices = GetComponentsInChildren<Dice>().ToList();
