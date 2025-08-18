@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.Events;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.UI;
 
 [DefaultExecutionOrder(-1)]
 public class Dices_Controller : MonoBehaviour
@@ -19,22 +20,35 @@ public class Dices_Controller : MonoBehaviour
     [SerializeField] float RollDicePos_Radius = 2, SpawnPos_Radius = 1;
     GameController_Simple gameController;
 
+    [SerializeField] TextMeshProUGUI TMP_ButtonText;
+    public Button Button_RollDice;
+    [Header("Money to Roll")]
+    public int MoneyToRoll = 1;
     private void Awake()
     {
-        GetChildDices();
+        availableDices = GetComponentsInChildren<Dice>().ToList();
         Instance = this;
     }
     private void Start()
     {
         gameController = GameController_Simple.Instance;
     }
-    public void GetChildDices()
-    {
-        availableDices = GetComponentsInChildren<Dice>().ToList();
+    public void EnableRollButton() 
+    { 
+        Button_RollDice.interactable = true;
+        Button_BuyExtraValue.interactable = true;
     }
-   
+    public void DisableRollButton()
+    {
+        Button_RollDice.interactable = false;
+        Button_BuyExtraValue.interactable = false;
+    }
+
+    //After using this coroutine, remember to call EnableRollButton() to re-enable the button
     public IEnumerator RollDicesCoroutine()
     {
+        DisableRollButton();
+        SetDicesDraggable(false);
         //Group up the dices into transform position
         float groupUpTime = 0.4f;
         List<Dice> dicesToRoll = GetDicesToRoll();
@@ -83,16 +97,27 @@ public class Dices_Controller : MonoBehaviour
         }
         LastRolledValue = addedValue;
 
+        TMP_ButtonText.text = LastRolledValue.ToString();
         TMP_boughtRollValue.rectTransform.DOShakeRotation(.1f, 10);
         yield return new WaitForSeconds(0.1f);
+        SetDicesDraggable(true);
         LastRolledValue += boughtRollValue;
         ResetBoughtValue();
 
         OnDicesRolled.Invoke(LastRolledValue);
+
+        //
+        void ResetBoughtValue()
+        {
+            boughtRollValue = 0;
+            TMP_boughtRollValue.text = "+0";
+
+        }
     }
     #region BUY ROLL VALUE
     int boughtRollValue = 0;
     [SerializeField] TextMeshProUGUI TMP_boughtRollValue;
+    [SerializeField] Button Button_BuyExtraValue;
     public void Button_BuyExtraRollValue()
     {
         if (gameController.GetCurrentMoney() == 0) { return; }
@@ -101,12 +126,7 @@ public class Dices_Controller : MonoBehaviour
         GameController_Simple.Instance.RemoveMoney(1);
         TMP_boughtRollValue.text = "+" + boughtRollValue.ToString();
     }
-    void ResetBoughtValue()
-    {
-        boughtRollValue = 0;
-        TMP_boughtRollValue.text = "+0";
-
-    }
+    
     #endregion
 
     public void SetDicesDraggable(bool draggability)

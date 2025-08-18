@@ -6,7 +6,7 @@ public class Tile_DamagePerIndex : Tile_Base
     [SerializeField] int damagePerIndex;
     public override IEnumerator OnPlayerStepped()
     {
-        yield return GameController.Co_AddAcumulatedMultiplier(BoardController.TilesList.Count * damagePerIndex);
+        yield return GameController.C_AddAcumulatedMultiplier(BoardController.TilesList.Count * damagePerIndex);
         yield return base.OnPlayerStepped();
     }
     public override string GetTooltipText()

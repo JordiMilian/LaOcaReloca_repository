@@ -136,7 +136,7 @@ public class Tile_Base : MonoBehaviour, IBuyable
     public virtual IEnumerator OnPlayerStepped()
     {
         UpdateTileVisuals();
-        yield return GameController.Co_AddAcumulatedDamage(GetCrossedDamageAmount());
+        yield return GameController.C_AddAcumulatedDamage(GetCrossedDamageAmount());
 
     }
     public virtual IEnumerator OnPlayerLanded()

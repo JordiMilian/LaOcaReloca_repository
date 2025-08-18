@@ -14,6 +14,6 @@ public interface IBuyable
 }
 public interface IEncounter
 {
-    public void OnEncounterEnter();
-    public void OnEncounterExit();
+    public IEnumerator OnEncounterEnter();
+    public IEnumerator OnEncounterExit();
 }

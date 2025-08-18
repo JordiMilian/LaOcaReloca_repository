@@ -1,21 +1,36 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
 {
-    public void OnEncounterEnter()
-    {
-        ChangeEncounterState(EnemyEncounterState.StartBoard);
-    }
-    public void OnEncounterExit()
-    {
-        throw new System.NotImplementedException();
-    }
-    #region GAME FLOW
+    public int Enemy_MaxHP = 100;
+    [SerializeField] PlayableDirector Timeline_KilledEnemy, Timeline_SpawnEnemy;
     GameController_Simple gameController;
+    #region ENTER/EXIT ENCOUNTER
+    public IEnumerator OnEncounterEnter()
+    {
+        Dices_Controller.Instance.Button_RollDice.onClick.AddListener(Button_RollDicesTestButton);
+        Dices_Controller.Instance.DisableRollButton();
+
+        Timeline_SpawnEnemy.Play();
+        yield return new WaitForSeconds((float)Timeline_SpawnEnemy.duration);
+
+        gameController.AddMoney(10);
+        gameController.SetNewEnemyMaxHP(Enemy_MaxHP);
+
+        ChangeEnemyEncounterState(EnemyEncounterState.FreeMode);
+    }
+    public IEnumerator OnEncounterExit()
+    {
+        Dices_Controller.Instance.Button_RollDice.onClick.RemoveListener(Button_RollDicesTestButton);
+        yield break;
+    }
+    #endregion
+    #region GAME FLOW
     public enum EnemyEncounterState
     {
-        Empty, StartBoard, MovingPlayer, FreeMode, ReachedEnd, KilledEnemy, PlayerDied
+        Empty, MovingPlayer, FreeMode, ReachedEnd, KilledEnemy, PlayerDied
     }
     EnemyEncounterState currentState = EnemyEncounterState.Empty;
     private void Awake()
@@ -23,13 +38,11 @@ public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
         gameController = GameController_Simple.Instance;
     }
 
-    public void ChangeEncounterState(EnemyEncounterState newState)
+    public void ChangeEnemyEncounterState(EnemyEncounterState newState)
     {
         //On EXIT this State
         switch (currentState)
         {
-            case EnemyEncounterState.StartBoard:
-                break;
             case EnemyEncounterState.MovingPlayer:
                 if (regularMovingCoroutine != null) { StopCoroutine(regularMovingCoroutine); }
                 break;
@@ -47,89 +60,66 @@ public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
         //On ENTER this State
         switch (newState)
         {
-            case EnemyEncounterState.StartBoard:
-                StartCoroutine(StartGameCoroutine());
-                break;
             case EnemyEncounterState.MovingPlayer:
-                regularMovingCoroutine = StartCoroutine(OnMovingPlayer_Coroutine());
+                regularMovingCoroutine = StartCoroutine(C_MovingPlayer());
                 break;
             case EnemyEncounterState.FreeMode:
-                //zoom out the camera
-                //enable shop items purchase
                 OnFreeModeEnter();
                 break;
             case EnemyEncounterState.ReachedEnd:
                 StartCoroutine(OnReachedEnd_Coroutine());
                 break;
             case EnemyEncounterState.KilledEnemy:
-                //Display some victory screen
                 StartCoroutine(KilledEnemy_Coroutine());
-
                 break;
             case EnemyEncounterState.PlayerDied:
-                //called when not killing the dude before X turns
-                //SHow game over screen
-                //restart game
                 Debug.Log("PlayerDied");
-                RollDiceButton.interactable = false;
+                Dices_Controller.Instance.DisableRollButton();
                 break;
         }
         currentState = newState;
     }
-    #region START GAME
-    IEnumerator StartGameCoroutine()
-    {
-        gameController.shopController.ResetAllShopItems();
-        OnFreeModeExit();
-        yield return gameController.BoardController.StartBoard();
-        ChangeEncounterState(EnemyEncounterState.FreeMode);
-    }
-    #endregion
     #region FREE MODE
     void OnFreeModeEnter()
     {
-        RollDiceButton.interactable = true;
+        gameController.dicesController.EnableRollButton();
         gameController.shopController.EnableShop();
     }
     void OnFreeModeExit()
     {
-        RollDiceButton.interactable = false;
         gameController.shopController.DisableShop();
     }
     #endregion
     #region MOVING PLAYER 
-    Coroutine regularMovingCoroutine;
+
     //This mode is entered when the rolling dice button is pressed
     //during this whole coroutine, if we change state the movement coroutine is canceled, so dont worry about switching into FreeMode after all
-    public int remainingStepsToTake;
+    Coroutine regularMovingCoroutine;
+    int remainingStepsToTake;
     [Header("stepping audio")]
     [SerializeField] AudioSource StepSound;
     [SerializeField] float addPitchPerStep;
     [Header("Money to Roll")]
     public int MoneyToRoll = 1;
-    IEnumerator OnMovingPlayer_Coroutine()
+    IEnumerator C_MovingPlayer()
     {
         if(gameController.dicesController.GetDicesToRoll().Count == 0)
         {
             Debug.LogWarning("No dices to roll, please select at least one");
-            ChangeEncounterState(EnemyEncounterState.FreeMode);
+            ChangeEnemyEncounterState(EnemyEncounterState.FreeMode);
             yield break;
         }
         Dices_Controller dicesController = gameController.dicesController;
-        gameController.RemoveMoney(MoneyToRoll);
-        dicesController.SetDicesDraggable(false);
-        RollDiceButton.interactable = false;
-        yield return dicesController.RollDicesCoroutine();
-        dicesController.SetDicesDraggable(true);
-        remainingStepsToTake = dicesController.LastRolledValue;
+        Board_Controller_simple BoardController = gameController.BoardController;
 
-        TMP_rolledDiceAmount.text = remainingStepsToTake.ToString();
+        gameController.RemoveMoney(MoneyToRoll);
+        yield return dicesController.RollDicesCoroutine();
+        remainingStepsToTake = dicesController.LastRolledValue;
 
         yield return gameController.OnRolledDice_CardEffects.ActivateEffects();
 
         float basePitch = StepSound.pitch;
-        Board_Controller_simple BoardController = gameController.BoardController;
-
+        
         while (remainingStepsToTake > 0)
         {
             StepSound.pitch += addPitchPerStep;
@@ -146,44 +136,40 @@ public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
 
         yield return BoardController.L_LandPlayerInCurrentPos();
 
-        yield return DealTotalDamage();
+        yield return gameController.C_DealTotalDamage();
 
-        ChangeEncounterState(EnemyEncounterState.FreeMode); 
+        ChangeEnemyEncounterState(EnemyEncounterState.FreeMode); 
             
     }
     public void Button_RollDicesTestButton()
     {
-        ChangeEncounterState(EnemyEncounterState.MovingPlayer);
+        ChangeEnemyEncounterState(EnemyEncounterState.MovingPlayer);
     }
     #endregion
     #region REACHED END
     IEnumerator OnReachedEnd_Coroutine()
     {
         yield return new WaitForSeconds(0.5f); 
-        yield return DealTotalDamage();
-        yield return BoardController.JumpPlayerToStartTile();
+        yield return gameController.C_DealTotalDamage();
+        yield return gameController.BoardController.JumpPlayerToStartTile();
 
-        ChangeEncounterState(EnemyEncounterState.FreeMode);
+        ChangeEnemyEncounterState(EnemyEncounterState.FreeMode);
     }
     #endregion
     #region KILLED ENEMY
-    [SerializeField] PlayableDirector Timeline_KilledEnemy;
-    IEnumerator KilledEnemy_Coroutine()
+    
+    public virtual IEnumerator KilledEnemy_Coroutine()
     {
         Timeline_KilledEnemy.Play();
         float timelineDuration = (float)Timeline_KilledEnemy.duration;
         yield return new WaitForSeconds(timelineDuration);
 
-        AddMoney(10);
-        Enemy_MaxHP *= 1.2f;
-        Enemy_CurrentHP = Enemy_MaxHP;
-        UpdateEnemyHPBar();
+        yield return gameController.OnKilledEnemy_CardEffects.ActivateEffects();
 
-        yield return BoardController.JumpPlayerToStartTile();
+        yield return gameController.BoardController.JumpPlayerToStartTile();
 
-        yield return OnKilledEnemy_CardEffects.ActivateEffects();
 
-        ChangeEncounterState(EnemyEncounterState.FreeMode);
+        gameController.LoadNextEncounter();
     }
     #endregion
     #endregion

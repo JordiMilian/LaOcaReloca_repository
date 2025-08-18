@@ -39,7 +39,7 @@ public class Board_Controller_simple : MonoBehaviour
 
 
     #region STARTING BOARD CREATION
-    public IEnumerator StartBoard() //called from game controller
+    public IEnumerator C_StartBoard() //called from game controller
     {
         TilesList = InstantiateStartingTiles();
         UpdateTfData();

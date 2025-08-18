@@ -12,7 +12,7 @@ public class Tile_DestroyOnLanded : Tile_Base
 
     public override IEnumerator OnPlayerLanded()
     {
-        yield return GameController.Co_AddAcumulatedMultiplier(MultiplierAdded);
+        yield return GameController.C_AddAcumulatedMultiplier(MultiplierAdded);
         yield return base.OnPlayerLanded();
 
         Tile_Base randomTile = null;

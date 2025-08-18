@@ -31,7 +31,7 @@ public class Tile_TilesShuffler : Tile_Base
             BoardController.MoveTiles_ToTfData(true);
 
             yield return new WaitForSeconds(0.5f);
-            yield return GameController.Co_AddAcumulatedMultiplier(MultiplierPerShuffledTile * tilesToShuffle.Count);
+            yield return GameController.C_AddAcumulatedMultiplier(MultiplierPerShuffledTile * tilesToShuffle.Count);
         }
         yield return base.OnPlayerStepped(); 
 

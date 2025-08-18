@@ -25,7 +25,7 @@ public class Tile_AdjacentToEmpties : Tile_Base
                 tile.tileMovement.DisplayMessage($"+{AddedDamagePerEmpty}", TileMessageType.AddMultiplier);
             }
         }
-        yield return GameController.Co_AddAcumulatedMultiplier(AddedDamagePerEmpty * emptiesCount);
+        yield return GameController.C_AddAcumulatedMultiplier(AddedDamagePerEmpty * emptiesCount);
         yield return base.OnPlayerStepped();
     }
 }

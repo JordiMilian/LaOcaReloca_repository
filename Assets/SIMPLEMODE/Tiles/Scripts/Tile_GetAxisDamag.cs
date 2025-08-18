@@ -43,7 +43,7 @@ public class Tile_GetAxisDamag : Tile_Base
         }
        
         tileMovement.shakeTile(Intensity.large);
-        yield return GameController.Co_AddAcumulatedDamage(totalDamage);
+        yield return GameController.C_AddAcumulatedDamage(totalDamage);
 
 
         //

@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
-using System;
-using UnityEngine.Playables;
 using DG.Tweening;
 using UnityEngine.Events;
 
@@ -19,7 +17,6 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] Button RollDiceButton;
     public Dices_Controller dicesController;
 
-
     //COROUTINE EVENTS
     public CardEffectsDelegate OnRolledDice_CardEffects = new();
     public CardEffectsDelegate OnKilledEnemy_CardEffects = new();
@@ -31,11 +28,16 @@ public class GameController_Simple : MonoBehaviour
         Instance = this;
         mainCamera = Camera.main;
     }
-    private void Start()
+    private IEnumerator Start()
     {
         UpdateMoneyUI();
         UpdateAcumulatedDamageDisplay();
         UpdateEnemyHPBar();
+
+        shopController.ResetAllShopItems();
+        yield return BoardController.C_StartBoard();
+
+        LoadNextEncounter();
     }
     private void Update()
     {
@@ -128,10 +130,8 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] float Enemy_CurrentHP;
     [SerializeField] TextMeshProUGUI TMP_AcumulatedDamage;
     [SerializeField] Healthbar healthbar;
-    public IEnumerator Co_AddAcumulatedDamage(float amount)
+    public IEnumerator C_AddAcumulatedDamage(float amount)
     {
-        //if (Mathf.Approximately(amount, 0)) { yield break; }
-
         AcumulatedDamage += amount;
         UpdateAcumulatedDamageDisplay();
 
@@ -139,7 +139,7 @@ public class GameController_Simple : MonoBehaviour
         TMP_AcumulatedDamage.rectTransform.DOShakeRotation(shakeDuration, 30);
         yield return new WaitForSeconds(shakeDuration);
     }
-    public IEnumerator Co_AddAcumulatedMultiplier(float amount)
+    public IEnumerator C_AddAcumulatedMultiplier(float amount)
     {
         if (Mathf.Approximately(amount, 0)) { yield break; }
 
@@ -151,7 +151,7 @@ public class GameController_Simple : MonoBehaviour
         yield return new WaitForSeconds(shakeDuration);
     }
     public float GetCurrentAcumulatedDamage() { return AcumulatedDamage; }
-    IEnumerator DealTotalDamage()
+    public IEnumerator C_DealTotalDamage()
     {
         float totalDamage = AcumulatedDamage * AcumulatedMultiplier;
         Enemy_CurrentHP -= totalDamage;
@@ -172,7 +172,7 @@ public class GameController_Simple : MonoBehaviour
         yield return new WaitForSeconds(shakeDuration);
         
 
-        if (Mathf.Approximately( Enemy_CurrentHP,0))
+        if (Mathf.Approximately(Enemy_CurrentHP,0))
         {
             ChangeGameState(GameState.KilledEnemy);
         }
@@ -182,9 +182,15 @@ public class GameController_Simple : MonoBehaviour
         
         TMP_AcumulatedDamage.text = $"<color=blue>{MathJ.FloatToString(AcumulatedDamage, 1)}<color=white> x <color=red>{MathJ.FloatToString(AcumulatedMultiplier,1)}";
     }
-    void UpdateEnemyHPBar()
+    public void UpdateEnemyHPBar()
     {
         healthbar.UpdateHealthbar(Enemy_CurrentHP, Enemy_MaxHP);
+    }
+    public void SetNewEnemyMaxHP(float MaxHP)
+    {
+        Enemy_MaxHP = MaxHP;
+        Enemy_CurrentHP = MaxHP;
+        UpdateEnemyHPBar();
     }
     #endregion
     #region MONEY
@@ -211,6 +217,30 @@ public class GameController_Simple : MonoBehaviour
         TMP_CurrentMoney.text = currentMoney.ToString();
     }
     #endregion
+    #region ENCOUNTERS
+    [SerializeField] List<GameObject> EncountersPrefabs = new();
 
+    GameObject currentEncounterGO;
+    IEncounter currentEncounter;
+    int currentEncounterIndex = -1;
+    public void LoadNextEncounter()
+    {
+        StartCoroutine(C_LoadNextEncounter());
+    }
+    IEnumerator C_LoadNextEncounter()
+    {
+        if(currentEncounter != null)
+        {
+            yield return currentEncounter.OnEncounterExit();
+            Destroy(currentEncounterGO);
+        }
+
+        currentEncounterIndex++;
+        currentEncounterGO = Instantiate(EncountersPrefabs[currentEncounterIndex], transform);
+        currentEncounter = currentEncounterGO.GetComponent<IEncounter>();
+
+        yield return currentEncounter.OnEncounterEnter();
+    }
+    #endregion
 
 }

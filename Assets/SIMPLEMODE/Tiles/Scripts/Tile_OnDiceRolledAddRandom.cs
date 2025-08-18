@@ -16,7 +16,7 @@ public class Tile_OnDiceRolledAddRandom : Tile_Base
     IEnumerator AddRolledValueToRandomTile()
     {
         int lastRolledvalue = GameController.dicesController.LastRolledValue;
-        yield return GameController.Co_AddAcumulatedMultiplier(lastRolledvalue);
+        yield return GameController.C_AddAcumulatedMultiplier(lastRolledvalue);
 
         Tile_Base randomTile = null;
 
