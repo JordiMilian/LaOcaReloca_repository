@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.Events;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.UI;
 
 [DefaultExecutionOrder(-1)]
 public class Dices_Controller : MonoBehaviour
@@ -32,9 +33,22 @@ public class Dices_Controller : MonoBehaviour
     {
         availableDices = GetComponentsInChildren<Dice>().ToList();
     }
-   
+    public Button Button_Rolldices;
+    [SerializeField] Button Button_AddExtraValue;
+    [SerializeField] TextMeshProUGUI TMP_AddExtraValue, TMP_RollDicesText;
+    public void EnableRollButtons()
+    {
+        Button_Rolldices.interactable = true;
+        Button_AddExtraValue.interactable = true;
+    }
+    public void DisableRollButtons()
+    { 
+        Button_Rolldices.interactable = false;
+        Button_AddExtraValue.interactable = false;
+    }
     public IEnumerator RollDicesCoroutine()
     {
+        SetDicesDraggable(false);
         //Group up the dices into transform position
         float groupUpTime = 0.4f;
         List<Dice> dicesToRoll = GetDicesToRoll();
@@ -83,33 +97,35 @@ public class Dices_Controller : MonoBehaviour
         }
         LastRolledValue = addedValue;
 
-        TMP_boughtRollValue.rectTransform.DOShakeRotation(.1f, 10);
+        TMP_AddExtraValue.rectTransform.DOShakeRotation(.1f, 10);
         yield return new WaitForSeconds(0.1f);
         LastRolledValue += boughtRollValue;
         ResetBoughtValue();
+        SetDicesDraggable(true);
+        TMP_RollDicesText.text = LastRolledValue.ToString();
 
         OnDicesRolled.Invoke(LastRolledValue);
     }
     #region BUY ROLL VALUE
     int boughtRollValue = 0;
-    [SerializeField] TextMeshProUGUI TMP_boughtRollValue;
+    
     public void Button_BuyExtraRollValue()
     {
         if (gameController.GetCurrentMoney() == 0) { return; }
 
         boughtRollValue++;
         GameController_Simple.Instance.RemoveMoney(1);
-        TMP_boughtRollValue.text = "+" + boughtRollValue.ToString();
+        TMP_AddExtraValue.text = "+" + boughtRollValue.ToString();
     }
     void ResetBoughtValue()
     {
         boughtRollValue = 0;
-        TMP_boughtRollValue.text = "+0";
+        TMP_AddExtraValue.text = "+0";
 
     }
     #endregion
 
-    public void SetDicesDraggable(bool draggability)
+    void SetDicesDraggable(bool draggability)
     {
         foreach(Dice dice in availableDices)
         {

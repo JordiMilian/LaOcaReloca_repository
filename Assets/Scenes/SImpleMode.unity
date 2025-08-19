@@ -3379,7 +3379,7 @@ GameObject:
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &811305181
 Animator:
   serializedVersion: 7
@@ -5449,7 +5449,10 @@ MonoBehaviour:
   diceSpawnPoint: {fileID: 228586240}
   RollDicePos_Radius: 1
   SpawnPos_Radius: 0.3
-  TMP_boughtRollValue: {fileID: 1359022850}
+  Button_Rolldices: {fileID: 295868723}
+  Button_AddExtraValue: {fileID: 346227509}
+  TMP_AddExtraValue: {fileID: 1359022850}
+  TMP_RollDicesText: {fileID: 2078382948}
 --- !u!4 &1386617555
 Transform:
   m_ObjectHideFlags: 0
@@ -6717,16 +6720,17 @@ MonoBehaviour:
   currentGameState: 0
   BoardController: {fileID: 466753541}
   shopController: {fileID: 1757594647}
-  TMP_rolledDiceAmount: {fileID: 2078382948}
-  RollDiceButton: {fileID: 295868723}
   dicesController: {fileID: 1386617554}
-  EmptyTile: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
   intersecticTiles: []
   remainingStepsToTake: 0
   StepSound: {fileID: 798376506}
   addPitchPerStep: 0.05
   MoneyToRoll: 1
-  Timeline_KilledEnemy: {fileID: 1325522183}
+  EncountersPrefabs:
+  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   AcumulatedDamage: 0
   AcumulatedMultiplier: 1
   Enemy_MaxHP: 100

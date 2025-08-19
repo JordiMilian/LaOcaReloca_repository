@@ -2,29 +2,22 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine.UI;
-using System;
-using UnityEngine.Playables;
 using DG.Tweening;
 using UnityEngine.Events;
+
 public enum GameState
 {
-    Empty, StartBoard, MovingPlayer, FreeMode, ReachedEnd, KilledEnemy, PlayerDied
+    Empty, MovingPlayer, FreeMode, ReachedEnd, KilledEnemy, PlayerDied, EncountersTransition
 }
 public class GameController_Simple : MonoBehaviour
 {
+    [Header("References")]
     public GameState currentGameState;
-    [SerializeField] Board_Controller_simple BoardController;
+    public Board_Controller_simple BoardController;
     Camera mainCamera;
     public ShopController shopController;
-
-    [Header("Test roll")]
-    [SerializeField] TextMeshProUGUI TMP_rolledDiceAmount;
-    [SerializeField] Button RollDiceButton;
     public Dices_Controller dicesController;
 
-
-    [SerializeField] GameObject EmptyTile;
 
     //COROUTINE EVENTS
     public CardEffectsDelegate OnRolledDice_CardEffects = new();
@@ -37,12 +30,20 @@ public class GameController_Simple : MonoBehaviour
         Instance = this;
         mainCamera = Camera.main;
     }
-    private void Start()
+    private IEnumerator Start()
     {
-        ChangeGameState(GameState.StartBoard);
         UpdateMoneyUI();
         UpdateAcumulatedDamageDisplay();
         UpdateEnemyHPBar();
+
+        shopController.DisableShop();
+
+        yield return BoardController.StartBoard();
+
+        shopController.ResetAllShopItems();
+
+        ChangeGameState(GameState.EncountersTransition);
+
     }
     private void Update()
     {
@@ -69,80 +70,60 @@ public class GameController_Simple : MonoBehaviour
 
     public void ChangeGameState(GameState newState)
     {
+        if(currentStateCoroutine != null)
+        {
+            StopCoroutine(currentStateCoroutine);
+            currentStateCoroutine = null;
+        }
+
         //On EXIT this State
         switch (currentGameState)
         {
-            case GameState.StartBoard:
-                break;
-            case GameState.MovingPlayer:
-                if (regularMovingCoroutine != null) { StopCoroutine(regularMovingCoroutine); }
-                break;
             case GameState.FreeMode:
                 OnFreeModeExit();
                 break;
-            case GameState.ReachedEnd:
-                break;
-            case GameState.KilledEnemy:
-                break;
-            case GameState.PlayerDied:
-                break;
         }
-
+        Debug.Log($"switching gameState from {currentGameState} to {newState}");
+        currentGameState = newState;
         //On ENTER this State
-        switch (newState)
+        switch (currentGameState)
         {
-            case GameState.StartBoard:
-                StartCoroutine(StartGameCoroutine());
-                break;
             case GameState.MovingPlayer:
-                regularMovingCoroutine = StartCoroutine(OnMovingPlayer_Coroutine());
+                currentStateCoroutine = StartCoroutine(OnMovingPlayer_Coroutine());
                 break;
             case GameState.FreeMode:
-                //zoom out the camera
-                //enable shop items purchase
                 OnFreeModeEnter();
                 break;
             case GameState.ReachedEnd:
-                StartCoroutine(OnReachedEnd_Coroutine());
-                break;
-            case GameState.KilledEnemy:
-                //Display some victory screen
-                StartCoroutine(KilledEnemy_Coroutine());
-
+                currentStateCoroutine = StartCoroutine(OnReachedEnd_Coroutine());
                 break;
             case GameState.PlayerDied:
-                //called when not killing the dude before X turns
-                //SHow game over screen
-                //restart game
+                //TO DO
                 Debug.Log("PlayerDied");
-                RollDiceButton.interactable = false;
+                break;
+            case GameState.EncountersTransition:
+                currentStateCoroutine = StartCoroutine(C_LoadNextEncounter());
                 break;
         }
-        currentGameState = newState;
     }
-    #region START GAME
-    IEnumerator StartGameCoroutine()
-    {
-        shopController.ResetAllShopItems();
-        OnFreeModeExit();
-        yield return BoardController.StartBoard();
-        ChangeGameState(GameState.FreeMode);
-    }
-    #endregion
     #region FREE MODE
     void OnFreeModeEnter()
     {
-        RollDiceButton.interactable = true;
+        dicesController.EnableRollButtons();
         shopController.EnableShop();
+        if(BoardController.PlayerIndex == BoardController.TilesList.Count -1)
+        {
+            ChangeGameState(GameState.ReachedEnd);
+        }
     }
     void OnFreeModeExit()
     {
-        RollDiceButton.interactable = false;
+        dicesController.DisableRollButtons();
         shopController.DisableShop();
     }
     #endregion
     #region MOVING PLAYER 
-    Coroutine regularMovingCoroutine;
+    Coroutine currentStateCoroutine;
     //This mode is entered when the rolling dice button is pressed
     //during this whole coroutine, if we change state the movement coroutine is canceled, so dont worry about switching into FreeMode after all
     public int remainingStepsToTake;
@@ -160,13 +141,8 @@ public class GameController_Simple : MonoBehaviour
             yield break;
         }
         RemoveMoney(MoneyToRoll);
-        dicesController.SetDicesDraggable(false);
-        RollDiceButton.interactable = false;
         yield return dicesController.RollDicesCoroutine();
-        dicesController.SetDicesDraggable(true);
         remainingStepsToTake = dicesController.LastRolledValue;
-
-        TMP_rolledDiceAmount.text = remainingStepsToTake.ToString();
 
         yield return OnRolledDice_CardEffects.ActivateEffects();
 
@@ -193,7 +169,7 @@ public class GameController_Simple : MonoBehaviour
         ChangeGameState(GameState.FreeMode); 
             
     }
-    public void Button_RollDicesTestButton()
+    public void ChangeStateToMoving()
     {
         ChangeGameState(GameState.MovingPlayer);
     }
@@ -208,24 +184,25 @@ public class GameController_Simple : MonoBehaviour
         ChangeGameState(GameState.FreeMode);
     }
     #endregion
-    #region KILLED ENEMY
-    [SerializeField] PlayableDirector Timeline_KilledEnemy;
-    IEnumerator KilledEnemy_Coroutine()
+    #region ENCOUNTERS
+    [SerializeField] List<GameObject> EncountersPrefabs = new List<GameObject>();
+    IEncounter currentEncounter;
+    GameObject currentEncounterObject;
+    int currentEncounterIndex = -1;
+
+    IEnumerator C_LoadNextEncounter()
     {
-        Timeline_KilledEnemy.Play();
-        float timelineDuration = (float)Timeline_KilledEnemy.duration;
-        yield return new WaitForSeconds(timelineDuration);
+        if (currentEncounterObject != null)
+        {
+            yield return currentEncounter.OnEncounterExit();
+            Destroy(currentEncounterObject);
+            currentEncounterObject = null;
+        }
+        currentEncounterIndex++;
+        currentEncounterObject = Instantiate(EncountersPrefabs[currentEncounterIndex], transform);
+        currentEncounter = currentEncounterObject.GetComponent<IEncounter>();
+        yield return currentEncounter.OnEncounterEnter();
 
-        AddMoney(10);
-        Enemy_MaxHP *= 1.2f;
-        Enemy_CurrentHP = Enemy_MaxHP;
-        UpdateEnemyHPBar();
-
-        yield return BoardController.JumpPlayerToStartTile();
-
-        yield return OnKilledEnemy_CardEffects.ActivateEffects();
-
-        ChangeGameState(GameState.FreeMode);
     }
     #endregion
     #endregion
@@ -344,7 +321,7 @@ public class GameController_Simple : MonoBehaviour
 
         if (Mathf.Approximately( Enemy_CurrentHP,0))
         {
-            ChangeGameState(GameState.KilledEnemy);
+            ChangeGameState(GameState.EncountersTransition);
         }
     }
     void UpdateAcumulatedDamageDisplay()
@@ -355,6 +332,12 @@ public class GameController_Simple : MonoBehaviour
     void UpdateEnemyHPBar()
     {
         healthbar.UpdateHealthbar(Enemy_CurrentHP, Enemy_MaxHP);
+    }
+    public void SetNewEnemyMaxHP(float MaxHP)
+    {
+        Enemy_MaxHP = MaxHP;
+        Enemy_CurrentHP = MaxHP;
+        UpdateEnemyHPBar();
     }
     #endregion
     #region MONEY
@@ -381,6 +364,6 @@ public class GameController_Simple : MonoBehaviour
         TMP_CurrentMoney.text = currentMoney.ToString();
     }
     #endregion
-
+    
 
 }
