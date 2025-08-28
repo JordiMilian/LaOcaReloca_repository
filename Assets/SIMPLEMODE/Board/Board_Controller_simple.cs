@@ -50,6 +50,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         PlayerIndex = 0;
         OnPlayerMoved?.Invoke(0, 0);
+        playerSidePos = PlayerPrefab.transform.position;
         yield return V_StepPlayerToNewPos();
     }
     private List<Tile_Base> InstantiateStartingTiles()
@@ -186,6 +187,7 @@ public class Board_Controller_simple : MonoBehaviour
         {
             Destroy(undertiles_List[i]);
         }
+        undertiles_List = new();
 
         InstantiateUnderTile(UnderTileTypes.Start, TfData[0].position, TfData[0].rotation,0);
 
@@ -251,6 +253,66 @@ public class Board_Controller_simple : MonoBehaviour
         }
     }
     #endregion
+    #region ASSEMBLE/DISASSEMBLE BOARD
+    public bool isBoardAssembled = true;
+    const float disassembledHeight = 7;
+    const float maxRandonTime = 0.3f;
+    const float assembleTime = 1.5f;
+    public IEnumerator C_AsembleBoard()
+    {
+        isBoardAssembled = true;
+        foreach (GameObject underTile in undertiles_List)
+        {
+            underTile.SetActive(true);
+        }
+        for (int i = 0;i <TilesList.Count; i++)
+        {
+            Tile_Base tile = TilesList[i];
+            Vector3 finalPos = TfData[i].position;
+            Sequence seq = DOTween.Sequence().
+                   AppendInterval(Random.Range(0, maxRandonTime)).
+                   Append(tile.transform.DOMove(finalPos, assembleTime)).SetEase(Ease.InOutCubic);
+        }
+        yield return new WaitForSeconds(assembleTime + maxRandonTime);
+        yield return V_JumpPlayerToNewPos();
+    }
+    public IEnumerator C_DisasembleBoard()
+    {
+        isBoardAssembled = false;
+        yield return C_JumpPlayerToSide();
+        foreach (GameObject underTile in undertiles_List)
+        {
+            underTile.SetActive(false);
+        }
+        foreach(Tile_Base tile in TilesList)
+        {
+            Vector3 finalPos = new Vector3(tile.transform.position.x, disassembledHeight, tile.transform.position.z);
+            Sequence seq = DOTween.Sequence().
+                    AppendInterval(Random.Range(0, maxRandonTime)).
+                    Append(tile.transform.DOMove(finalPos, assembleTime)).SetEase(Ease.InOutCubic);
+        }
+        yield return new WaitForSeconds(assembleTime + maxRandonTime);
+
+    }
+    Vector3 playerSidePos;//this position is set at the starting board
+    IEnumerator C_JumpPlayerToSide()
+    {
+        const float duration = .5f;
+
+        float jumpHeight = 1;
+        Sequence seq =
+            DOTween.Sequence().
+                Append(PlayerPrefab.transform.DOJump(
+                    playerSidePos,
+                    jumpHeight,
+                    1,
+                    duration
+                    ));
+
+        ;
+        yield return new WaitForSeconds(duration);
+    }
+    #endregion 
     #region MAIN PUBLIC METHODS FOR BOARD MOVEMENT
     public IEnumerator L_StepPlayer(bool positiveStep) //If false, its negative step
     {
@@ -281,7 +343,7 @@ public class Board_Controller_simple : MonoBehaviour
         PlayerIndex = IndexOfTile;
         OnPlayerMoved?.Invoke(originalIndex, PlayerIndex);
 
-        yield return V_JumpPlayerToNewPos(originalIndex);
+        yield return V_JumpPlayerToNewPos();
         V_ShakePlayer();
         yield return TilesList[PlayerIndex].OnPlayerStepped();
         if (triggerLanded) yield return L_LandPlayerInCurrentPos();
@@ -312,7 +374,7 @@ public class Board_Controller_simple : MonoBehaviour
                 ;
         yield return new WaitForSeconds(duration);
     }
-    IEnumerator V_JumpPlayerToNewPos(int startingIndex)
+    IEnumerator V_JumpPlayerToNewPos()
     {
         const float duration = .5f;
         Vector3 newPos = TilesList[PlayerIndex].tileMovement.originTransform.position;
@@ -330,6 +392,7 @@ public class Board_Controller_simple : MonoBehaviour
         ;
         yield return new WaitForSeconds(duration);
     }
+    
     void V_ShakePlayer()
     {
         PlayerPrefab.transform.DOShakePosition(0.2f, .1f, 1);
