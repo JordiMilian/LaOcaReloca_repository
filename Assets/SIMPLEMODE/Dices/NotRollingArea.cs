@@ -8,6 +8,7 @@ public class NotRollingArea : MonoBehaviour
         if(other.TryGetComponent(out Dice dice))
         {
             dice.isSelectedForRoll = false;
+            dice.GetComponent<Rigidbody>().useGravity = false;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -15,6 +16,7 @@ public class NotRollingArea : MonoBehaviour
         if (other.TryGetComponent(out Dice dice))
         {
             dice.isSelectedForRoll = true;
+            dice.GetComponent<Rigidbody>().useGravity = true;
         }
     }
 }

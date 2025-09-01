@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEngine;
 
 public class InterfacesStorage
 {
@@ -16,4 +17,11 @@ public interface IEncounter
 {
     public IEnumerator OnEncounterEnter();
     public IEnumerator OnEncounterExit();
+}
+public interface ITooltip
+{
+    public string GetTooltipDescription();
+    public string GetTooltipTitle();
+    //public Sprite GetTooltipSprite();
+    
 }

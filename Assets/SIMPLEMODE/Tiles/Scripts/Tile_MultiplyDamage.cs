@@ -12,6 +12,6 @@ public class Tile_MultiplyDamage : Tile_Base
 
     public override string GetTooltipText()
     {
-        return $"{On.OnCrossed} Add {MathJ.AddMultiplier(multiplierAdded)} multiplier";
+        return $"{OnEnum.OnCrossed} Add {MathJ.AddMultiplier(multiplierAdded)} multiplier";
     }
 }

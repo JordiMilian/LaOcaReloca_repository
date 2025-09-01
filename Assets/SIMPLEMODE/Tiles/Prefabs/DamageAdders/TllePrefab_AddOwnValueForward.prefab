@@ -89,16 +89,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af950cd55f2fca4d953af9a39830aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileTags: 
-  secundarySkill: 0
+  TitleText: FEEDER
+  tileTag: 0
   tileState: 0
   defaultCrossedDamage: 10
   rarity: 2
   indexInBoard: 0
   IndexInHand: 0
   vectorInBoard: {x: 0, y: 0}
-  positionInBoardAxis: {x: 0, y: 0}
   tileColor: {r: 0.45882356, g: 0.8740857, b: 1, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0
   PercentageToAdd: 50
+  CrossedDamage: 5

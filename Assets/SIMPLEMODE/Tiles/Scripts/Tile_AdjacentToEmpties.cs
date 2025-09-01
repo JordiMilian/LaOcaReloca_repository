@@ -9,9 +9,10 @@ public class Tile_AdjacentToEmpties : Tile_Base
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
     public override string GetTooltipText() 
     {
-        return $"{ON(On.OnCrossed)} for each surrounding EMPTY TILES, {MathJ.AddMultiplier(AddedDamagePerEmpty)}";
+        return $"{ON(OnEnum.OnCrossed)} For each surrounding EMPTY TILES, {MathJ.AddDamage(DealtDamagePerEmpty)}\n{ON(OnEnum.OnLanded)} Add {MathJ.AddDamage(PermaAddedDamage)} to each surrounding EMPTY TILES";
     }
-    [SerializeField] float AddedDamagePerEmpty = 10;
+    [SerializeField] float DealtDamagePerEmpty = 10;
+    [SerializeField] float PermaAddedDamage = 20;
     public override IEnumerator OnPlayerStepped()
     {
         List<Tile_Base> adjacentEmpties = GetTilesAround(true);
@@ -22,10 +23,25 @@ public class Tile_AdjacentToEmpties : Tile_Base
             {
                 emptiesCount++;
                 tile.tileMovement.shakeTile(Intensity.low);
-                tile.tileMovement.DisplayMessage($"+{AddedDamagePerEmpty}", TileMessageType.AddMultiplier);
             }
         }
-        yield return GameController.Co_AddAcumulatedMultiplier(AddedDamagePerEmpty * emptiesCount);
+        yield return GameController.Co_AddAcumulatedDamage(DealtDamagePerEmpty * emptiesCount);
         yield return base.OnPlayerStepped();
+    }
+    public override IEnumerator OnPlayerLanded()
+    {
+        List<Tile_Base> adjacentEmpties = GetTilesAround(true);
+        List<Tile_Base> emptiesAround = new();
+
+        foreach (Tile_Base tile in adjacentEmpties)
+        {
+            if (tile.tileTag == TileTags.EmptyTile)
+            {
+                emptiesAround.Add(tile);
+                tile.AddPermaDamage(PermaAddedDamage);
+            }
+        }
+
+        return base.OnPlayerLanded();
     }
 }

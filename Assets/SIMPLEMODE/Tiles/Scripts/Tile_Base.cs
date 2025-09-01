@@ -204,18 +204,18 @@ public class Tile_Base : MonoBehaviour, IBuyable
 
     #endregion
     #region TOOLTIP INTRO
-    protected enum On
+    protected enum OnEnum
     {
         OnCrossed, OnLanded, OnRolledDice, OnReached
     }
-    protected string ON(On on)
+    protected string ON(OnEnum on)
     {
         switch (on)
         {
-            case On.OnCrossed: return "<b>ON CROSSED:<b>";
-            case On.OnLanded: return "<b>ON LANDED:<b>";
-            case On.OnRolledDice: return "<b>ON ROLLED DICES:<b>";
-            case On.OnReached:return "<b>ON REACHED:<b>";
+            case OnEnum.OnCrossed: return "<b>- ON CROSSED:</b>";
+            case OnEnum.OnLanded: return "<b>- ON LANDED:</b>";
+            case OnEnum.OnRolledDice: return "<b>- ON ROLLED DICES:</b>";
+            case OnEnum.OnReached:return "<b>- ON REACHED:</b>";
             default: return "";
 
         }

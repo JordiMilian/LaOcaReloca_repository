@@ -8,7 +8,7 @@ public class Tile_AddDmgAround : Tile_Base
 
     public override string GetTooltipText() 
     {
-        return$"ON CROSSED: Add {addedDmg} damage to tiles around";
+        return$"{ON(OnEnum.OnCrossed)} Add {MathJ.AddDamage(addedDmg)} to tiles around";
 
     }
 
@@ -29,7 +29,6 @@ public class Tile_AddDmgAround : Tile_Base
                     if(adjacentTile is Tile_Start) { continue; } 
                     adjacentTile.AddPermaDamage(addedDmg);
                 }
-
             }
         }
     }

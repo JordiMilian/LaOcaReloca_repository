@@ -13,6 +13,6 @@ public class Tile_End : Tile_Base
     }
     public override string GetTooltipText()
     {
-        return $"{ON(On.OnReached)} Add {moneyOnReached} coins and return to Start";
+        return $"{ON(OnEnum.OnReached)} Add {moneyOnReached} coins and return to Start";
     }
 }

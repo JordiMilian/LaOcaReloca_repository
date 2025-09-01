@@ -85,8 +85,8 @@ MonoBehaviour:
   indexInBoard: 0
   IndexInHand: 0
   vectorInBoard: {x: 0, y: 0}
-  positionInBoardAxis: {x: 0, y: 0}
   tileColor: {r: 0.9339623, g: 0.86414623, b: 0.7973923, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0
-  AddedDamagePerEmpty: 2
+  DealtDamagePerEmpty: 5
+  PermaAddedDamage: 25

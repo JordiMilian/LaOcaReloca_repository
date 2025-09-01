@@ -245,7 +245,7 @@ MonoBehaviour:
   cutscene_SpawnEnemy: {fileID: 5605596926375504412}
   cutscene_KilledEnemy: {fileID: 7456175356226893891}
   MaxHp: 100
-  MoneyReward: 10
+  MoneyReward: 6
 --- !u!1 &5486222231234530492
 GameObject:
   m_ObjectHideFlags: 0

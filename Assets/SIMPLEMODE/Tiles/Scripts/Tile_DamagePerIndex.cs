@@ -11,6 +11,6 @@ public class Tile_DamagePerIndex : Tile_Base
     }
     public override string GetTooltipText()
     {
-        return $"{ On.OnLanded} Add {MathJ.AddMultiplier(damagePerIndex)} multiplier per tile in board";
+        return $"{ OnEnum.OnLanded} Add {MathJ.AddMultiplier(damagePerIndex)} multiplier per tile in board";
     }
 }

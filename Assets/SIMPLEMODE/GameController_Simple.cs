@@ -189,7 +189,8 @@ public class GameController_Simple : MonoBehaviour
     IEncounter currentEncounter;
     GameObject currentEncounterObject;
     int currentEncounterIndex = -1;
-
+    [SerializeField] int[] EnemyEncountersHP;
+    int enemiesEncountered = 0;
     IEnumerator C_LoadNextEncounter()
     {
         if (currentEncounterObject != null)
@@ -201,8 +202,16 @@ public class GameController_Simple : MonoBehaviour
         currentEncounterIndex++;
         currentEncounterObject = Instantiate(EncountersPrefabs[currentEncounterIndex], transform);
         currentEncounter = currentEncounterObject.GetComponent<IEncounter>();
-        yield return currentEncounter.OnEncounterEnter();
 
+        //Cutre cutre pls refactor
+        if(currentEncounter is Encounter_BasicEnemy)
+        {
+            Encounter_BasicEnemy enemyEncounter = currentEncounter as Encounter_BasicEnemy;
+            enemyEncounter.MaxHp = EnemyEncountersHP[enemiesEncountered];
+            enemiesEncountered++;
+        }
+
+        yield return currentEncounter.OnEncounterEnter();
     }
     #endregion
     #endregion

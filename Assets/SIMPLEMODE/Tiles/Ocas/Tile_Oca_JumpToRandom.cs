@@ -10,6 +10,15 @@ public class Tile_Oca_JumpToRandom : Tile_Oca
 
         List<Tile_Oca> boardOcas = GetAllOcaTiles();
 
+        //if there is only this oca, jump to end
+        if(boardOcas.Count <= 1)
+        {
+            yield return BoardController.L_JumpPlayerTo(BoardController.TilesList.Count -1, false);
+            GameController.AddMoney(GameController.MoneyToRoll);
+            yield break;
+        }
+
+
         int randomIndex;
         //make sure we dont land in the same Oca as this
         do

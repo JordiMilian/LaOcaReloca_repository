@@ -8,7 +8,7 @@ public class Tile_DestroyOnLanded : Tile_Base
     //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
     [SerializeField] float MultiplierAdded = 20;
     public override string GetTooltipText() 
-    { return $"{On.OnLanded} Destroy a random tile and {MathJ.AddMultiplier(MultiplierAdded)}"; }
+    { return $"{OnEnum.OnLanded} Destroy a random tile and {MathJ.AddMultiplier(MultiplierAdded)}"; }
 
     public override IEnumerator OnPlayerLanded()
     {

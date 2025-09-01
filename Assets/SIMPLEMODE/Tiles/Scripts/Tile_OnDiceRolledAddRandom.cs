@@ -16,7 +16,6 @@ public class Tile_OnDiceRolledAddRandom : Tile_Base
     IEnumerator AddRolledValueToRandomTile()
     {
         int lastRolledvalue = GameController.dicesController.LastRolledValue;
-        yield return GameController.Co_AddAcumulatedMultiplier(lastRolledvalue);
 
         Tile_Base randomTile = null;
 
@@ -27,7 +26,7 @@ public class Tile_OnDiceRolledAddRandom : Tile_Base
         while (randomTile == this);
 
 
-        randomTile.AddPermaDamage(lastRolledvalue);
+        randomTile.AddPermaDamage(lastRolledvalue * 2);
 
         //Feedback
         tileMovement.shakeTile(Intensity.mid);
@@ -35,6 +34,6 @@ public class Tile_OnDiceRolledAddRandom : Tile_Base
     }
     public override string GetTooltipText()
     {
-        return $"ON DICES ROLLED: Add dices value to a random Tile";
+        return $"{ON(OnEnum.OnRolledDice)}: Add dices value x2 to a random Tile";
     }
 }

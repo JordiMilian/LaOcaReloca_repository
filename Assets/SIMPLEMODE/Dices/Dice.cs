@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.EventSystems;
 using System.Collections;
-public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, IBuyable
+public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, IBuyable, ITooltip, IPointerEnterHandler, IPointerExitHandler
 {
     [Serializable]
     public struct DiceFaces
@@ -97,29 +97,44 @@ public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, IBuyab
     {
         Debug.Log("clicked dice");
         AttemptStartDragging();
+        TooltipManager.Instance.ForceTooltip(this);
     }
-
     public void OnPointerUp(PointerEventData eventData)
     {
         StopDragging();
+        TooltipManager.Instance.StopForcingThisTooltip(this);
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        TooltipManager.Instance.RequestTooltip(this);
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        TooltipManager.Instance.RemoveRequest(this);
+    }
+    public virtual string GetTooltipDescription()
+    {
+        return $"Regular {diceFaces.Length} faces dice"; 
+    }
+
+    public string GetTooltipTitle()
+    {
+        return gameObject.name;
     }
     #region BUYING DICES
     public int GetBuyingPrice()
     {
         return PriceInShop;
     }
-    
     public void OnAppearInShop(ShopItem_Controller shopItemController)
     {
        transform.position = shopItemController.buyablePositionTf.position;
        isInShop = true;
     }
-
     public void OnEnablePurchase()
     {
         canBeDragged = true;
     }
-
     public void OnDisablePurchase()
     {
         canBeDragged = false;
@@ -133,6 +148,8 @@ public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, IBuyab
         isInShop = false;
         isSelectedForRoll = true;
     }
+
+    
     #endregion
 }
 

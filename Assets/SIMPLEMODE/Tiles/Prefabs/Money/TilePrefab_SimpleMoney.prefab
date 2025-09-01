@@ -90,13 +90,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce065043446faa428209556efad143c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secundarySkill: 0
+  TitleText: SIMPLE MONEY
+  tileTag: 0
   tileState: 0
-  addedDamageOnCrossed: 15
+  defaultCrossedDamage: 1
   rarity: 1
   indexInBoard: 0
   IndexInHand: 0
+  vectorInBoard: {x: 0, y: 0}
   tileColor: {r: 0.8196079, g: 0.6, b: 0, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0
-  moneyAmount: 5
+  landedAmount: 5
+  steppedAmount: 1

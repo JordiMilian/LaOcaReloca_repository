@@ -4,6 +4,7 @@ using UnityEngine;
 public class Tile_AddOwnValueForward : Tile_Base
 {
     [SerializeField] float PercentageToAdd = 20;
+    [SerializeField] float CrossedDamage = 5;
     public override IEnumerator OnPlayerLanded()
     {
         yield return base.OnPlayerLanded();
@@ -15,8 +16,18 @@ public class Tile_AddOwnValueForward : Tile_Base
             yield return new WaitForSeconds(0.3f);
         }
     }
+    public override IEnumerator OnPlayerStepped()
+    {
+        yield return base.OnPlayerStepped();
+        Tile_Base nextTile = BoardController.TilesList[indexInBoard + 1];
+        if (nextTile != null)
+        {
+            nextTile.AddPermaDamage(CrossedDamage);
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
     public override string GetTooltipText()
     {
-        return $"On Landed: Add {PercentageToAdd}% of this tile damage to the next tile";
+        return $"{ON(OnEnum.OnLanded)} Add {PercentageToAdd}% of this tile damage to the next tile \n{ON(OnEnum.OnCrossed)} Add {MathJ.AddDamage(CrossedDamage)} forward";
     }
 }

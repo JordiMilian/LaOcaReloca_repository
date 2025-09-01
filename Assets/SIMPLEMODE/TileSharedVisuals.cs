@@ -3,14 +3,13 @@ using UnityEngine;
 using TMPro;
 
 
-public class TileSharedVisuals : MonoBehaviour
+public class TileSharedVisuals : MonoBehaviour, ITooltip
 {
     Camera mainCamera;
     [HideInInspector] public transformData originTransform;
     public bool canBeMoved = true;
     [SerializeField] float heightWhileDragged = .5f;
     GameController_Simple gameController;
-    Board_Controller_simple boardController;
     [HideInInspector] public Tile_Base tileBase;
     [SerializeField] TextMeshPro TMP_DamageDisplay;
     
@@ -18,12 +17,7 @@ public class TileSharedVisuals : MonoBehaviour
     {
         mainCamera = Camera.main;
         gameController = GameController_Simple.Instance;
-        boardController = Board_Controller_simple.Instance;
         tileBase = GetComponent<Tile_Base>();
-    }
-    private void Start()
-    {
-        HideTooltip();
     }
     #region Set Origin
     //The rotation of a Tile is ALWAYS identity so its always facing the player
@@ -59,7 +53,7 @@ public class TileSharedVisuals : MonoBehaviour
     {
         TMP_DamageDisplay.text = MathJ.FloatToString(tileBase.GetDefaultCrossedDamage(), 1);
     }
-    #region MOUSE INPUTS
+    #region TOOLTIPS
     private void OnMouseDown()
     {
         if (!canBeMoved) { return; }
@@ -71,7 +65,7 @@ public class TileSharedVisuals : MonoBehaviour
         {
             gameController.SelectedNewTile(tile);
         }
-        HideTooltip();
+        ForceTooltip();
     }
     private void OnMouseDrag()
     {
@@ -104,23 +98,22 @@ public class TileSharedVisuals : MonoBehaviour
         {
             MoveTileToOrigin();
         }   
+        StopForcingThisTooltip();
     }
-    [Header("Tooltip")]
-    [SerializeField] GameObject TooltipRootGO;
-    [SerializeField] TextMeshProUGUI TMP_description;
-    [SerializeField] TextMeshProUGUI TMP_title;
-    private void OnMouseEnter() { ShowTooltip(); }
-    private void OnMouseExit() { HideTooltip(); }
+    private void OnMouseEnter() { RequestTooltip(); }
+    private void OnMouseExit() { StopRequestTooltip(); }
 
-    void HideTooltip()
+    void StopRequestTooltip() { TooltipManager.Instance.RemoveRequest(this); }
+    void RequestTooltip() { TooltipManager.Instance.RequestTooltip(this); }
+    void ForceTooltip() { TooltipManager.Instance.ForceTooltip(this); }
+    void StopForcingThisTooltip() { TooltipManager.Instance.StopForcingThisTooltip(this); }
+    public string GetTooltipDescription()
     {
-        TooltipRootGO.SetActive(false);
+        return tileBase.GetTooltipText();
     }
-    void ShowTooltip()
+    public string GetTooltipTitle()
     {
-        TMP_description.text = tileBase.GetTooltipText();
-        TMP_title.text = tileBase.TitleText;
-        TooltipRootGO.SetActive(true);
+        return tileBase.TitleText;
     }
     #endregion
     [SerializeField] float verticalShakeForce = 0.02f;

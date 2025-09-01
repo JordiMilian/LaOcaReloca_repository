@@ -62,7 +62,7 @@ public class Board_Controller_simple : MonoBehaviour
             GameObject prefabToSpawn;
             if (i == 0) { prefabToSpawn = Tile_Start; }
             else if (i == StartingTilesCount - 1) { prefabToSpawn = Tile_End; }
-            else if (i % 4 == 0) { prefabToSpawn = Tile_Oca; }
+            else if (i % 3 == 0) { prefabToSpawn = Tile_Oca; }
             //else if(i % 3 == 0) { prefabToSpawn = Tile_Money; }
             else { prefabToSpawn = Tile_Empty; }
 
