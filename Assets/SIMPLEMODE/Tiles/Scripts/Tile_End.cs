@@ -9,10 +9,11 @@ public class Tile_End : Tile_Base
     {
         yield return base.OnPlayerStepped();
         GameController.AddMoney(moneyOnReached);
+        yield return GameController.OnReachedEndTile_CardEffects.C_ActivateEffects();
         GameController_Simple.Instance.ChangeGameState(GameState.ReachedEnd);
     }
     public override string GetTooltipText()
     {
-        return $"{ON(OnEnum.OnReached)} Add {moneyOnReached} coins and return to Start";
+        return $"{OnReached} Add {moneyOnReached} coins and return to Start";
     }
 }

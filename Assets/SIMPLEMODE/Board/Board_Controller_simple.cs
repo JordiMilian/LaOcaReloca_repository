@@ -352,7 +352,6 @@ public class Board_Controller_simple : MonoBehaviour
     public IEnumerator JumpPlayerToStartTile()
     {
         yield return L_JumpPlayerTo(0, true);
-        yield return GameController_Simple.Instance.OnReachedStartTile_CardEffects.ActivateEffects();
     }
     #endregion
     #region PLAYER VISUALS

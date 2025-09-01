@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85318c2161315db488bd574b2dbbbf4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TitleText: BASIC MULT
+  TitleText: MULTIPLIER
   tileTag: 0
   tileState: 0
   defaultCrossedDamage: 10
@@ -101,4 +101,4 @@ MonoBehaviour:
   tileColor: {r: 0.41509432, g: 0, b: 0, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0
-  multiplierAdded: 2
+  multiplier: 2

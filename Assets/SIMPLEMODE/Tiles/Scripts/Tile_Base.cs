@@ -69,12 +69,12 @@ public class Tile_Base : MonoBehaviour, IBuyable
     {
         return defaultCrossedDamage;
     }
-    void SetDefaultCrossingDamage(float newDamage)
+    protected void SetDefaultCrossingDamage(float newDamage)
     {
         defaultCrossedDamage = newDamage;
         tileMovement.UpdateDmgDisplayText();
     }
-    public void AddPermaDamage(float addedDamage)
+    public virtual void AddPermaDamage(float addedDamage)
     {
         SetDefaultCrossingDamage(defaultCrossedDamage + addedDamage);
         tileMovement.shakeTile(Intensity.mid);
@@ -87,6 +87,12 @@ public class Tile_Base : MonoBehaviour, IBuyable
         {
             tileMovement.DisplayMessage(MathJ.FloatToString(addedDamage, 1), TileMessageType.AddPermaDamage);
         }
+    }
+    public void MultiplyPermaDamage(float mult)
+    {
+        SetDefaultCrossingDamage(defaultCrossedDamage * mult);
+        tileMovement.shakeTile(Intensity.mid);
+        tileMovement.DisplayMessage($"x{mult}", TileMessageType.AddPermaDamage);
     }
     public void MultiplyCrossingDamage(float mult)
     {
@@ -204,44 +210,12 @@ public class Tile_Base : MonoBehaviour, IBuyable
 
     #endregion
     #region TOOLTIP INTRO
-    protected enum OnEnum
-    {
-        OnCrossed, OnLanded, OnRolledDice, OnReached
-    }
-    protected string ON(OnEnum on)
-    {
-        switch (on)
-        {
-            case OnEnum.OnCrossed: return "<b>- ON CROSSED:</b>";
-            case OnEnum.OnLanded: return "<b>- ON LANDED:</b>";
-            case OnEnum.OnRolledDice: return "<b>- ON ROLLED DICES:</b>";
-            case OnEnum.OnReached:return "<b>- ON REACHED:</b>";
-            default: return "";
+    protected const string OnCrossed = "<b>- ON CROSSED:</b>";
+    protected const string OnLanded = "<b>- ON LANDED:</b>";
+    protected const string OnRolledDice = "<b>- ON ROLLED DICES:</b>";
+    protected const string OnReachedEnd = "<b>- ON REACHED END TILE:</b>";
+    protected const string OnReached = "<b>- ON REACHED:</b>";
+    protected const string OnAddedDamage = "<b>- ON ADDED DAMAGE:</b>";
 
-        }
-    }
     #endregion
-    protected List<Tile_Base> GetTilesAround(bool ignoreSelf)
-    {
-        List<Tile_Base> tilesAround = new();
-        for (int i = -1; i <= 1; i++)
-        {
-            for (int j = -1; j <= 1; j++)
-            {
-                Vector2Int tileIndex = vectorInBoard + new Vector2Int(i, j);
-
-                if (i == 0 && j == 0)
-                {
-                    if(!ignoreSelf){ tilesAround.Add(BoardController.TilesByPosition[tileIndex]); }
-                    continue;
-                }   
-
-                if (BoardController.TilesByPosition.ContainsKey(tileIndex))
-                {
-                    tilesAround.Add(BoardController.TilesByPosition[tileIndex]);
-                }
-            }
-        }
-        return tilesAround;
-    }
 }

@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using NUnit.Framework;
 public class Tile_AddDmgAround : Tile_Base
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
@@ -8,28 +10,19 @@ public class Tile_AddDmgAround : Tile_Base
 
     public override string GetTooltipText() 
     {
-        return$"{ON(OnEnum.OnCrossed)} Add {MathJ.AddDamage(addedDmg)} to tiles around";
-
+        return$"{OnCrossed} Add {MathJ.AddDamage(addedDmg)} to tiles around";
     }
 
     [SerializeField] float addedDmg;
     public override IEnumerator OnPlayerStepped()
     { 
-        yield return base.OnPlayerStepped(); 
-        for (int i = -1; i <= 1; i++)
+        yield return base.OnPlayerStepped();
+        List<Tile_Base> tilesAround = MathJ.GetTilesAround(this, true);
+        foreach (Tile_Base tile in tilesAround)
         {
-            for (int j = -1; j <= 1; j++)
-            {
-                if (i == 0 && j == 0) continue; // Skip the tile itself
-
-                Vector2Int aroundTileIndex = vectorInBoard + new Vector2Int(i, j);
-                if (BoardController.TilesByPosition.ContainsKey(aroundTileIndex))
-                {
-                    Tile_Base adjacentTile = BoardController.TilesByPosition[vectorInBoard + new Vector2Int(i, j)];
-                    if(adjacentTile is Tile_Start) { continue; } 
-                    adjacentTile.AddPermaDamage(addedDmg);
-                }
-            }
+            if (tile is Tile_Start) { continue; }
+            tile.AddPermaDamage(addedDmg);
         }
+     
     }
 }

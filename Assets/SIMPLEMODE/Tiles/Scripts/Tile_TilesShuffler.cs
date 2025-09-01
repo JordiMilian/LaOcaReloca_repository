@@ -36,5 +36,5 @@ public class Tile_TilesShuffler : Tile_Base
         yield return base.OnPlayerStepped(); 
 
     }
-    public override string GetTooltipText() { return $"{OnEnum.OnCrossed} Shuffle tiles forward. Add {MathJ.AddMultiplier(MultiplierPerShuffledTile)} multiplier per Shuffled tile"; }
+    public override string GetTooltipText() { return $"{OnCrossed} Shuffle tiles forward. Add {MathJ.AddMultiplier(MultiplierPerShuffledTile)} multiplier per Shuffled tile"; }
 }

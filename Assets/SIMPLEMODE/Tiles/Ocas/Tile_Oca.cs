@@ -30,6 +30,6 @@ public class Tile_Oca : Tile_Base
     public IEnumerator basePlayerLanded() { yield return base.OnPlayerLanded(); } //use this in case you create an Oca that doesnt jump to the next Oca 
     public override string GetTooltipText()
     {
-        return $"{MathJ.BoldText("ON LANDED: ")}jump to the next nearest Oca and gain {GameController.MoneyToRoll} money";
+        return $"{MathJ.BoldText("ON LANDED: ")}jump to the next Oca and gain {GameController.MoneyToRoll} money";
     }
 }

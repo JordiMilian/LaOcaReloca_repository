@@ -49,7 +49,7 @@ public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
         yield return new WaitForSeconds((float)cutscene_KilledEnemy.duration);
         cameras.SetCameraPriority("CinemachineCamera_Goose", 0);
 
-        yield return gameController.OnKilledEnemy_CardEffects.ActivateEffects();
+        yield return gameController.OnKilledEnemy_CardEffects.C_ActivateEffects();
 
        
 

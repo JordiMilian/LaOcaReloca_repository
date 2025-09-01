@@ -18,6 +18,6 @@ public class Tile_DamageMover : Tile_Base
 
     public override string GetTooltipText()
     {
-        return "On Stepped: Move the damage from the previous tile to the next tile";
+        return $"{OnCrossed} Transfer the damage from the previous tile to the next tile";
     }
 }

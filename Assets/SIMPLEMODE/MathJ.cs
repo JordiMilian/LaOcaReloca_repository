@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class MathJ 
@@ -47,13 +48,12 @@ public static class MathJ
         }
         return result;
     }
-
     public static string BoldText(string text)
     {
         return $"<b>{text}</b>";
     }
-    public static string AddDamage(float damage) { return $"<color=blue>+ {FloatToString(damage, 1)} dmg<color=black>"; }
-    public static string AddMultiplier(float damage) { return $"<color=red>+ {FloatToString(damage, 1)} mult<color=black>"; }
+    public static string AddDamage(float damage) { return $"<color=blue>+{FloatToString(damage, 1)}dmg<color=black>"; }
+    public static string AddMultiplier(float damage) { return $"<color=red>+{FloatToString(damage, 1)}mult<color=black>"; }
     public static int GetFibonacciValue(int n, int iterations)
     {
         int finalValue = n;
@@ -66,5 +66,66 @@ public static class MathJ
             previousValue = finalValue;
         }
         return finalValue;
-    } 
+    }
+
+    #region TILES EFFECTS UTILITIES
+    public static Tile_Base GetRandomTileInBoard(Tile_Base thisTile,bool ignoreSelf = true, bool ignoreStart = true,bool ignoreEnd = true)
+    {
+        Board_Controller_simple board = Board_Controller_simple.Instance;
+
+        Tile_Base randomTile = board.TilesList[Random.Range(0, board.TilesList.Count)];
+        while(ignoreSelf && randomTile == thisTile || ignoreEnd && randomTile is Tile_End || (ignoreStart && randomTile is Tile_Start))
+        {
+            randomTile = board.TilesList[Random.Range(0, board.TilesList.Count)];
+        }
+        return randomTile;
+    }
+    public static Tile_Base GetRandomTileInBoardWithTag(TileTags tileTag, Tile_Base thisTile, bool ignoreSelf = true)
+    {
+        Board_Controller_simple board = Board_Controller_simple.Instance;
+
+        List<Tile_Base> tilesWithTag =  GetAllTilesWithTag(tileTag, thisTile, ignoreSelf);
+        if (tilesWithTag.Count == 0) { return null; }
+
+        return tilesWithTag[Random.Range(0, tilesWithTag.Count)];
+    }
+    public static List<Tile_Base> GetAllTilesWithTag(TileTags tileTag, Tile_Base thisTile, bool ignoreSelf = true)
+    {
+        Board_Controller_simple board = Board_Controller_simple.Instance;
+        List<Tile_Base> tilesWithTag = new();
+        foreach (Tile_Base tile in board.TilesList)
+        {
+            if (tile.tileTag == tileTag)
+            {
+                if (ignoreSelf && tile == thisTile) { continue; }
+                tilesWithTag.Add(tile);
+            }
+        }
+        return tilesWithTag;
+    }
+    public static List<Tile_Base> GetTilesAround(Tile_Base thisTile, bool ignoreSelf)
+    {
+        Board_Controller_simple board = Board_Controller_simple.Instance;
+        List<Tile_Base> tilesAround = new();
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                Vector2Int tileIndex = thisTile.vectorInBoard + new Vector2Int(i, j);
+
+                if (i == 0 && j == 0)
+                {
+                    if (!ignoreSelf) { tilesAround.Add(board.TilesByPosition[tileIndex]); }
+                    continue;
+                }
+
+                if (board.TilesByPosition.ContainsKey(tileIndex))
+                {
+                    tilesAround.Add(board.TilesByPosition[tileIndex]);
+                }
+            }
+        }
+        return tilesAround;
+    }
+    #endregion
 }

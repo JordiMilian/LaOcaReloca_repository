@@ -3,15 +3,25 @@ using UnityEngine;
 
 public class Tile_MultiplyDamage : Tile_Base
 {
-    [SerializeField] float multiplierAdded = 2;
+    [SerializeField] int multiplier = 2;
+    public override IEnumerator OnPlayerLanded()
+    {
+        Tile_Base randomTile = MathJ.GetRandomTileInBoard(this, true, true);
+        randomTile.MultiplyPermaDamage(multiplier);
+        yield return base.OnPlayerLanded();
+    }
     public override IEnumerator OnPlayerStepped()
     {
-        yield return GameController.Co_AddAcumulatedMultiplier(multiplierAdded); //multiply the current damage X2
+        for (int i = 0; i < multiplier - 1; i++)
+        {
+            yield return GameController.Co_AddAcumulatedDamage(defaultCrossedDamage * (multiplier - 1));
+        }
+        
         yield return base.OnPlayerStepped();
-    } 
+    }
 
     public override string GetTooltipText()
     {
-        return $"{OnEnum.OnCrossed} Add {MathJ.AddMultiplier(multiplierAdded)} multiplier";
+        return $"{OnLanded} Multiply the dmg of a RANDOM TILE x{multiplier} \n{OnCrossed} Deal this tile damage x{multiplier}";
     }
 }

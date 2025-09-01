@@ -7168,7 +7168,7 @@ MonoBehaviour:
   remainingStepsToTake: 0
   StepSound: {fileID: 798376506}
   addPitchPerStep: 0.05
-  MoneyToRoll: 1
+  MoneyToRoll: 3
   EncountersPrefabs:
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 3768023283977433165, guid: 860536b0550a4f94e99ba5484f66765f, type: 3}
@@ -7188,7 +7188,7 @@ MonoBehaviour:
   OnMoneyUpdated:
     m_PersistentCalls:
       m_Calls: []
-  currentMoney: 10
+  currentMoney: 50
   TMP_CurrentMoney: {fileID: 1986439319}
 --- !u!4 &1715485039
 Transform:
@@ -7512,7 +7512,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AllBuyables:
-  - {fileID: 4718749425601199319, guid: 24ee097d7e611794db661c73b24ccec0, type: 3}
   - {fileID: 8766472299784947829, guid: 2081cf1d72f2ab74e929fd6f38753df1, type: 3}
   - {fileID: 4718749425601199319, guid: daaf5231fc38bc04aa8a80e714242361, type: 3}
   - {fileID: 4718749425601199319, guid: bc90e0651c3728849a079bff0686b0f4, type: 3}
@@ -7535,11 +7534,17 @@ MonoBehaviour:
   - {fileID: 4718749425601199319, guid: b3ff04347efb7c4468bcdeaaa5c14351, type: 3}
   - {fileID: 1547170513799009516, guid: 7ec2b73cc20355a4e9572735718b9fa1, type: 3}
   - {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
+  - {fileID: 8766472299784947829, guid: 8a39dbc2b886bcf498724512f7cc9b1a, type: 3}
+  - {fileID: 8766472299784947829, guid: 10550aa9320624149a06e3d19c765443, type: 3}
+  - {fileID: 8766472299784947829, guid: c84f0f1cdfc2cb445b6b58684fbd58c4, type: 3}
+  - {fileID: 4718749425601199319, guid: 24ee097d7e611794db661c73b24ccec0, type: 3}
+  - {fileID: 4718749425601199319, guid: 24ee097d7e611794db661c73b24ccec0, type: 3}
+  - {fileID: 8766472299784947829, guid: 98436adb18ac3ba43a60ff970946076a, type: 3}
   shopItems:
   - {fileID: 1309579213}
   - {fileID: 1169025460}
   - {fileID: 248396317}
-  rerollPrice: 5
+  rerollPrice: 3
   button_Reroll: {fileID: 1862571179}
 --- !u!4 &1757594648
 Transform:

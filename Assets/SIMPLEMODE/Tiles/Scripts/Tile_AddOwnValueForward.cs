@@ -28,6 +28,6 @@ public class Tile_AddOwnValueForward : Tile_Base
     }
     public override string GetTooltipText()
     {
-        return $"{ON(OnEnum.OnLanded)} Add {PercentageToAdd}% of this tile damage to the next tile \n{ON(OnEnum.OnCrossed)} Add {MathJ.AddDamage(CrossedDamage)} forward";
+        return $"{OnLanded} Add {PercentageToAdd}% of this tile damage to the next tile \n{OnCrossed} Add {MathJ.AddDamage(CrossedDamage)} forward";
     }
 }

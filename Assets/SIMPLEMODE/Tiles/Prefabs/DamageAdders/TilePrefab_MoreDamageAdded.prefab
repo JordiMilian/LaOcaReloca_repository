@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8806826499406372248
+--- !u!1001 &4822435512175257914
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,14 +10,22 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
       propertyPath: m_Name
-      value: TllePrefab_AddSetValueForward
+      value: TilePrefab_MoreDamageAdded
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
-      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4776112878941749762, guid: 13f06a96ebf842547919b71594469744, type: 3}
@@ -53,16 +61,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5408180314939963311, guid: 13f06a96ebf842547919b71594469744, type: 3}
-      propertyPath: m_Color.b
+      propertyPath: m_Enabled
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5408180314939963311, guid: 13f06a96ebf842547919b71594469744, type: 3}
-      propertyPath: m_Color.g
-      value: 0.978371
-      objectReference: {fileID: 0}
-    - target: {fileID: 5408180314939963311, guid: 13f06a96ebf842547919b71594469744, type: 3}
-      propertyPath: m_Color.r
-      value: 0.5896226
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -70,35 +70,33 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -5235471758424388490}
+      addedObject: {fileID: -4026183045121659941}
   m_SourcePrefab: {fileID: 100100000, guid: 13f06a96ebf842547919b71594469744, type: 3}
---- !u!1 &4718749425601199319 stripped
+--- !u!1 &8766472299784947829 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
-  m_PrefabInstance: {fileID: 8806826499406372248}
+  m_PrefabInstance: {fileID: 4822435512175257914}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-5235471758424388490
+--- !u!114 &-4026183045121659941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4718749425601199319}
+  m_GameObject: {fileID: 8766472299784947829}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb809dacb4d8b8f47abb20d60629cc72, type: 3}
+  m_Script: {fileID: 11500000, guid: 94bb41ddc111fa847a264df5cb4dd000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TitleText: NO NAME
-  tileTags: 
+  TitleText: CREATINA
+  tileTag: 0
   tileState: 0
-  defaultCrossedDamage: 5
-  rarity: 1
+  defaultCrossedDamage: 1
+  rarity: 2
   indexInBoard: 0
   IndexInHand: 0
   vectorInBoard: {x: 0, y: 0}
-  positionInBoardAxis: {x: 0, y: 0}
-  tileColor: {r: 0.4269758, g: 0.8011664, b: 0.9528302, a: 1}
+  tileColor: {r: 0.5552115, g: 1, b: 0.2216981, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0
-  Amount: 5

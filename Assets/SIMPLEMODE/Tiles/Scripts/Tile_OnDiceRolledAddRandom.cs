@@ -17,16 +17,10 @@ public class Tile_OnDiceRolledAddRandom : Tile_Base
     {
         int lastRolledvalue = GameController.dicesController.LastRolledValue;
 
-        Tile_Base randomTile = null;
-
-        do
-        {
-            randomTile = BoardController.TilesList[Random.Range(1, BoardController.TilesList.Count)];
-        }
-        while (randomTile == this);
+        Tile_Base randomTile = MathJ.GetRandomTileInBoard(this, true,true);
 
 
-        randomTile.AddPermaDamage(lastRolledvalue * 2);
+        randomTile.AddPermaDamage(lastRolledvalue);
 
         //Feedback
         tileMovement.shakeTile(Intensity.mid);
@@ -34,6 +28,6 @@ public class Tile_OnDiceRolledAddRandom : Tile_Base
     }
     public override string GetTooltipText()
     {
-        return $"{ON(OnEnum.OnRolledDice)}: Add dices value x2 to a random Tile";
+        return $"{OnRolledDice}: Add dices value to a random Tile";
     }
 }

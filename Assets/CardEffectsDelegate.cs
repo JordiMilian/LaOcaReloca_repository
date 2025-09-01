@@ -16,7 +16,7 @@ public class CardEffectsDelegate
     {
         CardsCoroutines.Remove(enumerator);
     }
-    public IEnumerator ActivateEffects()
+    public IEnumerator C_ActivateEffects()
     {
         foreach(Func<IEnumerator> effect in CardsCoroutines)
         {

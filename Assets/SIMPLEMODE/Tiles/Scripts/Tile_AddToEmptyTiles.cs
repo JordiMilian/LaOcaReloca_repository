@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile_AddToEmptyTiles : Tile_Base
@@ -16,8 +18,19 @@ public class Tile_AddToEmptyTiles : Tile_Base
             }
         }
     }
+    public override IEnumerator OnPlayerStepped()
+    {
+        Tile_Base randomEmpty = MathJ.GetRandomTileInBoardWithTag(TileTags.EmptyTile, this, true);
+
+        if(randomEmpty != null)
+        {
+            randomEmpty.AddPermaDamage(addedDamageToEmptyTiles);
+        }
+
+        return base.OnPlayerStepped();
+    }
     public override string GetTooltipText()
     {
-        return $"On Landed: Add {addedDamageToEmptyTiles} damage to all empty tiles";
+        return $"{OnLanded} Add {MathJ.AddDamage(addedDamageToEmptyTiles)} to ALL EMPTY TILES \n{OnCrossed} Add {MathJ.AddDamage(addedDamageToEmptyTiles)} to a RANDOM EMPTY TILE";
     }
 }

@@ -9,13 +9,13 @@ public class Tile_AdjacentToEmpties : Tile_Base
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
     public override string GetTooltipText() 
     {
-        return $"{ON(OnEnum.OnCrossed)} For each surrounding EMPTY TILES, {MathJ.AddDamage(DealtDamagePerEmpty)}\n{ON(OnEnum.OnLanded)} Add {MathJ.AddDamage(PermaAddedDamage)} to each surrounding EMPTY TILES";
+        return $"{OnCrossed} For each surrounding EMPTY TILES, {MathJ.AddDamage(DealtDamagePerEmpty)}\n{OnLanded} Add {MathJ.AddDamage(PermaAddedDamage)} to each surrounding EMPTY TILES";
     }
     [SerializeField] float DealtDamagePerEmpty = 10;
     [SerializeField] float PermaAddedDamage = 20;
     public override IEnumerator OnPlayerStepped()
     {
-        List<Tile_Base> adjacentEmpties = GetTilesAround(true);
+        List<Tile_Base> adjacentEmpties = MathJ.GetTilesAround(this,true);
         int emptiesCount = 0;
         foreach (Tile_Base tile in adjacentEmpties)
         {
@@ -30,7 +30,7 @@ public class Tile_AdjacentToEmpties : Tile_Base
     }
     public override IEnumerator OnPlayerLanded()
     {
-        List<Tile_Base> adjacentEmpties = GetTilesAround(true);
+        List<Tile_Base> adjacentEmpties = MathJ.GetTilesAround(this,true);
         List<Tile_Base> emptiesAround = new();
 
         foreach (Tile_Base tile in adjacentEmpties)

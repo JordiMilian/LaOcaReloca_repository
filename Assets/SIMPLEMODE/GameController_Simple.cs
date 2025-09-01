@@ -22,7 +22,7 @@ public class GameController_Simple : MonoBehaviour
     //COROUTINE EVENTS
     public CardEffectsDelegate OnRolledDice_CardEffects = new();
     public CardEffectsDelegate OnKilledEnemy_CardEffects = new();
-    public CardEffectsDelegate OnReachedStartTile_CardEffects = new();
+    public CardEffectsDelegate OnReachedEndTile_CardEffects = new();
 
     public static GameController_Simple Instance;
     private void Awake()
@@ -144,7 +144,7 @@ public class GameController_Simple : MonoBehaviour
         yield return dicesController.RollDicesCoroutine();
         remainingStepsToTake = dicesController.LastRolledValue;
 
-        yield return OnRolledDice_CardEffects.ActivateEffects();
+        yield return OnRolledDice_CardEffects.C_ActivateEffects();
 
         float basePitch = StepSound.pitch;
 
@@ -295,7 +295,7 @@ public class GameController_Simple : MonoBehaviour
         TMP_AcumulatedDamage.rectTransform.DOShakeRotation(shakeDuration, 30);
         yield return new WaitForSeconds(shakeDuration);
     }
-    public IEnumerator Co_AddAcumulatedMultiplier(float amount)
+    public IEnumerator Co_AddAcumulatedMultiplier(float amount) //For now lets not use this, maybe delete later
     {
         if (Mathf.Approximately(amount, 0)) { yield break; }
 

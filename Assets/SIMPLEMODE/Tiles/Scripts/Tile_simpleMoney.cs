@@ -18,6 +18,6 @@ public class Tile_simpleMoney : Tile_Base
     }
     public override string GetTooltipText()
     {
-        return $"{ON(OnEnum.OnCrossed)} Add {steppedAmount} money\n{ON(OnEnum.OnLanded)} Add {landedAmount} money ";
+        return $"{OnCrossed} Add {steppedAmount} money\n{OnLanded} Add {landedAmount} money ";
     }
 }
