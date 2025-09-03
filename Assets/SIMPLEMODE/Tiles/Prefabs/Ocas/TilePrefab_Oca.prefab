@@ -93,12 +93,11 @@ MonoBehaviour:
   TitleText: OCA
   tileTag: 2
   tileState: 0
-  defaultCrossedDamage: 15
+  BaseDamage: 15
   rarity: 1
   indexInBoard: 0
   IndexInHand: 0
   vectorInBoard: {x: 0, y: 0}
-  positionInBoardAxis: {x: 0, y: 0}
   tileColor: {r: 0.64705884, g: 0, b: 0.6117647, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0

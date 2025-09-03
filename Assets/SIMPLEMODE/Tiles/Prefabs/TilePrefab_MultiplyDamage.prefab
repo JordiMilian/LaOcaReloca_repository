@@ -93,7 +93,7 @@ MonoBehaviour:
   TitleText: MULTIPLIER
   tileTag: 0
   tileState: 0
-  defaultCrossedDamage: 10
+  BaseDamage: 20
   rarity: 2
   indexInBoard: 0
   IndexInHand: 0

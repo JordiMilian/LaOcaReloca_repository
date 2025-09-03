@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 
 public class TileSharedVisuals : MonoBehaviour, ITooltip
@@ -11,14 +12,18 @@ public class TileSharedVisuals : MonoBehaviour, ITooltip
     [SerializeField] float heightWhileDragged = .5f;
     GameController_Simple gameController;
     [HideInInspector] public Tile_Base tileBase;
-    [SerializeField] TextMeshPro TMP_DamageDisplay;
+    [SerializeField] TextMeshProUGUI TMP_DamageDisplay;
+    [SerializeField] Image basicColorPanel;
     
     private void Awake()
     {
         mainCamera = Camera.main;
         gameController = GameController_Simple.Instance;
         tileBase = GetComponent<Tile_Base>();
+        SetBasicPanelColor();
+        UpdateDmgDisplayText();
     }
+    
     #region Set Origin
     //The rotation of a Tile is ALWAYS identity so its always facing the player
     public void SetOriginTransformWithTransform(Transform originTf)
@@ -51,7 +56,15 @@ public class TileSharedVisuals : MonoBehaviour, ITooltip
     }
     public void UpdateDmgDisplayText()
     {
-        TMP_DamageDisplay.text = MathJ.FloatToString(tileBase.GetDefaultCrossedDamage(), 1);
+        TMP_DamageDisplay.text = MathJ.FloatToString(tileBase.GetBaseDamage(), 1);
+    }
+    public void SetBasicPanelColor()
+    {
+        basicColorPanel.color = tileBase.tileColor;
+    }
+    public void SetBasicPanelColor_Transparent()
+    {
+        basicColorPanel.color = new Color(tileBase.tileColor.r, tileBase.tileColor.g, tileBase.tileColor.b, 0.75f);
     }
     #region TOOLTIPS
     private void OnMouseDown()

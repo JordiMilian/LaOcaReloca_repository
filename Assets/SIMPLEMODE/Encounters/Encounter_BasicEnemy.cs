@@ -16,7 +16,7 @@ public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
         gameController = GameController_Simple.Instance;
         cameras = CamerasManager.instance;
 
-        Dices_Controller.Instance.Button_Rolldices.onClick.AddListener(GameController_Simple.Instance.ChangeStateToMoving);
+        Dices_Controller.Instance.Button_Rolldices.onClick.AddListener(GameController_Simple.Instance.ChangeStateToRollingDice);
         //Load board if it's not loaded
 
         if(gameController.BoardController.isBoardAssembled == false)
@@ -41,8 +41,8 @@ public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
     }
     public IEnumerator OnEncounterExit()
     {
-        Dices_Controller.Instance.Button_Rolldices.onClick.RemoveListener(GameController_Simple.Instance.ChangeStateToMoving);
-        Dices_Controller.Instance.DisableRollButtons();
+        Dices_Controller.Instance.Button_Rolldices.onClick.RemoveListener(GameController_Simple.Instance.ChangeStateToRollingDice);
+        //Dices_Controller.Instance.DisableRollButtons();
 
         cameras.SetCameraPriority("CinemachineCamera_Goose", 15);
         cutscene_KilledEnemy.Play();

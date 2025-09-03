@@ -127,5 +127,55 @@ public static class MathJ
         }
         return tilesAround;
     }
+    public static List<Tile_Base> GetVerticalAxisTiles(Tile_Base thisTile, bool ignoreSelf = true)
+    {
+        Board_Controller_simple board = Board_Controller_simple.Instance;
+        List<Tile_Base> tilesInAxis = new List<Tile_Base>();
+
+        Vector2Int vectorToCheck = thisTile.vectorInBoard + Vector2Int.down;
+        while (board.TilesByPosition.ContainsKey(vectorToCheck))
+        {
+            tilesInAxis.Add(board.TilesByPosition[vectorToCheck]);
+            vectorToCheck += Vector2Int.down;
+        }
+        vectorToCheck = thisTile.vectorInBoard + Vector2Int.up;
+        while (board.TilesByPosition.ContainsKey(vectorToCheck))
+        {
+            tilesInAxis.Add(board.TilesByPosition[vectorToCheck]);
+            vectorToCheck += Vector2Int.up;
+        }
+        if (!ignoreSelf) tilesInAxis.Add(thisTile);
+
+        return tilesInAxis;
+    }
+    public static List<Tile_Base> GetHorizontalAxisTiles(Tile_Base thisTile, bool ignoreSelf = true)
+    {
+        Board_Controller_simple board = Board_Controller_simple.Instance;
+        List<Tile_Base> tilesInAxis = new List<Tile_Base>();
+
+        Vector2Int vectorToCheck = thisTile.vectorInBoard + Vector2Int.right;
+        while (board.TilesByPosition.ContainsKey(vectorToCheck))
+        {
+            tilesInAxis.Add(board.TilesByPosition[vectorToCheck]);
+            vectorToCheck += Vector2Int.right;
+        }
+        vectorToCheck = thisTile.vectorInBoard + Vector2Int.left;
+        while (board.TilesByPosition.ContainsKey(vectorToCheck))
+        {
+            tilesInAxis.Add(board.TilesByPosition[vectorToCheck]);
+            vectorToCheck += Vector2Int.left;
+        }
+        if (!ignoreSelf) tilesInAxis.Add(thisTile);
+
+        return tilesInAxis;
+    }
+    public static List<Tile_Base> GetBothAxisTiles (Tile_Base thisTile, bool ignoreSelf = true)
+    {
+        List<Tile_Base> tilesInAxis = new List<Tile_Base>();
+        tilesInAxis.AddRange(GetVerticalAxisTiles(thisTile));
+        tilesInAxis.AddRange(GetHorizontalAxisTiles(thisTile));
+        if (!ignoreSelf) tilesInAxis.Add(thisTile);
+        return tilesInAxis;
+    }
     #endregion
 }

@@ -137,7 +137,7 @@ public class CardsCreator_Editor : Editor
             Tile_Base tileLogic = targetPrefab_GO.GetComponent<Tile_Base>();
             tileLogic.tileColor = colorProperty.colorValue;
             tileLogic.TitleText = displayName.stringValue;
-            tileLogic.defaultCrossedDamage = crossedDamage.floatValue;
+            tileLogic.BaseDamage = crossedDamage.floatValue;
             tileLogic.rarity = (Rarity)cardRarity.enumValueIndex;
             tileLogic.tileTag = (TileTags)tileTagsProp.enumValueIndex;
             //set tile tags somehow

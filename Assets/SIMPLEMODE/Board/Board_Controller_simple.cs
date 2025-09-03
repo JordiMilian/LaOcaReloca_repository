@@ -45,7 +45,7 @@ public class Board_Controller_simple : MonoBehaviour
         UpdateTfData();
         MoveTiles_ToTfData(false);
         UpdateUndertiles_ByTfData();
-        yield return Co_AnimateStartingTiles();
+        yield return C_AnimateStartingTiles();
 
 
         PlayerIndex = 0;
@@ -77,7 +77,6 @@ public class Board_Controller_simple : MonoBehaviour
             {
                 tileInfo.indexInBoard = index;
                 tempTiles.Add(tileInfo);
-                tileInfo.UpdateTileVisuals();
                 tileInfo.SetTileState(TileState.InBoard);
             }
             else { Debug.LogError("ERROR: TilePrefab is missing a controller"); }
@@ -166,8 +165,9 @@ public class Board_Controller_simple : MonoBehaviour
     [SerializeField] float underTiles_VerticalOffset = -0.25f;
     List<GameObject> undertiles_List = new();
     public enum UnderTileTypes { Start, Straight, Curve }
-    IEnumerator Co_AnimateStartingTiles()
+    IEnumerator C_AnimateStartingTiles()
     {
+
         float delayBetweenTiles = TimeToCreateBoard / TilesList.Count;
 
         foreach (Tile_Base tile in TilesList)
@@ -339,15 +339,24 @@ public class Board_Controller_simple : MonoBehaviour
     {
         if(IndexOfTile < 0) { Debug.LogWarning($"WARNING: {IndexOfTile} is not a valid index to jump"); IndexOfTile = 0; }
         if(IndexOfTile > TilesList.Count - 1) { Debug.LogWarning($"WARNING: {IndexOfTile} is not a valid index to jump"); IndexOfTile = TilesList.Count - 1; }
+
         int originalIndex = PlayerIndex;
         PlayerIndex = IndexOfTile;
         OnPlayerMoved?.Invoke(originalIndex, PlayerIndex);
 
         yield return V_JumpPlayerToNewPos();
         V_ShakePlayer();
-        yield return TilesList[PlayerIndex].OnPlayerStepped();
-        if (triggerLanded) yield return L_LandPlayerInCurrentPos();
-        
+        if(triggerLanded)
+        {
+            GameController_Simple.Instance.remainingStepsToTake = 1;
+            yield return TilesList[PlayerIndex].OnPlayerStepped();
+            GameController_Simple.Instance.remainingStepsToTake = 0;
+            yield return L_LandPlayerInCurrentPos();
+        }
+        else
+        {
+            yield return TilesList[PlayerIndex].OnPlayerStepped();
+        }
     }
     public IEnumerator JumpPlayerToStartTile()
     {
@@ -416,8 +425,6 @@ public class Board_Controller_simple : MonoBehaviour
         newTile.OnPlacedInBoard();
 
         Destroy(oldTileInBoard.gameObject);
-
-        newTile.UpdateTileVisuals();//Esto sobre casi segur
     }
     public void AddNewTile(Tile_Base tile, int index)
     {
@@ -447,7 +454,7 @@ public class Board_Controller_simple : MonoBehaviour
         UpdateTfData();
         MoveTiles_ToTfData(true);
         UpdateUndertiles_ByTfData();
-        if(index < PlayerIndex) { PlayerIndex--; }
+        if(index <= PlayerIndex) { PlayerIndex--; }
         StartCoroutine(V_StepPlayerToNewPos());
     }
     public void MoveTileInBoard(int from, int to)

@@ -80,8 +80,8 @@ MonoBehaviour:
   TitleText: VISIO DE FUTUR
   tileTag: 0
   tileState: 0
-  defaultCrossedDamage: 5
-  rarity: 1
+  BaseDamage: 5
+  rarity: 2
   indexInBoard: 0
   IndexInHand: 0
   vectorInBoard: {x: 0, y: 0}

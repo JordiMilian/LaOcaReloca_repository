@@ -47,7 +47,7 @@ public class ShopController : MonoBehaviour
     {
         GameController_Simple gameController = GameController_Simple.Instance;
 
-        if(gameController.CanPurchase(rerollPrice))
+        if(gameController.CanPurchaseWithoutLosing(rerollPrice))
         {
             gameController.RemoveMoney(rerollPrice);
             ResetAllShopItems();

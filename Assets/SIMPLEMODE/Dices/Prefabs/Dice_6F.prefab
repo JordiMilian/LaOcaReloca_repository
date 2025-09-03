@@ -264,7 +264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8654065909344354623, guid: 4c0c29ef8dc6c3441ad3dd3539182a0d, type: 3}
       propertyPath: heightWhileDragged
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8654065909344354623, guid: 4c0c29ef8dc6c3441ad3dd3539182a0d, type: 3}
       propertyPath: diceFaces.Array.size

@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public enum GameState
 {
-    Empty, MovingPlayer, FreeMode, ReachedEnd, KilledEnemy, PlayerDied, EncountersTransition
+    Empty,RollingDices ,MovingPlayer, FreeMode, ReachedEnd, KilledEnemy, PlayerDied, EncountersTransition
 }
 public class GameController_Simple : MonoBehaviour
 {
@@ -45,10 +46,7 @@ public class GameController_Simple : MonoBehaviour
         ChangeGameState(GameState.EncountersTransition);
 
     }
-    private void Update()
-    {
-        GetIntersectingTilesToMouse();   
-    }
+    
     #region INTERSECTING TILES WITH MOUSE
     [SerializeField] List<Tile_Base> intersecticTiles;
     void GetIntersectingTilesToMouse()
@@ -88,8 +86,11 @@ public class GameController_Simple : MonoBehaviour
         //On ENTER this State
         switch (currentGameState)
         {
+            case GameState.RollingDices:
+                currentStateCoroutine = StartCoroutine(C_RollingDIces());
+                break;
             case GameState.MovingPlayer:
-                currentStateCoroutine = StartCoroutine(OnMovingPlayer_Coroutine());
+                currentStateCoroutine = StartCoroutine(C_MovingPlayer());
                 break;
             case GameState.FreeMode:
                 OnFreeModeEnter();
@@ -122,6 +123,22 @@ public class GameController_Simple : MonoBehaviour
         shopController.DisableShop();
     }
     #endregion
+    #region ROLLING DICES
+    IEnumerator C_RollingDIces()
+    {
+        if (dicesController.GetDicesToRoll().Count == 0)
+        {
+            Debug.LogWarning("No dices to roll, please select at least one");
+            ChangeGameState(GameState.FreeMode);
+            yield break;
+        }
+        RemoveMoney(MoneyToRoll);
+        yield return dicesController.RollDicesCoroutine();
+
+        ChangeGameState(GameState.MovingPlayer);
+
+    }
+    #endregion
     #region MOVING PLAYER 
     Coroutine currentStateCoroutine;
     //This mode is entered when the rolling dice button is pressed
@@ -132,16 +149,9 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] float addPitchPerStep;
     [Header("Money to Roll")]
     public int MoneyToRoll = 1;
-    IEnumerator OnMovingPlayer_Coroutine()
+    
+    IEnumerator C_MovingPlayer()
     {
-        if(dicesController.GetDicesToRoll().Count == 0)
-        {
-            Debug.LogWarning("No dices to roll, please select at least one");
-            ChangeGameState(GameState.FreeMode);
-            yield break;
-        }
-        RemoveMoney(MoneyToRoll);
-        yield return dicesController.RollDicesCoroutine();
         remainingStepsToTake = dicesController.LastRolledValue;
 
         yield return OnRolledDice_CardEffects.C_ActivateEffects();
@@ -166,12 +176,11 @@ public class GameController_Simple : MonoBehaviour
 
         yield return DealTotalDamage();
 
-        ChangeGameState(GameState.FreeMode); 
-            
+        ChangeGameState(GameState.FreeMode);
     }
-    public void ChangeStateToMoving()
+    public void ChangeStateToRollingDice()
     {
-        ChangeGameState(GameState.MovingPlayer);
+        ChangeGameState(GameState.RollingDices);
     }
     #endregion
     #region REACHED END
@@ -239,7 +248,7 @@ public class GameController_Simple : MonoBehaviour
         if(SelectedTile.tileState == TileState.InShop)
         {
             ShopItem_Controller shopItem = shopController.GetShopItem(SelectedTile);
-            if (!CanPurchase(shopItem.buyable.GetBuyingPrice() +1)) { return false; }
+            if (!CanPurchaseWithoutLosing(shopItem.buyable.GetBuyingPrice())) { return false; }
         }
        
         if(tileBelow is Tile_End || tileBelow is Tile_Start) { return false; }
@@ -284,7 +293,7 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] float Enemy_CurrentHP;
     [SerializeField] TextMeshProUGUI TMP_AcumulatedDamage;
     [SerializeField] Healthbar healthbar;
-    public IEnumerator Co_AddAcumulatedDamage(float amount)
+    public IEnumerator C_AddAcumulatedDamage(float amount)
     {
         //if (Mathf.Approximately(amount, 0)) { yield break; }
 
@@ -368,11 +377,45 @@ public class GameController_Simple : MonoBehaviour
     }
     public int GetCurrentMoney() { return currentMoney; }
     public bool CanPurchase(int price) { return price <= currentMoney; }
+    public bool CanPurchaseWithoutLosing(int price)
+    {
+        return price <= currentMoney - MoneyToRoll;
+    }
     void UpdateMoneyUI()
     {
         TMP_CurrentMoney.text = currentMoney.ToString();
     }
     #endregion
-    
+    private void Update()
+    {
+        GetIntersectingTilesToMouse();
+
+        //Shift + 0 => Add 10 money
+        //Shift + 1-9 => Move X Steps in board
+        if (Keyboard.current[Key.LeftShift].isPressed)
+        {
+            if (Keyboard.current[Key.Digit0].wasPressedThisFrame) { AddMoney(10); }
+  
+            if (Keyboard.current[Key.Digit9].wasPressedThisFrame) { AttemptForceMovingState(9); }
+            if (Keyboard.current[Key.Digit8].wasPressedThisFrame) { AttemptForceMovingState(8); }
+            if (Keyboard.current[Key.Digit7].wasPressedThisFrame) { AttemptForceMovingState(7); }
+            if (Keyboard.current[Key.Digit6].wasPressedThisFrame) { AttemptForceMovingState(6); }
+            if (Keyboard.current[Key.Digit5].wasPressedThisFrame) { AttemptForceMovingState(5); }
+            if (Keyboard.current[Key.Digit4].wasPressedThisFrame) { AttemptForceMovingState(4); }
+            if (Keyboard.current[Key.Digit3].wasPressedThisFrame) { AttemptForceMovingState(3); }
+            if (Keyboard.current[Key.Digit2].wasPressedThisFrame) { AttemptForceMovingState(2); }
+            if (Keyboard.current[Key.Digit1].wasPressedThisFrame) { AttemptForceMovingState(1); }
+        }
+
+        void AttemptForceMovingState(int steps)
+        {
+            if (currentGameState == GameState.FreeMode)
+            {
+                dicesController.LastRolledValue = steps;
+                ChangeGameState(GameState.MovingPlayer);
+            }
+        }
+    }
+   
 
 }

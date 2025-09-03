@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Tile_Start : Tile_Base
 {
-    public override float GetCrossedDamageAmount()
+    public override float GetBaseDamage()
     {
         return 0;
     }

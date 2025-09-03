@@ -20,7 +20,7 @@ public class Tile_OnDiceRolledAddRandom : Tile_Base
         Tile_Base randomTile = MathJ.GetRandomTileInBoard(this, true,true);
 
 
-        randomTile.AddPermaDamage(lastRolledvalue);
+        randomTile.AddBaseDamage(lastRolledvalue);
 
         //Feedback
         tileMovement.shakeTile(Intensity.mid);

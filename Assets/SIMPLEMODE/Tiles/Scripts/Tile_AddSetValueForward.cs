@@ -10,7 +10,7 @@ public class Tile_AddSetValueForward : Tile_Base
         Tile_Base nextTile = BoardController.TilesList[indexInBoard + 1];
         if (nextTile != null)
         {
-            nextTile.AddPermaDamage(Amount);
+            nextTile.AddBaseDamage(Amount);
             yield return new WaitForSeconds(0.3f);
         }
     }

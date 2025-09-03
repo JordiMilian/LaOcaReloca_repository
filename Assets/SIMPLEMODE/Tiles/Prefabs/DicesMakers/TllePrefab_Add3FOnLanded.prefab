@@ -77,16 +77,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5269f8cd518d04993dff5d24eca075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TitleText: NO NAME
-  tileTags: 
+  TitleText: DICES SPAWNER
+  tileTag: 0
   tileState: 0
-  defaultCrossedDamage: 1
+  BaseDamage: 10
   rarity: 2
   indexInBoard: 0
   IndexInHand: 0
   vectorInBoard: {x: 0, y: 0}
-  positionInBoardAxis: {x: 0, y: 0}
   tileColor: {r: 0.38146168, g: 0.645283, b: 0.35916692, a: 1}
   tileMovement: {fileID: 0}
   isBehindPlayer: 0
-  DicePrefab: {fileID: 1547170513799009516, guid: 7ec2b73cc20355a4e9572735718b9fa1, type: 3}
+  DicePrefab_OnCrossed: {fileID: 1547170513799009516, guid: 7ec2b73cc20355a4e9572735718b9fa1, type: 3}
+  DicePrefab_OnLanded: {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}

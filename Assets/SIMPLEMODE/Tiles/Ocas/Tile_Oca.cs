@@ -25,7 +25,6 @@ public class Tile_Oca : Tile_Base
                 yield break;
             }
         }
-
     }
     public IEnumerator basePlayerLanded() { yield return base.OnPlayerLanded(); } //use this in case you create an Oca that doesnt jump to the next Oca 
     public override string GetTooltipText()

@@ -108,13 +108,15 @@ public class Dices_Controller : MonoBehaviour
     }
     #region BUY ROLL VALUE
     int boughtRollValue = 0;
-    
+    [SerializeField] int buyRollValuePrice = 1;
+
+
     public void Button_BuyExtraRollValue()
     {
-        if (gameController.GetCurrentMoney() == 0) { return; }
+        if (!gameController.CanPurchaseWithoutLosing(buyRollValuePrice)) { return; }
 
         boughtRollValue++;
-        GameController_Simple.Instance.RemoveMoney(1);
+        GameController_Simple.Instance.RemoveMoney(buyRollValuePrice);
         TMP_AddExtraValue.text = "+" + boughtRollValue.ToString();
     }
     void ResetBoughtValue()

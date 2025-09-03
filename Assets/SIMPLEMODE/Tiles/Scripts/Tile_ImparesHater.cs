@@ -8,11 +8,11 @@ public class Tile_ImparesHater : Tile_Base
     {
         if(GameController.dicesController.LastRolledValue%2 == 0)
         {
-            AddPermaDamage(10);
+            AddBaseDamage(10);
         }
         else 
         {
-            AddPermaDamage(-10);
+            AddBaseDamage(-10);
         }
         yield return new WaitForSeconds(0.3f);
 
@@ -21,6 +21,6 @@ public class Tile_ImparesHater : Tile_Base
     }
     public override string GetTooltipText()
     {
-        return $"On Crossed: if last rolled value is ODD, add {GetDefaultCrossedDamage()}, else remove that amount";
+        return $"On Crossed: if last rolled value is ODD, add {GetBaseDamage()}, else remove that amount";
     }
 }

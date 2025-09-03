@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public enum Intensity
 {
@@ -27,7 +28,7 @@ public class Tile_Base : MonoBehaviour, IBuyable
     public string TitleText = "NO NAME";
     public TileTags tileTag;
     [HideInInspector] public TileState tileState = TileState.none;
-    public float defaultCrossedDamage = 1;
+    public float BaseDamage = 1;
     public Rarity rarity = Rarity.none;
     [HideInInspector] public int indexInBoard;
     [HideInInspector] public int IndexInHand;
@@ -35,7 +36,6 @@ public class Tile_Base : MonoBehaviour, IBuyable
 
     [Header("Color testing")]
     public Color tileColor;
-    SpriteRenderer tileTestSprite;
 
     protected GameController_Simple GameController;
     protected Board_Controller_simple BoardController;
@@ -44,61 +44,62 @@ public class Tile_Base : MonoBehaviour, IBuyable
     {
         GameController = GameController_Simple.Instance;
         BoardController = Board_Controller_simple.Instance;
-
-        tileTestSprite = GetComponentInChildren<SpriteRenderer>(); //remember placeholder
-
         tileMovement = GetComponent<TileSharedVisuals>();
 
     }
-    private void Start()
+    #region DAMAGE MODIFIERS
+    protected List<float> DamagesToDeal = new();
+    public virtual float GetBaseDamage()
     {
-        UpdateTileVisuals();
+        return BaseDamage;
     }
-    public void CopyData(Tile_Base copyingTile)
+    protected void SetBaseDamage(float newDamage)
     {
-        tileColor = copyingTile.tileColor;
-        rarity = copyingTile.rarity;
-    }
-    public void UpdateTileVisuals()
-    {
-        tileTestSprite.color = tileColor;
+        BaseDamage = newDamage;
         tileMovement.UpdateDmgDisplayText();
     }
-    #region CROSSING DAMAGE
-    public float GetDefaultCrossedDamage()
+    public virtual void AddBaseDamage(float addedDamage)
     {
-        return defaultCrossedDamage;
-    }
-    protected void SetDefaultCrossingDamage(float newDamage)
-    {
-        defaultCrossedDamage = newDamage;
-        tileMovement.UpdateDmgDisplayText();
-    }
-    public virtual void AddPermaDamage(float addedDamage)
-    {
-        SetDefaultCrossingDamage(defaultCrossedDamage + addedDamage);
+        SetBaseDamage(BaseDamage + addedDamage);
         tileMovement.shakeTile(Intensity.mid);
-        if (Mathf.Approximately(addedDamage, 0)) { return; }
-        if(addedDamage >= 0)
-        {
-            tileMovement.DisplayMessage("+" + MathJ.FloatToString(addedDamage, 1), TileMessageType.AddPermaDamage);
-        }
-        else
-        {
-            tileMovement.DisplayMessage(MathJ.FloatToString(addedDamage, 1), TileMessageType.AddPermaDamage);
-        }
+        tileMovement.DisplayMessage("+" + MathJ.FloatToString(addedDamage, 1), TileMessageType.AddPermaDamage);
     }
-    public void MultiplyPermaDamage(float mult)
+    public virtual void RemoveBaseDamage(float removedDamage)
     {
-        SetDefaultCrossingDamage(defaultCrossedDamage * mult);
+        if(removedDamage > BaseDamage)
+        {
+            removedDamage = BaseDamage;
+        }
+        SetBaseDamage(BaseDamage - removedDamage);
+        tileMovement.shakeTile(Intensity.mid);
+        tileMovement.DisplayMessage($"-{removedDamage}", TileMessageType.AddPermaDamage);
+    }
+    public void MultiplyBaseDamage(float mult)
+    {
+        SetBaseDamage(BaseDamage * mult);
         tileMovement.shakeTile(Intensity.mid);
         tileMovement.DisplayMessage($"x{mult}", TileMessageType.AddPermaDamage);
     }
-    public void MultiplyCrossingDamage(float mult)
+    protected IEnumerator C_DealAllDamageToDeal()
     {
-        SetDefaultCrossingDamage(defaultCrossedDamage * mult);
-        tileMovement.shakeTile(Intensity.mid);
-        //Number display
+        if(DamagesToDeal.Count == 0) { yield break; }
+
+        float totalDamage = 0;
+
+        string displayMessage = "";
+        for (int i = 0; i < DamagesToDeal.Count; i++)
+        {
+            displayMessage += MathJ.FloatToString(DamagesToDeal[i], 1);
+            if (i != DamagesToDeal.Count - 1) { displayMessage += "+"; }
+        }
+        tileMovement.DisplayMessage(displayMessage, TileMessageType.AddDamage);
+
+        foreach (float dmg in DamagesToDeal) { totalDamage += dmg; }
+        yield return GameController.C_AddAcumulatedDamage(totalDamage);
+
+        
+
+        DamagesToDeal.Clear();
     }
     #endregion
     public void SetTileState(TileState newState)
@@ -135,28 +136,27 @@ public class Tile_Base : MonoBehaviour, IBuyable
     void CheckForDraggability(int from, int to)
     {
         isBehindPlayer = BoardController.PlayerIndex >= indexInBoard;
-        if (isBehindPlayer) { tileTestSprite.color = new Color(tileColor.r, tileColor.g, tileColor.b, 0.75f); }
-        else { tileTestSprite.color = tileColor; }
+        if (isBehindPlayer) { tileMovement.SetBasicPanelColor_Transparent(); }
+        else { tileMovement.SetBasicPanelColor(); }
     }
     #region MAIN VIRTUAL LOGIC METHODS
+
     public virtual IEnumerator OnPlayerStepped()
     {
-        UpdateTileVisuals();
-        yield return GameController.Co_AddAcumulatedDamage(GetCrossedDamageAmount());
+        DamagesToDeal.Add(GetBaseDamage());
+        DamagesToDeal.Reverse();
 
+        if (GameController.remainingStepsToTake != 1) { yield return C_DealAllDamageToDeal(); } //Deal damage unless its the last step
     }
     public virtual IEnumerator OnPlayerLanded()
     {
         tileMovement.shakeTile(Intensity.mid);
-        yield break;
+
+        yield return C_DealAllDamageToDeal(); 
     }
     public virtual void OnPlacedInBoard() { }
     public virtual void OnRemovedFromBoard() { }
 
-    public virtual float GetCrossedDamageAmount()
-    {
-        return defaultCrossedDamage;
-    }
     public virtual string GetTooltipText()
     {
         return $"EMPTY TILE";
@@ -215,7 +215,7 @@ public class Tile_Base : MonoBehaviour, IBuyable
     protected const string OnRolledDice = "<b>- ON ROLLED DICES:</b>";
     protected const string OnReachedEnd = "<b>- ON REACHED END TILE:</b>";
     protected const string OnReached = "<b>- ON REACHED:</b>";
-    protected const string OnAddedDamage = "<b>- ON ADDED DAMAGE:</b>";
+    protected const string OnAddedDamage = "<b>- ON ADDED DAMAGE TO THIS TILE:</b>";
 
     #endregion
 }

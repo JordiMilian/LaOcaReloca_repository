@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1001635674238233346, guid: 13f06a96ebf842547919b71594469744, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
       propertyPath: m_Name
       value: TllePrefab_Empty
@@ -80,7 +84,7 @@ MonoBehaviour:
   TitleText: EMPTY
   tileTag: 1
   tileState: 0
-  defaultCrossedDamage: 10
+  BaseDamage: 10
   rarity: 0
   indexInBoard: 0
   IndexInHand: 0

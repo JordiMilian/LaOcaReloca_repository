@@ -44,5 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fbf9ce172758164db46172551838f0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceFaces: []
   isSelectedForRoll: 1
-  faces: 010000000200000003000000040000000500000006000000
+  faceUpValue: 0
+  rb: {fileID: 0}
+  isMoving: 0
+  PriceInShop: 5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  canBeDragged: 1
+  heightWhileDragged: 1
