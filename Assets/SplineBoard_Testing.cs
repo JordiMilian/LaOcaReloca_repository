@@ -6,30 +6,29 @@ using UnityEngine.Splines;
 using UnityEngine.U2D;
 using static UnityEngine.UI.Image;
 
+public struct TileInfo
+{
+    public Vector3 originW;
+    public Vector3 centerW;
+    public List<Vector3> cornersFromOrigin;
+    public Vector3 forwardFromCenter;
+}
+
 public class SplineBoard_Testing : MonoBehaviour
 {
     [SerializeField] SplineContainer spline;
-    [SerializeField] SpriteShapeController shape;
 
     [SerializeField] int tilesCount = 10;
     [SerializeField] float width = 1f;
 
-    List<Vector3> tilesCornersFromOrigin = new();
-    List<Vector3> tilesOriginW = new();
     List<TileInfo> tilesInfo = new();
     [SerializeField] GameObject tilePrefab;
 
-    struct TileInfo
-    {
-        public Vector3 originW;
-        public Vector3 centerW;
-        public List<Vector3> cornersFromOrigin;
-        public Vector3 forwardFromCenter;
-    }
+    [SerializeField] float minTileLenght = 3;
 
     private void OnDrawGizmosSelected()
     {
-        UpdateTiles();
+        UpdateStructs();
 
         foreach(TileInfo info in tilesInfo)
         {
@@ -37,16 +36,14 @@ public class SplineBoard_Testing : MonoBehaviour
 
             for(int i = 0; i < info.cornersFromOrigin.Count; i++)
             {
-                if(i < info.cornersFromOrigin.Count - 1)
+                switch(i)
                 {
-                    Gizmos.DrawLine(info.originW + info.cornersFromOrigin[i], info.originW + info.cornersFromOrigin[i+1]);
-                }
-                else
-                {
-                    Gizmos.DrawLine(info.originW + info.cornersFromOrigin[i], info.originW + info.cornersFromOrigin[0]);
+                    case 0: Gizmos.DrawLine(info.originW + info.cornersFromOrigin[0], info.originW + info.cornersFromOrigin[1]); break;
+                    case 1: Gizmos.DrawLine(info.originW + info.cornersFromOrigin[1], info.originW + info.cornersFromOrigin[3]); break;
+                    case 2: Gizmos.DrawLine(info.originW + info.cornersFromOrigin[2], info.originW + info.cornersFromOrigin[0]); break;
+                    case 3: Gizmos.DrawLine(info.originW + info.cornersFromOrigin[3], info.originW + info.cornersFromOrigin[2]); break;
                 }
             }
-
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(info.centerW, info.centerW + info.forwardFromCenter);
             Gizmos.color = Color.green;
@@ -58,13 +55,14 @@ public class SplineBoard_Testing : MonoBehaviour
 
     private void Start()
     {
-        UpdateTiles();
-        CreateTIles();
+        UpdateStructs();
+        CreateStartingTiles();
+        PlaceTilesToPlace();
     }
-    public void UpdateTiles()
+    public void UpdateStructs()
     {
-        tilesCornersFromOrigin = new();
-        tilesOriginW = new();
+        List<Vector3> tilesCornersFromOrigin = new();
+        List<Vector3> tilesOriginW = new();
         tilesInfo = new();
 
         float TPerTile = 1f / (float)tilesCount;
@@ -96,41 +94,46 @@ public class SplineBoard_Testing : MonoBehaviour
 
             Vector3 difBetweenOrigins = tilesOriginW[i + 1] - tilesOriginW[i];
 
-            List<Vector3> cornersFromOrigin = new();
+            List<Vector3> VerticesPositionsFromOrigin = new();
             int startingCornerIndex = i * 2;
             for (int j = 0; j < 4; j++)
             {
+                //The order of the mesh vertices is:
+                //3-----1
+                //|     |
+                //2-----0
+                //But when we created the corners they were in this order:
+                //1-----3
+                //|     |
+                //0-----2
+                //So here we are storing them in the proper order in the struct
                 switch (j)
-                {
-                    case 0: cornersFromOrigin.Add(tilesCornersFromOrigin[startingCornerIndex]); break;
-                    case 1: cornersFromOrigin.Add(tilesCornersFromOrigin[startingCornerIndex +1]); break;
-                    case 2: cornersFromOrigin.Add( difBetweenOrigins + tilesCornersFromOrigin[startingCornerIndex + 3]); break;
-                    case 3: cornersFromOrigin.Add(difBetweenOrigins + tilesCornersFromOrigin[startingCornerIndex + 2]); break;
+                {       
+                    case 0: VerticesPositionsFromOrigin.Add(difBetweenOrigins + tilesCornersFromOrigin[startingCornerIndex + 2]); break;
+                    case 1: VerticesPositionsFromOrigin.Add(difBetweenOrigins + tilesCornersFromOrigin[startingCornerIndex + 3]); break;
+                    case 2: VerticesPositionsFromOrigin.Add(tilesCornersFromOrigin[startingCornerIndex]); break;
+                    case 3: VerticesPositionsFromOrigin.Add(tilesCornersFromOrigin[startingCornerIndex+1]); break;
                 }
             }
-
-            newTileInfo.cornersFromOrigin = cornersFromOrigin;
+            newTileInfo.cornersFromOrigin = VerticesPositionsFromOrigin;
 
             tilesInfo.Add(newTileInfo);
         } 
     }
-    void CreateTIles()
+    List<SplineTile> TilesList = new();
+    void CreateStartingTiles()
     {
-        for (int i = 0; i < tilesInfo.Count; i++)
+        for(int i = 0; i < tilesInfo.Count; i++)
         {
-            TileInfo info = tilesInfo[i];
-
-            GameObject newTile = Instantiate(tilePrefab, info.originW, Quaternion.identity);
-            SplineContainer splineContainer = newTile.GetComponent<SplineContainer>();
-            SpriteShapeController shapeController = newTile.GetComponent<SpriteShapeController>();
-
-            for (int j = 0; j < info.cornersFromOrigin.Count; j++)
-            {
-                BezierKnot knot = splineContainer.Spline[j];
-                knot.Position = info.cornersFromOrigin[j];
-                splineContainer.Spline[j] = knot;
-                shapeController.spline.SetPosition(j, info.cornersFromOrigin[j]);
-            }
+            GameObject newTile = Instantiate(tilePrefab);
+            TilesList.Add(newTile.GetComponent<SplineTile>());
+        }
+    }
+    void PlaceTilesToPlace()
+    {
+        for (int i = 0; i < TilesList.Count; i++)
+        {
+            TilesList[i].SetMeshToStruct(tilesInfo[i]);
         }
     }
 }
