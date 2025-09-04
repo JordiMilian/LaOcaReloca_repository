@@ -447,6 +447,7 @@ public class Board_Controller_simple : MonoBehaviour
     public void RemoveTile(int index)
     {
         Tile_Base tileToRemove = TilesList[index];
+        tileToRemove.OnRemovedFromBoard();
         TilesList.RemoveAt(index);
 
         Destroy(tileToRemove.gameObject);
