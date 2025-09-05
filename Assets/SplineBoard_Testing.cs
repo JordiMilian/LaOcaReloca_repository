@@ -6,7 +6,7 @@ using UnityEngine.Splines;
 using UnityEngine.U2D;
 using static UnityEngine.UI.Image;
 
-public struct TileInfo
+public struct TileTfData
 {
     public Vector3 originW;
     public Vector3 centerW;
@@ -20,17 +20,18 @@ public class SplineBoard_Testing : MonoBehaviour
 
     [SerializeField] int tilesCount = 10;
     [SerializeField] float width = 1f;
+    [SerializeField] float maxTileLenght = 3;
 
-    List<TileInfo> tilesInfo = new();
+    List<TileTfData> tilesData = new();
     [SerializeField] GameObject tilePrefab;
 
-    [SerializeField] float minTileLenght = 3;
+    
 
     private void OnDrawGizmosSelected()
     {
         UpdateStructs();
 
-        foreach(TileInfo info in tilesInfo)
+        foreach(TileTfData info in tilesData)
         {
             Gizmos.color = Color.purple;
 
@@ -57,20 +58,36 @@ public class SplineBoard_Testing : MonoBehaviour
     {
         UpdateStructs();
         CreateStartingTiles();
-        PlaceTilesToPlace();
+        PlaceTilesToTfData();
     }
     public void UpdateStructs()
     {
         List<Vector3> tilesCornersFromOrigin = new();
         List<Vector3> tilesOriginW = new();
-        tilesInfo = new();
+        tilesData = new();
+        
 
+        float GetTWithLenght( float lenght)
+        {
+            float totalLenght = spline.CalculateLength();
+            return Mathf.InverseLerp(0, totalLenght, lenght);
+        }
+        float maxTPerTIle = GetTWithLenght(maxTileLenght);
         float TPerTile = 1f / (float)tilesCount;
+        if (maxTileLenght * tilesCount > spline.CalculateLength())
+        {
+            //dividir normal
+            TPerTile = 1f / (float)tilesCount;
+        }
+        else
+        {
+            TPerTile = maxTPerTIle;
+        }
 
         //Get corners from all Origins
         for(int i = 0; i < tilesCount +1; i++)
         {
-            float t = 1f / (float)tilesCount * i;
+            float t = TPerTile * i;
 
             Vector3 tan = spline.EvaluateTangent(t);
             Vector3 forward = tan.normalized;
@@ -84,8 +101,8 @@ public class SplineBoard_Testing : MonoBehaviour
         //Get all the structs filled
         for (int i = 0; i < tilesCount; i++)
         {
-            float centerT = 1f / (float)tilesCount * i + (TPerTile/2);
-            TileInfo newTileInfo = new();
+            float centerT = TPerTile * i + (TPerTile/2);
+            TileTfData newTileInfo = new();
 
             newTileInfo.centerW = spline.EvaluatePosition(centerT);
             Vector3 tan = spline.EvaluateTangent(centerT);
@@ -117,23 +134,39 @@ public class SplineBoard_Testing : MonoBehaviour
             }
             newTileInfo.cornersFromOrigin = VerticesPositionsFromOrigin;
 
-            tilesInfo.Add(newTileInfo);
+            tilesData.Add(newTileInfo);
         } 
     }
     List<SplineTile> TilesList = new();
     void CreateStartingTiles()
     {
-        for(int i = 0; i < tilesInfo.Count; i++)
+        for(int i = 0; i < tilesData.Count; i++)
         {
             GameObject newTile = Instantiate(tilePrefab);
             TilesList.Add(newTile.GetComponent<SplineTile>());
         }
     }
-    void PlaceTilesToPlace()
+    void PlaceTilesToTfData()
     {
         for (int i = 0; i < TilesList.Count; i++)
         {
-            TilesList[i].SetMeshToStruct(tilesInfo[i]);
+            StartCoroutine( TilesList[i].C_MoveMeshToStruct(tilesData[i]));
         }
+    }
+
+    [SerializeField] int Test_IndexToAdd;
+    [ContextMenu("Add New Tile")]
+    void AddNewTile()
+    {
+
+        if(Test_IndexToAdd >= TilesList.Count)
+        {
+            Test_IndexToAdd = TilesList.Count-1;
+        }
+        tilesCount++;
+        UpdateStructs();
+        GameObject newTile = Instantiate(tilePrefab, transform.position, Quaternion.identity);
+        TilesList.Insert(Test_IndexToAdd, newTile.GetComponent<SplineTile>());
+        PlaceTilesToTfData();
     }
 }

@@ -97,9 +97,9 @@ Material:
     m_Floats:
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
-    - _AlphaClippingThreshold: -0.07
+    - _AlphaClippingThreshold: 1.11
     - _AlphaToMask: 0
-    - _BOrderEmissionIntensity: 100000
+    - _BOrderEmissionIntensity: 24
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BorderEmission_Threshold: 0.3
