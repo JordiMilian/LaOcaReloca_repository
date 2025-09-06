@@ -1,17 +1,21 @@
-using NUnit.Framework;
+
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.Splines;
-using UnityEngine.U2D;
-using static UnityEngine.UI.Image;
+
 
 public struct TileTfData
 {
-    public Vector3 originW;
-    public Vector3 centerW;
-    public List<Vector3> cornersFromOrigin;
-    public Vector3 forwardFromCenter;
+    public Vector3 origin; //this is the point in the spline that touches with the previus tile
+    public Vector3 center;
+    //These lists are sorted like this because that's how the mesh handles it
+    //3----1
+    //|    |
+    //2----0
+    public List<Vector3> cornersInWorld;
+    public List<Vector3> cornersInLocal;
+    public Vector3 forward, up, right;
+    public Quaternion rotation;
 }
 
 public class SplineBoard_Testing : MonoBehaviour
@@ -25,32 +29,32 @@ public class SplineBoard_Testing : MonoBehaviour
     List<TileTfData> tilesData = new();
     [SerializeField] GameObject tilePrefab;
 
-    
+    public List<SplineTile> TilesList = new();
 
     private void OnDrawGizmosSelected()
     {
         UpdateStructs();
 
-        foreach(TileTfData info in tilesData)
+        foreach (TileTfData info in tilesData)
         {
             Gizmos.color = Color.purple;
 
-            for(int i = 0; i < info.cornersFromOrigin.Count; i++)
+            for (int i = 0; i < info.cornersInWorld.Count; i++)
             {
-                switch(i)
+                switch (i)
                 {
-                    case 0: Gizmos.DrawLine(info.originW + info.cornersFromOrigin[0], info.originW + info.cornersFromOrigin[1]); break;
-                    case 1: Gizmos.DrawLine(info.originW + info.cornersFromOrigin[1], info.originW + info.cornersFromOrigin[3]); break;
-                    case 2: Gizmos.DrawLine(info.originW + info.cornersFromOrigin[2], info.originW + info.cornersFromOrigin[0]); break;
-                    case 3: Gizmos.DrawLine(info.originW + info.cornersFromOrigin[3], info.originW + info.cornersFromOrigin[2]); break;
+                    case 0: Gizmos.DrawLine( info.cornersInWorld[0],  info.cornersInWorld[1]); break;
+                    case 1: Gizmos.DrawLine( info.cornersInWorld[1],  info.cornersInWorld[3]); break;
+                    case 2: Gizmos.DrawLine( info.cornersInWorld[2],  info.cornersInWorld[0]); break;
+                    case 3: Gizmos.DrawLine( info.cornersInWorld[3],  info.cornersInWorld[2]); break;
                 }
             }
             Gizmos.color = Color.blue;
-            Gizmos.DrawLine(info.centerW, info.centerW + info.forwardFromCenter);
+            Gizmos.DrawLine(info.center, info.center + info.forward);
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(info.centerW, info.centerW + Vector3.up);
+            Gizmos.DrawLine(info.center, info.center + info.up);
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(info.centerW, info.centerW + Vector3.Cross(Vector3.up, info.forwardFromCenter).normalized);
+            Gizmos.DrawLine(info.center, info.center + info.right);
         }
     }
 
@@ -63,20 +67,13 @@ public class SplineBoard_Testing : MonoBehaviour
     public void UpdateStructs()
     {
         List<Vector3> tilesCornersFromOrigin = new();
-        List<Vector3> tilesOriginW = new();
+        List<Vector3> tilesOrigins = new();
         tilesData = new();
-        
 
-        float GetTWithLenght( float lenght)
-        {
-            float totalLenght = spline.CalculateLength();
-            return Mathf.InverseLerp(0, totalLenght, lenght);
-        }
         float maxTPerTIle = GetTWithLenght(maxTileLenght);
-        float TPerTile = 1f / (float)tilesCount;
+        float TPerTile;
         if (maxTileLenght * tilesCount > spline.CalculateLength())
         {
-            //dividir normal
             TPerTile = 1f / (float)tilesCount;
         }
         else
@@ -85,7 +82,7 @@ public class SplineBoard_Testing : MonoBehaviour
         }
 
         //Get corners from all Origins
-        for(int i = 0; i < tilesCount +1; i++)
+        for (int i = 0; i < tilesCount + 1; i++)
         {
             float t = TPerTile * i;
 
@@ -95,24 +92,32 @@ public class SplineBoard_Testing : MonoBehaviour
 
             tilesCornersFromOrigin.Add(right * width / 2);
             tilesCornersFromOrigin.Add(-right * width / 2);
-            tilesOriginW.Add(spline.EvaluatePosition(t));
+            tilesOrigins.Add(spline.EvaluatePosition(t));
         }
 
-        //Get all the structs filled
+        //Get the basic info In and 
         for (int i = 0; i < tilesCount; i++)
         {
-            float centerT = TPerTile * i + (TPerTile/2);
             TileTfData newTileInfo = new();
 
-            newTileInfo.centerW = spline.EvaluatePosition(centerT);
+            float centerT = TPerTile * i + (TPerTile / 2);
+
+            newTileInfo.center = spline.EvaluatePosition(centerT);
+
             Vector3 tan = spline.EvaluateTangent(centerT);
-            newTileInfo.forwardFromCenter = tan.normalized;
-            newTileInfo.originW = tilesOriginW[i];
+            newTileInfo.forward = tan.normalized;
+            newTileInfo.up = Vector3.up;
+            newTileInfo.right = Vector3.Cross(newTileInfo.up, newTileInfo.forward);
 
-            Vector3 difBetweenOrigins = tilesOriginW[i + 1] - tilesOriginW[i];
+            newTileInfo.origin = tilesOrigins[i];
+            newTileInfo.rotation = Quaternion.LookRotation(newTileInfo.forward, Vector3.up);
 
-            List<Vector3> VerticesPositionsFromOrigin = new();
+            //Get the corners from Origin
+            Vector3 difBetweenOrigins = tilesOrigins[i + 1] - tilesOrigins[i];
             int startingCornerIndex = i * 2;
+
+            newTileInfo.cornersInWorld = new();
+            newTileInfo.cornersInLocal = new();
             for (int j = 0; j < 4; j++)
             {
                 //The order of the mesh vertices is:
@@ -123,21 +128,45 @@ public class SplineBoard_Testing : MonoBehaviour
                 //1-----3
                 //|     |
                 //0-----2
-                //So here we are storing them in the proper order in the struct
+                //So here we are sorting them in the proper order in the struct
+                Vector3 sortedWorldPos;
                 switch (j)
-                {       
-                    case 0: VerticesPositionsFromOrigin.Add(difBetweenOrigins + tilesCornersFromOrigin[startingCornerIndex + 2]); break;
-                    case 1: VerticesPositionsFromOrigin.Add(difBetweenOrigins + tilesCornersFromOrigin[startingCornerIndex + 3]); break;
-                    case 2: VerticesPositionsFromOrigin.Add(tilesCornersFromOrigin[startingCornerIndex]); break;
-                    case 3: VerticesPositionsFromOrigin.Add(tilesCornersFromOrigin[startingCornerIndex+1]); break;
+                {
+                    case 0: sortedWorldPos = newTileInfo.origin + difBetweenOrigins + tilesCornersFromOrigin[startingCornerIndex + 2]; break;
+                    case 1: sortedWorldPos = newTileInfo.origin + difBetweenOrigins + tilesCornersFromOrigin[startingCornerIndex + 3]; break;
+                    case 2: sortedWorldPos = newTileInfo.origin + tilesCornersFromOrigin[startingCornerIndex]; break;
+                    case 3: sortedWorldPos = newTileInfo.origin + tilesCornersFromOrigin[startingCornerIndex + 1]; break;
+                    default: sortedWorldPos = Vector3.zero; break;
                 }
-            }
-            newTileInfo.cornersFromOrigin = VerticesPositionsFromOrigin;
+                
+                //Now we collect the World and Local positions out of that mess
+                newTileInfo.cornersInWorld.Add(sortedWorldPos);
 
+                Vector3 localPos = worldToLocal(
+                    newTileInfo.cornersInWorld[j],
+                    newTileInfo.center,
+                    newTileInfo.right,
+                    newTileInfo.forward);
+
+                newTileInfo.cornersInLocal.Add(localPos);
+            }
             tilesData.Add(newTileInfo);
-        } 
+        }
+        //
+        float GetTWithLenght(float lenght)
+        {
+            float totalLenght = spline.CalculateLength();
+            return Mathf.InverseLerp(0, totalLenght, lenght);
+        }
+        Vector3 worldToLocal(Vector3 world, Vector3 pos ,Vector3 right, Vector3 forward)
+        {
+            Vector3 posToWorld = world - pos;
+            float x = Vector3.Dot(posToWorld, right);
+            float z = Vector3.Dot(posToWorld, forward);
+            return new Vector3(x, 0, z);
+        }
     }
-    List<SplineTile> TilesList = new();
+    
     void CreateStartingTiles()
     {
         for(int i = 0; i < tilesData.Count; i++)
@@ -150,15 +179,16 @@ public class SplineBoard_Testing : MonoBehaviour
     {
         for (int i = 0; i < TilesList.Count; i++)
         {
-            StartCoroutine( TilesList[i].C_MoveMeshToStruct(tilesData[i]));
+            TilesList[i].SetOriginTfData(tilesData[i]);
+            TilesList[i].MoveToOrigin();
         }
     }
 
+    [Header("Testing")]
     [SerializeField] int Test_IndexToAdd;
     [ContextMenu("Add New Tile")]
     void AddNewTile()
     {
-
         if(Test_IndexToAdd >= TilesList.Count)
         {
             Test_IndexToAdd = TilesList.Count-1;

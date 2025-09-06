@@ -171,7 +171,7 @@ public class Tile_Base : MonoBehaviour, IBuyable
             if (tile.GetType() == this.GetType()) { repeatedCards++; }
         }
 
-        int baseValue = 0;
+        int baseValue;
         switch (rarity)
         {
             case Rarity.Common: { baseValue = 2; break; }

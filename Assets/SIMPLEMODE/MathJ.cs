@@ -178,4 +178,13 @@ public static class MathJ
         return tilesInAxis;
     }
     #endregion
+
+    //this functions works with Vector3 but works as If it was Vector2, meaning  (A,0,B) => (A,B). It doesnt consider Y
+    public static Vector3 worldToLocal2D(Vector3 world, Vector3 pos, Vector3 right, Vector3 forward)
+    {
+        Vector3 posToWorld = world - pos;
+        float x = Vector3.Dot(posToWorld, right);
+        float z = Vector3.Dot(posToWorld, forward);
+        return new Vector3(x, 0, z);
+    }
 }
