@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using NUnit.Framework;
-public class Tile_Shuffler : Tile_Base
+
+[CreateAssetMenu(menuName = "TileProfile/Shuffler", fileName = "TileProfile_Shuffler")]
+public class Tile_Shuffler : Tile_Profile
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
@@ -10,28 +11,28 @@ public class Tile_Shuffler : Tile_Base
     [SerializeField] float DmgPerShuffledTile = 2;
   public override IEnumerator OnPlayerStepped()
     {
-        if (indexInBoard < BoardController.TilesList.Count - 2) //si no es la penultima
+        if (Tile.indexInBoard < BoardController.TilesList.Count - 2) //si no es la penultima
         {
-            List<Tile_Base> tilesToShuffle = new();
+            List<TileController> tilesToShuffle = new();
             for (int i = BoardController.TilesList.Count - 2; i > BoardController.PlayerIndex + 1; i--)
             {
-                Tile_Base tile = BoardController.TilesList[i];
+                TileController tile = BoardController.TilesList[i];
                 tilesToShuffle.Add(tile);
                 BoardController.TilesList.RemoveAt(i);
             }
 
             for (int i = tilesToShuffle.Count - 1; i >= 0; i--)
             {
-                Tile_Base tile = tilesToShuffle[i];
+                TileController tile = tilesToShuffle[i];
                 int randomIndex = Random.Range(BoardController.PlayerIndex + 1, BoardController.TilesList.Count - 1);
                 BoardController.TilesList.Insert(randomIndex, tile);
             }
-            BoardController.UpdateTfData();
+            BoardController.UpdateStructData();
 
             BoardController.MoveTiles_ToTfData(true);
 
             yield return new WaitForSeconds(0.5f);
-            DamagesToDeal.Add(DmgPerShuffledTile * tilesToShuffle.Count);
+            Tile.DamagesToDeal.Add(DmgPerShuffledTile * tilesToShuffle.Count);
         }
         yield return base.OnPlayerStepped(); 
 

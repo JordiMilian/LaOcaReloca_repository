@@ -1,20 +1,20 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tile_OnCrossedAddEndTileDamage : Tile_Base
+public class Tile_OnCrossedAddEndTileDamage : Tile_Profile
 {
     [SerializeField] int damageToAdd = 5;
     [SerializeField] float multiplierOnLanded = 1.5f;
     public override IEnumerator OnPlayerStepped()
     {
         yield return base.OnPlayerStepped();
-        Tile_Base endTile = BoardController.TilesList[BoardController.TilesList.Count - 1];
+        TileController endTile = BoardController.TilesList[BoardController.TilesList.Count - 1];
 
         endTile.AddBaseDamage(damageToAdd);
     }
     public override IEnumerator OnPlayerLanded()
     {
-        Tile_Base endTile = BoardController.TilesList[BoardController.TilesList.Count - 1];
+        TileController endTile = BoardController.TilesList[BoardController.TilesList.Count - 1];
         endTile.MultiplyBaseDamage(1.5f);
         yield return base.OnPlayerLanded();
     }

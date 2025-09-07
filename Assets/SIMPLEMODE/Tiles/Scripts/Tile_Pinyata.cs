@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
-public class Tile_Pinyata : Tile_Base
+public class Tile_Pinyata : Tile_Profile
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
@@ -17,10 +17,10 @@ public class Tile_Pinyata : Tile_Base
     public override IEnumerator OnPlayerStepped()
     { 
         yield return base.OnPlayerStepped();
-        List<Tile_Base> tilesAround = MathJ.GetTilesAround(this, true);
-        foreach (Tile_Base tile in tilesAround)
+        List<TileController> tilesAround = MathJ.GetTilesAround(Tile, true);
+        foreach (TileController tile in tilesAround)
         {
-            if (tile is Tile_Start) { continue; }
+            if (tile._Profile is Tile_Start) { continue; }
             tile.AddBaseDamage(addedDmg);
         }
      

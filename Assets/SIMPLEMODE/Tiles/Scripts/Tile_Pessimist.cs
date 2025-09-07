@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
-public class Tile_Pessimist : Tile_Base
+public class Tile_Pessimist : Tile_Profile
 {
 
 
@@ -23,8 +23,8 @@ public class Tile_Pessimist : Tile_Base
     IEnumerator OnReachedEndEffect()
     {
         tileMovement.shakeTile(Intensity.mid);
-        DamagesToDeal.Add(BaseDamage * multiplierOnEnd);
-        yield return C_DealAllDamageToDeal(); 
+        Tile.DamagesToDeal.Add(BaseDamage * multiplierOnEnd);
+        yield return Tile.C_DealAllDamageToDeal(); 
     }
     public override string GetTooltipText()
     {

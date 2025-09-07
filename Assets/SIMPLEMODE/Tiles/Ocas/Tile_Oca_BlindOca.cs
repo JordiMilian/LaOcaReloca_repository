@@ -8,7 +8,7 @@ public class Tile_Oca_BlindOca : Tile_Oca
     {
         yield return base.basePlayerLanded(); //we call the base from two behind
 
-        List<Tile_Oca> boardOcas = GetAllOcaTiles();
+        List<TileController> boardOcas = GetAllOcaTiles();
 
         //if there is only this oca, jump to end
         if(boardOcas.Count <= 1)
@@ -25,19 +25,19 @@ public class Tile_Oca_BlindOca : Tile_Oca
         {
             randomIndex = Random.Range(0, boardOcas.Count);
         }
-        while (boardOcas[randomIndex].indexInBoard == indexInBoard);
+        while (boardOcas[randomIndex] == Tile);
 
         
         yield return BoardController.L_JumpPlayerTo(boardOcas[randomIndex].indexInBoard, false);
         GameController.AddMoney(GameController.MoneyToRoll);
 
     }
-    public List<Tile_Oca> GetAllOcaTiles()
+    public List<TileController> GetAllOcaTiles()
     {
-        List<Tile_Oca> ocaTiles = new();
-        foreach (Tile_Base tile in BoardController.TilesList)
+        List<TileController> ocaTiles = new();
+        foreach (TileController tile in BoardController.TilesList)
         {
-            if (tile is Tile_Oca) { ocaTiles.Add(tile as Tile_Oca); }
+            if (tile._Profile is Tile_Oca) { ocaTiles.Add(tile); }
         }
         return ocaTiles;
     }

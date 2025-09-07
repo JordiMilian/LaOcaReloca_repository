@@ -2,26 +2,26 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Tile_Oca : Tile_Base
+[CreateAssetMenu(menuName = "TileProfile/Ocas/Oca", fileName = "Tile_Oca")]
+public class Tile_Oca : Tile_Profile
 {
     
     public override IEnumerator OnPlayerLanded()
     {
         yield return base.OnPlayerLanded();
-        Board_Controller_simple boardController = Board_Controller_simple.Instance;
 
-        for (int i = indexInBoard + 1; i < boardController.TilesList.Count; i++)
+        for (int i = Tile.indexInBoard + 1; i < BoardController.TilesList.Count; i++)
         {
-            if (boardController.TilesList[i] is Tile_Oca)
+            if (base.BoardController.TilesList[i]._Profile is Tile_Oca)
             {
-                yield return boardController.L_JumpPlayerTo(i, false);
+                yield return BoardController.L_JumpPlayerTo(i, false);
                 GameController.AddMoney(GameController.MoneyToRoll);
                 yield break;
 
             }
-            if(boardController.TilesList[i] is Tile_End)
+            if(BoardController.TilesList[i]._Profile is Tile_End)
             {
-                yield return boardController.L_JumpPlayerTo(i, true);
+                yield return BoardController.L_JumpPlayerTo(i, true);
                 yield break;
             }
         }

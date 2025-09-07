@@ -29,7 +29,7 @@ public class SplineBoard_Testing : MonoBehaviour
     List<TileTfData> tilesData = new();
     [SerializeField] GameObject tilePrefab;
 
-    public List<SplineTile> TilesList = new();
+    public List<TileController> TilesList = new();
     [Header("Extra Large tiles")]
     [Range(1,5)]
     [SerializeField] float ExtraLargePercent = 1.5f;
@@ -161,7 +161,7 @@ public class SplineBoard_Testing : MonoBehaviour
                 //Now we collect the World and Local positions out of that mess
                 newTileInfo.cornersInWorld.Add(sortedWorldPos);
 
-                Vector3 localPos = worldToLocal(
+                Vector3 localPos = MathJ.worldToLocal2D(
                     newTileInfo.cornersInWorld[j],
                     newTileInfo.center,
                     newTileInfo.right,
@@ -178,13 +178,6 @@ public class SplineBoard_Testing : MonoBehaviour
             float totalLenght = spline.CalculateLength();
             return Mathf.InverseLerp(0, totalLenght, lenght);
         }
-        Vector3 worldToLocal(Vector3 world, Vector3 pos ,Vector3 right, Vector3 forward)
-        {
-            Vector3 posToWorld = world - pos;
-            float x = Vector3.Dot(posToWorld, right);
-            float z = Vector3.Dot(posToWorld, forward);
-            return new Vector3(x, 0, z);
-        }
     }
     
     void CreateStartingTiles()
@@ -192,7 +185,7 @@ public class SplineBoard_Testing : MonoBehaviour
         for(int i = 0; i < tilesData.Count; i++)
         {
             GameObject newTile = Instantiate(tilePrefab);
-            TilesList.Add(newTile.GetComponent<SplineTile>());
+            TilesList.Add(newTile.GetComponent<TileController>());
         }
     }
     void PlaceTilesToTfData()
@@ -200,7 +193,7 @@ public class SplineBoard_Testing : MonoBehaviour
         for (int i = 0; i < TilesList.Count; i++)
         {
             TilesList[i].SetOriginTfData(tilesData[i]);
-            TilesList[i].MoveToOrigin();
+            TilesList[i].MoveToTfData();
         }
     }
 
@@ -216,7 +209,7 @@ public class SplineBoard_Testing : MonoBehaviour
         tilesCount++;
         UpdateStructs();
         GameObject newTile = Instantiate(tilePrefab, transform.position, Quaternion.identity);
-        TilesList.Insert(Test_IndexToAdd, newTile.GetComponent<SplineTile>());
+        TilesList.Insert(Test_IndexToAdd, newTile.GetComponent<TileController>());
         PlaceTilesToTfData();
     }
 }

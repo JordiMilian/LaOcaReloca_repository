@@ -4,24 +4,22 @@ using TMPro;
 using UnityEngine.UI;
 
 
-public class TileSharedVisuals : MonoBehaviour, ITooltip
+public class TileSharedVisuals : MonoBehaviour
 {
     Camera mainCamera;
     [HideInInspector] public transformData originTransform;
     public bool canBeMoved = true;
     [SerializeField] float heightWhileDragged = .5f;
     GameController_Simple gameController;
-    [HideInInspector] public Tile_Base tileBase;
+    [HideInInspector] public TileController tileBase;
     [SerializeField] TextMeshProUGUI TMP_DamageDisplay;
-    [SerializeField] Image basicColorPanel;
     
     private void Awake()
     {
         mainCamera = Camera.main;
         gameController = GameController_Simple.Instance;
-        tileBase = GetComponent<Tile_Base>();
+        tileBase = GetComponent<TileController>();
         SetBasicPanelColor();
-        UpdateDmgDisplayText();
     }
     
     #region Set Origin
@@ -60,25 +58,26 @@ public class TileSharedVisuals : MonoBehaviour, ITooltip
     }
     public void SetBasicPanelColor()
     {
-        basicColorPanel.color = tileBase.tileColor;
+        //TO DO: Add something to the material to show dragability
+        //basicColorPanel.color = tileBase.tileColor;
     }
     public void SetBasicPanelColor_Transparent()
     {
-        basicColorPanel.color = new Color(tileBase.tileColor.r, tileBase.tileColor.g, tileBase.tileColor.b, 0.75f);
+       // basicColorPanel.color = new Color(tileBase.tileColor.r, tileBase.tileColor.g, tileBase.tileColor.b, 0.75f);
     }
     #region TOOLTIPS
     private void OnMouseDown()
     {
         if (!canBeMoved) { return; }
-        if (tileBase == null) { tileBase = GetComponent<Tile_Base>();}
+        if (tileBase == null) { tileBase = GetComponent<TileController>();}
         if (tileBase.isBehindPlayer) { return; }
        
 
-        if(TryGetComponent(out Tile_Base tile))
+        if(TryGetComponent(out TileController tile))
         {
             gameController.SelectedNewTile(tile);
         }
-        ForceTooltip();
+   
     }
     private void OnMouseDrag()
     {
@@ -111,23 +110,8 @@ public class TileSharedVisuals : MonoBehaviour, ITooltip
         {
             MoveTileToOrigin();
         }   
-        StopForcingThisTooltip();
     }
-    private void OnMouseEnter() { RequestTooltip(); }
-    private void OnMouseExit() { StopRequestTooltip(); }
-
-    void StopRequestTooltip() { TooltipManager.Instance.RemoveRequest(this); }
-    void RequestTooltip() { TooltipManager.Instance.RequestTooltip(this); }
-    void ForceTooltip() { TooltipManager.Instance.ForceTooltip(this); }
-    void StopForcingThisTooltip() { TooltipManager.Instance.StopForcingThisTooltip(this); }
-    public string GetTooltipDescription()
-    {
-        return tileBase.GetTooltipText();
-    }
-    public string GetTooltipTitle()
-    {
-        return tileBase.TitleText;
-    }
+   
     #endregion
     [SerializeField] float verticalShakeForce = 0.02f;
     float shakeDuration = 1;
@@ -182,13 +166,13 @@ public class TileSharedVisuals : MonoBehaviour, ITooltip
             case TileMessageType.Neutral:
                 msgColor = Color.white;
                 break;
-            case TileMessageType.AddPermaDamage:
+            case TileMessageType.AddBaseDamage:
                 msgColor = Color.cyan;
                 break;
             case TileMessageType.AddMultiplier:
                 msgColor = Color.red;
                 break;
-            case TileMessageType.AddDamage:
+            case TileMessageType.DealDamage:
                 msgColor = Color.blue;
                 break;
         }

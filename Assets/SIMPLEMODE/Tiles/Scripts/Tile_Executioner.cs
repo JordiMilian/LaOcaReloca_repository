@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_Executioner : Tile_Base
+public class Tile_Executioner : Tile_Profile
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
@@ -13,7 +13,7 @@ public class Tile_Executioner : Tile_Base
     {
         yield return base.OnPlayerLanded();
 
-        Tile_Base randomTile = null;
+        TileController randomTile = null;
         int randomIndex = 0;
         while(randomTile == null || randomTile is Tile_Start || randomTile is Tile_End || randomTile == this)
         {

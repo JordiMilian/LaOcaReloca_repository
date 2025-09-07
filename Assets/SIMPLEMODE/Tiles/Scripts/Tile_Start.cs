@@ -1,11 +1,7 @@
 using UnityEngine;
-
-public class Tile_Start : Tile_Base
+[CreateAssetMenu(menuName = "TileProfile/Basics/Start", fileName = "Tile_Start")]
+public class Tile_Start : Tile_Profile
 {
-    public override float GetBaseDamage()
-    {
-        return 0;
-    }
     public override string GetTooltipText()
     {
         return "START";

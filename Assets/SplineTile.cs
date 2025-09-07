@@ -8,18 +8,25 @@ public class SplineTile : MonoBehaviour, IPointerClickHandler
 {
     public MeshFilter meshFilter;
     [SerializeField] MeshCollider meshCollider;
+    [SerializeField] Material tileMaterial;
     TileTfData TfData;
+    public Tile_Profile tileProfile;
     bool isDataSet = false;//this is for gizmo drawing for now
-    public Vector3 cornerPos;
-    [Range(0,1)]
-    [SerializeField] float PercentageOfCorner = .25f;
-    [SerializeField] float sizeOfCorner = 1;
+    
+    private void Awake()
+    {
+        tileMaterial = Instantiate(tileMaterial);
+        tileMaterial.color = Random.ColorHSV();
+        GetComponent<MeshRenderer>().material = tileMaterial;
+    }
+    //This should be called from the SHOP or whoever creates new tiles
+    #region TFDATA
     public void SetOriginTfData(TileTfData tileData)
     {
         TfData = tileData;
         isDataSet = true;
     }
-    public void SetAtTfData()
+    public void SetToTfData()
     {
         transform.position = TfData.center;
         transform.rotation = TfData.rotation;
@@ -31,15 +38,7 @@ public class SplineTile : MonoBehaviour, IPointerClickHandler
 
         meshCollider.sharedMesh = meshFilter.mesh;
     }
-    private void OnDrawGizmos()
-    {
-        if(!isDataSet ) { return; }
-        //Draw the corner
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.TransformPoint(GetLocalCornerPos()), sizeOfCorner);
-
-    }
-    public void MoveToOrigin()
+    public void MoveToTfData()
     {
         StartCoroutine(moving());
 
@@ -71,24 +70,22 @@ public class SplineTile : MonoBehaviour, IPointerClickHandler
                 yield return null;
             }
 
-            SetAtTfData();
+            SetToTfData();
         }
     }
-    public void SetToDefaultShape()
+    #endregion
+    #region CORNER POS
+    [Header("Corner")]
+    [Range(0, 1)]
+    [SerializeField] float PercentageOfCorner = .25f;
+    [SerializeField] float sizeOfCorner = 1;
+    private void OnDrawGizmos()
     {
-        Vector3[] defaultPos = new Vector3[4]
-        {
-            new Vector3(0,0,0),
-            new Vector3(0,0,3),
-            new Vector3(-3,0,3),
-            new Vector3(-3,0,0)
-        };
-        Mesh mesh = meshFilter.mesh;
-        mesh.SetVertices(defaultPos);
-        mesh.RecalculateBounds();
-        mesh.RecalculateNormals();
+        if (!isDataSet) { return; }
+        //Draw the corner
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.TransformPoint(GetLocalCornerPos()), sizeOfCorner);
     }
-    
     Vector3 GetLocalCornerPos()
     {
         int TopCornerIndex = GetMostTopCornerIndexW();
@@ -124,6 +121,7 @@ public class SplineTile : MonoBehaviour, IPointerClickHandler
             default: return -1;
         }
     }
+    #endregion
 
     public void OnPointerClick(PointerEventData eventData)
     {

@@ -12,7 +12,7 @@ public class ShopItem_Controller : MonoBehaviour
     public void RemoveItem()
     {
         buyable = null;
-        buyableGO = null;
+        buyableGO = null; 
         TMP_Price.text = "";
     }
     public void ResetShopItem()

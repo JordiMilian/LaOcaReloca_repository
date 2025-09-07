@@ -9,12 +9,12 @@ public class Tile_Oca_LeaderOca : Tile_Oca
     [SerializeField] float addedDamageAtOcas = 10;
     public override IEnumerator OnPlayerLanded()
     {
-        List<Tile_Base> ocasTiles = new();
-        foreach (Tile_Base tile in BoardController.TilesList)
+        List<TileController> ocasTiles = new();
+        foreach (TileController tile in BoardController.TilesList)
         {
-            if (tile.tileTag == TileTags.Oca) { ocasTiles.Add(tile); }
+            if (tile._Profile.tileTag == TileTags.Oca) { ocasTiles.Add(tile); }
         }
-        foreach (Tile_Base tile in ocasTiles)
+        foreach (TileController tile in ocasTiles)
         {
             if (tile == this) { continue; }
             tile.AddBaseDamage(addedDamageAtOcas);
@@ -26,11 +26,11 @@ public class Tile_Oca_LeaderOca : Tile_Oca
     public override IEnumerator OnPlayerStepped()
     {
         int OcasCount = 0;
-        foreach (Tile_Base tile in BoardController.TilesList)
+        foreach (TileController tile in BoardController.TilesList)
         {
-            if (tile is Tile_Oca) { OcasCount++; }
+            if (tile._Profile is Tile_Oca) { OcasCount++; }
         }
-        DamagesToDeal.Add(damagePerOca * OcasCount);
+        Tile.DamagesToDeal.Add(damagePerOca * OcasCount);
         Debug.Log($"Found {OcasCount} ocas");
 
         yield return base.OnPlayerStepped();

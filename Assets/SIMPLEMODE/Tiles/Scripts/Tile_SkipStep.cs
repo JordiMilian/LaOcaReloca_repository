@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
-public class Tile_SkipStep : Tile_Base
+public class Tile_SkipStep : Tile_Profile
 {
     public override IEnumerator OnPlayerStepped()
     {
@@ -11,6 +11,6 @@ public class Tile_SkipStep : Tile_Base
     }
     public override string GetTooltipText()
     {
-        return "On Crossed: Skip this step";
+        return $"{OnCrossed} Skip this step";
     }
 }

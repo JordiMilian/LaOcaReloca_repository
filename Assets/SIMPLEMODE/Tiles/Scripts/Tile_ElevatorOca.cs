@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_ElevatorOca : Tile_Base
+public class Tile_ElevatorOca : Tile_Oca
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
@@ -11,7 +11,7 @@ public class Tile_ElevatorOca : Tile_Base
 
     public override IEnumerator OnPlayerLanded() 
     { 
-        yield return base.OnPlayerLanded();
+        yield return basePlayerLanded();
         yield return BoardController.L_JumpPlayerTo(BoardController.TilesList.Count - 1, true);
 
     }

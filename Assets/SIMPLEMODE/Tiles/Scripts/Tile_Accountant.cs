@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tile_Accountant : Tile_Base
+public class Tile_Accountant : Tile_Profile
 {
     [SerializeField] int damagePerIndex;
     public override IEnumerator OnPlayerStepped()
     {
-        DamagesToDeal.Add(BoardController.TilesList.Count * damagePerIndex);
+        Tile.DamagesToDeal.Add(BoardController.TilesList.Count * damagePerIndex);
         yield return base.OnPlayerStepped();
     }
     public override string GetTooltipText()

@@ -25,3 +25,23 @@ public interface ITooltip
     //public Sprite GetTooltipSprite();
     
 }
+public enum Intensity
+{
+    empty, low, mid, large
+}
+public enum TileState
+{
+    none, InShop, InBoard
+}
+public enum Rarity
+{
+    none, Common, Rare, Legendary, Unique
+}
+public enum TileTags
+{
+    NoTag, EmptyTile, Oca
+}
+public enum TileMessageType
+{
+    Neutral, DealDamage, AddMultiplier, AddBaseDamage
+}

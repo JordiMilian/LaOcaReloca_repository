@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile_Crucifix : Tile_Base
+public class Tile_Crucifix : Tile_Profile
 {
     [SerializeField] float addedDamageToOtherTiles = 2;
     public override IEnumerator OnPlayerLanded()
@@ -11,18 +11,18 @@ public class Tile_Crucifix : Tile_Base
         
         float totalDamage = 0;
 
-        List<Tile_Base> axisTiles = MathJ.GetBothAxisTiles(this);
-        foreach (Tile_Base tile in axisTiles)
+        List<TileController> axisTiles = MathJ.GetBothAxisTiles(Tile);
+        foreach (TileController tile in axisTiles)
         {
             yield return addTileDamage(tile);
         }
 
         tileMovement.shakeTile(Intensity.large);
 
-        DamagesToDeal.Add(totalDamage);
+        Tile.DamagesToDeal.Add(totalDamage);
         yield return base.OnPlayerLanded();
         //
-        IEnumerator addTileDamage(Tile_Base tile)
+        IEnumerator addTileDamage(TileController tile)
         {
             totalDamage += tile.GetBaseDamage();
             tile.tileMovement.shakeTile(Intensity.mid);
@@ -31,8 +31,8 @@ public class Tile_Crucifix : Tile_Base
     }
     public override IEnumerator OnPlayerStepped()
     {
-        List<Tile_Base> axisTiles = MathJ.GetBothAxisTiles(this);
-        foreach (Tile_Base tile in axisTiles)
+        List<TileController> axisTiles = MathJ.GetBothAxisTiles(Tile);
+        foreach (TileController tile in axisTiles)
         {
             tile.AddBaseDamage(addedDamageToOtherTiles);
         }

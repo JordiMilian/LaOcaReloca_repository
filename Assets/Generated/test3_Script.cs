@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class test3_Script : Tile_Base
+public class test3_Script : TileController
 {
 //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
 //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }

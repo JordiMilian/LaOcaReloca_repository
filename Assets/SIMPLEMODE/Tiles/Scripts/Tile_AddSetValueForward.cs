@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
-public class Tile_AddSetValueForward : Tile_Base
+public class Tile_AddSetValueForward : Tile_Profile
 {
     [SerializeField] int Amount = 5;
     public override IEnumerator OnPlayerStepped()
     {
         yield return base.OnPlayerStepped();
-        Tile_Base nextTile = BoardController.TilesList[indexInBoard + 1];
+        TileController nextTile = BoardController.TilesList[Tile.indexInBoard + 1];
         if (nextTile != null)
         {
             nextTile.AddBaseDamage(Amount);

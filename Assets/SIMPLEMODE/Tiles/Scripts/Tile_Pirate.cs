@@ -1,16 +1,14 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_Pirate : Tile_Base
+public class Tile_Pirate : Tile_Profile
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
 
-
-    
     [SerializeField] int moneyOnLanded = 2;
     public override IEnumerator OnPlayerStepped()
     {
-        DamagesToDeal.Add(GameController.GetCurrentMoney());
+        Tile.DamagesToDeal.Add(GameController.GetCurrentMoney());
         yield return base.OnPlayerStepped();
     }
     public override IEnumerator OnPlayerLanded()

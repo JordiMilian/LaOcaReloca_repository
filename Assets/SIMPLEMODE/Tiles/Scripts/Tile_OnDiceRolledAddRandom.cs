@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tile_OnDiceRolledAddRandom : Tile_Base
+public class Tile_OnDiceRolledAddRandom : Tile_Profile
 {
     public override void OnPlacedInBoard()
     {
@@ -17,7 +17,7 @@ public class Tile_OnDiceRolledAddRandom : Tile_Base
     {
         int lastRolledvalue = GameController.dicesController.LastRolledValue;
 
-        Tile_Base randomTile = MathJ.GetRandomTileInBoard(this, true,true);
+        TileController randomTile = MathJ.GetRandomTileInBoard(Tile, true,true);
 
 
         randomTile.AddBaseDamage(lastRolledvalue);

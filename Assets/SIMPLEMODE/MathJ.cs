@@ -69,33 +69,33 @@ public static class MathJ
     }
 
     #region TILES EFFECTS UTILITIES
-    public static Tile_Base GetRandomTileInBoard(Tile_Base thisTile,bool ignoreSelf = true, bool ignoreStart = true,bool ignoreEnd = true)
+    public static TileController GetRandomTileInBoard(TileController thisTile,bool ignoreSelf = true, bool ignoreStart = true,bool ignoreEnd = true)
     {
         Board_Controller_simple board = Board_Controller_simple.Instance;
 
-        Tile_Base randomTile = board.TilesList[Random.Range(0, board.TilesList.Count)];
-        while(ignoreSelf && randomTile == thisTile || ignoreEnd && randomTile is Tile_End || (ignoreStart && randomTile is Tile_Start))
+        TileController randomTile = board.TilesList[Random.Range(0, board.TilesList.Count)];
+        while(ignoreSelf && randomTile == thisTile || ignoreEnd && randomTile._Profile is Tile_End || (ignoreStart && randomTile._Profile is Tile_Start))
         {
             randomTile = board.TilesList[Random.Range(0, board.TilesList.Count)];
         }
         return randomTile;
     }
-    public static Tile_Base GetRandomTileInBoardWithTag(TileTags tileTag, Tile_Base thisTile, bool ignoreSelf = true)
+    public static TileController GetRandomTileInBoardWithTag(TileTags tileTag, TileController thisTile, bool ignoreSelf = true)
     {
         Board_Controller_simple board = Board_Controller_simple.Instance;
 
-        List<Tile_Base> tilesWithTag =  GetAllTilesWithTag(tileTag, thisTile, ignoreSelf);
+        List<TileController> tilesWithTag =  GetAllTilesWithTag(tileTag, thisTile, ignoreSelf);
         if (tilesWithTag.Count == 0) { return null; }
 
         return tilesWithTag[Random.Range(0, tilesWithTag.Count)];
     }
-    public static List<Tile_Base> GetAllTilesWithTag(TileTags tileTag, Tile_Base thisTile, bool ignoreSelf = true)
+    public static List<TileController> GetAllTilesWithTag(TileTags tileTag, TileController thisTile, bool ignoreSelf = true)
     {
         Board_Controller_simple board = Board_Controller_simple.Instance;
-        List<Tile_Base> tilesWithTag = new();
-        foreach (Tile_Base tile in board.TilesList)
+        List<TileController> tilesWithTag = new();
+        foreach (TileController tile in board.TilesList)
         {
-            if (tile.tileTag == tileTag)
+            if (tile._Profile.tileTag == tileTag)
             {
                 if (ignoreSelf && tile == thisTile) { continue; }
                 tilesWithTag.Add(tile);
@@ -103,10 +103,10 @@ public static class MathJ
         }
         return tilesWithTag;
     }
-    public static List<Tile_Base> GetTilesAround(Tile_Base thisTile, bool ignoreSelf)
+    public static List<TileController> GetTilesAround(TileController thisTile, bool ignoreSelf)
     {
         Board_Controller_simple board = Board_Controller_simple.Instance;
-        List<Tile_Base> tilesAround = new();
+        List<TileController> tilesAround = new();
         for (int i = -1; i <= 1; i++)
         {
             for (int j = -1; j <= 1; j++)
@@ -127,10 +127,10 @@ public static class MathJ
         }
         return tilesAround;
     }
-    public static List<Tile_Base> GetVerticalAxisTiles(Tile_Base thisTile, bool ignoreSelf = true)
+    public static List<TileController> GetVerticalAxisTiles(TileController thisTile, bool ignoreSelf = true)
     {
         Board_Controller_simple board = Board_Controller_simple.Instance;
-        List<Tile_Base> tilesInAxis = new List<Tile_Base>();
+        List<TileController> tilesInAxis = new List<TileController>();
 
         Vector2Int vectorToCheck = thisTile.vectorInBoard + Vector2Int.down;
         while (board.TilesByPosition.ContainsKey(vectorToCheck))
@@ -148,10 +148,10 @@ public static class MathJ
 
         return tilesInAxis;
     }
-    public static List<Tile_Base> GetHorizontalAxisTiles(Tile_Base thisTile, bool ignoreSelf = true)
+    public static List<TileController> GetHorizontalAxisTiles(TileController thisTile, bool ignoreSelf = true)
     {
         Board_Controller_simple board = Board_Controller_simple.Instance;
-        List<Tile_Base> tilesInAxis = new List<Tile_Base>();
+        List<TileController> tilesInAxis = new List<TileController>();
 
         Vector2Int vectorToCheck = thisTile.vectorInBoard + Vector2Int.right;
         while (board.TilesByPosition.ContainsKey(vectorToCheck))
@@ -169,9 +169,9 @@ public static class MathJ
 
         return tilesInAxis;
     }
-    public static List<Tile_Base> GetBothAxisTiles (Tile_Base thisTile, bool ignoreSelf = true)
+    public static List<TileController> GetBothAxisTiles (TileController thisTile, bool ignoreSelf = true)
     {
-        List<Tile_Base> tilesInAxis = new List<Tile_Base>();
+        List<TileController> tilesInAxis = new List<TileController>();
         tilesInAxis.AddRange(GetVerticalAxisTiles(thisTile));
         tilesInAxis.AddRange(GetHorizontalAxisTiles(thisTile));
         if (!ignoreSelf) tilesInAxis.Add(thisTile);

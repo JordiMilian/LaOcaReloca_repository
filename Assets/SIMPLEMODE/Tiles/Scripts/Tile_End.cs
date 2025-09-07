@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
-public class Tile_End : Tile_Base
+[CreateAssetMenu(menuName = "TileProfile/Basics/End", fileName = "Tile_End")]
+public class Tile_End : Tile_Profile
 {
     [SerializeField] int moneyOnReached = 3;
     public override IEnumerator OnPlayerStepped()
@@ -20,7 +20,7 @@ public class Tile_End : Tile_Base
     IEnumerator ReachedEnd()
     {
         GameController.AddMoney(moneyOnReached);
-        yield return C_DealAllDamageToDeal();
+        yield return Tile.C_DealAllDamageToDeal();
         yield return GameController.OnReachedEndTile_CardEffects.C_ActivateEffects();
         GameController_Simple.Instance.ChangeGameState(GameState.ReachedEnd);
     }

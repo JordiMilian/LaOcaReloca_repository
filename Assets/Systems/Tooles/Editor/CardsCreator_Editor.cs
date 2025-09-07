@@ -134,12 +134,14 @@ public class CardsCreator_Editor : Editor
             Type tileLogicType = scriptAsset.GetClass();
             targetPrefab_GO.AddComponent(tileLogicType);
 
-            Tile_Base tileLogic = targetPrefab_GO.GetComponent<Tile_Base>();
+            TileController tileLogic = targetPrefab_GO.GetComponent<TileController>();
+            /* TO DO REWORK THIS TOOL
             tileLogic.tileColor = colorProperty.colorValue;
             tileLogic.TitleText = displayName.stringValue;
             tileLogic.BaseDamage = crossedDamage.floatValue;
             tileLogic.rarity = (Rarity)cardRarity.enumValueIndex;
             tileLogic.tileTag = (TileTags)tileTagsProp.enumValueIndex;
+            */
             //set tile tags somehow
 
             ShopController shop = shopController.objectReferenceValue as ShopController;

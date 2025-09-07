@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tile_Matrioska : Tile_Base
+public class Tile_Matrioska : Tile_Profile
 {
     [SerializeField] int timesCrossed;
     [SerializeField] int timesNeededToCross = 3;
@@ -10,13 +10,13 @@ public class Tile_Matrioska : Tile_Base
    {
         timesCrossed++;
         
-        MultiplyBaseDamage(multiplyCurrentDamageBy);
+        Tile.MultiplyBaseDamage(multiplyCurrentDamageBy);
         yield return base.OnPlayerStepped();
 
         if (timesCrossed >= timesNeededToCross)
         {
             yield return new WaitForSeconds(.5f);
-            BoardController.RemoveTile(indexInBoard);
+            BoardController.RemoveTile(Tile.indexInBoard);
             yield break;
         }
     }

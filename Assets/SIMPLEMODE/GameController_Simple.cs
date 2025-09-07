@@ -48,7 +48,7 @@ public class GameController_Simple : MonoBehaviour
     }
     
     #region INTERSECTING TILES WITH MOUSE
-    [SerializeField] List<Tile_Base> intersecticTiles;
+    [SerializeField] List<TileController> intersecticTiles;
     void GetIntersectingTilesToMouse()
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -57,7 +57,7 @@ public class GameController_Simple : MonoBehaviour
         hitsArray = Physics.RaycastAll(ray);
         foreach (RaycastHit hit in hitsArray)
         {
-            if (hit.collider.TryGetComponent(out Tile_Base tileBase))
+            if (hit.collider.TryGetComponent(out TileController tileBase))
             {
                 intersecticTiles.Add(tileBase);
             }
@@ -225,8 +225,8 @@ public class GameController_Simple : MonoBehaviour
     #endregion
     #endregion
     #region PLACE AND MOVE TILES
-    Tile_Base SelectedTile;
-    public void SelectedNewTile(Tile_Base tile)
+    TileController SelectedTile;
+    public void SelectedNewTile(TileController tile)
     {
         SelectedTile = tile;
     }
@@ -234,8 +234,8 @@ public class GameController_Simple : MonoBehaviour
     {
         if(intersecticTiles.Count <= 1) { return false; }
 
-        Tile_Base tileBelow = null;
-        foreach (Tile_Base tile in intersecticTiles)
+        TileController tileBelow = null;
+        foreach (TileController tile in intersecticTiles)
         {
             if (tile == SelectedTile) { continue; }
             tileBelow = tile;
@@ -251,13 +251,13 @@ public class GameController_Simple : MonoBehaviour
             if (!CanPurchaseWithoutLosing(shopItem.buyable.GetBuyingPrice())) { return false; }
         }
        
-        if(tileBelow is Tile_End || tileBelow is Tile_Start) { return false; }
+        if(tileBelow._Profile is Tile_End || tileBelow._Profile is Tile_Start) { return false; }
         return true;
     }
     public void PlaceTile() //Called from TileMovement OnMouseUp
     {
-        Tile_Base tileInBoard = null;
-        foreach (Tile_Base tile in intersecticTiles) //Search for the tile in board
+        TileController tileInBoard = null;
+        foreach (TileController tile in intersecticTiles) //Search for the tile in board
         {
             if(tile == SelectedTile) { continue; }
             tileInBoard = tile;
@@ -274,7 +274,7 @@ public class GameController_Simple : MonoBehaviour
             //MoveTilesInBoard(SelectedTile.indexInBoard, tileInBoard.indexInBoard);
         }
     }
-    void PlaceTileFromShopToBoard(Tile_Base tileInBoard, Tile_Base boughtTile)
+    void PlaceTileFromShopToBoard(TileController tileInBoard, TileController boughtTile)
     {
         RemoveMoney(SelectedTile.GetBuyingPrice());
         //BoardController.ReplaceTileInBoard(tileInBoard, boughtTile);

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tile_AddDiceOnLanded : Tile_Base
+public class Tile_AddDiceOnLanded : Tile_Profile
 {
     [SerializeField] GameObject DicePrefab_OnCrossed;
     [SerializeField] GameObject DicePrefab_OnLanded;

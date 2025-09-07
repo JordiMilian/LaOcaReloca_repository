@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.Events;
+using UnityEngine.Splines;
 
 public struct transformData
 {
@@ -13,11 +14,12 @@ public struct transformData
 }
 public class Board_Controller_simple : MonoBehaviour
 {
-    [SerializeField] GameObject Tile_Empty, Tile_Start, Tile_End, Tile_Oca;
+    [SerializeField] Tile_Profile Tile_Empty, Tile_Start, Tile_End, Tile_Oca;
+    [SerializeField] TilesFactory factory;
 
-    public List<Tile_Base> TilesList = new();
-    public List<transformData> TfData = new();
-    public Dictionary<Vector2Int, Tile_Base> TilesByPosition = new();
+    public List<TileController> TilesList = new();
+    public List<TileTfData> TfData = new();
+    public Dictionary<Vector2Int, TileController> TilesByPosition = new();
     public int PlayerIndex { get; private set; }
 
     Transform tilesHolder, UnderTilesHolder;
@@ -42,9 +44,8 @@ public class Board_Controller_simple : MonoBehaviour
     public IEnumerator StartBoard() //called from game controller
     {
         TilesList = InstantiateStartingTiles();
-        UpdateTfData();
+        TfData =  GetStrucrtData(StartingTilesCount);
         MoveTiles_ToTfData(false);
-        UpdateUndertiles_ByTfData();
         yield return C_AnimateStartingTiles();
 
 
@@ -53,182 +54,41 @@ public class Board_Controller_simple : MonoBehaviour
         playerSidePos = PlayerPrefab.transform.position;
         yield return V_StepPlayerToNewPos();
     }
-    private List<Tile_Base> InstantiateStartingTiles()
+    private List<TileController> InstantiateStartingTiles()
     {
-        List<Tile_Base> tempTiles = new();
+        List<TileController> tempTiles = new();
 
         for (int i = 0; i < StartingTilesCount; i++)
         {
-            GameObject prefabToSpawn;
+            Tile_Profile prefabToSpawn;
             if (i == 0) { prefabToSpawn = Tile_Start; }
             else if (i == StartingTilesCount - 1) { prefabToSpawn = Tile_End; }
             else if (i % 3 == 0) { prefabToSpawn = Tile_Oca; }
             //else if(i % 3 == 0) { prefabToSpawn = Tile_Money; }
             else { prefabToSpawn = Tile_Empty; }
 
-            SpawnAndAddNewTile(prefabToSpawn, i);
+            TileController newTile = factory.InstantiateTile(prefabToSpawn);
+            tempTiles.Add(newTile);
+
         }
         return tempTiles;
 
-        void SpawnAndAddNewTile(GameObject tilePrefab, int index)
-        {
-            GameObject newTile = Instantiate(tilePrefab, tilesHolder);
-            if(newTile.TryGetComponent(out Tile_Base tileInfo))
-            {
-                tileInfo.indexInBoard = index;
-                tempTiles.Add(tileInfo);
-                tileInfo.SetTileState(TileState.InBoard);
-            }
-            else { Debug.LogError("ERROR: TilePrefab is missing a controller"); }
-        }
     }
-    public void UpdateTfData()
-    {
-        TfData = new();
-
-        Vector3Int moveingDirection = Vector3Int.left;
-
-        Vector3 nextPosition = transform.position;
-        Vector2Int nextVector = new Vector2Int(0, 0);
-        Quaternion nextRotation = Quaternion.identity;
-        Quaternion halfRotation = Quaternion.AngleAxis(90, Vector3.up);
-
-        int tilesPerSide = GetMinSquareSides(TilesList.Count);
-        float scaleMultiplier = boardSideSize / (float)tilesPerSide;
-        float distanceBetween = scaleMultiplier;
-        if(tilesPerSide % 2 == 0) 
-        {
-            nextPosition += new Vector3(distanceBetween / 2, 0, -distanceBetween/2);        
-        }
-        int amountToMove = 1;
-        int amountMovedInDirection = 0;
-
-        for (int i = TilesList.Count - 1; i >= 0; i--)
-        {
-            transformData newTfStat = new();
-
-            //place tile in this position
-            newTfStat.position = nextPosition;
-            newTfStat.rotation = nextRotation;
-            newTfStat.scale = Vector3.one * scaleMultiplier;
-            newTfStat.vector = nextVector;
-            TfData.Add(newTfStat);
-
-
-            //rotate if reached end
-            if (amountMovedInDirection == amountToMove)
-            {
-                if (moveingDirection == Vector3Int.forward || moveingDirection == Vector3Int.back)
-                {
-                    amountToMove++;
-                }
-                amountMovedInDirection = 0;
-                moveingDirection = rotateVectorClockwise90Degrees(moveingDirection);
-
-                nextRotation = halfRotation * nextRotation;
-            }
-
-            //move next position
-            nextPosition += (Vector3)moveingDirection * distanceBetween;
-            nextVector += BoardVector3ToVector2Int(moveingDirection);
-
-            amountMovedInDirection++;
-
-        }
-        TfData.Reverse();
-
-        //
-        Vector3Int rotateVectorClockwise90Degrees(Vector3Int VectorToRotate)
-        {
-            return new Vector3Int(VectorToRotate.z, 0, -VectorToRotate.x);
-        }
-        Vector2Int BoardVector3ToVector2Int(Vector3Int v) { return new Vector2Int(v.x, v.z); }
-        int GetMinSquareSides(int tilesCount)
-        {
-            int maxSides = 10;
-            for (int i = 2; i < maxSides; i++)
-            {
-                if (tilesCount <= Mathf.Pow(i, 2))
-                {
-                    return i;
-                }
-            }
-            return maxSides; //return the max square side if tiles are too many
-        }
-    }
-
-    [Header("UnderTiles")]
-    [SerializeField] GameObject UnderTilePrefab_Start;
-    [SerializeField] GameObject UnderTilePrefab_Straight;
-    [SerializeField] GameObject UnderTilePrefab_Curve;
-    [SerializeField] Color undertile_StartColor, undertile_EndColor;
-    [SerializeField] float underTiles_VerticalOffset = -0.25f;
-    List<GameObject> undertiles_List = new();
-    public enum UnderTileTypes { Start, Straight, Curve }
     IEnumerator C_AnimateStartingTiles()
     {
 
         float delayBetweenTiles = TimeToCreateBoard / TilesList.Count;
 
-        foreach (Tile_Base tile in TilesList)
+        foreach (TileController tile in TilesList)
         {
-            tile.gameObject.SetActive(false);
+            tile.SetToTfData();
         }
-        foreach (Tile_Base tile in TilesList)
+        yield break;
+        foreach (TileController tile in TilesList)
         {
             yield return new WaitForSeconds(delayBetweenTiles);
             tile.gameObject.SetActive(true);
             tile.tileMovement. FirstAppeareanceAnim();
-        }
-    }
-    void UpdateUndertiles_ByTfData()
-    {
-        for(int i = undertiles_List.Count - 1; i >= 0; i--)
-        {
-            Destroy(undertiles_List[i]);
-        }
-        undertiles_List = new();
-
-        InstantiateUnderTile(UnderTileTypes.Start, TfData[0].position, TfData[0].rotation,0);
-
-        for (int i = 1;i < TfData.Count;i++)
-        {
-            transformData thisTf = TfData[i];
-            if(i == TfData.Count -1)
-            {
-                Quaternion finalQuaterion = thisTf.rotation * Quaternion.AngleAxis(180, Vector3.up);
-                InstantiateUnderTile(UnderTileTypes.Start, thisTf.position, finalQuaterion, i);
-            }
-            else if(thisTf.rotation != TfData[i - 1].rotation)
-            {
-                InstantiateUnderTile(UnderTileTypes.Curve, thisTf.position,thisTf.rotation, i);
-            }
-            else
-            {
-                InstantiateUnderTile(UnderTileTypes.Straight, thisTf.position, thisTf.rotation, i);
-            }
-        }
-        void InstantiateUnderTile(UnderTileTypes undertileType, Vector3 position, Quaternion rotation, int index)
-        {
-            GameObject prefabToSpawn = null;
-            switch (undertileType)
-            {
-                case UnderTileTypes.Start:
-                    prefabToSpawn = UnderTilePrefab_Start;
-                    break;
-                case UnderTileTypes.Straight:
-                    prefabToSpawn = UnderTilePrefab_Straight;
-                    break;
-                case UnderTileTypes.Curve:
-                    prefabToSpawn = UnderTilePrefab_Curve;
-                    break;
-            }
-            Vector3 underTilePos = position + (Vector3.up * underTiles_VerticalOffset);
-            GameObject newUndertile = Instantiate(prefabToSpawn, underTilePos, rotation, UnderTilesHolder);
-            newUndertile.transform.localScale = TfData[index].scale;
-            undertiles_List.Add(newUndertile);
-            newUndertile.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(undertile_StartColor, undertile_EndColor, (float)index / (float)TfData.Count);
-
         }
     }
     public void MoveTiles_ToTfData(bool withMovement)
@@ -236,23 +96,171 @@ public class Board_Controller_simple : MonoBehaviour
         TilesByPosition = new();
         for (int i = 0; i < TilesList.Count; i++)
         {
-            Tile_Base tile = TilesList[i];
-            transformData tfStat = TfData[i];
-            tile.tileMovement.SetOriginTransformWithStats(tfStat);
+            TileController tile = TilesList[i];
+            TileTfData tfStat = TfData[i];
+            tile.SetOriginTfData(tfStat);
+            
             tile.indexInBoard = i;
-            tile.vectorInBoard = tfStat.vector;
-            TilesByPosition.Add(tfStat.vector, tile);
+            tile.SetTileState(TileState.InBoard);
             if (withMovement)
             {
-                tile.tileMovement.MoveTileToOrigin();
+                tile.MoveToTfData();
             }
             else
             {
-                tile.tileMovement.PlaceTileInOrigin();
+                tile.SetToTfData();
             }
         }
     }
     #endregion
+
+    [SerializeField] SplineContainer spline;
+
+    [SerializeField] float width = 1f;
+    [SerializeField] float maxTileLenght = 3;
+    [SerializeField] float ExtraLargePercent = 1.5f;
+
+
+    private void OnDrawGizmosSelected()
+    {
+       List<TileTfData> temptructs = GetStrucrtData(StartingTilesCount);
+
+        foreach (TileTfData info in temptructs)
+        {
+            Gizmos.color = Color.purple;
+
+            for (int i = 0; i < info.cornersInWorld.Count; i++)
+            {
+                switch (i)
+                {
+                    case 0: Gizmos.DrawLine(info.cornersInWorld[0], info.cornersInWorld[1]); break;
+                    case 1: Gizmos.DrawLine(info.cornersInWorld[1], info.cornersInWorld[3]); break;
+                    case 2: Gizmos.DrawLine(info.cornersInWorld[2], info.cornersInWorld[0]); break;
+                    case 3: Gizmos.DrawLine(info.cornersInWorld[3], info.cornersInWorld[2]); break;
+                }
+            }
+        }
+    }
+    public List<TileTfData> GetStrucrtData(int tilesAmount)
+    {
+        List<TileTfData> tempList = new();
+        List<Vector3> tilesCornersFromOrigin = new();
+        List<Vector3> tilesOrigins = new();
+
+        float smallT;
+        float largeT;
+
+        //if the total max lenght is larger than the whole spline, then divide. Else just use the lenght. 
+        //We multiply by 2 because it's only the Start Tile and End Tile
+        if ((maxTileLenght * ExtraLargePercent * 2) + maxTileLenght * (tilesAmount - 2) > spline.CalculateLength())
+        {
+            smallT = 1f / (ExtraLargePercent * 2 + (tilesAmount - 2));
+            largeT = smallT * ExtraLargePercent;
+        }
+        else
+        {
+            smallT = GetTWithLenght(maxTileLenght);
+            largeT = GetTWithLenght(maxTileLenght * ExtraLargePercent);
+        }
+
+        //Get corners from all Origins
+        float totalT = 0;
+        for (int i = 0; i < tilesAmount + 1; i++)
+        {
+            float thisT = totalT;
+
+            Vector3 tan = spline.EvaluateTangent(thisT);
+            Vector3 forward = tan.normalized;
+            Vector3 right = Vector3.Cross(Vector3.up, forward).normalized;
+
+            tilesCornersFromOrigin.Add(right * width / 2);
+            tilesCornersFromOrigin.Add(-right * width / 2);
+            tilesOrigins.Add(spline.EvaluatePosition(thisT));
+
+            float nextT;
+            if (i == 0 || i == tilesAmount - 1) { nextT = largeT; }
+            else { nextT = smallT; }
+            totalT += nextT;
+
+        }
+        totalT = 0;
+        //Get the basic info In and add the corners 
+        for (int i = 0; i < tilesAmount; i++)
+        {
+            TileTfData newTileInfo = new();
+            
+
+            float thisT;
+            if (i == 0 || i == tilesAmount - 1) { thisT = largeT; }
+            else { thisT = smallT; }
+
+            float centerT = totalT + (thisT / 2);
+
+            newTileInfo.center = spline.EvaluatePosition(centerT);
+
+            Vector3 tan = spline.EvaluateTangent(centerT);
+            newTileInfo.forward = tan.normalized;
+            newTileInfo.up = Vector3.up;
+            newTileInfo.right = Vector3.Cross(newTileInfo.up, newTileInfo.forward);
+
+            newTileInfo.origin = tilesOrigins[i];
+            newTileInfo.rotation = Quaternion.LookRotation(newTileInfo.forward, Vector3.up);
+
+            //Get the corners from Origin
+            Vector3 difBetweenOrigins = tilesOrigins[i + 1] - tilesOrigins[i];
+            int startingCornerIndex = i * 2;
+
+            newTileInfo.cornersInWorld = new();
+            newTileInfo.cornersInLocal = new();
+            for (int j = 0; j < 4; j++)
+            {
+                //The order of the mesh vertices is:
+                //3-----1
+                //|     |
+                //2-----0
+                //But when we created the corners they were in this order:
+                //1-----3
+                //|     |
+                //0-----2
+                //So here we are sorting them in the proper order in the struct
+                Vector3 sortedWorldPos;
+                switch (j)
+                {
+                    case 0: sortedWorldPos = newTileInfo.origin + difBetweenOrigins + tilesCornersFromOrigin[startingCornerIndex + 2]; break;
+                    case 1: sortedWorldPos = newTileInfo.origin + difBetweenOrigins + tilesCornersFromOrigin[startingCornerIndex + 3]; break;
+                    case 2: sortedWorldPos = newTileInfo.origin + tilesCornersFromOrigin[startingCornerIndex]; break;
+                    case 3: sortedWorldPos = newTileInfo.origin + tilesCornersFromOrigin[startingCornerIndex + 1]; break;
+                    default: sortedWorldPos = Vector3.zero; break;
+                }
+
+                //Now we collect the World and Local positions out of that mess
+                newTileInfo.cornersInWorld.Add(sortedWorldPos);
+
+                Vector3 localPos = MathJ.worldToLocal2D(
+                    newTileInfo.cornersInWorld[j],
+                    newTileInfo.center,
+                    newTileInfo.right,
+                    newTileInfo.forward);
+
+                newTileInfo.cornersInLocal.Add(localPos);
+            }
+            totalT += thisT;
+            tempList.Add(newTileInfo);
+        }
+        return tempList;
+        Debug.Log(TfData.Count);
+        //
+        float GetTWithLenght(float lenght)
+        {
+            float totalLenght = spline.CalculateLength();
+            return Mathf.InverseLerp(0, totalLenght, lenght);
+        }
+    }
+    public void UpdateStructData()
+    {
+        TfData = GetStrucrtData(TilesList.Count);
+    }
+
     #region ASSEMBLE/DISASSEMBLE BOARD
     public bool isBoardAssembled = true;
     const float disassembledHeight = 7;
@@ -261,14 +269,10 @@ public class Board_Controller_simple : MonoBehaviour
     public IEnumerator C_AsembleBoard()
     {
         isBoardAssembled = true;
-        foreach (GameObject underTile in undertiles_List)
-        {
-            underTile.SetActive(true);
-        }
         for (int i = 0;i <TilesList.Count; i++)
         {
-            Tile_Base tile = TilesList[i];
-            Vector3 finalPos = TfData[i].position;
+            TileController tile = TilesList[i];
+            Vector3 finalPos = TfData[i].center;
             Sequence seq = DOTween.Sequence().
                    AppendInterval(Random.Range(0, maxRandonTime)).
                    Append(tile.transform.DOMove(finalPos, assembleTime)).SetEase(Ease.InOutCubic);
@@ -280,11 +284,8 @@ public class Board_Controller_simple : MonoBehaviour
     {
         isBoardAssembled = false;
         yield return C_JumpPlayerToSide();
-        foreach (GameObject underTile in undertiles_List)
-        {
-            underTile.SetActive(false);
-        }
-        foreach(Tile_Base tile in TilesList)
+
+        foreach(TileController tile in TilesList)
         {
             Vector3 finalPos = new Vector3(tile.transform.position.x, disassembledHeight, tile.transform.position.z);
             Sequence seq = DOTween.Sequence().
@@ -331,7 +332,7 @@ public class Board_Controller_simple : MonoBehaviour
     {
         Debug.Log($"Landed in:{PlayerIndex}");
         V_ShakePlayer();
-        Tile_Base thisTile = TilesList[PlayerIndex];
+        TileController thisTile = TilesList[PlayerIndex];
 
         yield return TilesList[PlayerIndex].OnPlayerLanded();
     }
@@ -367,7 +368,7 @@ public class Board_Controller_simple : MonoBehaviour
     IEnumerator V_StepPlayerToNewPos()//step the player to new pos
     {
         const float duration = 0.25f;
-        Vector3 newPos = TilesList[PlayerIndex].tileMovement.originTransform.position;
+        Vector3 newPos = TilesList[PlayerIndex].TfData.center;
 
         float jumpHeight = .5f;
         Sequence seq =
@@ -385,7 +386,7 @@ public class Board_Controller_simple : MonoBehaviour
     IEnumerator V_JumpPlayerToNewPos()
     {
         const float duration = .5f;
-        Vector3 newPos = TilesList[PlayerIndex].tileMovement.originTransform.position;
+        Vector3 newPos = TilesList[PlayerIndex].TfData.center;
 
         float jumpHeight = 1;
         Sequence seq =
@@ -408,7 +409,7 @@ public class Board_Controller_simple : MonoBehaviour
 
     #endregion
     #region BOARD EDITING
-    public void ReplaceTileInBoard(Tile_Base oldTileInBoard, Tile_Base newTile)
+    public void ReplaceTileInBoard(TileController oldTileInBoard, TileController newTile)
     {
         oldTileInBoard.OnRemovedFromBoard();
         TilesList[oldTileInBoard.indexInBoard] = newTile;
@@ -426,14 +427,13 @@ public class Board_Controller_simple : MonoBehaviour
 
         Destroy(oldTileInBoard.gameObject);
     }
-    public void AddNewTile(Tile_Base tile, int index)
+    public void AddNewTile(TileController tile, int index)
     {
         TilesList.Insert(index, tile);
 
-        UpdateTfData();
+        TfData = GetStrucrtData(TilesList.Count);
 
         MoveTiles_ToTfData(true);
-        UpdateUndertiles_ByTfData();
         if (PlayerIndex >= index) { PlayerIndex++; }
         StartCoroutine(V_StepPlayerToNewPos());
 
@@ -446,21 +446,20 @@ public class Board_Controller_simple : MonoBehaviour
     }  
     public void RemoveTile(int index)
     {
-        Tile_Base tileToRemove = TilesList[index];
+        TileController tileToRemove = TilesList[index];
         tileToRemove.OnRemovedFromBoard();
         TilesList.RemoveAt(index);
 
         Destroy(tileToRemove.gameObject);
 
-        UpdateTfData();
+        TfData = GetStrucrtData(TilesList.Count);
         MoveTiles_ToTfData(true);
-        UpdateUndertiles_ByTfData();
         if(index <= PlayerIndex) { PlayerIndex--; }
         StartCoroutine(V_StepPlayerToNewPos());
     }
     public void MoveTileInBoard(int from, int to)
     {
-        Tile_Base tileMoved = TilesList[from];
+        TileController tileMoved = TilesList[from];
         TilesList.RemoveAt(from);
         TilesList.Insert(to, tileMoved );
 

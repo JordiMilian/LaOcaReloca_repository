@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile_MrBeast : Tile_Base
+public class Tile_MrBeast : Tile_Profile
 {
     [SerializeField] int addedDamageToEmptyTiles = 2;
 
     public override IEnumerator OnPlayerLanded()
     {
-        foreach(Tile_Base tile in BoardController.TilesList)
+        foreach(TileController tile in BoardController.TilesList)
         {
-            if(tile.tileTag == TileTags.EmptyTile)
+            if(tile._Profile.tileTag == TileTags.EmptyTile)
             {
                 tile.AddBaseDamage(addedDamageToEmptyTiles);
                 yield return new WaitForSeconds(0.1f);
@@ -21,7 +21,7 @@ public class Tile_MrBeast : Tile_Base
     }
     public override IEnumerator OnPlayerStepped()
     {
-        Tile_Base randomEmpty = MathJ.GetRandomTileInBoardWithTag(TileTags.EmptyTile, this, true);
+        TileController randomEmpty = MathJ.GetRandomTileInBoardWithTag(TileTags.EmptyTile, Tile, true);
 
         if(randomEmpty != null)
         {

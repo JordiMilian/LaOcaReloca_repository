@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class grtret_Script : Tile_Base
+public class grtret_Script : TileController
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
