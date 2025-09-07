@@ -270,6 +270,8 @@ MonoBehaviour:
   meshCollider: {fileID: 7746987551804539669}
   DamagesToDeal: []
   isBehindPlayer: 0
+  canBeMoved: 1
+  heightWhileDragged: 1
 --- !u!114 &6254283340180580904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,11 +284,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 452c41b7fe96d8140805b74aa01f9efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBeMoved: 1
   heightWhileDragged: 0.5
   tileBase: {fileID: 0}
   TMP_DamageDisplay: {fileID: 4097408748514575852}
-  verticalShakeForce: 0.02
   messageDisplay: {fileID: 7389525537173239978}
 --- !u!1 &8426792045165695173
 GameObject:
@@ -436,6 +436,7 @@ GameObject:
   - component: {fileID: 6200291192644541086}
   - component: {fileID: 8886854289917000125}
   - component: {fileID: 7634817798374059676}
+  - component: {fileID: 1126694679958976595}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -527,3 +528,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1818360609 &1126694679958976595
+RotationConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9098524751519526914}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_RotationAtRest: {x: 90, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_Active: 1
+  m_IsLocked: 1
+  m_Sources: []

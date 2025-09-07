@@ -22,20 +22,18 @@ public class Board_Controller_simple : MonoBehaviour
     public Dictionary<Vector2Int, TileController> TilesByPosition = new();
     public int PlayerIndex { get; private set; }
 
-    Transform tilesHolder, UnderTilesHolder;
+    Transform tilesHolder;
     public static Board_Controller_simple Instance;
     private void Awake()
     {
         Instance = this;
         tilesHolder = transform.Find("TilesHolder");
-        UnderTilesHolder = transform.Find("UndertilesHolder");
     }
     [Header("Player")]
     [SerializeField] GameObject PlayerPrefab;
 
     [Header("Board visualization")]
     public int StartingTilesCount = 9;
-    [SerializeField] float boardSideSize = 6;
     [SerializeField] float TimeToCreateBoard;
     public UnityEvent<int, int> OnPlayerMoved; //(from, to)
 
@@ -60,14 +58,14 @@ public class Board_Controller_simple : MonoBehaviour
 
         for (int i = 0; i < StartingTilesCount; i++)
         {
-            Tile_Profile prefabToSpawn;
-            if (i == 0) { prefabToSpawn = Tile_Start; }
-            else if (i == StartingTilesCount - 1) { prefabToSpawn = Tile_End; }
-            else if (i % 3 == 0) { prefabToSpawn = Tile_Oca; }
+            Tile_Profile profileToSpawn;
+            if (i == 0) { profileToSpawn = Tile_Start; }
+            else if (i == StartingTilesCount - 1) { profileToSpawn = Tile_End; }
+            else if (i % 4 == 0) { profileToSpawn = Tile_Oca; }
             //else if(i % 3 == 0) { prefabToSpawn = Tile_Money; }
-            else { prefabToSpawn = Tile_Empty; }
+            else { profileToSpawn = Tile_Empty; }
 
-            TileController newTile = factory.InstantiateTile(prefabToSpawn);
+            TileController newTile = factory.InstantiateTile(profileToSpawn);
             tempTiles.Add(newTile);
 
         }
@@ -81,9 +79,8 @@ public class Board_Controller_simple : MonoBehaviour
 
         foreach (TileController tile in TilesList)
         {
-            tile.SetToTfData();
+            tile.gameObject.SetActive(false);
         }
-        yield break;
         foreach (TileController tile in TilesList)
         {
             yield return new WaitForSeconds(delayBetweenTiles);
@@ -419,8 +416,8 @@ public class Board_Controller_simple : MonoBehaviour
 
         newTile.transform.parent = transform;
 
-        newTile.tileMovement.SetOriginTransformWithStats(oldTileInBoard.tileMovement.originTransform);
-        newTile.tileMovement.MoveTileToOrigin();
+        newTile.SetOriginTfData(oldTileInBoard.TfData);
+        newTile.MoveToTfData();
         newTile.SetTileState(TileState.InBoard);
 
         newTile.OnPlacedInBoard();
@@ -431,7 +428,7 @@ public class Board_Controller_simple : MonoBehaviour
     {
         TilesList.Insert(index, tile);
 
-        TfData = GetStrucrtData(TilesList.Count);
+        UpdateStructData();
 
         MoveTiles_ToTfData(true);
         if (PlayerIndex >= index) { PlayerIndex++; }
@@ -452,7 +449,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         Destroy(tileToRemove.gameObject);
 
-        TfData = GetStrucrtData(TilesList.Count);
+        UpdateStructData();
         MoveTiles_ToTfData(true);
         if(index <= PlayerIndex) { PlayerIndex--; }
         StartCoroutine(V_StepPlayerToNewPos());

@@ -7,6 +7,7 @@ public class Tile_Profile : ScriptableObject
     public string Title = "NO TITLE";
     public Color tileColor = Color.gray;
     public Rarity rarity = Rarity.none;
+    public int uniquePrice = 0; //IF rarity is Unique, use this value. Would be nice to hide this in Editor
     public TileTags tileTag;
     [HideInInspector] public TileController Tile;
     protected TileSharedVisuals tileMovement;

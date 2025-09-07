@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f59fa2e076235542b0468b7be3bd2c2, type: 3}
-  m_Name: Tile_Empty
+  m_Script: {fileID: 11500000, guid: 94bb41ddc111fa847a264df5cb4dd000, type: 3}
+  m_Name: Tile_Creatine
   m_EditorClassIdentifier: 
-  BaseDamage: 10
-  Title: EMPTY
-  tileColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  rarity: 1
+  BaseDamage: 1
+  Title: CREATINE
+  tileColor: {r: 0.28096253, g: 1, b: 0.066037595, a: 1}
+  rarity: 3
+  uniquePrice: 0
   tileTag: 0
   Tile: {fileID: 0}
+  multiplieValue: 3

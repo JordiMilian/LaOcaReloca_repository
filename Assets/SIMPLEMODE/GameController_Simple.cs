@@ -230,6 +230,7 @@ public class GameController_Simple : MonoBehaviour
     {
         SelectedTile = tile;
     }
+    public void UnselectCurrentTile() { SelectedTile = null; }
     public bool CanPlaceTile()
     {
         if(intersecticTiles.Count <= 1) { return false; }
@@ -243,7 +244,7 @@ public class GameController_Simple : MonoBehaviour
         }
 
         if(tileBelow.tileState != TileState.InBoard) { return false; }
-        if (!tileBelow.tileMovement.canBeMoved) { return false; }
+        if (!tileBelow.canBeMoved) { return false; }
         if (tileBelow.isBehindPlayer && SelectedTile.tileState == TileState.InBoard) { return false; }
         if(SelectedTile.tileState == TileState.InShop)
         {

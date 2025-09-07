@@ -16,6 +16,20 @@ public struct TileTfData
     public List<Vector3> cornersInLocal;
     public Vector3 forward, up, right;
     public Quaternion rotation;
+    public TileTfData(Transform tf)
+    {
+        origin = tf.position;
+        center = tf.position;
+        cornersInLocal = new List<Vector3> { Vector3.right, Vector3.forward, Vector3.back, Vector3.left };
+        cornersInWorld = new List<Vector3>
+        {   tf.position + Vector3.right,
+            tf.position + Vector3.forward,
+            tf.position + Vector3.back,
+            tf.position + Vector3.left
+        };
+        forward = tf.forward;up = tf.up; right = tf.right;
+        rotation = tf.rotation;
+    }
 }
 
 public class SplineBoard_Testing : MonoBehaviour

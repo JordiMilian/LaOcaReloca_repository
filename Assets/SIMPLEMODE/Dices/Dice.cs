@@ -95,7 +95,6 @@ public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, IBuyab
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("clicked dice");
         AttemptStartDragging();
         TooltipManager.Instance.ForceTooltip(this);
     }

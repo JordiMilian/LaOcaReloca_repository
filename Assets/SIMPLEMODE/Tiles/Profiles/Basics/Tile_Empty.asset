@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7eb08d72232972144ac6b50ac242741b, type: 3}
-  m_Name: Tile_Shuffler
+  m_Script: {fileID: 11500000, guid: 0f59fa2e076235542b0468b7be3bd2c2, type: 3}
+  m_Name: Tile_Empty
   m_EditorClassIdentifier: 
-  BaseDamage: 5
-  Title: SHUFFLER
-  tileColor: {r: 0.8385378, g: 0.6057885, b: 0.89433956, a: 1}
-  rarity: 2
+  BaseDamage: 10
+  Title: EMPTY
+  tileColor: {r: 1, g: 1, b: 1, a: 1}
+  rarity: 4
+  uniquePrice: 1
   tileTag: 0
   Tile: {fileID: 0}
-  DmgPerShuffledTile: 3

@@ -55,37 +55,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2117379556851994441}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13f06a96ebf842547919b71594469744, type: 3}
---- !u!1 &8766472299784947829 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4270678604827107663, guid: 13f06a96ebf842547919b71594469744, type: 3}
-  m_PrefabInstance: {fileID: 4822435512175257914}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2117379556851994441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8766472299784947829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7eb08d72232972144ac6b50ac242741b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TitleText: SHUFFLER
-  tileTag: 1
-  tileState: 0
-  BaseDamage: 5
-  rarity: 2
-  indexInBoard: 0
-  IndexInHand: 0
-  vectorInBoard: {x: 0, y: 0}
-  tileColor: {r: 0.58569777, g: 0.43961373, b: 0.8396226, a: 1}
-  tileMovement: {fileID: 0}
-  isBehindPlayer: 0
-  DmgPerShuffledTile: 5

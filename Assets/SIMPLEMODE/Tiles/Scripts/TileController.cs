@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class TileController : MonoBehaviour, IBuyable, ITooltip, IPointerEnterHandler, IPointerExitHandler
+public class TileController : MonoBehaviour, IBuyable, ITooltip
+    ,IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+
 {
     [HideInInspector] public TileState tileState = TileState.none;
 
@@ -50,7 +52,6 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip, IPointerEnterHa
         {
             float timer = 0;
             const float movingTime = .5f;
-            yield return new WaitForSeconds(Random.Range(0, movingTime));
             transform.DOMove(TfData.center, movingTime).SetEase(Ease.OutBack);
 
             while (timer < movingTime)
@@ -166,11 +167,11 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip, IPointerEnterHa
             case TileState.none:
                 break;
             case TileState.InShop: 
-                tileMovement.canBeMoved = true;
+                canBeMoved = true;
                 break;
             case TileState.InBoard:
-                if(_Profile is Tile_End || _Profile is Tile_Start) { tileMovement.canBeMoved = false; break; }
-                tileMovement.canBeMoved = true;
+                if(_Profile is Tile_End || _Profile is Tile_Start) { canBeMoved = false; break; }
+                canBeMoved = true;
                 BoardController.OnPlayerMoved.AddListener(CheckForDraggability);
                 CheckForDraggability(0, BoardController.PlayerIndex);
                 break;
@@ -208,12 +209,13 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip, IPointerEnterHa
     }
     #endregion
     #region BUY/SELL
+    
     public virtual int GetBuyingPrice()
     {
         int repeatedCards = 0;
         foreach (TileController tile in BoardController.TilesList)
         {
-            if (tile.GetType() == this.GetType()) { repeatedCards++; }
+            if (tile._Profile.GetType() == _Profile.GetType()) { repeatedCards++; }
         }
 
         int baseValue;
@@ -222,6 +224,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip, IPointerEnterHa
             case Rarity.Common: { baseValue = 2; break; }
             case Rarity.Rare: { baseValue = 4; break; }
             case Rarity.Legendary: { baseValue = 10; break; }
+            case Rarity.Unique: { return _Profile.uniquePrice; }
             default: { Debug.LogError("ERROR: Pls set a valid rarity to this Tile"); return 0; }
         }
         return MathJ.GetFibonacciValue(baseValue, repeatedCards);
@@ -229,26 +232,19 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip, IPointerEnterHa
     }
     public void OnAppearInShop(ShopItem_Controller shopItemController)
     {
-        SetTileProfile(GetRandomProfile());
-        tileMovement.SetOriginTransformWithTransform(shopItemController.buyablePositionTf);
-        tileMovement.PlaceTileInOrigin();
+        SetTileProfile(TilesFactory.instance.GetRandomProfile());
+        SetOriginTfData(new TileTfData(shopItemController.buyablePositionTf));
+        SetToTfData();
         SetTileState(TileState.InShop);
-
-        //
-        Tile_Profile GetRandomProfile()
-        {
-            Debug.LogError("TO DO");
-            return null;
-        }
     }
     public void OnEnablePurchase()
     {
-        tileMovement.canBeMoved = true;
+        canBeMoved = true;
     }
 
     public void OnDisablePurchase()
     {
-        tileMovement.canBeMoved = false;
+        canBeMoved = false;
     }
     #endregion
     #region TOOLTIPS
@@ -266,6 +262,68 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip, IPointerEnterHa
     public string GetTooltipTitle()
     {
         return _Profile.Title;
-    }  
+    }
     #endregion
+    #region DRAGGING
+    public bool canBeMoved = true;
+    Coroutine draggingCoroutine;
+    [SerializeField] float heightWhileDragged = 1;
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if( AttemptStartDragging())
+        {
+            GameController.SelectedNewTile(this);
+            ForceTooltip();
+        }
+    }
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        StopDragging();
+        if(GameController.CanPlaceTile())
+        {
+            GameController.PlaceTile();
+        }
+        else
+        {
+            MoveToTfData();
+        }
+        GameController.UnselectCurrentTile();
+        StopForcingThisTooltip();
+    }
+
+    bool AttemptStartDragging()
+    {
+        if (!canBeMoved) { return false; }
+        if (isBehindPlayer) { return false; }
+        if (GameController_Simple.Instance.currentGameState == GameState.MovingPlayer) { MoveToTfData(); return false; }
+
+        Camera mainCamera = Camera.main;
+
+        draggingCoroutine = StartCoroutine(C_draggingCoroutine());
+        return true;
+        //
+        IEnumerator C_draggingCoroutine()
+        {
+            while (true)
+            {
+                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+                Plane plane = new Plane(Vector3.up, Vector3.up * heightWhileDragged);
+
+                if (plane.Raycast(ray, out float distance))
+                {
+                    Vector3 mousePosInPlane = ray.GetPoint(distance);
+                    Debug.DrawLine(transform.position, mousePosInPlane);
+                    transform.position = Vector3.MoveTowards(transform.position, mousePosInPlane, 40 * Time.deltaTime);
+                }
+                yield return null;
+            }
+        }
+    }
+    void StopDragging()
+    {
+        if(draggingCoroutine != null) { StopCoroutine(draggingCoroutine); }
+    }
+    #endregion
+    
 }

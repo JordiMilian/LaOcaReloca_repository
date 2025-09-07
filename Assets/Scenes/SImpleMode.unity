@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1790435
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1872,6 +1872,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 87f6e8cd18d0886449ea36c62becd500, type: 2}
   - {fileID: 11400000, guid: bb7518c65198e7a47a97f733e324f934, type: 2}
   - {fileID: 11400000, guid: ee1314f99f2109444ad254e58ff62988, type: 2}
+  - {fileID: 11400000, guid: 32d1622c41d705d429c815e7204c1cf7, type: 2}
+  - {fileID: 11400000, guid: ee777195ce6c7ea42bd3bbd986a95444, type: 2}
 --- !u!4 &400194873
 Transform:
   m_ObjectHideFlags: 0
@@ -2243,15 +2245,14 @@ MonoBehaviour:
   factory: {fileID: 400194872}
   TilesList: []
   PlayerPrefab: {fileID: 1266550042}
-  StartingTilesCount: 40
-  boardSideSize: 6
-  TimeToCreateBoard: 0.8
+  StartingTilesCount: 21
+  TimeToCreateBoard: 0.52
   OnPlayerMoved:
     m_PersistentCalls:
       m_Calls: []
   spline: {fileID: 466753543}
-  width: 0.86
-  maxTileLenght: 1.22
+  width: 1.07
+  maxTileLenght: 1.28
   ExtraLargePercent: 1.5
   isBoardAssembled: 1
 --- !u!4 &466753542
@@ -2263,8 +2264,8 @@ Transform:
   m_GameObject: {fileID: 466753540}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.4999997, z: -0, w: 0.8660256}
-  m_LocalPosition: {x: 0.23, y: 0.44, z: 0.34}
-  m_LocalScale: {x: 0.014758094, y: 0.014758094, z: 0.014758094}
+  m_LocalPosition: {x: 0.59, y: 0.08, z: 0.37}
+  m_LocalScale: {x: 0.018802136, y: 0.018802136, z: 0.018802136}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 798820325}
@@ -3123,7 +3124,7 @@ Transform:
   m_GameObject: {fileID: 595544788}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.51603, y: 1.991, z: 13.61}
+  m_LocalPosition: {x: 12.71, y: 1.991, z: 1.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5355,7 +5356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1377140915
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7133,6 +7134,7 @@ MonoBehaviour:
   AllBuyables:
   - {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
   - {fileID: 1547170513799009516, guid: 7ec2b73cc20355a4e9572735718b9fa1, type: 3}
+  - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
   shopItems:
   - {fileID: 1309579213}
   - {fileID: 1169025460}
@@ -7173,7 +7175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1830490640
 BoxCollider:
   m_ObjectHideFlags: 0

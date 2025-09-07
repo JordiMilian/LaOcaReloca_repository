@@ -15,6 +15,7 @@ MonoBehaviour:
   BaseDamage: 15
   Title: OCA
   tileColor: {r: 0.7735849, g: 0.37803486, b: 0.661234, a: 1}
-  rarity: 1
+  rarity: 4
+  uniquePrice: 3
   tileTag: 2
   Tile: {fileID: 0}

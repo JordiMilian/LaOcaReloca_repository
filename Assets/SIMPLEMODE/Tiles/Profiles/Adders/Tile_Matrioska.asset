@@ -9,13 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7eb08d72232972144ac6b50ac242741b, type: 3}
-  m_Name: Tile_Shuffler
+  m_Script: {fileID: 11500000, guid: a540a8c32a74c2a40b7f081f19e7ac15, type: 3}
+  m_Name: Tile_Matrioska
   m_EditorClassIdentifier: 
-  BaseDamage: 5
-  Title: SHUFFLER
-  tileColor: {r: 0.8385378, g: 0.6057885, b: 0.89433956, a: 1}
+  BaseDamage: 15
+  Title: MATRIOSKA
+  tileColor: {r: 1, g: 0.6988019, b: 0.5415094, a: 1}
   rarity: 2
+  uniquePrice: 0
   tileTag: 0
   Tile: {fileID: 0}
-  DmgPerShuffledTile: 3
+  timesCrossed: 0
+  timesNeededToCross: 5
+  multiplyCurrentDamageBy: 1.5

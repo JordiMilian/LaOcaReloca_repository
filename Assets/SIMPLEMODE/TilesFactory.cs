@@ -5,7 +5,20 @@ public class TilesFactory : MonoBehaviour
 {
     [SerializeField] GameObject EmptyPrefab;
     [SerializeField] List<Tile_Profile> tileProfiles = new();
-     public TileController InstantiateTile(Tile_Profile profile)
+
+    public static TilesFactory instance;
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    public TileController InstantiateTile(Tile_Profile profile)
     {
         GameObject newTile = Instantiate(EmptyPrefab);
 
@@ -19,6 +32,6 @@ public class TilesFactory : MonoBehaviour
     {
         return InstantiateTile(tileProfiles[Random.Range(0, tileProfiles.Count - 1)]);
     }
-    public Tile_Profile GetRandomProfile() { return tileProfiles[Random.Range(0, tileProfiles.Count - 1)]; }
+    public Tile_Profile GetRandomProfile() { return tileProfiles[Random.Range(0, tileProfiles.Count)]; }
 
 }

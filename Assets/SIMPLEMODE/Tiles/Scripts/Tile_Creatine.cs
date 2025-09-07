@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+[CreateAssetMenu(menuName = "TileProfile/DamageAdders/Creatine", fileName = "Tile_Creatine")]
 public class Tile_Creatine : Tile_Profile
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
