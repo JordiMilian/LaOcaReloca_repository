@@ -30,6 +30,9 @@ public class SplineBoard_Testing : MonoBehaviour
     [SerializeField] GameObject tilePrefab;
 
     public List<SplineTile> TilesList = new();
+    [Header("Extra Large tiles")]
+    [Range(1,5)]
+    [SerializeField] float ExtraLargePercent = 1.5f;
 
     private void OnDrawGizmosSelected()
     {
@@ -70,37 +73,53 @@ public class SplineBoard_Testing : MonoBehaviour
         List<Vector3> tilesOrigins = new();
         tilesData = new();
 
-        float maxTPerTIle = GetTWithLenght(maxTileLenght);
-        float TPerTile;
-        if (maxTileLenght * tilesCount > spline.CalculateLength())
+        float smallT;
+        float largeT;
+
+        //if the total max lenght is larger than the whole spline, then divide. Else just use the lenght. 
+        //We multiply by 2 because it's only the Start Tile and End Tile
+        if ((maxTileLenght* ExtraLargePercent * 2) + maxTileLenght * (tilesCount -2) > spline.CalculateLength() )
         {
-            TPerTile = 1f / (float)tilesCount;
+            smallT = 1f / (ExtraLargePercent * 2 + (tilesCount - 2));
+            largeT = smallT * ExtraLargePercent;
         }
         else
         {
-            TPerTile = maxTPerTIle;
+            smallT = GetTWithLenght(maxTileLenght);
+            largeT = GetTWithLenght(maxTileLenght * ExtraLargePercent);
         }
 
         //Get corners from all Origins
+        float totalT = 0;
         for (int i = 0; i < tilesCount + 1; i++)
         {
-            float t = TPerTile * i;
+            float thisT = totalT;
 
-            Vector3 tan = spline.EvaluateTangent(t);
+            Vector3 tan = spline.EvaluateTangent(thisT);
             Vector3 forward = tan.normalized;
             Vector3 right = Vector3.Cross(Vector3.up, forward).normalized;
 
             tilesCornersFromOrigin.Add(right * width / 2);
             tilesCornersFromOrigin.Add(-right * width / 2);
-            tilesOrigins.Add(spline.EvaluatePosition(t));
-        }
+            tilesOrigins.Add(spline.EvaluatePosition(thisT));
 
-        //Get the basic info In and 
+            float nextT;
+            if (i == 0 || i == tilesCount-1) { nextT = largeT; }
+            else { nextT = smallT; }
+            totalT += nextT;
+
+        }
+        totalT = 0;
+        //Get the basic info In and add the corners 
         for (int i = 0; i < tilesCount; i++)
         {
             TileTfData newTileInfo = new();
 
-            float centerT = TPerTile * i + (TPerTile / 2);
+            float thisT;
+            if (i == 0 || i == tilesCount-1) { thisT = largeT; }
+            else { thisT = smallT; }
+
+            float centerT = totalT + (thisT / 2);
 
             newTileInfo.center = spline.EvaluatePosition(centerT);
 
@@ -150,6 +169,7 @@ public class SplineBoard_Testing : MonoBehaviour
 
                 newTileInfo.cornersInLocal.Add(localPos);
             }
+            totalT += thisT;
             tilesData.Add(newTileInfo);
         }
         //
