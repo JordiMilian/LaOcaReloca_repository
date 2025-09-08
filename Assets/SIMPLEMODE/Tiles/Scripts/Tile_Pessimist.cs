@@ -1,10 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using System;
+[CreateAssetMenu(menuName = "TileProfile/EndSynergy/Pessimiest", fileName = "Tile_Pessimist")]
 public class Tile_Pessimist : Tile_Profile
 {
-
-
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
     //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
 

@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-
+[CreateAssetMenu(menuName = "TileProfile/EndSynergy/Investor", fileName = "Tile_Investor")]
 public class Tile_OnCrossedAddEndTileDamage : Tile_Profile
 {
     [SerializeField] int damageToAdd = 5;

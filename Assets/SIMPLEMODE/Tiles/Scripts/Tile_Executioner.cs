@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+[CreateAssetMenu(menuName = "TileProfile/Executioner", fileName = "Tile_Executioner")]
 public class Tile_Executioner : Tile_Profile
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
@@ -13,11 +14,13 @@ public class Tile_Executioner : Tile_Profile
     {
         yield return base.OnPlayerLanded();
 
+        if (BoardController.TilesList.Count == 3) { yield break; } //if its just this tile + Start + End
+
         TileController randomTile = null;
         int randomIndex = 0;
-        while(randomTile == null || randomTile is Tile_Start || randomTile is Tile_End || randomTile == this)
+        while(randomTile == null || randomTile == this)
         {
-            randomIndex = Random.Range(0, BoardController.TilesList.Count);
+            randomIndex = Random.Range(1, BoardController.TilesList.Count-1);
             randomTile = BoardController.TilesList[randomIndex];
         }
         BoardController.RemoveTile(randomIndex);

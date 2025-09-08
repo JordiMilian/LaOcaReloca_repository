@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0075ee004943614cb00595d99cec4b2, type: 3}
-  m_Name: Tile_End
+  m_Script: {fileID: 11500000, guid: 85318c2161315db488bd574b2dbbbf4a, type: 3}
+  m_Name: Tile_Multiplier
   m_EditorClassIdentifier: 
-  BaseDamage: 50
-  Title: END
-  tileColor: {r: 0.13962269, g: 0.13962269, b: 0.13962269, a: 1}
-  rarity: 4
-  uniquePrice: 999
+  BaseDamage: 20
+  Title: DARTS
+  tileColor: {r: 0.5849056, g: 0.48644418, b: 0.26375934, a: 1}
+  rarity: 1
+  uniquePrice: 0
   tileTag: 0
   Tile: {fileID: 0}
-  moneyOnReached: 3
+  multiplierOnLanded: 4
+  multiplierOnStepped: 1.5

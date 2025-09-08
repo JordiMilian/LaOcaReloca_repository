@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
-
-public class Tile_OnDiceRolledAddRandom : Tile_Profile
+[CreateAssetMenu(menuName = "TileProfile/DicesEnjoyers/Ladybug", fileName = "Tile_Ladybug")]
+public class Tile_Ladybug : Tile_Profile
 {
     public override void OnPlacedInBoard()
     {

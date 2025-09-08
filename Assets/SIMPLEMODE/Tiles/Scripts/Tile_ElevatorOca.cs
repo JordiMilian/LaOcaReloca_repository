@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+[CreateAssetMenu(menuName = "TileProfile/Ocas/ElevatorOca", fileName = "Tile_ElevatorOca")]
 public class Tile_ElevatorOca : Tile_Oca
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }

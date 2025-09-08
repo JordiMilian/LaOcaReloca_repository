@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
+[CreateAssetMenu(menuName = "TileProfile/Ocas/Blind Oca", fileName = "Tile_BlindOca")]
 public class Tile_Oca_BlindOca : Tile_Oca
 {
     public override IEnumerator OnPlayerLanded()
@@ -43,6 +44,6 @@ public class Tile_Oca_BlindOca : Tile_Oca
     }
     public override string GetTooltipText()
     {
-        return  $"{MathJ.BoldText("ON LANDED: ")} Jump to another random Oca and gain {GameController.MoneyToRoll} money";
+        return  $"{OnLanded} Jump to another random Oca and gain {GameController.MoneyToRoll} money";
     }
 }

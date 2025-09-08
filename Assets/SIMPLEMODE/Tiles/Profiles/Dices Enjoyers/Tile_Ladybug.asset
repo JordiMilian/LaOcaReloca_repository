@@ -9,14 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0075ee004943614cb00595d99cec4b2, type: 3}
-  m_Name: Tile_End
+  m_Script: {fileID: 11500000, guid: c7e298d8ae265ee4bab7a690cfe19b70, type: 3}
+  m_Name: Tile_Ladybug
   m_EditorClassIdentifier: 
-  BaseDamage: 50
-  Title: END
-  tileColor: {r: 0.13962269, g: 0.13962269, b: 0.13962269, a: 1}
-  rarity: 4
-  uniquePrice: 999
+  BaseDamage: 10
+  Title: DICE LADYBUG
+  tileColor: {r: 0.6411368, g: 0.8490566, b: 0.4661801, a: 1}
+  rarity: 2
+  uniquePrice: 0
   tileTag: 0
   Tile: {fileID: 0}
-  moneyOnReached: 3

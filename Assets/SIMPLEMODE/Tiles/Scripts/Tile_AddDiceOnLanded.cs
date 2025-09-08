@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-
+[CreateAssetMenu(menuName = "TileProfile/DicesEnjoyers/DicesCreator", fileName = "Tile_DicesCreator")]
 public class Tile_AddDiceOnLanded : Tile_Profile
 {
     [SerializeField] GameObject DicePrefab_OnCrossed;

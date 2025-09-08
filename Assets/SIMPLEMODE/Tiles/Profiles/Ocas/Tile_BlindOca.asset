@@ -9,14 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0075ee004943614cb00595d99cec4b2, type: 3}
-  m_Name: Tile_End
+  m_Script: {fileID: 11500000, guid: 44789d45fef95a54dbd090c087260828, type: 3}
+  m_Name: Tile_BlindOca
   m_EditorClassIdentifier: 
-  BaseDamage: 50
-  Title: END
-  tileColor: {r: 0.13962269, g: 0.13962269, b: 0.13962269, a: 1}
-  rarity: 4
-  uniquePrice: 999
-  tileTag: 0
+  BaseDamage: 15
+  Title: BLIND OCA
+  tileColor: {r: 0.9245283, g: 0.3959772, b: 0.8085179, a: 1}
+  rarity: 2
+  uniquePrice: 0
+  tileTag: 2
   Tile: {fileID: 0}
-  moneyOnReached: 3

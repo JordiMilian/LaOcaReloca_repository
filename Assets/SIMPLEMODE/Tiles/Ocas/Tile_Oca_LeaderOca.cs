@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[CreateAssetMenu(menuName = "TileProfile/Ocas/LeaderOca", fileName = "Tile_LeaderOca")]
 public class Tile_Oca_LeaderOca : Tile_Oca
 {
     [SerializeField] int damagePerOca = 1;

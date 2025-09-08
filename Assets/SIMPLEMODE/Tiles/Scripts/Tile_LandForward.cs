@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+[CreateAssetMenu(menuName = "TileProfile/LandForward", fileName = "Tile_LandForward")]
 public class Tile_LandForward : Tile_Profile
 {
     public override IEnumerator OnPlayerLanded()

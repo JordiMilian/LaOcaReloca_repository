@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+[CreateAssetMenu(menuName = "TileProfile/Money/Pirate", fileName = "Tile_Pirate")]
 public class Tile_Pirate : Tile_Profile
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }

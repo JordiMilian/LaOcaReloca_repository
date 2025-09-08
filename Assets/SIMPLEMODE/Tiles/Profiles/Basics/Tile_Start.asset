@@ -15,6 +15,7 @@ MonoBehaviour:
   BaseDamage: 0
   Title: START
   tileColor: {r: 1, g: 0.96998596, b: 0, a: 1}
-  rarity: 0
+  rarity: 4
+  uniquePrice: 999
   tileTag: 0
   Tile: {fileID: 0}

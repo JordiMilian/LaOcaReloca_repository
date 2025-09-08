@@ -19,6 +19,8 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     protected Board_Controller_simple BoardController;
     [HideInInspector] public TileSharedVisuals tileMovement;
 
+    [SerializeField] Transform zeroRotationTf;
+
     public Tile_Profile _Profile;
 
     #region NEW TF DATA
@@ -36,6 +38,8 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     {
         transform.position = TfData.center;
         transform.rotation = TfData.rotation;
+
+        zeroRotationTf.rotation = TfData.rotation.
 
         Mesh mesh = meshFilter.mesh;
         mesh.SetVertices(TfData.cornersInLocal);

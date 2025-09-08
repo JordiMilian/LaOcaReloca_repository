@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-
+[CreateAssetMenu(menuName = "TileProfile/DamageMover", fileName = "Tile_DamageMover")]
 public class Tile_DamageMover : Tile_Profile
 {
     public override IEnumerator OnPlayerStepped()

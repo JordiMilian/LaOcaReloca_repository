@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "TileProfile/DamageAdders/Feeder", fileName = "Tile_Feeder")]
 public class Tile_Feeder : Tile_Profile
 {
     [SerializeField] float PercentageToAdd = 20;

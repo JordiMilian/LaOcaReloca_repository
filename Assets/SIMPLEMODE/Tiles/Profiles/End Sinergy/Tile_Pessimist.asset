@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0075ee004943614cb00595d99cec4b2, type: 3}
-  m_Name: Tile_End
+  m_Script: {fileID: 11500000, guid: f8d59cc5ce262904eadb24d444edd17e, type: 3}
+  m_Name: Tile_Pessimist
   m_EditorClassIdentifier: 
-  BaseDamage: 50
-  Title: END
-  tileColor: {r: 0.13962269, g: 0.13962269, b: 0.13962269, a: 1}
-  rarity: 4
-  uniquePrice: 999
+  BaseDamage: 25
+  Title: PESSIMIST
+  tileColor: {r: 0.25074401, g: 0.3433962, b: 0.3144128, a: 1}
+  rarity: 0
+  uniquePrice: 0
   tileTag: 0
   Tile: {fileID: 0}
-  moneyOnReached: 3
+  multiplierOnEnd: 2.5

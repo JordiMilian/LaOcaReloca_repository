@@ -6,14 +6,15 @@ public class Tile_Profile : ScriptableObject
     public float BaseDamage = 10;
     public string Title = "NO TITLE";
     public Color tileColor = Color.gray;
-    public Rarity rarity = Rarity.none;
-    public int uniquePrice = 0; //IF rarity is Unique, use this value. Would be nice to hide this in Editor
+    [HideInInspector] public Rarity rarity = Rarity.none;
+    [HideInInspector] public int uniquePrice = 0; //IF rarity is Unique, use this value.
     public TileTags tileTag;
     [HideInInspector] public TileController Tile;
     protected TileSharedVisuals tileMovement;
-
+    [Space(5)]
     protected Board_Controller_simple BoardController;
     protected GameController_Simple GameController;
+    
     public void Initialize()
     {
         BoardController = Board_Controller_simple.Instance;
