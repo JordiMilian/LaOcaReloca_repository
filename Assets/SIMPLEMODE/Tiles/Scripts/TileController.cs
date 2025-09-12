@@ -39,7 +39,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         transform.position = TfData.center;
         transform.rotation = TfData.rotation;
 
-        zeroRotationTf.rotation = TfData.rotation.
+        zeroRotationTf.localRotation = Quaternion.Inverse(TfData.rotation);
 
         Mesh mesh = meshFilter.mesh;
         mesh.SetVertices(TfData.cornersInLocal);
@@ -75,6 +75,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
                 Quaternion targetRot = TfData.rotation;
                 Quaternion currentRot = transform.rotation;
                 Quaternion lerpedRot = Quaternion.Lerp(currentRot, targetRot, timer / movingTime);
+                zeroRotationTf.localRotation = Quaternion.Inverse(lerpedRot);
                 transform.rotation = lerpedRot;
                 yield return null;
             }
@@ -87,7 +88,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     {
         _Profile = Instantiate(profile);
         _Profile.Tile = this;
-        tileMaterial.color = _Profile.tileColor;
+        tileMaterial.SetColor("_Color", _Profile.tileColor);
         tileMovement.UpdateDmgDisplayText();
         _Profile.Initialize();
     }
