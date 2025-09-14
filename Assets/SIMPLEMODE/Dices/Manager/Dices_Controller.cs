@@ -13,8 +13,10 @@ public class Dices_Controller : MonoBehaviour
 {
     public List<Dice> availableDices = new List<Dice>();
     public static Dices_Controller Instance;
-    public UnityEvent<int> OnDicesRolled;
+    public UnityEvent<int> OnDicesRolled; //Card effects should not subscribe to this event. Instead use the CardEffects events
+    //Maybe at some point we should make a LastDiceRoll_Info and have everything there
     public int LastRolledValue;
+    public int LastRolledDicesCount;
     [SerializeField] float multiplyDicesRotationForce = 2, verticalDiceForce = 1;
     [SerializeField] Transform diceSpawnPoint;
     [SerializeField] float RollDicePos_Radius = 2, SpawnPos_Radius = 1;
@@ -96,6 +98,7 @@ public class Dices_Controller : MonoBehaviour
             addedValue += dice.faceUpValue;
         }
         LastRolledValue = addedValue;
+        LastRolledDicesCount = dicesToRoll.Count;
 
         TMP_AddExtraValue.rectTransform.DOShakeRotation(.1f, 10);
         yield return new WaitForSeconds(0.1f);

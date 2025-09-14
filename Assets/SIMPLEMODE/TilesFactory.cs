@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class TilesFactory : MonoBehaviour
 {
     [SerializeField] GameObject EmptyPrefab;
-    [SerializeField] List<Tile_Profile> tileProfiles = new();
+    public List<Tile_Profile> tileProfiles = new();
 
     public static TilesFactory instance;
     private void Awake()

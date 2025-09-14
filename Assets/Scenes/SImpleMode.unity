@@ -1886,6 +1886,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3c37319dc707e9741a7f405c8cb944ad, type: 2}
   - {fileID: 11400000, guid: a6a88e0d3ff7bf344ac29c6491dd4f7c, type: 2}
   - {fileID: 11400000, guid: a2086781205550e44baa1511d48b7cc5, type: 2}
+  - {fileID: 11400000, guid: 503ec199befa82645a8c8370c23ab291, type: 2}
+  - {fileID: 11400000, guid: d079e72c8f96fde4abf394c594bc9fa6, type: 2}
+  - {fileID: 11400000, guid: d1879b766da214340a9f0f752fd2ed0b, type: 2}
 --- !u!4 &400194873
 Transform:
   m_ObjectHideFlags: 0
@@ -2257,7 +2260,7 @@ MonoBehaviour:
   factory: {fileID: 400194872}
   TilesList: []
   PlayerPrefab: {fileID: 1266550042}
-  StartingTilesCount: 30
+  StartingTilesCount: 13
   TimeToCreateBoard: 0.52
   OnPlayerMoved:
     m_PersistentCalls:
@@ -2855,6 +2858,7 @@ GameObject:
   m_Component:
   - component: {fileID: 498311904}
   - component: {fileID: 498311903}
+  - component: {fileID: 498311905}
   m_Layer: 0
   m_Name: Cards Creation Tool
   m_TagString: Untagged
@@ -2898,6 +2902,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &498311905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498311902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assetName: TowerOfDices
+  folderName: Dices Enjoyers
+  title: TOWER OF DICES
+  color: {r: 0.17974368, g: 0.509434, b: 0.2626382, a: 1}
+  baseDamage: 20
+  rarity: 1
+  tag: 0
+  factory: {fileID: 400194872}
 --- !u!1 &566852619
 GameObject:
   m_ObjectHideFlags: 0
@@ -5493,6 +5517,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   LastRolledValue: 0
+  LastRolledDicesCount: 0
   multiplyDicesRotationForce: 20
   verticalDiceForce: 2000
   diceSpawnPoint: {fileID: 228586240}

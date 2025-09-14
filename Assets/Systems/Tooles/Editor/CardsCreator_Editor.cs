@@ -134,6 +134,7 @@ public class CardsCreator_Editor : Editor
             Type tileLogicType = scriptAsset.GetClass();
             targetPrefab_GO.AddComponent(tileLogicType);
 
+
             TileController tileLogic = targetPrefab_GO.GetComponent<TileController>();
             /* TO DO REWORK THIS TOOL
             tileLogic.tileColor = colorProperty.colorValue;

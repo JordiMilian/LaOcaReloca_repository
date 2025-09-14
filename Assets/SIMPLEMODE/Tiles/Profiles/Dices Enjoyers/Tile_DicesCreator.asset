@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5269f8cd518d04993dff5d24eca075, type: 3}
   m_Name: Tile_DicesCreator
   m_EditorClassIdentifier: 
-  BaseDamage: 10
-  Title: NO TITLE
-  tileColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  rarity: 0
+  BaseDamage: 12
+  Title: DICES CREATOR
+  tileColor: {r: 0.75764096, g: 1, b: 0.4584905, a: 1}
+  rarity: 2
   uniquePrice: 0
   tileTag: 0
   Tile: {fileID: 0}
-  DicePrefab_OnCrossed: {fileID: 0}
-  DicePrefab_OnLanded: {fileID: 0}
+  DicePrefab_OnCrossed: {fileID: 1547170513799009516, guid: 7ec2b73cc20355a4e9572735718b9fa1, type: 3}
+  DicePrefab_OnLanded: {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}

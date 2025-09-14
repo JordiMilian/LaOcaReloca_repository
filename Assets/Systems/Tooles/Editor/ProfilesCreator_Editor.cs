@@ -1,0 +1,180 @@
+using UnityEngine;
+using UnityEditor;
+using System.IO;
+using System;
+
+[CustomEditor(typeof(ProfilesCreator))]
+public class ProfilesCreator_Editor : Editor
+{
+    ProfilesCreator data;
+    SerializedProperty prop_assetName, prop_folderName, prop_title;
+    SerializedProperty prop_color, prop_baseDamage;
+    SerializedProperty prop_rarity, prop_tag;
+    bool useFolder;
+
+    private void OnEnable()
+    {
+        data = (ProfilesCreator)target;
+        prop_assetName = serializedObject.FindProperty("assetName");
+        prop_folderName = serializedObject.FindProperty("folderName");
+        prop_title = serializedObject.FindProperty("title");
+        prop_color = serializedObject.FindProperty("color");
+        prop_baseDamage = serializedObject.FindProperty("baseDamage");
+        prop_rarity = serializedObject.FindProperty("rarity");
+        prop_tag = serializedObject.FindProperty("tag");
+    }
+
+    public override void OnInspectorGUI()
+    {
+        bool showCreateScriptButton = true, showCreateInstanceButton = true;
+        bool showDeleteTile = false;
+
+        base.OnInspectorGUI();
+        Undo.RecordObject(data, "CardsCreator");
+
+        GUILayout.Space(5);
+        GUILayout.Label("TILES PROFILES CREATION TOOL", EditorStyles.whiteBoldLabel);
+        GUILayout.Space(10);
+        EditorGUILayout.HelpBox(
+            "To create a new Tile Profile you must first creat the script. " +
+            "Wait until is assembles the new script and then create the instance",
+            MessageType.Info);
+        EditorGUILayout.PropertyField(prop_assetName);
+
+        GUILayout.BeginHorizontal();
+        
+            useFolder = GUILayout.Toggle(useFolder, "Use Folder");
+            GUI.enabled = useFolder;
+            EditorGUILayout.PropertyField(prop_folderName);
+            GUI.enabled = true;
+
+        GUILayout.EndHorizontal();
+
+        serializedObject.ApplyModifiedProperties();
+
+        #region GET STRINGS
+        string assetName = "Tile_"+prop_assetName.stringValue;
+        string folderName = prop_folderName.stringValue;
+
+        string instancepath;
+        if(!useFolder)
+        {
+            instancepath = $"Assets/SIMPLEMODE/Tiles/Profiles/{assetName}.asset";
+        }
+        else { instancepath = $"Assets/SIMPLEMODE/Tiles/Profiles/{folderName}/{assetName}.asset"; }
+        string scriptpath = $"Assets/SIMPLEMODE/Tiles/Scripts/{assetName}.cs";
+        #endregion
+        #region STRING CHECK
+        if(assetName.Contains(' ') || prop_assetName.stringValue == "")
+        {
+            EditorGUILayout.HelpBox("Not valid asset name", MessageType.Error);
+            return;
+        }
+        Type script_Type = Type.GetType(assetName + ", Assembly-CSharp");
+        if (AssetDatabase.AssetPathExists(instancepath))
+        {
+            EditorGUILayout.HelpBox("That profile already exists", MessageType.Warning);
+            showDeleteTile = true;
+            showCreateScriptButton = false;
+            showCreateInstanceButton = false;
+        }
+        else if (script_Type != null)
+        {
+            EditorGUILayout.HelpBox("A script with that name already exists, now create the instance", MessageType.Warning);
+            showCreateScriptButton = false;
+        }
+        else
+        {
+            showCreateInstanceButton = false;
+        }
+
+        #endregion
+        #region BUTTONS
+        if (showCreateScriptButton)
+        {
+            if (GUILayout.Button("Create Script"))
+            {
+                //Create the script in the folder
+                File.WriteAllText(scriptpath, GetEmptyScriptContent(assetName));
+                AssetDatabase.Refresh();
+                //We should wait for compiling time
+            }
+        }
+
+        if (showCreateInstanceButton)
+        {
+            EditorGUILayout.PropertyField(prop_title);
+            EditorGUILayout.PropertyField(prop_baseDamage);
+            EditorGUILayout.PropertyField(prop_color);
+            EditorGUILayout.PropertyField(prop_rarity); //TO DO Unique price
+            EditorGUILayout.PropertyField(prop_tag);
+            serializedObject.ApplyModifiedProperties();
+
+            if (GUILayout.Button("Create Instance"))
+            {
+                //Create the folder if it doesnt exist
+                string folderPath = $"Assets/SIMPLEMODE/Tiles/Profiles/{folderName}";
+                if (!AssetDatabase.AssetPathExists(folderPath))
+                {
+                    AssetDatabase.CreateFolder("Assets/SIMPLEMODE/Tiles/Profiles", folderName);
+                }
+                //Find the type of Scriptable Object
+                Type SO_type = Type.GetType(assetName + ", Assembly-CSharp");
+                if (SO_type == null)
+                {
+                    Debug.LogError("Could not find type: " + assetName);
+                    return;
+                }
+
+                Tile_Profile instance = (Tile_Profile)ScriptableObject.CreateInstance(SO_type);
+                if (instance == null)
+                {
+                    Debug.LogError("Could not create instance of: " + assetName);
+                    return;
+                }
+
+                instance.tileColor = prop_color.colorValue;
+                instance.Title = prop_title.stringValue;
+                instance.BaseDamage = prop_baseDamage.floatValue;
+                instance.rarity = (Rarity)prop_rarity.enumValueIndex;
+                instance.tileTag = (TileTags)prop_tag.enumValueIndex;
+
+                AssetDatabase.CreateAsset(instance, instancepath);
+                data.factory.tileProfiles.Add(instance);
+                AssetDatabase.SaveAssets();
+
+                Selection.activeObject = instance;
+            }
+        }
+        
+        if(showDeleteTile)
+        {
+            if(GUILayout.Button("Delete tile"))
+            {
+                //remove it from the factory
+                Tile_Profile profileToDelete = AssetDatabase.LoadAssetAtPath<Tile_Profile>(instancepath);
+                data.factory.tileProfiles.Remove(profileToDelete);
+
+                AssetDatabase.DeleteAsset(scriptpath);
+                AssetDatabase.DeleteAsset(instancepath);
+            }
+        }
+        #endregion
+    }
+
+
+
+    string GetEmptyScriptContent(string scriptName)
+    {
+        return $"using UnityEngine;\n" +
+            "using System.Collections;\n" +
+            $"public class {scriptName} : Tile_Profile\n" +
+            "{\n" +
+            "   //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }\n" +
+            "   //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }\n" +
+            "   //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }\n" +
+            "   //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }\n" +
+            "   //public override string GetTooltipText() { }\n" +
+            "}";
+    }
+}

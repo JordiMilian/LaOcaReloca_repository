@@ -18,6 +18,6 @@ public class Tile_AddDiceOnLanded : Tile_Profile
     }
     public override string GetTooltipText()
     {
-        return $"{OnLanded} Add a {DicePrefab_OnCrossed.name} \n{OnCrossed} Add a {DicePrefab_OnLanded.name}";
+        return $"{OnLanded} Add a D6 \n{OnCrossed} Add a Single-Use D6";
     }
 }
