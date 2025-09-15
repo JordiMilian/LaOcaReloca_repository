@@ -146,7 +146,6 @@ public class ProfilesCreator_Editor : Editor
                 Selection.activeObject = instance;
             }
         }
-        
         if(showDeleteTile)
         {
             if(GUILayout.Button("Delete tile"))
@@ -160,8 +159,71 @@ public class ProfilesCreator_Editor : Editor
             }
         }
         #endregion
+
+        ChangeName();
+       
     }
 
+    void ChangeName()
+    {
+        GUILayout.Space(5);
+        GUILayout.Label("TILES CHANGING NAME TOOL");
+        GUILayout.Space(10);
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Old asset name");
+        oldName = EditorGUILayout.TextField(oldName);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("New asset name");
+        newName = EditorGUILayout.TextField(newName);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("New title name");
+        newTitle = EditorGUILayout.TextField(newTitle);
+        GUILayout.EndHorizontal();
+
+
+        string oldAssetName = $"Tile_{oldName}";
+        string newAssetName = $"Tile_{newName}";
+        string scriptPath = $"Assets/SIMPLEMODE/Tiles/Scripts/{oldAssetName}.cs";
+
+        //Find the profile instance among the foulders
+        string[] GUIDsFound = AssetDatabase.FindAssets(oldAssetName, new string[] { "Assets/SIMPLEMODE/Tiles/Profiles"});
+        int rightIndex = -1;
+        for (int i = 0; i < GUIDsFound.Length; i++)
+        {
+            string foundFileName = Path.GetFileName(AssetDatabase.GUIDToAssetPath(GUIDsFound[i]));
+            if (oldAssetName + ".asset" == foundFileName)
+            {
+                rightIndex = i;
+                Debug.Log($"Found {foundFileName}");
+            }
+        }
+        if(rightIndex > -1 && AssetDatabase.AssetPathExists(scriptPath))
+        {
+            if (GUILayout.Button("CHANGE NAME"))
+            {
+                //rename the profile
+                AssetDatabase.RenameAsset(AssetDatabase.GUIDToAssetPath(GUIDsFound[rightIndex]), newAssetName);
+
+                //Rename the script
+                AssetDatabase.RenameAsset(scriptPath, newAssetName);
+                string scriptContent = File.ReadAllText(scriptPath);
+                scriptContent = scriptContent.Replace(oldAssetName, newAssetName);
+                File.WriteAllText(scriptPath, scriptContent);
+
+                AssetDatabase.Refresh();
+            }
+        }
+
+        
+    }
+    string newName;
+    string oldName;
+    string newTitle;
 
 
     string GetEmptyScriptContent(string scriptName)

@@ -81,8 +81,8 @@ public class TileSharedVisuals : MonoBehaviour
 
         Sequence msgSeq = DOTween.Sequence();
         msgSeq.Append(messageDisplay.rectTransform.DOScale(1, 0.5f)).
-            Append(messageDisplay.rectTransform.DOShakeRotation(.2f, 10)).
-            Append(messageDisplay.rectTransform.DOScale(0, 0.2f));
+            Append(messageDisplay.rectTransform.DOShakeRotation(.4f, 10)).
+            Append(messageDisplay.rectTransform.DOScale(0, 0.3f));
 
     }
     #endregion
