@@ -227,17 +227,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &21995971 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6550208092805951490, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
-  m_PrefabInstance: {fileID: 1554250998}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fbf9ce172758164db46172551838f0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &21995972 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5063001915850145008, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
@@ -871,7 +860,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4362962105363994262, guid: 087307a22c0822c4895c17be87f38ac9, type: 3}
+  - {fileID: 7001746646116476933, guid: 7a05d3bf8446da3488bbf34131e1c4ff, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2902,11 +2891,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: TowerOfDices
-  folderName: Dices Enjoyers
-  title: TOWER OF DICES
+  assetName: other
+  folderName: TestFolder
+  title: TEST
   color: {r: 0.17974368, g: 0.509434, b: 0.2626382, a: 1}
-  baseDamage: 20
+  baseDamage: 11
   rarity: 1
   tag: 0
   factory: {fileID: 400194872}
@@ -5500,16 +5489,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableDices:
-  - {fileID: 21995971}
-  OnDicesRolled:
-    m_PersistentCalls:
-      m_Calls: []
+  - {fileID: 1554250999}
   LastRolledValue: 0
   LastRolledDicesCount: 0
-  multiplyDicesRotationForce: 20
-  verticalDiceForce: 2000
   diceSpawnPoint: {fileID: 228586240}
-  RollDicePos_Radius: 1
   SpawnPos_Radius: 0.3
   Button_Rolldices: {fileID: 295868723}
   Button_AddExtraValue: {fileID: 346227509}
@@ -6237,6 +6220,10 @@ PrefabInstance:
       propertyPath: m_AngularDamping
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4915395928871981067, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
+      propertyPath: isSelectedForRoll
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5063001915850145008, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.01
@@ -6282,6 +6269,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
+--- !u!114 &1554250999 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4915395928871981067, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
+  m_PrefabInstance: {fileID: 1554250998}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fd4c9b84871cc541a1877e402dad2aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1584451164
 GameObject:
   m_ObjectHideFlags: 0
@@ -6879,8 +6877,10 @@ MonoBehaviour:
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 3768023283977433165, guid: 860536b0550a4f94e99ba5484f66765f, type: 3}
-  EnemyEncountersHP: 64000000c8000000900100002003000040060000800c0000
+  EnemyEncountersHP: 64000000c80000009001000058020000e803000078050000d0070000280a0000ac0d0000
   AcumulatedDamage: 0
   AcumulatedMultiplier: 1
   Enemy_MaxHP: 100
@@ -6890,7 +6890,7 @@ MonoBehaviour:
   OnMoneyUpdated:
     m_PersistentCalls:
       m_Calls: []
-  currentMoney: 15
+  currentMoney: 30
   TMP_CurrentMoney: {fileID: 1986439319}
 --- !u!4 &1715485039
 Transform:
@@ -7216,6 +7216,10 @@ MonoBehaviour:
   AllBuyables:
   - {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
   - {fileID: 1547170513799009516, guid: 7ec2b73cc20355a4e9572735718b9fa1, type: 3}
+  - {fileID: 1547170513799009516, guid: db55b00471a63b442a73e88152ba911d, type: 3}
+  - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
+  - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
+  - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
   - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
   - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
   - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}

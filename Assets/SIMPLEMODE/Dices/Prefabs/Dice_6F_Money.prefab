@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
       propertyPath: m_Name
-      value: Dice_6F_SingleUseVariant
+      value: Dice_6F_Money
       objectReference: {fileID: 0}
     - target: {fileID: 5063001915850145008, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55,7 +55,7 @@ PrefabInstance:
     - target: {fileID: 6336495102658508532, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 8221c127501b9ac4f8539dfaa1c46b1a, type: 2}
+      objectReference: {fileID: 2100000, guid: a909c791b7a8b004b8b48f5865079798, type: 2}
     - target: {fileID: 7667903492524580429, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -68,7 +68,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -3417752374281697522}
+      addedObject: {fileID: 8452688639161076141}
   m_SourcePrefab: {fileID: 100100000, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
 --- !u!54 &99333886605187821 stripped
 Rigidbody:
@@ -80,7 +80,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
   m_PrefabInstance: {fileID: 4567236797941548290}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-3417752374281697522
+--- !u!114 &8452688639161076141
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1547170513799009516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 829be2ed421773248952b97a0d411930, type: 3}
+  m_Script: {fileID: 11500000, guid: b430831bdfb42e2449b6aa92486cbd1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   FaceUpValue: 0
@@ -106,7 +106,7 @@ MonoBehaviour:
     faceTransform: {fileID: 7393622526164324281}
   - faceValue: 6
     faceTransform: {fileID: 3695149948940717315}
-  isSelectedForRoll: 1
+  isSelectedForRoll: 0
   rb: {fileID: 99333886605187821}
   PriceInShop: 3
   canBeDragged: 1

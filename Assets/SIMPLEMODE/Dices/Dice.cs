@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.EventSystems;
 using System.Collections;
+using UnityEngine.Events;
 public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, IBuyable, ITooltip, IPointerEnterHandler, IPointerExitHandler
 {
+    public int FaceUpValue;
+
     [Serializable]
     public struct DiceFaces
     {
         public int faceValue;
         public Transform faceTransform;
     }
-    [SerializeField] DiceFaces[] diceFaces;
+    [SerializeField] protected DiceFaces[] diceFaces;
+
     public bool isSelectedForRoll;
-    public int faceUpValue;
     public Rigidbody rb;
-    public bool isMoving;
+
     protected bool isInShop = false;
     [SerializeField] int PriceInShop = 5;
 
@@ -25,39 +28,33 @@ public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, IBuyab
         mainCamera = Camera.main;
         rb = GetComponent<Rigidbody>();
     }
-    public virtual int GetRollDiceValue()
+    public virtual void RollDice() { }//In this coroutine we should set the way this type of dice is rolled
+    public virtual IEnumerator C_OnRolledEffect() { yield break; } //Effects happening after the dice has been rolled and stopped
+    public virtual void UpdateFaceupValue()
     {
-        return diceFaces[UnityEngine.Random.Range(0, diceFaces.Length)].faceValue;
-    }
-    private void Update()
+        FaceUpValue = diceFaces[GetHighestFaceIndex()].faceValue;
+    } //this is virtual because some dices don't give faceUpValue (ex. MoneyDice)
+    protected int GetHighestFaceIndex()
     {
-        isMoving = !rb.IsSleeping();
-
-        if (!isMoving)
+        float highestHeight = Mathf.NegativeInfinity;
+        int highestIndex = -1;
+        for (int i = 0; i < diceFaces.Length; i++)
         {
-            float highestHeight = Mathf.NegativeInfinity;
-            int highestIndex = -1;
-            for (int i = 0; i < diceFaces.Length; i++)
+            Transform faceTf = diceFaces[i].faceTransform;
+            if (faceTf.position.y > highestHeight)
             {
-                Transform faceTf = diceFaces[i].faceTransform;
-                if (faceTf.position.y > highestHeight)
-                {
-                    highestHeight = faceTf.position.y;
-                    highestIndex = i;
-
-                }
+                highestHeight = faceTf.position.y;
+                highestIndex = i;
             }
-            faceUpValue = diceFaces[highestIndex].faceValue;
         }
-
+        return highestIndex;
     }
 
+    #region DRAGGING
     [Header("Dragging")]
-    [SerializeField] LayerMask layerMask;
     public bool canBeDragged = true;
     [SerializeField] float heightWhileDragged;
     Coroutine dragging;
-    
     void AttemptStartDragging()
     {
         if(!canBeDragged) { return; }
@@ -111,15 +108,17 @@ public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, IBuyab
     {
         TooltipManager.Instance.RemoveRequest(this);
     }
+    #endregion
+    #region TOOLTIP
     public virtual string GetTooltipDescription()
     {
-        return $"Regular {diceFaces.Length} faces dice"; 
+        return $"Regular {diceFaces.Length} faces dice";
     }
-
     public string GetTooltipTitle()
     {
         return gameObject.name;
     }
+    #endregion
     #region BUYING DICES
     public int GetBuyingPrice()
     {

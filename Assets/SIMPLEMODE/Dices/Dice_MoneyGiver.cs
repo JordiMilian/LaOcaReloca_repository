@@ -1,12 +1,23 @@
-using DG.Tweening;
-using System.Collections;
 using UnityEngine;
+using System.Collections;
+using DG.Tweening;
 
-public class Dice_SingleUse : Dice_BasicDice
+public class Dice_MoneyGiver : Dice_BasicDice
 {
+    int moneyToGet;
+    public override void UpdateFaceupValue()
+    {
+        base.UpdateFaceupValue();
+        moneyToGet = FaceUpValue;
+        FaceUpValue = 0;
+    }
     public override IEnumerator C_OnRolledEffect()
     {
-        
+        yield return base.C_OnRolledEffect();
+        yield return new WaitForSeconds(0.2f);
+
+        GameController_Simple.Instance.AddMoney(moneyToGet);
+
         StartCoroutine(DestroyItself());
         yield break;
 
@@ -19,10 +30,10 @@ public class Dice_SingleUse : Dice_BasicDice
 
             Destroy(gameObject);
         }
+    
     }
     public override string GetTooltipDescription()
     {
-        return $"Is destroyed after being rolled.";
+        return $"Gives money instead of face up value. Is destroyed after rolled.";
     }
-
 }

@@ -13,27 +13,22 @@ public class Dices_Controller : MonoBehaviour
 {
     public List<Dice> availableDices = new List<Dice>();
     public static Dices_Controller Instance;
-    public UnityEvent<int> OnDicesRolled; //Card effects should not subscribe to this event. Instead use the CardEffects events
+
     //Maybe at some point we should make a LastDiceRoll_Info and have everything there
     public int LastRolledValue;
     public int LastRolledDicesCount;
-    [SerializeField] float multiplyDicesRotationForce = 2, verticalDiceForce = 1;
     [SerializeField] Transform diceSpawnPoint;
-    [SerializeField] float RollDicePos_Radius = 2, SpawnPos_Radius = 1;
+    [SerializeField] float SpawnPos_Radius = 1;
     GameController_Simple gameController;
 
     private void Awake()
     {
-        GetChildDices();
+        availableDices = GetComponentsInChildren<Dice>().ToList();
         Instance = this;
     }
     private void Start()
     {
         gameController = GameController_Simple.Instance;
-    }
-    public void GetChildDices()
-    {
-        availableDices = GetComponentsInChildren<Dice>().ToList();
     }
     public Button Button_Rolldices;
     [SerializeField] Button Button_AddExtraValue;
@@ -51,40 +46,27 @@ public class Dices_Controller : MonoBehaviour
     public IEnumerator RollDicesCoroutine()
     {
         SetDicesDraggable(false);
-        //Group up the dices into transform position
-        float groupUpTime = 0.4f;
         List<Dice> dicesToRoll = GetDicesToRoll();
         foreach (Dice dice in dicesToRoll)
         {
-            Transform diceTf = dice.transform;
-            dice.rb.isKinematic = true;
-            Vector3 randomPos = UnityEngine.Random.insideUnitSphere * RollDicePos_Radius + transform.position;
-            diceTf.DOMove(randomPos, groupUpTime);
-            diceTf.DORotate(UnityEngine.Random.rotation.eulerAngles, groupUpTime).SetEase(Ease.OutCubic);
-        }
-        yield return new WaitForSeconds(groupUpTime);
-
-        //Add force to them
-        foreach (Dice dice in dicesToRoll)
-        {
-            dice.rb.isKinematic = false;
-            dice.rb.AddTorque(UnityEngine.Random.insideUnitSphere * multiplyDicesRotationForce, ForceMode.Impulse);
-            dice.rb.AddForce(-Vector3.up * verticalDiceForce);
+            dice.RollDice();
         }
 
-        yield return new WaitForSeconds(0.1f);
+        //wait for at least 1 seconds so all dices can set up
+        yield return new WaitForSeconds(1.2f);
 
-        //Wait for all dices to stop moving
+
+        //Wait for all dices to stop moving and update the ones that do
         bool areAllDicesStopped;
         do
         {
             areAllDicesStopped = true;
             foreach (Dice dice in dicesToRoll)
             {
-                if (dice.isMoving)
+                if (!dice.rb.IsSleeping())
                 {
                     areAllDicesStopped = false;
-                    break;
+                    dice.UpdateFaceupValue();
                 }
             }
             yield return null;
@@ -93,10 +75,16 @@ public class Dices_Controller : MonoBehaviour
 
 
         int addedValue = 0;
+        //first we add up all the values and then wait for the effects to aboid effects moving the dices
         foreach (Dice dice in dicesToRoll)
         {
-            addedValue += dice.faceUpValue;
+            addedValue += dice.FaceUpValue;
         }
+        foreach (Dice dice in dicesToRoll)
+        {
+            yield return dice.C_OnRolledEffect();
+        }
+
         LastRolledValue = addedValue;
         LastRolledDicesCount = dicesToRoll.Count;
 
@@ -107,7 +95,6 @@ public class Dices_Controller : MonoBehaviour
         SetDicesDraggable(true);
         TMP_RollDicesText.text = LastRolledValue.ToString();
 
-        OnDicesRolled.Invoke(LastRolledValue);
     }
     #region BUY ROLL VALUE
     int boughtRollValue = 0;

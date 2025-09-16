@@ -164,6 +164,9 @@ public class ProfilesCreator_Editor : Editor
        
     }
 
+    string newName;
+    string oldName;
+    string newTitle;
     void ChangeName()
     {
         GUILayout.Space(5);
@@ -210,10 +213,14 @@ public class ProfilesCreator_Editor : Editor
                 AssetDatabase.RenameAsset(AssetDatabase.GUIDToAssetPath(GUIDsFound[rightIndex]), newAssetName);
 
                 //Rename the script
-                AssetDatabase.RenameAsset(scriptPath, newAssetName);
                 string scriptContent = File.ReadAllText(scriptPath);
                 scriptContent = scriptContent.Replace(oldAssetName, newAssetName);
                 File.WriteAllText(scriptPath, scriptContent);
+                AssetDatabase.RenameAsset(scriptPath, newAssetName);
+
+                //Rename title
+                Tile_Profile profile = AssetDatabase.LoadAssetAtPath<Tile_Profile>(AssetDatabase.GUIDToAssetPath(GUIDsFound[rightIndex]));
+                profile.Title = newTitle;
 
                 AssetDatabase.Refresh();
             }
@@ -221,9 +228,7 @@ public class ProfilesCreator_Editor : Editor
 
         
     }
-    string newName;
-    string oldName;
-    string newTitle;
+   
 
 
     string GetEmptyScriptContent(string scriptName)
