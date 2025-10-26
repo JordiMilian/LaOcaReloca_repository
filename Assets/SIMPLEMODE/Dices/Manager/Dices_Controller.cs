@@ -33,15 +33,15 @@ public class Dices_Controller : MonoBehaviour
     public Button Button_Rolldices;
     [SerializeField] Button Button_AddExtraValue;
     [SerializeField] TextMeshProUGUI TMP_AddExtraValue, TMP_RollDicesText;
-    public void EnableRollButtons()
+    public void EnableRollButton()
     {
         Button_Rolldices.interactable = true;
-        Button_AddExtraValue.interactable = true;
     }
-    public void DisableRollButtons()
-    { 
+    public void EnableAddExtraRollValueButton() { Button_AddExtraValue.interactable = true; }
+    public void DisableAddExtraRollValueButton() {  Button_AddExtraValue.interactable = false;}
+    public void DisableRollButton()
+    {
         Button_Rolldices.interactable = false;
-        Button_AddExtraValue.interactable = false;
     }
     public IEnumerator RollDicesCoroutine()
     {

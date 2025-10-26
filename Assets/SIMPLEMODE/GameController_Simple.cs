@@ -110,7 +110,8 @@ public class GameController_Simple : MonoBehaviour
     #region FREE MODE
     void OnFreeModeEnter()
     {
-        dicesController.EnableRollButtons();
+        dicesController.EnableRollButton();
+        dicesController.EnableAddExtraRollValueButton();
         shopController.EnableShop();
         if(BoardController.PlayerIndex == BoardController.TilesList.Count -1)
         {
@@ -119,7 +120,8 @@ public class GameController_Simple : MonoBehaviour
     }
     void OnFreeModeExit()
     {
-        dicesController.DisableRollButtons();
+        dicesController.DisableRollButton();
+        dicesController.DisableAddExtraRollValueButton();
         shopController.DisableShop();
     }
     #endregion
