@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.Events;
 using UnityEngine.Splines;
+using UnityEditor.Rendering;
 
 public struct transformData
 {
@@ -260,12 +261,19 @@ public class Board_Controller_simple : MonoBehaviour
 
     #region ASSEMBLE/DISASSEMBLE BOARD
     public bool isBoardAssembled = true;
-    const float disassembledHeight = 7;
+    const float disassembledHeight = 30;
     const float maxRandonTime = 0.3f;
     const float assembleTime = 1.5f;
     public IEnumerator C_AsembleBoard()
     {
+        CamerasManager cameras = CamerasManager.instance;
+        cameras.SetCameraPriority("CinemachineCamera_Board", 15);
+
         isBoardAssembled = true;
+        foreach (TileController tile in TilesList)
+        {
+            tile.gameObject.SetActive(true);
+        }
         for (int i = 0;i <TilesList.Count; i++)
         {
             TileController tile = TilesList[i];
@@ -276,9 +284,12 @@ public class Board_Controller_simple : MonoBehaviour
         }
         yield return new WaitForSeconds(assembleTime + maxRandonTime);
         yield return V_JumpPlayerToNewPos();
+        cameras.SetCameraPriority("CinemachineCamera_Board", 0);
     }
     public IEnumerator C_DisasembleBoard()
     {
+        CamerasManager cameras = CamerasManager.instance;
+        cameras.SetCameraPriority("CinemachineCamera_Board", 15);
         isBoardAssembled = false;
         yield return C_JumpPlayerToSide();
 
@@ -290,7 +301,11 @@ public class Board_Controller_simple : MonoBehaviour
                     Append(tile.transform.DOMove(finalPos, assembleTime)).SetEase(Ease.InOutCubic);
         }
         yield return new WaitForSeconds(assembleTime + maxRandonTime);
-
+        foreach (TileController tile in TilesList)
+        {
+            tile.gameObject.SetActive(false);
+        }
+        cameras.SetCameraPriority("CinemachineCamera_Board", 0);
     }
     Vector3 playerSidePos;//this position is set at the starting board
     IEnumerator C_JumpPlayerToSide()

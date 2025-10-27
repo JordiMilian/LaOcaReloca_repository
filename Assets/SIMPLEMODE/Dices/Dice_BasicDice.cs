@@ -10,6 +10,7 @@ public class Dice_BasicDice : Dice
 
     public override void RollDice()
     {
+        base.RollDice();
         StartCoroutine(rollDicesCoroutine());
 
         IEnumerator rollDicesCoroutine()

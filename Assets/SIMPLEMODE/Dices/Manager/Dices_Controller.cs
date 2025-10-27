@@ -45,7 +45,6 @@ public class Dices_Controller : MonoBehaviour
     }
     public IEnumerator RollDicesCoroutine()
     {
-        SetDicesDraggable(false);
         List<Dice> dicesToRoll = GetDicesToRoll();
         foreach (Dice dice in dicesToRoll)
         {

@@ -37,8 +37,12 @@ public class TooltipManager : MonoBehaviour
     }
     public void ForceTooltip(ITooltip tooltipToForce)
     {
-        forcedTooltip = tooltipToForce;
-        UpdateTooltipTexts();
+        if(forcedTooltip == null)
+        {
+            forcedTooltip = tooltipToForce;
+            UpdateTooltipTexts();
+        }
+        
     }
     public void StopForcingThisTooltip(ITooltip tooltipToStop)
     {
@@ -58,6 +62,12 @@ public class TooltipManager : MonoBehaviour
         else if(tooltipRequests.Count > 0)
         {
             ITooltip tooltipToDisplay = tooltipRequests[tooltipRequests.Count - 1];//Display the last requested tooltip
+            if(tooltipToDisplay == null)
+            {
+                TMP_Description.text = "";
+                TMP_Title.text = "";
+                return;
+            }
 
             TMP_Description.text = tooltipToDisplay.GetTooltipDescription();
             TMP_Title.text = tooltipToDisplay.GetTooltipTitle();

@@ -21,10 +21,8 @@ public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
 
         if(gameController.BoardController.isBoardAssembled == false)
         {
-            cameras.SetCameraPriority("CinemachineCamera_Board", 15);
             yield return gameController.BoardController.C_AsembleBoard();
             yield return new WaitForSeconds(0.5f);
-            cameras.SetCameraPriority("CinemachineCamera_Board", 0);
         }
 
 

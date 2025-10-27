@@ -28,7 +28,7 @@ public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, IBuyab
         mainCamera = Camera.main;
         rb = GetComponent<Rigidbody>();
     }
-    public virtual void RollDice() { }//In this coroutine we should set the way this type of dice is rolled
+    public virtual void RollDice() { canBeDragged = false; }//In this coroutine we should set the way this type of dice is rolled
     public virtual IEnumerator C_OnRolledEffect() { yield break; } //Effects happening after the dice has been rolled and stopped
     public virtual void UpdateFaceupValue()
     {
