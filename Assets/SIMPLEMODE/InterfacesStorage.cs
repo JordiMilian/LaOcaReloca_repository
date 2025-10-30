@@ -22,7 +22,7 @@ public interface ITooltip
 {
     public string GetTooltipDescription();
     public string GetTooltipTitle();
-    //public Sprite GetTooltipSprite();
+    public Texture GetTooltipTexture();
     
 }
 public enum Intensity

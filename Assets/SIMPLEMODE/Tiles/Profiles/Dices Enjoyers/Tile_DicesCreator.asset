@@ -19,6 +19,6 @@ MonoBehaviour:
   rarity: 2
   uniquePrice: 0
   tileTag: 0
-  Tile: {fileID: 0}
+  _Tile: {fileID: 0}
   DicePrefab_OnCrossed: {fileID: 1547170513799009516, guid: 7ec2b73cc20355a4e9572735718b9fa1, type: 3}
-  DicePrefab_OnLanded: {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
+  DicePrefab_OnLanded: {fileID: 1547170513799009516, guid: 4e8482089949b5149aff72c891108b7c, type: 3}

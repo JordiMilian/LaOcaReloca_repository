@@ -15,7 +15,7 @@ public class Tile_Shelter : Tile_Profile
     [SerializeField] float PermaAddedDamage = 20;
     public override IEnumerator OnPlayerStepped()
     {
-        List<TileController> adjacentEmpties = MathJ.GetTilesAround(Tile,true);
+        List<TileController> adjacentEmpties = MathJ.GetTilesAround(_Tile,true);
         int emptiesCount = 0;
         foreach (TileController tile in adjacentEmpties)
         {
@@ -25,12 +25,12 @@ public class Tile_Shelter : Tile_Profile
                 tile.tileMovement.shakeTile(Intensity.low);
             }
         }
-        Tile.DamagesToDeal.Add(DealtDamagePerEmpty * emptiesCount);
+        _Tile.DamagesToDeal.Add(DealtDamagePerEmpty * emptiesCount);
         yield return base.OnPlayerStepped();
     }
     public override IEnumerator OnPlayerLanded()
     {
-        List<TileController> adjacentEmpties = MathJ.GetTilesAround(Tile,true);
+        List<TileController> adjacentEmpties = MathJ.GetTilesAround(_Tile,true);
         List<TileController> emptiesAround = new();
 
         foreach (TileController tile in adjacentEmpties)

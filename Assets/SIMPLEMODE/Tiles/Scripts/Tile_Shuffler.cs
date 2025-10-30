@@ -11,7 +11,7 @@ public class Tile_Shuffler : Tile_Profile
     [SerializeField] float DmgPerShuffledTile = 2;
   public override IEnumerator OnPlayerStepped()
     {
-        if (Tile.indexInBoard < BoardController.TilesList.Count - 2) //si no es la penultima
+        if (_Tile.indexInBoard < BoardController.TilesList.Count - 2) //si no es la penultima
         {
             List<TileController> tilesToShuffle = new();
             for (int i = BoardController.TilesList.Count - 2; i > BoardController.PlayerIndex + 1; i--)
@@ -32,7 +32,7 @@ public class Tile_Shuffler : Tile_Profile
             BoardController.MoveTiles_ToTfData(true);
 
             yield return new WaitForSeconds(0.5f);
-            Tile.DamagesToDeal.Add(DmgPerShuffledTile * tilesToShuffle.Count);
+            _Tile.DamagesToDeal.Add(DmgPerShuffledTile * tilesToShuffle.Count);
         }
         yield return base.OnPlayerStepped(); 
 

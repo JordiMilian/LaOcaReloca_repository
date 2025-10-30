@@ -11,7 +11,7 @@ public class Tile_Crucifix : Tile_Profile
         
         float totalDamage = 0;
 
-        List<TileController> axisTiles = MathJ.GetBothAxisTiles(Tile);
+        List<TileController> axisTiles = MathJ.GetBothAxisTiles(_Tile);
         foreach (TileController tile in axisTiles)
         {
             yield return addTileDamage(tile);
@@ -19,7 +19,7 @@ public class Tile_Crucifix : Tile_Profile
 
         tileMovement.shakeTile(Intensity.large);
 
-        Tile.DamagesToDeal.Add(totalDamage);
+        _Tile.DamagesToDeal.Add(totalDamage);
         yield return base.OnPlayerLanded();
         //
         IEnumerator addTileDamage(TileController tile)
@@ -31,7 +31,7 @@ public class Tile_Crucifix : Tile_Profile
     }
     public override IEnumerator OnPlayerStepped()
     {
-        List<TileController> axisTiles = MathJ.GetBothAxisTiles(Tile);
+        List<TileController> axisTiles = MathJ.GetBothAxisTiles(_Tile);
         foreach (TileController tile in axisTiles)
         {
             tile.AddBaseDamage(addedDamageToOtherTiles);

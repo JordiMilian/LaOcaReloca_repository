@@ -20,7 +20,7 @@ public class Tile_Pinyata : Tile_Profile
     public override IEnumerator OnPlayerStepped()
     { 
         yield return base.OnPlayerStepped();
-        List<TileController> tilesAround = MathJ.GetAdjacentTiles(Tile, adjacentDepth);
+        List<TileController> tilesAround = MathJ.GetAdjacentTiles(_Tile, adjacentDepth);
         foreach (TileController tile in tilesAround)
         {
             tile.AddBaseDamage(addedDmg);
@@ -29,7 +29,7 @@ public class Tile_Pinyata : Tile_Profile
     public override IEnumerator OnPlayerLanded() 
     { 
         yield return base.OnPlayerLanded();
-        List<TileController> tilesAround = MathJ.GetAdjacentTiles(Tile, adjacentDepth);
+        List<TileController> tilesAround = MathJ.GetAdjacentTiles(_Tile, adjacentDepth);
         foreach (TileController tile in tilesAround)
         {
             tile.AddBaseDamage(addedDmgOnlanded);

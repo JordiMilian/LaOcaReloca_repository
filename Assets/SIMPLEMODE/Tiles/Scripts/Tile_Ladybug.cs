@@ -17,7 +17,7 @@ public class Tile_Ladybug : Tile_Profile
     {
         int lastRolledvalue = GameController.dicesController.LastRolledValue;
 
-        TileController randomTile = MathJ.GetRandomTileInBoard(Tile, true,true);
+        TileController randomTile = MathJ.GetRandomTileInBoard(_Tile, true,true);
 
 
         randomTile.AddBaseDamage(lastRolledvalue);

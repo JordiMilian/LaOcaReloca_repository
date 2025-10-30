@@ -7,6 +7,8 @@ public class TooltipManager : MonoBehaviour
     List<ITooltip> tooltipRequests = new();
     ITooltip forcedTooltip;
     [SerializeField] TextMeshProUGUI TMP_Description, TMP_Title;
+    [SerializeField] Material imageMaterial;
+    [SerializeField] Texture defaultTexture;
     public static TooltipManager Instance;
     private void Awake()
     {
@@ -58,6 +60,7 @@ public class TooltipManager : MonoBehaviour
         {
             TMP_Description.text = forcedTooltip.GetTooltipDescription();
             TMP_Title.text = forcedTooltip.GetTooltipTitle();
+            imageMaterial.SetTexture("_mainTexture", forcedTooltip.GetTooltipTexture());
         }
         else if(tooltipRequests.Count > 0)
         {
@@ -66,17 +69,19 @@ public class TooltipManager : MonoBehaviour
             {
                 TMP_Description.text = "";
                 TMP_Title.text = "";
+                imageMaterial.SetTexture("_mainTexture", defaultTexture);
                 return;
             }
 
             TMP_Description.text = tooltipToDisplay.GetTooltipDescription();
             TMP_Title.text = tooltipToDisplay.GetTooltipTitle();
-            //TO DO: Display sprite 
+            imageMaterial.SetTexture("_mainTexture", tooltipToDisplay.GetTooltipTexture());
         }
         else
         {
             TMP_Description.text = "";
             TMP_Title.text = "";
+            imageMaterial.SetTexture("_mainTexture", defaultTexture);
         }
     }
 }

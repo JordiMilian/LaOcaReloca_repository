@@ -30,7 +30,7 @@ public class Tile_Oca_LeaderOca : Tile_Oca
         {
             if (tile._Profile is Tile_Oca) { OcasCount++; }
         }
-        Tile.DamagesToDeal.Add(damagePerOca * OcasCount);
+        _Tile.DamagesToDeal.Add(damagePerOca * OcasCount);
         Debug.Log($"Found {OcasCount} ocas");
 
         yield return base.OnPlayerStepped();

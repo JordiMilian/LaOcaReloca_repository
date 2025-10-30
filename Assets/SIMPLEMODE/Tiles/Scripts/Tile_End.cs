@@ -20,7 +20,7 @@ public class Tile_End : Tile_Profile
     IEnumerator ReachedEnd()
     {
         GameController.AddMoney(moneyOnReached);
-        yield return Tile.C_DealAllDamageToDeal();
+        yield return _Tile.C_DealAllDamageToDeal();
         yield return GameController.OnReachedEndTile_CardEffects.C_ActivateEffects();
         GameController_Simple.Instance.ChangeGameState(GameState.ReachedEnd);
     }

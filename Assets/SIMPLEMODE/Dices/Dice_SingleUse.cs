@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Dice_SingleUse : Dice_BasicDice
 {
+    [SerializeField] int uses = 1;
+    [SerializeField] int usesRemaining = 1;
     public override IEnumerator C_OnRolledEffect()
     {
+        usesRemaining--;
+        if (usesRemaining <= 0)
+        {
+            StartCoroutine(DestroyItself());
+        }
+
         
-        StartCoroutine(DestroyItself());
         yield break;
 
         IEnumerator DestroyItself()
@@ -22,7 +29,7 @@ public class Dice_SingleUse : Dice_BasicDice
     }
     public override string GetTooltipDescription()
     {
-        return $"Is destroyed after being rolled.";
+        return $"Destroyed after being rolled {uses}({usesRemaining}) times";
     }
 
 }

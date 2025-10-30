@@ -6,18 +6,19 @@ public class Tile_DamageMover : Tile_Profile
     public override IEnumerator OnPlayerStepped()
     {
         yield return base.OnPlayerStepped();
-        TileController tileBehind = BoardController.TilesList[Tile.indexInBoard - 1];
+        TileController tileBehind = BoardController.TilesList[_Tile.indexInBoard - 1];
         if(tileBehind._Profile is not Tile_Start)
         {
-            TileController tileForward = BoardController.TilesList[Tile.indexInBoard + 1];
+            TileController tileForward = BoardController.TilesList[_Tile.indexInBoard + 1];
             tileForward.AddBaseDamage(tileBehind.GetBaseDamage());
             tileBehind.RemoveBaseDamage(tileBehind.GetBaseDamage());
             yield return new WaitForSeconds(0.3f);
         }
+        BoardController.RemoveTile(_Tile.indexInBoard);
     }
 
     public override string GetTooltipText()
     {
-        return $"{OnCrossed} Transfer the damage from the previous tile to the next tile";
+        return $"{OnCrossed} Transfer the damage from the previous tile to the next tile and destroy itself";
     }
 }

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseDamage: 1
   Title: METRO STATION
-  tileColor: {r: 1, g: 0.19433957, b: 0.19433957, a: 1}
+  tileColor: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 1}
   tileTexture: {fileID: 2800000, guid: 43266b1226d22da4b9990d7b68cd0c57, type: 3}
   rarity: 1
   uniquePrice: 0
   tileTag: 0
-  Tile: {fileID: 0}
+  _Tile: {fileID: 0}

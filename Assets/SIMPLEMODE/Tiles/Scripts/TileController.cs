@@ -12,7 +12,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
 
     [HideInInspector] public int indexInBoard;
     [HideInInspector] public Vector2Int vectorInBoard;
-    [SerializeField] Material tileMaterial;
+    public Material tileMaterial;
 
     //Basic references to other scripts
     protected GameController_Simple GameController;
@@ -125,7 +125,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     public void SetTileProfile(Tile_Profile profile)
     {
         _Profile = Instantiate(profile);
-        _Profile.Tile = this;
+        _Profile._Tile = this;
         tileMaterial.SetColor("_OutlineColor", _Profile.tileColor);
         if(_Profile.tileTexture != null)
         {
@@ -309,6 +309,10 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     public string GetTooltipTitle()
     {
         return _Profile.Title;
+    }
+    public Texture GetTooltipTexture()
+    {
+        return _Profile.tileTexture;
     }
     #endregion
     #region DRAGGING

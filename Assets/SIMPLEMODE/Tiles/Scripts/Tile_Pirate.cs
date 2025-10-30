@@ -9,7 +9,7 @@ public class Tile_Pirate : Tile_Profile
     [SerializeField] int moneyOnLanded = 2;
     public override IEnumerator OnPlayerStepped()
     {
-        Tile.DamagesToDeal.Add(GameController.GetCurrentMoney());
+        _Tile.DamagesToDeal.Add(GameController.GetCurrentMoney());
         yield return base.OnPlayerStepped();
     }
     public override IEnumerator OnPlayerLanded()

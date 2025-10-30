@@ -108,12 +108,14 @@ MonoBehaviour:
     faceTransform: {fileID: 3695149948940717315}
   isSelectedForRoll: 1
   rb: {fileID: 99333886605187821}
-  PriceInShop: 3
+  PriceInShop: 2
   canBeDragged: 1
   heightWhileDragged: 1
   RollDicePos_Radius: 2
   multiplierRotationForce: 500
   verticalDiceForce: 3
+  uses: 1
+  usesRemaining: 1
 --- !u!4 &2426010869236002237 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2218297296304105663, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}

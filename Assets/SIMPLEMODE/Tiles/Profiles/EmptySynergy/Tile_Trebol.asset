@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseDamage: 20
   Title: TREBOL
-  tileColor: {r: 0.7075472, g: 0.70550746, b: 0.23028658, a: 1}
+  tileColor: {r: 0.5176471, g: 0.6117647, b: 0.63529414, a: 1}
   tileTexture: {fileID: 2800000, guid: 8ab1f897f7472044ba9788a5ac90a17a, type: 3}
   rarity: 2
   uniquePrice: 0
   tileTag: 0
-  Tile: {fileID: 0}
-  moneyOnLandedOnEmpty: 3
+  _Tile: {fileID: 0}
+  moneyOnLandedOnEmpty: 2

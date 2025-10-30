@@ -10,7 +10,7 @@ public class Tile_Profile : ScriptableObject
     [HideInInspector] public Rarity rarity = Rarity.none;
     [HideInInspector] public int uniquePrice = 0; //IF rarity is Unique, use this value.
     public TileTags tileTag;
-    [HideInInspector] public TileController Tile;
+    [HideInInspector] public TileController _Tile;
     protected TileSharedVisuals tileMovement;
     [Space(5)]
     protected Board_Controller_simple BoardController;
@@ -20,18 +20,18 @@ public class Tile_Profile : ScriptableObject
     {
         BoardController = Board_Controller_simple.Instance;
         GameController = GameController_Simple.Instance;
-        tileMovement = Tile.tileMovement;
+        tileMovement = _Tile.tileMovement;
     }
     public virtual IEnumerator OnPlayerStepped()
     {
-        Tile.DamagesToDeal.Add(BaseDamage);
-        Tile.DamagesToDeal.Reverse();
+        _Tile.DamagesToDeal.Add(BaseDamage);
+        _Tile.DamagesToDeal.Reverse();
 
-        if (GameController_Simple.Instance.remainingStepsToTake != 1) { yield return Tile.C_DealAllDamageToDeal(); }
+        if (GameController_Simple.Instance.remainingStepsToTake != 1) { yield return _Tile.C_DealAllDamageToDeal(); }
     }
     public virtual IEnumerator OnPlayerLanded() 
     {
-        yield return Tile.C_DealAllDamageToDeal();
+        yield return _Tile.C_DealAllDamageToDeal();
     }
     public virtual void OnPlacedInBoard() { }
     public virtual void OnRemovedFromBoard() { }
@@ -52,7 +52,7 @@ public class Tile_Profile : ScriptableObject
     //IF YOU WANT TO MULTIPLY DAMAGE CALL IT FROM Tile.MultiplyBaseDamage()
     public virtual float AddBaseDamage(float addedDamage)
     {
-        Tile.SetBaseDamage(BaseDamage + addedDamage);
+        _Tile.SetBaseDamage(BaseDamage + addedDamage);
         return addedDamage;
     }
     public virtual float RemoveBaseDamage(float removedDamage)
@@ -61,12 +61,12 @@ public class Tile_Profile : ScriptableObject
         {
             removedDamage = BaseDamage;
         }
-        Tile.SetBaseDamage(BaseDamage - removedDamage);
+        _Tile.SetBaseDamage(BaseDamage - removedDamage);
         return removedDamage;
     }
     public virtual void MultiplyBaseDamage(float mult)
     {
-        Tile.SetBaseDamage(BaseDamage * mult);
+        _Tile.SetBaseDamage(BaseDamage * mult);
     }
     #endregion
 }

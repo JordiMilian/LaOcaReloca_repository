@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseDamage: 15
   Title: MATRIOSKA
-  tileColor: {r: 1, g: 0.6988019, b: 0.5415094, a: 1}
+  tileColor: {r: 0.7075472, g: 0.30998692, b: 0.103462085, a: 1}
   tileTexture: {fileID: 2800000, guid: e9f61c087bf19b74fac9841c28d560d1, type: 3}
   rarity: 2
   uniquePrice: 0
   tileTag: 0
-  Tile: {fileID: 0}
+  _Tile: {fileID: 0}
   timesCrossed: 0
   timesNeededToCross: 5
   multiplyCurrentDamageBy: 1.5

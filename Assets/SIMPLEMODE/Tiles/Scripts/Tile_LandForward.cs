@@ -8,7 +8,7 @@ public class Tile_LandForward : Tile_Profile
     {
         yield return base.OnPlayerLanded();
         yield return GameController.C_AddAcumulatedDamage(-GameController.GetCurrentAcumulatedDamage());
-        yield return BoardController.L_JumpPlayerTo(Tile.indexInBoard + 1, true);
+        yield return BoardController.L_JumpPlayerTo(_Tile.indexInBoard + 1, true);
     }
     public override string GetTooltipText()
     {

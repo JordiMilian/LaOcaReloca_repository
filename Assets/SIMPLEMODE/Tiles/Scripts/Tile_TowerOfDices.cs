@@ -18,7 +18,7 @@ public class Tile_TowerOfDices : Tile_Profile
 
     IEnumerator OnRolledDices()
     {
-        Tile.DamagesToDeal.Add(BaseDamage * Dices_Controller.Instance.LastRolledDicesCount);
-        yield return Tile.C_DealAllDamageToDeal();
+        _Tile.DamagesToDeal.Add(BaseDamage * Dices_Controller.Instance.LastRolledDicesCount);
+        yield return _Tile.C_DealAllDamageToDeal();
     }
 }

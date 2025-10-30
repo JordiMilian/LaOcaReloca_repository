@@ -22,8 +22,8 @@ public class Tile_Pessimist : Tile_Profile
     IEnumerator OnReachedEndEffect()
     {
         tileMovement.shakeTile(Intensity.mid);
-        Tile.DamagesToDeal.Add(BaseDamage * multiplierOnEnd);
-        yield return Tile.C_DealAllDamageToDeal(); 
+        _Tile.DamagesToDeal.Add(BaseDamage * multiplierOnEnd);
+        yield return _Tile.C_DealAllDamageToDeal(); 
     }
     public override string GetTooltipText()
     {

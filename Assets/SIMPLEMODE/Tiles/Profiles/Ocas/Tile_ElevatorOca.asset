@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseDamage: 5
   Title: ELEVATOR OCA
-  tileColor: {r: 0.27785942, g: 0.048024215, b: 0.3584906, a: 1}
+  tileColor: {r: 0.79607844, g: 0.14901961, b: 0.48235294, a: 1}
+  tileTexture: {fileID: 2800000, guid: eb2957581df23c440a9cd6ee015d1a86, type: 3}
   rarity: 3
   uniquePrice: 0
   tileTag: 2
-  Tile: {fileID: 0}
+  _Tile: {fileID: 0}

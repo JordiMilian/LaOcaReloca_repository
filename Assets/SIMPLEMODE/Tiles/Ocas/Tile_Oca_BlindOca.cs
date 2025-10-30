@@ -26,7 +26,7 @@ public class Tile_Oca_BlindOca : Tile_Oca
         {
             randomIndex = Random.Range(0, boardOcas.Count);
         }
-        while (boardOcas[randomIndex] == Tile);
+        while (boardOcas[randomIndex] == _Tile);
 
         
         yield return BoardController.L_JumpPlayerTo(boardOcas[randomIndex].indexInBoard, false);
@@ -44,6 +44,8 @@ public class Tile_Oca_BlindOca : Tile_Oca
     }
     public override string GetTooltipText()
     {
-        return  $"{OnLanded} Jump to another random Oca and gain {GameController.MoneyToRoll} money";
+        string display = "?";
+        if(GameController != null) { display = GameController.MoneyToRoll.ToString(); }
+        return  $"{OnLanded} Jump to another random Oca and gain {display} money";
     }
 }

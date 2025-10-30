@@ -8,13 +8,13 @@ public class Tile_MultiplyDamage : Tile_Profile
     [SerializeField] float multiplierOnStepped = 1.5f;
     public override IEnumerator OnPlayerLanded()
     {
-        TileController randomTile = MathJ.GetRandomTileInBoard(Tile, true, true);
+        TileController randomTile = MathJ.GetRandomTileInBoard(_Tile, true, true);
         randomTile.MultiplyBaseDamage(multiplierOnLanded);
         yield return base.OnPlayerLanded();
     }
     public override IEnumerator OnPlayerStepped()
     {
-        TileController randomTile = MathJ.GetRandomTileInBoard(Tile, true, true);
+        TileController randomTile = MathJ.GetRandomTileInBoard(_Tile, true, true);
         randomTile.MultiplyBaseDamage(multiplierOnStepped);
 
         yield return base.OnPlayerStepped();

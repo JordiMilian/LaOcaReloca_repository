@@ -6,13 +6,13 @@ public class Tile_Landmine : Tile_Profile
 {
     public override string GetTooltipText()
     {
-        return $"{OnLanded} Destroy the Tile forward and this Tile";
+        return $"{OnCrossed} Destroy the Tile forward and this Tile";
     }
 
-    public override IEnumerator OnPlayerLanded()
+    public override IEnumerator OnPlayerStepped()
     {
-        yield return base.OnPlayerLanded();
-        if (Tile.indexInBoard < BoardController.TilesList.Count - 2) { BoardController.RemoveTile(Tile.indexInBoard + 1); }
-        BoardController.RemoveTile(Tile.indexInBoard);
+        yield return base.OnPlayerStepped();
+        if (_Tile.indexInBoard < BoardController.TilesList.Count - 2) { BoardController.RemoveTile(_Tile.indexInBoard + 1); }
+        BoardController.RemoveTile(_Tile.indexInBoard);
     }
 }

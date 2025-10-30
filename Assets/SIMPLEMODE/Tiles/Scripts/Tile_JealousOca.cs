@@ -10,9 +10,9 @@ public class Tile_JealousOca : Tile_Oca
     IEnumerator OnLandedEffect()
     {
         TileController landedTile = BoardController.TilesList[BoardController.PlayerIndex];
-        if (landedTile._Profile.tileTag == TileTags.Oca)
+        if (landedTile._Profile.tileTag == TileTags.Oca && landedTile != _Tile)
         {
-            Tile.AddBaseDamage(landedTile.GetBaseDamage());
+            _Tile.AddBaseDamage(landedTile.GetBaseDamage());
             yield break;
         }   
     }

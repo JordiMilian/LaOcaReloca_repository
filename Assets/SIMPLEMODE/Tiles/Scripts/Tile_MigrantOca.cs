@@ -7,11 +7,11 @@ public class Tile_MigrantOca : Tile_Oca
     [SerializeField] int moneyPerTile = 1;
     public override IEnumerator OnPlayerLanded() 
    { 
-        int startingIndex = Tile.indexInBoard;
+        int startingIndex = _Tile.indexInBoard;
 
         yield return basePlayerLanded();
 
-        for (int i = Tile.indexInBoard + 1; i < BoardController.TilesList.Count; i++)
+        for (int i = _Tile.indexInBoard + 1; i < BoardController.TilesList.Count; i++)
         {
             if (BoardController.TilesList[i]._Profile is Tile_Oca)
             {

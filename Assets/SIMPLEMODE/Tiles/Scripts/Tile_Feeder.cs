@@ -9,7 +9,7 @@ public class Tile_Feeder : Tile_Profile
     public override IEnumerator OnPlayerLanded()
     {
         yield return base.OnPlayerLanded();
-        TileController nextTile = BoardController.TilesList[Tile.indexInBoard + 1];
+        TileController nextTile = BoardController.TilesList[_Tile.indexInBoard + 1];
         if(nextTile != null)
         {
             nextTile.AddBaseDamage
@@ -20,7 +20,7 @@ public class Tile_Feeder : Tile_Profile
     public override IEnumerator OnPlayerStepped()
     {
         yield return base.OnPlayerStepped();
-        TileController nextTile = BoardController.TilesList[Tile.indexInBoard + 1];
+        TileController nextTile = BoardController.TilesList[_Tile.indexInBoard + 1];
         if (nextTile != null)
         {
             nextTile.AddBaseDamage(CrossedDamage);

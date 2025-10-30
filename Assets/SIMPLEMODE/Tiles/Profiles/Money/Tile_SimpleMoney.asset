@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseDamage: 5
   Title: MONEY ON THE GROUND
-  tileColor: {r: 0.93773186, g: 0.96981126, b: 0.29826263, a: 1}
+  tileColor: {r: 1, g: 0.85882354, b: 0.23921569, a: 1}
   tileTexture: {fileID: 2800000, guid: 3129953ac048cef41a5abc99687be77f, type: 3}
   rarity: 1
   uniquePrice: 0
   tileTag: 0
-  Tile: {fileID: 0}
+  _Tile: {fileID: 0}
   landedAmount: 10
   steppedAmount: 1

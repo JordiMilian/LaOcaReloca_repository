@@ -26,12 +26,11 @@ public class TileSharedVisuals : MonoBehaviour
     }
     public void SetBasicPanelColor()
     {
-        //TO DO: Add something to the material to show dragability
-        //basicColorPanel.color = tileBase.tileColor;
+        tileBase.tileMaterial.SetFloat("_disabledAmount", 0f);
     }
     public void SetBasicPanelColor_Transparent()
     {
-       // basicColorPanel.color = new Color(tileBase.tileColor.r, tileBase.tileColor.g, tileBase.tileColor.b, 0.75f);
+        tileBase.tileMaterial.SetFloat("_disabledAmount", 0.35f);
     }
     #region SHARED ANIMATIONS
     public void FirstAppeareanceAnim()

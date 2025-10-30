@@ -119,6 +119,10 @@ public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, IBuyab
     {
         return gameObject.name;
     }
+    public Texture GetTooltipTexture()
+    {
+        return null;
+    }
     #endregion
     #region BUYING DICES
     public int GetBuyingPrice()

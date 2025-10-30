@@ -22,7 +22,7 @@ public class Tile_MrBeast : Tile_Profile
     }
     public override IEnumerator OnPlayerStepped()
     {
-        TileController randomEmpty = MathJ.GetRandomTileInBoardWithTag(TileTags.Empty, Tile, true);
+        TileController randomEmpty = MathJ.GetRandomTileInBoardWithTag(TileTags.Empty, _Tile, true);
 
         if(randomEmpty != null)
         {

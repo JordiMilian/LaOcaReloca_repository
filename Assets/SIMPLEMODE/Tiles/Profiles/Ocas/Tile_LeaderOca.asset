@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseDamage: 15
   Title: LEADER OCA
-  tileColor: {r: 0.68296653, g: 0.2512993, b: 0.6830188, a: 1}
+  tileColor: {r: 0.79607844, g: 0.14901961, b: 0.48235294, a: 1}
+  tileTexture: {fileID: 2800000, guid: bb3a4479ed3e2c14b989a9aa712c7b82, type: 3}
   rarity: 2
   uniquePrice: 0
   tileTag: 2
-  Tile: {fileID: 0}
+  _Tile: {fileID: 0}
   damagePerOca: 5
   addedDamageAtOcas: 25

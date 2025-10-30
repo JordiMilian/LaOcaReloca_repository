@@ -10,13 +10,13 @@ public class Tile_Matrioska : Tile_Profile
    {
         timesCrossed++;
         
-        Tile.MultiplyBaseDamage(multiplyCurrentDamageBy);
+        _Tile.MultiplyBaseDamage(multiplyCurrentDamageBy);
         yield return base.OnPlayerStepped();
 
         if (timesCrossed >= timesNeededToCross)
         {
             yield return new WaitForSeconds(.5f);
-            BoardController.RemoveTile(Tile.indexInBoard);
+            BoardController.RemoveTile(_Tile.indexInBoard);
             yield break;
         }
     }

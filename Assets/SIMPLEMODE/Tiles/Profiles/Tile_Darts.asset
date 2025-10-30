@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85318c2161315db488bd574b2dbbbf4a, type: 3}
-  m_Name: Tile_Multiplier
+  m_Name: Tile_Darts
   m_EditorClassIdentifier: 
   BaseDamage: 20
   Title: DARTS
   tileColor: {r: 0.5849056, g: 0.48644418, b: 0.26375934, a: 1}
-  tileTexture: {fileID: 2800000, guid: d7e9878e90d595a43a5f374e34275f35, type: 3}
+  tileTexture: {fileID: 2800000, guid: 1edc4fe8c466c9d4ebf37ee538126bc0, type: 3}
   rarity: 1
   uniquePrice: 0
   tileTag: 0
-  Tile: {fileID: 0}
+  _Tile: {fileID: 0}
   multiplierOnLanded: 4
   multiplierOnStepped: 1.5

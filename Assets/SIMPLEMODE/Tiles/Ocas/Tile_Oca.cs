@@ -10,7 +10,7 @@ public class Tile_Oca : Tile_Profile
     {
         yield return base.OnPlayerLanded();
 
-        for (int i = Tile.indexInBoard + 1; i < BoardController.TilesList.Count; i++)
+        for (int i = _Tile.indexInBoard + 1; i < BoardController.TilesList.Count; i++)
         {
             if (base.BoardController.TilesList[i]._Profile is Tile_Oca)
             {

@@ -11,7 +11,7 @@ public class Tile_Creatine : Tile_Profile
     public override float AddBaseDamage(float addedDamage)
     {
         float totalAddedDamage = addedDamage * multiplieValue;
-        Tile.SetBaseDamage(BaseDamage + totalAddedDamage);
+        _Tile.SetBaseDamage(BaseDamage + totalAddedDamage);
         return totalAddedDamage;
     }
     public override string GetTooltipText() { return $"{OnAddedDamage} Multiply x{multiplieValue} the added amount"; }

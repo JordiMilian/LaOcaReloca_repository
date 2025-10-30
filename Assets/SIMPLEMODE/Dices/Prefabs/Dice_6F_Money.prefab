@@ -108,7 +108,7 @@ MonoBehaviour:
     faceTransform: {fileID: 3695149948940717315}
   isSelectedForRoll: 0
   rb: {fileID: 99333886605187821}
-  PriceInShop: 3
+  PriceInShop: 2
   canBeDragged: 1
   heightWhileDragged: 1
   RollDicePos_Radius: 2

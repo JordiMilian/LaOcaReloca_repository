@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseDamage: 15
   Title: OCA
-  tileColor: {r: 0.7735849, g: 0.37803486, b: 0.661234, a: 1}
-  tileTexture: {fileID: 2800000, guid: 83dcb6b644a49fa4f9091587466e759e, type: 3}
+  tileColor: {r: 0.79607844, g: 0.14901961, b: 0.48235294, a: 1}
+  tileTexture: {fileID: 2800000, guid: cb32741a80bb20b47af412978791aa2b, type: 3}
   rarity: 4
   uniquePrice: 3
   tileTag: 2
-  Tile: {fileID: 0}
+  _Tile: {fileID: 0}

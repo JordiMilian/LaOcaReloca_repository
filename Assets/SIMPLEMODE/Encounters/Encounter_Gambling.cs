@@ -108,4 +108,8 @@ public class Encounter_Gambling : MonoBehaviour, IEncounter, ITooltip
     {
         return "GAMBLE ENCOUNTER";
     }
+    public Texture GetTooltipTexture()
+    {
+        return null;
+    }
 }

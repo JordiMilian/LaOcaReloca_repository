@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseDamage: 10
   Title: PIRATE
-  tileColor: {r: 0.7584905, g: 0.5414943, b: 0.1703025, a: 1}
+  tileColor: {r: 1, g: 0.8591023, b: 0.24056602, a: 1}
   tileTexture: {fileID: 2800000, guid: 20a26c1da9cee7d469d3c7c15e08eebd, type: 3}
   rarity: 1
   uniquePrice: 0
   tileTag: 0
-  Tile: {fileID: 0}
+  _Tile: {fileID: 0}
   moneyOnLanded: 2

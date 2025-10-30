@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseDamage: 10
   Title: MR BEAST
-  tileColor: {r: 0.754717, g: 0.7030776, b: 0.52331793, a: 1}
+  tileColor: {r: 0.5176471, g: 0.6117647, b: 0.63529414, a: 1}
+  tileTexture: {fileID: 2800000, guid: 836065718c5e4b24fb4414f013edd99e, type: 3}
   rarity: 2
   uniquePrice: 0
   tileTag: 0
-  Tile: {fileID: 0}
+  _Tile: {fileID: 0}
   addedDamageToEmptyTiles: 10

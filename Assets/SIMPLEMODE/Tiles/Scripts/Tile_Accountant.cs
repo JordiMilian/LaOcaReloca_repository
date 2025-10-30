@@ -7,13 +7,13 @@ public class Tile_Accountant : Tile_Profile
     [SerializeField] int damagePerIndex = 1;
     public override IEnumerator OnPlayerStepped()
     {
-        Tile.DamagesToDeal.Add(BoardController.TilesList.Count * damagePerIndex);
+        _Tile.DamagesToDeal.Add(BoardController.TilesList.Count * damagePerIndex);
         yield return base.OnPlayerStepped();
     }
     public override IEnumerator OnPlayerLanded()
     {
         damagePerIndex++;
-        Tile.DamagesToDeal.Add(BoardController.TilesList.Count);
+        _Tile.DamagesToDeal.Add(BoardController.TilesList.Count);
         yield return base.OnPlayerLanded();
     }
 
