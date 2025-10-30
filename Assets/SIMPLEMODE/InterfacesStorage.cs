@@ -39,7 +39,7 @@ public enum Rarity
 }
 public enum TileTags
 {
-    NoTag, EmptyTile, Oca
+    NoTag, Empty, Oca
 }
 public enum TileMessageType
 {

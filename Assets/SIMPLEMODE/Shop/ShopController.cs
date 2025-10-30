@@ -67,7 +67,7 @@ public class ShopController : MonoBehaviour
             item.ResetShopItem();
         }
     }
-    public GameObject getRandomBuyable()
+    public GameObject GetRandomBuyableGO()
     {
         return AllBuyables[UnityEngine.Random.Range(0, AllBuyables.Count)];
     }

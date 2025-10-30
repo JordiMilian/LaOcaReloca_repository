@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6783d8d6762e8c340a9401d15a6685ef, type: 3}
+  m_Name: Tile_JealousOca
+  m_EditorClassIdentifier: 
+  BaseDamage: 12
+  Title: JEALOUS OCA
+  tileColor: {r: 0.5056471, g: 0.41651833, b: 0.754717, a: 1}
+  rarity: 2
+  uniquePrice: 0
+  tileTag: 2
+  Tile: {fileID: 0}

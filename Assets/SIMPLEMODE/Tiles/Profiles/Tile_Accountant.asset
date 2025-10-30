@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 046e3a93e1c020749b3f3d4bc7eb3fc1, type: 3}
+  m_Name: Tile_Accountant
+  m_EditorClassIdentifier: 
+  BaseDamage: 5
+  Title: ACCOUNTANT
+  tileColor: {r: 0.5731132, g: 0.6005311, b: 0.764151, a: 1}
+  tileTexture: {fileID: 2800000, guid: d7e9878e90d595a43a5f374e34275f35, type: 3}
+  rarity: 1
+  uniquePrice: 0
+  tileTag: 0
+  Tile: {fileID: 0}
+  damagePerIndex: 1

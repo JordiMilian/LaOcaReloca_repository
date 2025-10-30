@@ -24,6 +24,7 @@ public class GameController_Simple : MonoBehaviour
     public CardEffectsDelegate OnRolledDice_CardEffects = new();
     public CardEffectsDelegate OnKilledEnemy_CardEffects = new();
     public CardEffectsDelegate OnReachedEndTile_CardEffects = new();
+    public CardEffectsDelegate OnLanded_CardEffects = new(); //Any card effect that triggers when landing on another tile. The regular Onlanded effect of all cards is not concerned with this
 
     public static GameController_Simple Instance;
     private void Awake()
@@ -174,6 +175,8 @@ public class GameController_Simple : MonoBehaviour
         }
         StepSound.pitch = basePitch;
 
+        yield return OnLanded_CardEffects.C_ActivateEffects();
+
         yield return BoardController.L_LandPlayerInCurrentPos();
 
         yield return DealTotalDamage();
@@ -211,7 +214,7 @@ public class GameController_Simple : MonoBehaviour
             currentEncounterObject = null;
         }
         currentEncounterIndex++;
-        currentEncounterObject = Instantiate(EncountersPrefabs[currentEncounterIndex], transform);
+        currentEncounterObject = Instantiate(EncountersPrefabs[currentEncounterIndex], transform.position,Quaternion.identity,transform);
         currentEncounter = currentEncounterObject.GetComponent<IEncounter>();
 
         //Cutre cutre pls refactor
@@ -291,7 +294,7 @@ public class GameController_Simple : MonoBehaviour
     #region DAMAGE
     [Header("Enemy HP")]
     [SerializeField] float AcumulatedDamage;
-    [SerializeField] float AcumulatedMultiplier;
+
     [SerializeField] float Enemy_MaxHP;
     [SerializeField] float Enemy_CurrentHP;
     [SerializeField] TextMeshProUGUI TMP_AcumulatedDamage;
@@ -307,30 +310,18 @@ public class GameController_Simple : MonoBehaviour
         TMP_AcumulatedDamage.rectTransform.DOShakeRotation(shakeDuration, 30);
         yield return new WaitForSeconds(shakeDuration);
     }
-    public IEnumerator Co_AddAcumulatedMultiplier(float amount) //For now lets not use this, maybe delete later
-    {
-        if (Mathf.Approximately(amount, 0)) { yield break; }
-
-        AcumulatedMultiplier += amount;
-        UpdateAcumulatedDamageDisplay();
-
-        const float shakeDuration = .15f;
-        TMP_AcumulatedDamage.rectTransform.DOShakeRotation(shakeDuration, 30);
-        yield return new WaitForSeconds(shakeDuration);
-    }
     public float GetCurrentAcumulatedDamage() { return AcumulatedDamage; }
-    IEnumerator DealTotalDamage()
+    IEnumerator DealTotalDamage() //sdfsdf
     {
-        float totalDamage = AcumulatedDamage * AcumulatedMultiplier;
+        float totalDamage = AcumulatedDamage;
         Enemy_CurrentHP -= totalDamage;
         Enemy_CurrentHP = Mathf.Clamp(Enemy_CurrentHP, 0, Enemy_MaxHP);
         AcumulatedDamage = 0;
-        AcumulatedMultiplier = 1;
 
-        TMP_AcumulatedDamage.text = $"<color=purple>{MathJ.FloatToString(totalDamage, 1)}";
+        TMP_AcumulatedDamage.text = $"<color=red>{MathJ.FloatToString(totalDamage, 1)}";
         UpdateEnemyHPBar();
 
-        float shakeDuration = .5f;
+        float shakeDuration = .5f ;
         Sequence shakeSequence = DOTween.Sequence();
 
         shakeSequence.Append(TMP_AcumulatedDamage.rectTransform.DOShakeRotation(shakeDuration, 30));
@@ -348,7 +339,7 @@ public class GameController_Simple : MonoBehaviour
     void UpdateAcumulatedDamageDisplay()
     {
         
-        TMP_AcumulatedDamage.text = $"<color=blue>{MathJ.FloatToString(AcumulatedDamage, 1)}<color=white> x <color=red>{MathJ.FloatToString(AcumulatedMultiplier,1)}";
+        TMP_AcumulatedDamage.text = $"<color=white>{MathJ.FloatToString(AcumulatedDamage, 1)}";
     }
     void UpdateEnemyHPBar()
     {

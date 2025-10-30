@@ -15,6 +15,7 @@ MonoBehaviour:
   BaseDamage: 10
   Title: CHEF
   tileColor: {r: 0.44571728, g: 0.6744335, b: 0.87169814, a: 1}
+  tileTexture: {fileID: 2800000, guid: 1f001a25c98ac3e4696767aabe89aa51, type: 3}
   rarity: 2
   uniquePrice: 0
   tileTag: 0

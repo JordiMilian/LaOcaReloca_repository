@@ -19,5 +19,5 @@ MonoBehaviour:
   uniquePrice: 0
   tileTag: 2
   Tile: {fileID: 0}
-  damagePerOca: 1
-  addedDamageAtOcas: 10
+  damagePerOca: 5
+  addedDamageAtOcas: 25

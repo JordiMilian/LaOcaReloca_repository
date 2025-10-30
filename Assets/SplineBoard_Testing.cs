@@ -14,6 +14,7 @@ public struct TileTfData
     //2----0
     public List<Vector3> cornersInWorld;
     public List<Vector3> cornersInLocal;
+    public List<Vector3> cornersInLocalWithoutRotation;
     public Vector3 forward, up, right;
     public Quaternion rotation;
     public TileTfData(Transform tf)
@@ -21,6 +22,7 @@ public struct TileTfData
         origin = tf.position;
         center = tf.position;
         cornersInLocal = new List<Vector3> { Vector3.right, Vector3.forward, Vector3.back, Vector3.left };
+        cornersInLocalWithoutRotation = cornersInLocal;
         cornersInWorld = new List<Vector3>
         {   tf.position + Vector3.right,
             tf.position + Vector3.forward,

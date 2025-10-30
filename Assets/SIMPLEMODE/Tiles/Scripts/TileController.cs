@@ -28,25 +28,25 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     [SerializeField] MeshFilter meshFilter;
     [SerializeField] MeshCollider meshCollider;
     public TileTfData TfData { get; private set; }
-    bool isDataSet = false; //For gizmo drawing pls kill
     public void SetOriginTfData(TileTfData tileData)
     {
         TfData = tileData;
-        isDataSet = true;
     }
     public void SetToTfData()
     {
         transform.position = TfData.center;
-        transform.rotation = TfData.rotation;
+        //transform.rotation = TfData.rotation;
 
-        zeroRotationTf.localRotation = Quaternion.Inverse(TfData.rotation);
+        //zeroRotationTf.localRotation = Quaternion.Inverse(TfData.rotation);
 
         Mesh mesh = meshFilter.mesh;
-        mesh.SetVertices(TfData.cornersInLocal);
+        mesh.SetVertices(TfData.cornersInLocalWithoutRotation);
         mesh.RecalculateBounds();
         mesh.RecalculateNormals();
 
         meshCollider.sharedMesh = meshFilter.mesh;
+
+        RecalculateTextureScaling();
     }
     public void MoveToTfData()
     {
@@ -58,6 +58,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
             const float movingTime = .5f;
             transform.DOMove(TfData.center, movingTime).SetEase(Ease.OutBack);
 
+            RecalculateTextureScaling();
             while (timer < movingTime)
             {
                 timer += Time.deltaTime;
@@ -65,30 +66,71 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
                 List<Vector3> newVerts = new();
                 for (int i = 0; i < meshFilter.mesh.vertexCount; i++)
                 {
-                    Vector3 targetPos = TfData.cornersInLocal[i];
+                    Vector3 targetPos = TfData.cornersInLocalWithoutRotation[i];
                     Vector3 currentPos = meshFilter.mesh.vertices[i];
                     Vector3 lerpedPos = Vector3.Lerp(currentPos, targetPos, timer / movingTime);
                     newVerts.Add(lerpedPos);
                 }
                 meshFilter.mesh.SetVertices(newVerts);
+                
 
-                Quaternion targetRot = TfData.rotation;
-                Quaternion currentRot = transform.rotation;
-                Quaternion lerpedRot = Quaternion.Lerp(currentRot, targetRot, timer / movingTime);
-                zeroRotationTf.localRotation = Quaternion.Inverse(lerpedRot);
-                transform.rotation = lerpedRot;
+                //Rotation
+                //Quaternion targetRot = TfData.rotation;
+                //Quaternion currentRot = transform.rotation;
+                //Quaternion lerpedRot = Quaternion.Lerp(currentRot, targetRot, timer / movingTime);
+                //zeroRotationTf.localRotation = Quaternion.Inverse(lerpedRot);
+                //transform.rotation = lerpedRot;
                 yield return null;
             }
 
             SetToTfData();
         }
     }
+
+    void RecalculateTextureScaling()
+    {
+        Vector3 furthestVertex = Vector2.zero;
+        float furthestDistance = 0;
+        foreach(Vector3 point in TfData.cornersInLocalWithoutRotation)
+        {
+            float distance = point.sqrMagnitude;
+            if (distance > furthestDistance)
+            {
+                furthestDistance = distance;
+                furthestVertex = point;
+            }
+            Debug.DrawLine(TfData.center, TfData.center + point, Color.white, 2);
+        }
+
+        float t = MathJ.GetSquare1Intersection(furthestVertex);
+        tileMaterial.SetFloat("_uvsMultiplier", t);
+        Debug.DrawLine(TfData.center, TfData.center + furthestVertex * t,Color.red, 2);
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Vector3[] squarePos = new Vector3[]
+        {
+            new Vector3(.5f,0,.5f),
+            new Vector3(.5f,0,-.5f),
+            new Vector3(-.5f,0,-.5f),
+            new Vector3(-.5f,0,.5f)
+        };
+        Gizmos.DrawLine(TfData.center + squarePos[0], TfData.center + squarePos[1]);
+        Gizmos.DrawLine(TfData.center + squarePos[1], TfData.center + squarePos[2]);
+        Gizmos.DrawLine(TfData.center + squarePos[2], TfData.center + squarePos[3]);
+        Gizmos.DrawLine(TfData.center + squarePos[3], TfData.center + squarePos[0]);
+    }
     #endregion
     public void SetTileProfile(Tile_Profile profile)
     {
         _Profile = Instantiate(profile);
         _Profile.Tile = this;
-        tileMaterial.SetColor("_Color", _Profile.tileColor);
+        tileMaterial.SetColor("_OutlineColor", _Profile.tileColor);
+        if(_Profile.tileTexture != null)
+        {
+            tileMaterial.SetTexture("_mainTexture", _Profile.tileTexture);
+        }
         tileMovement.UpdateDmgDisplayText();
         _Profile.Initialize();
     }

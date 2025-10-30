@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d890b512efada2c4db20567c4bad2c5f, type: 3}
+  m_Name: Tile_MrBeast
+  m_EditorClassIdentifier: 
+  BaseDamage: 10
+  Title: MR BEAST
+  tileColor: {r: 0.754717, g: 0.7030776, b: 0.52331793, a: 1}
+  rarity: 2
+  uniquePrice: 0
+  tileTag: 0
+  Tile: {fileID: 0}
+  addedDamageToEmptyTiles: 10

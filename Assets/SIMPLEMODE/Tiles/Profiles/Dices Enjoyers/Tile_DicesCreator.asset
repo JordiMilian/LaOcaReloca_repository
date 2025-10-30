@@ -15,6 +15,7 @@ MonoBehaviour:
   BaseDamage: 12
   Title: DICES CREATOR
   tileColor: {r: 0.75764096, g: 1, b: 0.4584905, a: 1}
+  tileTexture: {fileID: 2800000, guid: 41bcbfc2cdc6a194fad132717d27aff9, type: 3}
   rarity: 2
   uniquePrice: 0
   tileTag: 0

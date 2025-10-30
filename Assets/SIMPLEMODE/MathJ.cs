@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class MathJ 
@@ -103,6 +105,30 @@ public static class MathJ
         }
         return tilesWithTag;
     }
+    public static List<TileController> GetAdjacentTiles(TileController thisTile, int depth = 1, bool ignoreEnd = false, bool ignoreStart = true)
+    {
+        Board_Controller_simple board = Board_Controller_simple.Instance;
+        List<TileController> adjacentTiles = new();
+        for(int i = 0; i< depth; i++)
+        {
+            int positiveIndex = thisTile.indexInBoard + i + 1;
+            int negativeIndex = thisTile.indexInBoard -(i + 1);
+            
+            if (positiveIndex < board.TilesList.Count)
+            {
+                if(positiveIndex == board.TilesList.Count -1 && ignoreEnd == false) { adjacentTiles.Add(board.TilesList[positiveIndex]); }
+                else { adjacentTiles.Add(board.TilesList[positiveIndex]); }
+
+            }
+            if(negativeIndex >= 0)
+            {
+                if(negativeIndex == 0 && ignoreStart == false) { adjacentTiles.Add(board.TilesList[negativeIndex]); }
+                else { adjacentTiles.Add(board.TilesList[negativeIndex]); }
+            }
+        }
+        return adjacentTiles;
+    }
+    #region DEPRECATED
     public static List<TileController> GetTilesAround(TileController thisTile, bool ignoreSelf)
     {
         Board_Controller_simple board = Board_Controller_simple.Instance;
@@ -178,6 +204,7 @@ public static class MathJ
         return tilesInAxis;
     }
     #endregion
+    #endregion
 
     //this functions works with Vector3 but works as If it was Vector2, meaning  (A,0,B) => (A,B). It doesnt consider Y
     public static Vector3 worldToLocal2D(Vector3 world, Vector3 pos, Vector3 right, Vector3 forward)
@@ -186,5 +213,32 @@ public static class MathJ
         float x = Vector3.Dot(posToWorld, right);
         float z = Vector3.Dot(posToWorld, forward);
         return new Vector3(x, 0, z);
+    }
+
+    //Roll dice method
+
+
+    //t es un valor de 0-1 pel que multipliquem el vector v per trobar la interseccio. Ho fem amb X i Y per separat per veure quin dels dos dona menor resultat
+    //t*vx = 0.5 => t = 0.5/vx
+    public static float GetSquare1Intersection(Vector3 v)
+    {
+        if(Mathf.Approximately(v.sqrMagnitude, 0)) { return 0; }
+
+        float targetX = .5f * Mathf.Sign(v.x);
+        float targetZ = .5f * Mathf.Sign(v.z);
+
+        if (Mathf.Approximately(v.x, 0))
+        {
+            return targetZ / v.z;
+        }
+        if (Mathf.Approximately(v.z, 0))
+        {
+            return targetX / v.x;
+        }
+
+        float tx = targetX / v.x;
+        float tz = targetZ / v.z;
+
+        return Mathf.Min(tx, tz);
     }
 }

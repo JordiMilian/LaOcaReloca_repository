@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "TileProfile/EmptySynergy/MrBeast", fileName = "Tile_MrBeast")]
 public class Tile_MrBeast : Tile_Profile
 {
     [SerializeField] int addedDamageToEmptyTiles = 2;
@@ -11,7 +12,7 @@ public class Tile_MrBeast : Tile_Profile
     {
         foreach(TileController tile in BoardController.TilesList)
         {
-            if(tile._Profile.tileTag == TileTags.EmptyTile)
+            if(tile._Profile.tileTag == TileTags.Empty)
             {
                 tile.AddBaseDamage(addedDamageToEmptyTiles);
                 yield return new WaitForSeconds(0.1f);
@@ -21,7 +22,7 @@ public class Tile_MrBeast : Tile_Profile
     }
     public override IEnumerator OnPlayerStepped()
     {
-        TileController randomEmpty = MathJ.GetRandomTileInBoardWithTag(TileTags.EmptyTile, Tile, true);
+        TileController randomEmpty = MathJ.GetRandomTileInBoardWithTag(TileTags.Empty, Tile, true);
 
         if(randomEmpty != null)
         {

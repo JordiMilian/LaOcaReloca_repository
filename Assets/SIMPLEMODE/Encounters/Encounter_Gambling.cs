@@ -9,10 +9,11 @@ public class Encounter_Gambling : MonoBehaviour, IEncounter, ITooltip
     [SerializeField] GameObject CanvasRoot;
     [SerializeField] GameObject DicePrefab;
     [SerializeField] Button button_AddBet;
-    [SerializeField] PlayableDirector timeline_Enter, timeline_Exit;
+    [SerializeField] PlayableDirector timeline_Enter, timeline_HideLost, timeline_HideWin;
     Dice dice;
     GameObject diceGO;
     int currentBet;
+    bool hasWon = false;
     public IEnumerator OnEncounterEnter()
     {
         CanvasRoot.SetActive(false);
@@ -62,10 +63,11 @@ public class Encounter_Gambling : MonoBehaviour, IEncounter, ITooltip
             if(dice.FaceUpValue > 3)
             {
                 GameController_Simple.Instance.AddMoney(currentBet * 2);
+                hasWon = true;
             }
             else
             {
-                Debug.Log("Failed bet");
+                hasWon = false;
             }
 
             yield return new WaitForSeconds(.5f);
@@ -84,11 +86,17 @@ public class Encounter_Gambling : MonoBehaviour, IEncounter, ITooltip
 
         CamerasManager cameras = CamerasManager.instance;
 
-        timeline_Exit.Play();
-        yield return new WaitForSeconds((float)timeline_Exit.duration);
-        cameras.SetCameraPriority("CinemachineCamera_Goose", 0);
-
-        yield break;    
+        if(hasWon)
+        {
+            timeline_HideWin.Play();
+            yield return new WaitForSeconds((float)timeline_HideWin.duration);
+        }
+        else
+        {
+            timeline_HideLost.Play();
+            yield return new WaitForSeconds((float)timeline_HideLost.duration);
+        }
+        cameras.SetCameraPriority("CinemachineCamera_Goose", 0);    
     }
 
     public string GetTooltipDescription()

@@ -6,13 +6,6 @@ using UnityEngine.Events;
 using UnityEngine.Splines;
 using UnityEditor.Rendering;
 
-public struct transformData
-{
-    public Vector3 position;
-    public Quaternion rotation;
-    public Vector3 scale;
-    public Vector2Int vector;
-}
 public class Board_Controller_simple : MonoBehaviour
 {
     [SerializeField] Tile_Profile Tile_Empty, Tile_Start, Tile_End, Tile_Oca;
@@ -182,6 +175,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         }
         totalT = 0;
+
         //Get the basic info In and add the corners 
         for (int i = 0; i < tilesAmount; i++)
         {
@@ -210,6 +204,7 @@ public class Board_Controller_simple : MonoBehaviour
 
             newTileInfo.cornersInWorld = new();
             newTileInfo.cornersInLocal = new();
+            newTileInfo.cornersInLocalWithoutRotation = new();
             for (int j = 0; j < 4; j++)
             {
                 //The order of the mesh vertices is:
@@ -241,17 +236,48 @@ public class Board_Controller_simple : MonoBehaviour
                     newTileInfo.forward);
 
                 newTileInfo.cornersInLocal.Add(localPos);
+
+                newTileInfo.cornersInLocalWithoutRotation.Add(sortedWorldPos - newTileInfo.center);
             }
+            //newTileInfo.cornersInLocalWithoutRotation = sortVertexByLowest(newTileInfo.cornersInLocalWithoutRotation);
             totalT += thisT;
             tempList.Add(newTileInfo);
         }
         return tempList;
-        Debug.Log(TfData.Count);
+
         //
         float GetTWithLenght(float lenght)
         {
             float totalLenght = spline.CalculateLength();
             return Mathf.InverseLerp(0, totalLenght, lenght);
+        }
+
+        //Doesn't really work something is wrong i no tinc ganes de arreglarho
+        List<Vector3> sortVertexByLowest(List<Vector3> list)
+        {
+            float AToB = (list[0].z + list[1].z) / 2;
+            float BToC = (list[1].z + list[2].z) / 2;
+            float CToD = (list[2].z + list[3].z) / 2;
+            float DToA = (list[3].z + list[0].z) / 2;
+            float[] centers = new float[] { AToB, BToC, CToD, DToA };
+            int lowestIndex = -1;
+            float lowestValue = float.MaxValue;
+            for (int i = 0; i < centers.Length; i++)
+            {
+                if (centers[i] < lowestValue)
+                {
+                    lowestValue = centers[i];
+                    lowestIndex = i;
+                }
+            }
+            return rotateList(list, lowestIndex);
+        }
+        List<Vector3> rotateList(List<Vector3> list, int startIndex)
+        {
+            List<Vector3> rotated = new();
+            rotated.AddRange(list.GetRange(startIndex, list.Count - startIndex));
+            rotated.AddRange(list.GetRange(0, startIndex));
+            return rotated;
         }
     }
     public void UpdateStructData()

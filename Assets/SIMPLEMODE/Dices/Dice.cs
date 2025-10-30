@@ -4,6 +4,7 @@ using System;
 using UnityEngine.EventSystems;
 using System.Collections;
 using UnityEngine.Events;
+using DG.Tweening;
 public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, IBuyable, ITooltip, IPointerEnterHandler, IPointerExitHandler
 {
     public int FaceUpValue;

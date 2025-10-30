@@ -6,6 +6,7 @@ public class Tile_Profile : ScriptableObject
     public float BaseDamage = 10;
     public string Title = "NO TITLE";
     public Color tileColor = Color.gray;
+    public Texture tileTexture;
     [HideInInspector] public Rarity rarity = Rarity.none;
     [HideInInspector] public int uniquePrice = 0; //IF rarity is Unique, use this value.
     public TileTags tileTag;
@@ -42,6 +43,7 @@ public class Tile_Profile : ScriptableObject
     protected const string OnReachedEnd = "<b>- ON REACHED END TILE:</b>";
     protected const string OnReached = "<b>- ON REACHED:</b>";
     protected const string OnAddedDamage = "<b>- ON ADDED DAMAGE TO THIS TILE:</b>";
+    protected string OnLandedOnTag(TileTags tag) { return $"<b>- ON LANDED ON AN {tag.ToString().ToUpper()} TILE:</b>"; }
     #endregion
 
     #region DAMAGE MODIFIERS 

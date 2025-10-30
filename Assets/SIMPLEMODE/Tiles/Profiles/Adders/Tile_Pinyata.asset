@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80918863fb5ad647a2299dcac70d630, type: 3}
+  m_Name: Tile_Pinyata
+  m_EditorClassIdentifier: 
+  BaseDamage: 5
+  Title: PINYATA
+  tileColor: {r: 0.8962264, g: 0.48435774, b: 0.38470095, a: 1}
+  tileTexture: {fileID: 2800000, guid: 7dcbd6fa280c9274780a9ad1164cbdb6, type: 3}
+  rarity: 1
+  uniquePrice: 0
+  tileTag: 0
+  Tile: {fileID: 0}
+  adjacentDepth: 2
+  addedDmg: 5
+  addedDmgOnlanded: 5

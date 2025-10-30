@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7597778e1477074aa41b7d65645b5d2, type: 3}
+  m_Name: Tile_Trebol
+  m_EditorClassIdentifier: 
+  BaseDamage: 20
+  Title: TREBOL
+  tileColor: {r: 0.7075472, g: 0.70550746, b: 0.23028658, a: 1}
+  tileTexture: {fileID: 2800000, guid: 8ab1f897f7472044ba9788a5ac90a17a, type: 3}
+  rarity: 2
+  uniquePrice: 0
+  tileTag: 0
+  Tile: {fileID: 0}
+  moneyOnLandedOnEmpty: 3

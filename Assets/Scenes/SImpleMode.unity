@@ -899,8 +899,8 @@ Transform:
   m_GameObject: {fileID: 219119803}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.7203, y: 0, z: -0.02}
-  m_LocalScale: {x: 16.403305, y: 0.31726742, z: 12.814537}
+  m_LocalPosition: {x: -0.1906, y: 0, z: -0.02}
+  m_LocalScale: {x: 17.463366, y: 0.31726742, z: 12.814537}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 272637556}
@@ -1866,6 +1866,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 503ec199befa82645a8c8370c23ab291, type: 2}
   - {fileID: 11400000, guid: d079e72c8f96fde4abf394c594bc9fa6, type: 2}
   - {fileID: 11400000, guid: d1879b766da214340a9f0f752fd2ed0b, type: 2}
+  - {fileID: 11400000, guid: b5d6fbc836321e648b390c6cb5abc742, type: 2}
+  - {fileID: 11400000, guid: 0c2769ed4ea47ad46ae8c18189439914, type: 2}
+  - {fileID: 11400000, guid: 539488036e63b1f4ab925b3a1340c636, type: 2}
+  - {fileID: 11400000, guid: 9f3c3952484c8bd498122cc939029d84, type: 2}
+  - {fileID: 11400000, guid: 09d1b94c3f409a94da0ed2fe62f76dc3, type: 2}
+  - {fileID: 11400000, guid: f9a071a72f324264289f8e11e90b5b0e, type: 2}
+  - {fileID: 11400000, guid: 7995ec5d3bc48b448b725dab96cdcdd5, type: 2}
+  - {fileID: 11400000, guid: 366b679aec72be7448729be482814b8e, type: 2}
 --- !u!4 &400194873
 Transform:
   m_ObjectHideFlags: 0
@@ -2237,7 +2245,7 @@ MonoBehaviour:
   factory: {fileID: 400194872}
   TilesList: []
   PlayerPrefab: {fileID: 1266550042}
-  StartingTilesCount: 27
+  StartingTilesCount: 15
   TimeToCreateBoard: 0.52
   OnPlayerMoved:
     m_PersistentCalls:
@@ -2891,13 +2899,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: other
-  folderName: TestFolder
-  title: TEST
-  color: {r: 0.17974368, g: 0.509434, b: 0.2626382, a: 1}
-  baseDamage: 11
+  assetName: MigrantOca
+  folderName: Ocas
+  title: MIGRANT OCA
+  color: {r: 0.3814844, g: 0.17661981, b: 0.764151, a: 1}
+  baseDamage: 10
   rarity: 1
-  tag: 0
+  tag: 2
   factory: {fileID: 400194872}
 --- !u!1 &566852619
 GameObject:
@@ -6412,7 +6420,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Reroll - 5$
+  m_text: Reroll
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6657,7 +6665,7 @@ Transform:
   m_GameObject: {fileID: 1660438488}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.25, y: 0, z: 1.05}
+  m_LocalPosition: {x: 6.1, y: 0, z: 1.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6674,45 +6682,49 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3242063469851346974, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: b6a9b48796491a14d801a5bec6166902, type: 3}
     - target: {fileID: 6579358890262794748, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.68
+      value: -10.07
       objectReference: {fileID: 0}
     - target: {fileID: 6579358890262794748, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.776
+      value: 0.81
       objectReference: {fileID: 0}
     - target: {fileID: 6579358890262794748, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.4368978
+      value: 1.28
       objectReference: {fileID: 0}
     - target: {fileID: 6579358890262794748, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7009793
       objectReference: {fileID: 0}
     - target: {fileID: 6579358890262794748, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.7131804
       objectReference: {fileID: 0}
     - target: {fileID: 6579358890262794748, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.00094965607
       objectReference: {fileID: 0}
     - target: {fileID: 6579358890262794748, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.0009058383
       objectReference: {fileID: 0}
     - target: {fileID: 6579358890262794748, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 91
       objectReference: {fileID: 0}
     - target: {fileID: 6579358890262794748, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 8.645004
       objectReference: {fileID: 0}
     - target: {fileID: 6579358890262794748, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 8.649002
       objectReference: {fileID: 0}
     - target: {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
       propertyPath: m_Name
@@ -6878,16 +6890,15 @@ MonoBehaviour:
   - {fileID: 3768023283977433165, guid: f0c530ebdba95df4a920f149e158b135, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
-  - {fileID: 3768023283977433165, guid: 709f3b0af1a608747937a6059a839aa3, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 3768023283977433165, guid: 860536b0550a4f94e99ba5484f66765f, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  - {fileID: 3768023283977433165, guid: 709f3b0af1a608747937a6059a839aa3, type: 3}
   EnemyEncountersHP: 64000000c80000009001000058020000e803000078050000d0070000280a0000ac0d0000
   AcumulatedDamage: 0
-  AcumulatedMultiplier: 1
   Enemy_MaxHP: 100
   Enemy_CurrentHP: 100
   TMP_AcumulatedDamage: {fileID: 977100660}
@@ -7222,6 +7233,9 @@ MonoBehaviour:
   - {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
   - {fileID: 1547170513799009516, guid: 7ec2b73cc20355a4e9572735718b9fa1, type: 3}
   - {fileID: 1547170513799009516, guid: db55b00471a63b442a73e88152ba911d, type: 3}
+  - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
+  - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
+  - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
   - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
   - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
   - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}

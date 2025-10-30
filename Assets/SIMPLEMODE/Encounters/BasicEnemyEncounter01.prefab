@@ -79,7 +79,7 @@ Transform:
   m_GameObject: {fileID: 1171114016272086680}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.32, z: 11.16}
+  m_LocalPosition: {x: 0, y: -23.24, z: 11.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -245,7 +245,7 @@ MonoBehaviour:
   cutscene_SpawnEnemy: {fileID: 5605596926375504412}
   cutscene_KilledEnemy: {fileID: 7456175356226893891}
   MaxHp: 100
-  MoneyReward: 15
+  MoneyReward: 20
 --- !u!1 &5486222231234530492
 GameObject:
   m_ObjectHideFlags: 0
