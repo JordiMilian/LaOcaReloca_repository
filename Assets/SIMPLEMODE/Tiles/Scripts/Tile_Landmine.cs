@@ -8,7 +8,6 @@ public class Tile_Landmine : Tile_Profile
     {
         return $"{OnCrossed} Destroy the Tile forward and this Tile";
     }
-
     public override IEnumerator OnPlayerStepped()
     {
         yield return base.OnPlayerStepped();

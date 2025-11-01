@@ -15,6 +15,7 @@ public class Tile_Profile : ScriptableObject
     [Space(5)]
     protected Board_Controller_simple BoardController;
     protected GameController_Simple GameController;
+    public bool isMicroTile = false;
     
     public void Initialize()
     {
@@ -27,14 +28,19 @@ public class Tile_Profile : ScriptableObject
         _Tile.DamagesToDeal.Add(BaseDamage);
         _Tile.DamagesToDeal.Reverse();
 
-        if (GameController_Simple.Instance.remainingStepsToTake != 1) { yield return _Tile.C_DealAllDamageToDeal(); }
+        yield return GameController.OnCrossed_CardEffects.C_ActivateEffects();
+
+        if (isMicroTile ||  GameController_Simple.Instance.remainingStepsToTake != 1)//if it's the last tile to step before landing, we don't deal the damage because it will be dealt all toghere on landing
+        {
+            yield return _Tile.C_DealAllDamageToDeal(); 
+        }
     }
     public virtual IEnumerator OnPlayerLanded() 
     {
         yield return _Tile.C_DealAllDamageToDeal();
     }
     public virtual void OnPlacedInBoard() { }
-    public virtual void OnRemovedFromBoard() { }
+    public virtual void OnRemovedFromBoard() {}
     public virtual string GetTooltipText() { return "NO DESCRIPTION FOUND"; }
     #region TOOLTIP INTRO
     protected const string OnCrossed = "<b>- ON CROSSED:</b>";
@@ -44,6 +50,7 @@ public class Tile_Profile : ScriptableObject
     protected const string OnReached = "<b>- ON REACHED:</b>";
     protected const string OnAddedDamage = "<b>- ON ADDED DAMAGE TO THIS TILE:</b>";
     protected string OnLandedOnTag(TileTags tag) { return $"<b>- ON LANDED ON AN {tag.ToString().ToUpper()} TILE:</b>"; }
+    protected string OnCrossedOnTag(TileTags tag) { return $"<b>- ON CROSSED A {tag.ToString().ToUpper()} TILE:</b>"; }
     #endregion
 
     #region DAMAGE MODIFIERS 

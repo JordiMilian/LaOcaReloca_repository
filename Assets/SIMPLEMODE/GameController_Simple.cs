@@ -25,6 +25,7 @@ public class GameController_Simple : MonoBehaviour
     public CardEffectsDelegate OnKilledEnemy_CardEffects = new();
     public CardEffectsDelegate OnReachedEndTile_CardEffects = new();
     public CardEffectsDelegate OnLanded_CardEffects = new(); //Any card effect that triggers when landing on another tile. The regular Onlanded effect of all cards is not concerned with this
+    public CardEffectsDelegate OnCrossed_CardEffects = new();
 
     public static GameController_Simple Instance;
     private void Awake()
@@ -135,7 +136,7 @@ public class GameController_Simple : MonoBehaviour
             ChangeGameState(GameState.FreeMode);
             yield break;
         }
-        RemoveMoney(MoneyToRoll);
+        SetRemainingRolls(RollsRemaining-1);
         yield return dicesController.RollDicesCoroutine();
 
         ChangeGameState(GameState.MovingPlayer);
@@ -151,7 +152,7 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] AudioSource StepSound;
     [SerializeField] float addPitchPerStep;
     [Header("Money to Roll")]
-    public int MoneyToRoll = 1;
+    public int MoneyToRoll = 0;
     
     IEnumerator C_MovingPlayer()
     {
@@ -159,21 +160,12 @@ public class GameController_Simple : MonoBehaviour
 
         yield return OnRolledDice_CardEffects.C_ActivateEffects();
 
-        float basePitch = StepSound.pitch;
-
         while (remainingStepsToTake > 0)
         {
-            StepSound.pitch += addPitchPerStep;
-            StepSound.Play();
-            yield return BoardController.L_StepPlayer(true);
+            yield return BoardController.L_StepPlayer();
             remainingStepsToTake--;
+
         }
-        while (remainingStepsToTake < 0)
-        {
-            yield return BoardController.L_StepPlayer(false);
-            remainingStepsToTake++;
-        }
-        StepSound.pitch = basePitch;
 
         yield return OnLanded_CardEffects.C_ActivateEffects();
 
@@ -181,7 +173,9 @@ public class GameController_Simple : MonoBehaviour
 
         yield return DealTotalDamage();
 
-        ChangeGameState(GameState.FreeMode);
+        if(RollsRemaining <= 0) { ChangeGameState(GameState.PlayerDied); }
+        else { ChangeGameState(GameState.FreeMode); }
+           
     }
     public void ChangeStateToRollingDice()
     {
@@ -366,18 +360,28 @@ public class GameController_Simple : MonoBehaviour
         if (currentMoney < 0) { currentMoney = 0; }
         UpdateMoneyUI();
         OnMoneyUpdated.Invoke(currentMoney);
-
-        if (currentMoney < MoneyToRoll) { ChangeGameState(GameState.PlayerDied); }
     }
     public int GetCurrentMoney() { return currentMoney; }
     public bool CanPurchase(int price) { return price <= currentMoney; }
     public bool CanPurchaseWithoutLosing(int price)
     {
-        return price <= currentMoney - MoneyToRoll;
+        return price <= currentMoney;
     }
     void UpdateMoneyUI()
     {
         TMP_CurrentMoney.text = currentMoney.ToString();
+    }
+    #endregion
+    #region ROLLS PER ENCOUNTER
+    [Header("RollS")]
+    public int MaxRollsPerEncounter = 6;
+    public int RollsRemaining;
+    public int MoneyPerRemainignRoll = 3;
+    [SerializeField] TextMeshProUGUI TMP_Rolls;
+    public void SetRemainingRolls(int amount)
+    {
+        RollsRemaining = amount;
+        TMP_Rolls.text = $"{RollsRemaining}/{MaxRollsPerEncounter}";
     }
     #endregion
     private void Update()

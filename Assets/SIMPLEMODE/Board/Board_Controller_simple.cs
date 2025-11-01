@@ -12,6 +12,7 @@ public class Board_Controller_simple : MonoBehaviour
     [SerializeField] TilesFactory factory;
 
     public List<TileController> TilesList = new();
+    public TileController GetCurrentPlayerTile() { return TilesList[PlayerIndex]; }
     public List<TileTfData> TfData = new();
     public Dictionary<Vector2Int, TileController> TilesByPosition = new();
     public int PlayerIndex { get; private set; }
@@ -353,12 +354,12 @@ public class Board_Controller_simple : MonoBehaviour
     }
     #endregion 
     #region MAIN PUBLIC METHODS FOR BOARD MOVEMENT
-    public IEnumerator L_StepPlayer(bool positiveStep) //If false, its negative step
+    public IEnumerator L_StepPlayer() 
     {
-        if (positiveStep && PlayerIndex == TilesList.Count - 1) { yield break; }
-        if (!positiveStep && PlayerIndex == 0) { yield break; }
+        if (PlayerIndex == TilesList.Count - 1) { yield break; }
+  
 
-        int stepAmount = positiveStep ? 1 : -1;
+        int stepAmount = 1;
         PlayerIndex += stepAmount;
 
         OnPlayerMoved?.Invoke(PlayerIndex - stepAmount, PlayerIndex);

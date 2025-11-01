@@ -12,11 +12,11 @@ public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
     public int MoneyReward;
     public IEnumerator OnEncounterEnter()
     {
-
         gameController = GameController_Simple.Instance;
         cameras = CamerasManager.instance;
 
         Dices_Controller.Instance.Button_Rolldices.onClick.AddListener(GameController_Simple.Instance.ChangeStateToRollingDice);
+        gameController.SetRemainingRolls(gameController.MaxRollsPerEncounter);
         //Load board if it's not loaded
 
         if(gameController.BoardController.isBoardAssembled == false)
@@ -52,6 +52,7 @@ public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
        
 
         gameController.AddMoney(MoneyReward);
+        gameController.AddMoney(gameController.MoneyPerRemainignRoll * gameController.RollsRemaining);
 
     }
 

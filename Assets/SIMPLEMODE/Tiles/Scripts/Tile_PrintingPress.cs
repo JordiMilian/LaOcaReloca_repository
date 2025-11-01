@@ -14,7 +14,7 @@ public class Tile_PrintingPress : Tile_Profile
             TileController newTile =  TilesFactory.instance.InstantiateTile(tileBehind._Profile);
             newTile.SetBaseDamage(0);
 
-            BoardController.AddNewTile(newTile, _Tile.indexInBoard - 1);
+            BoardController.AddNewTile(newTile, _Tile.indexInBoard);
         }
         BoardController.RemoveTile(_Tile.indexInBoard);
     }

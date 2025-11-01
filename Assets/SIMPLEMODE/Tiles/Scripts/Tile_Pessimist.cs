@@ -4,10 +4,11 @@ using System;
 [CreateAssetMenu(menuName = "TileProfile/EndSynergy/Pessimiest", fileName = "Tile_Pessimist")]
 public class Tile_Pessimist : Tile_Profile
 {
-    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
+   
     //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
 
     [SerializeField] float multiplierOnEnd = 2;
+    [SerializeField] float extraDamageOnLanded = .5f;
     public override void OnPlacedInBoard() 
     {
         base.OnPlacedInBoard();
@@ -25,8 +26,13 @@ public class Tile_Pessimist : Tile_Profile
         _Tile.DamagesToDeal.Add(BaseDamage * multiplierOnEnd);
         yield return _Tile.C_DealAllDamageToDeal(); 
     }
+    public override IEnumerator OnPlayerLanded() 
+    { 
+        yield return base.OnPlayerLanded();
+        multiplierOnEnd += extraDamageOnLanded;
+    }
     public override string GetTooltipText()
     {
-        return $"{OnReachedEnd} Deal this tile dmg x{multiplierOnEnd}";
+        return $"{OnReachedEnd} Deal this tile dmg x{multiplierOnEnd} \n {OnLanded} +{extraDamageOnLanded}";
     }
 }

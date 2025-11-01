@@ -19,6 +19,6 @@ MonoBehaviour:
   rarity: 1
   uniquePrice: 0
   tileTag: 0
-  Tile: {fileID: 0}
-  damageToAdd: 5
+  _Tile: {fileID: 0}
+  damageToAdd: 10
   multiplierOnLanded: 1.5
