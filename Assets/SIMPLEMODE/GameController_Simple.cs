@@ -164,12 +164,16 @@ public class GameController_Simple : MonoBehaviour
         {
             yield return BoardController.L_StepPlayer();
             remainingStepsToTake--;
-
+            if(remainingStepsToTake > 0)
+            {
+                yield return BoardController.GetCurrentPlayerTile().C_DealAllDamageToDeal();
+            }
         }
 
         yield return OnLanded_CardEffects.C_ActivateEffects();
 
         yield return BoardController.L_LandPlayerInCurrentPos();
+        yield return BoardController.GetCurrentPlayerTile().C_DealAllDamageToDeal();
 
         yield return DealTotalDamage();
 

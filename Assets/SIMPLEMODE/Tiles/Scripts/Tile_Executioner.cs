@@ -23,7 +23,7 @@ public class Tile_Executioner : Tile_Profile
             randomIndex = Random.Range(1, BoardController.TilesList.Count-1);
             randomTile = BoardController.TilesList[randomIndex];
         }
-        BoardController.RemoveTile(randomIndex);
+        yield return BoardController.C_RemoveTile(randomIndex);
 
         
     }

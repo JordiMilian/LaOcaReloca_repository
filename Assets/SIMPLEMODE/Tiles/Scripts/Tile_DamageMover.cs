@@ -14,7 +14,8 @@ public class Tile_DamageMover : Tile_Profile
             tileBehind.RemoveBaseDamage(tileBehind.GetBaseDamage());
             yield return new WaitForSeconds(0.3f);
         }
-        BoardController.RemoveTile(_Tile.indexInBoard);
+        yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
+        GameController.remainingStepsToTake++;
     }
 
     public override string GetTooltipText()

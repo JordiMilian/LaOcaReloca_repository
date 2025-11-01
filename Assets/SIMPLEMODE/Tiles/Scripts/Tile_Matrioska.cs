@@ -15,9 +15,7 @@ public class Tile_Matrioska : Tile_Profile
 
         if (timesCrossed >= timesNeededToCross)
         {
-            yield return new WaitForSeconds(.5f);
-            BoardController.RemoveTile(_Tile.indexInBoard);
-            yield break;
+            yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
         }
     }
     public override string GetTooltipText()

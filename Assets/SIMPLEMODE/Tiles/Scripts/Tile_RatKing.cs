@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 public class Tile_RatKing : Tile_Profile
 {
+    [SerializeField] float ratsDamageAdder = .5f;
+    [SerializeField] float addedAmountOnLanded = .5f;
     public override void OnPlacedInBoard()
     { 
         base.OnPlacedInBoard(); 
@@ -12,11 +14,16 @@ public class Tile_RatKing : Tile_Profile
         base.OnRemovedFromBoard();
         GameController.OnCrossed_CardEffects.RemoveEffect(OnCrossedCheck);
     }
-    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
+    public override IEnumerator OnPlayerLanded() 
+    { 
+        yield return base.OnPlayerLanded();
+        ratsDamageAdder += addedAmountOnLanded;
+        
+    }
     //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
-    public override string GetTooltipText() { return $"Other Rats deal {ratsDamageAdder * 100}% more DMG"; }
+    public override string GetTooltipText() { return $"Other Rats deal {ratsDamageAdder * 100}% more DMG \n {OnLanded} Increase that amount by {addedAmountOnLanded * 100}%"; }
 
-    [SerializeField] float ratsDamageAdder = .5f;
+    
     IEnumerator OnCrossedCheck()
     {
         TileController otherTile = BoardController.TilesList[BoardController.PlayerIndex];

@@ -15,8 +15,9 @@ public class Tile_PrintingPress : Tile_Profile
             newTile.SetBaseDamage(0);
 
             BoardController.AddNewTile(newTile, _Tile.indexInBoard);
+            GameController.remainingStepsToTake++;
         }
-        BoardController.RemoveTile(_Tile.indexInBoard);
+        yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
     }
     public override string GetTooltipText() { return $"{OnCrossed} Create a copy of the Tile behind with DMG 0 and destroy itself"; }
 }

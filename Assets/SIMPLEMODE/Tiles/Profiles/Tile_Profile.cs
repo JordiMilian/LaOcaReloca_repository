@@ -8,6 +8,7 @@ public class Tile_Profile : ScriptableObject
     public Color tileColor = Color.gray;
     public Texture tileTexture;
     [HideInInspector] public Rarity rarity = Rarity.none;
+    public TileSize tileSize = TileSize.Medium;
     [HideInInspector] public int uniquePrice = 0; //IF rarity is Unique, use this value.
     public TileTags tileTag;
     [HideInInspector] public TileController _Tile;
@@ -15,7 +16,6 @@ public class Tile_Profile : ScriptableObject
     [Space(5)]
     protected Board_Controller_simple BoardController;
     protected GameController_Simple GameController;
-    public bool isMicroTile = false;
     
     public void Initialize()
     {
@@ -29,15 +29,10 @@ public class Tile_Profile : ScriptableObject
         _Tile.DamagesToDeal.Reverse();
 
         yield return GameController.OnCrossed_CardEffects.C_ActivateEffects();
-
-        if (isMicroTile ||  GameController_Simple.Instance.remainingStepsToTake != 1)//if it's the last tile to step before landing, we don't deal the damage because it will be dealt all toghere on landing
-        {
-            yield return _Tile.C_DealAllDamageToDeal(); 
-        }
     }
     public virtual IEnumerator OnPlayerLanded() 
     {
-        yield return _Tile.C_DealAllDamageToDeal();
+        yield break;
     }
     public virtual void OnPlacedInBoard() { }
     public virtual void OnRemovedFromBoard() {}

@@ -11,7 +11,8 @@ public class Tile_Landmine : Tile_Profile
     public override IEnumerator OnPlayerStepped()
     {
         yield return base.OnPlayerStepped();
-        if (_Tile.indexInBoard < BoardController.TilesList.Count - 2) { BoardController.RemoveTile(_Tile.indexInBoard + 1); }
-        BoardController.RemoveTile(_Tile.indexInBoard);
+        if (_Tile.indexInBoard < BoardController.TilesList.Count - 2) { yield return BoardController.C_RemoveTile(_Tile.indexInBoard + 1); }
+        yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
+        GameController.remainingStepsToTake++;
     }
 }

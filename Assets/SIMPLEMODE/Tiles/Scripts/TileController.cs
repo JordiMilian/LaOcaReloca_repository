@@ -269,7 +269,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         switch (_Profile.rarity)
         {
             case Rarity.Common: { baseValue = 2; break; }
-            case Rarity.Rare: { baseValue = 4; break; }
+            case Rarity.Rare: { baseValue = 5; break; }
             case Rarity.Legendary: { baseValue = 10; break; }
             case Rarity.Unique: { return _Profile.uniquePrice; }
             default: { Debug.LogError("ERROR: Pls set a valid rarity to this Tile"); return 0; }

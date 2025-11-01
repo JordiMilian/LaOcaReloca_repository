@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60d1754cd5e71d74bb22d099fa6b8ff5, type: 3}
   m_Name: Tile_RatKing
   m_EditorClassIdentifier: 
-  BaseDamage: 20
+  BaseDamage: 5
   Title: RAT KING
-  tileColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
-  tileTexture: {fileID: 0}
+  tileColor: {r: 0.3554201, g: 0.46226418, b: 0.37533927, a: 1}
+  tileTexture: {fileID: 2800000, guid: 4c66993b9108b52448ba2c99aefd7c13, type: 3}
   rarity: 2
+  tileSize: 1
   uniquePrice: 0
   tileTag: 3
   _Tile: {fileID: 0}
+  ratsDamageAdder: 1
+  addedAmountOnLanded: 0.25

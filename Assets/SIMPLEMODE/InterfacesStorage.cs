@@ -41,6 +41,10 @@ public enum TileTags
 {
     NoTag, Empty, Oca, Rat
 }
+public enum TileSize
+{
+    Small, Medium, Large
+}
 public enum TileMessageType
 {
     Neutral, DealDamage, AddMultiplier, AddBaseDamage

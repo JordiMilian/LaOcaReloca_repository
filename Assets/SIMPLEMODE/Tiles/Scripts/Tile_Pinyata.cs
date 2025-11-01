@@ -13,7 +13,7 @@ public class Tile_Pinyata : Tile_Profile
     [SerializeField] float addedDmg, addedDmgOnlanded;
     public override string GetTooltipText() 
     {
-        return$"{OnCrossed} Add {MathJ.AddDamage(addedDmg)} to tiles around in range {adjacentDepth} \n {OnLanded} Add +{addedDmgOnlanded} more to tiles around";
+        return$"{OnCrossed} Add {MathJ.AddDamage(addedDmg)} to tiles around in range {adjacentDepth} \n {OnLanded} Increase that amount by +{addedDmgOnlanded}";
     }
 
     

@@ -37,7 +37,7 @@ public class Board_Controller_simple : MonoBehaviour
     public IEnumerator StartBoard() //called from game controller
     {
         TilesList = InstantiateStartingTiles();
-        TfData =  GetStrucrtData(StartingTilesCount);
+        TfData =  GetStrucrtData();
         MoveTiles_ToTfData(false);
         yield return C_AnimateStartingTiles();
 
@@ -111,10 +111,12 @@ public class Board_Controller_simple : MonoBehaviour
     [SerializeField] float width = 1f;
     [SerializeField] float maxTileLenght = 3;
     [SerializeField] float ExtraLargePercent = 1.5f;
+    [SerializeField] float ExtraSmallPercent = .75f;
 
 
     private void OnDrawGizmosSelected()
     {
+        /*
        List<TileTfData> temptructs = GetStrucrtData(StartingTilesCount);
 
         foreach (TileTfData info in temptructs)
@@ -132,27 +134,49 @@ public class Board_Controller_simple : MonoBehaviour
                 }
             }
         }
+        */
     }
-    public List<TileTfData> GetStrucrtData(int tilesAmount)
+    public List<TileTfData> GetStrucrtData()
     {
         List<TileTfData> tempList = new();
         List<Vector3> tilesCornersFromOrigin = new();
         List<Vector3> tilesOrigins = new();
 
+        int tilesAmount = TilesList.Count;
+
         float smallT;
+        float mediumT;
         float largeT;
 
-        //if the total max lenght is larger than the whole spline, then divide. Else just use the lenght. 
-        //We multiply by 2 because it's only the Start Tile and End Tile
-        if ((maxTileLenght * ExtraLargePercent * 2) + maxTileLenght * (tilesAmount - 2) > spline.CalculateLength())
+        int smallTilesCount = 0, mediumTilesCount = 0, largeTilesCount = 0;
+
+        for (int i = 0; i < tilesAmount; i++)
         {
-            smallT = 1f / (ExtraLargePercent * 2 + (tilesAmount - 2));
-            largeT = smallT * ExtraLargePercent;
+            Tile_Profile profile = TilesList[i]._Profile;
+            switch (profile.tileSize)
+            {
+                case TileSize.Small: smallTilesCount++; break;
+                case TileSize.Medium: mediumTilesCount++; break;
+                case TileSize.Large: largeTilesCount++; break;
+            }
+        }
+        //if the total max lenght is larger than the whole spline, then divide. Else just use the lenght. 
+        //Calculate if its small enough to fit
+        if ((maxTileLenght * ExtraLargePercent * largeTilesCount) + 
+            (maxTileLenght * mediumTilesCount) + 
+            (maxTileLenght * ExtraSmallPercent * smallTilesCount)
+            > spline.CalculateLength())
+        {
+            mediumT = 1f / (ExtraLargePercent * largeTilesCount) + mediumTilesCount + (ExtraSmallPercent * smallTilesCount);
+            smallT = mediumT * ExtraSmallPercent;
+            largeT = mediumT * ExtraLargePercent;
         }
         else
         {
-            smallT = GetTWithLenght(maxTileLenght);
+            mediumT = GetTWithLenght(maxTileLenght);
+            smallT = GetTWithLenght(maxTileLenght * ExtraSmallPercent);
             largeT = GetTWithLenght(maxTileLenght * ExtraLargePercent);
+
         }
 
         //Get corners from all Origins
@@ -169,9 +193,15 @@ public class Board_Controller_simple : MonoBehaviour
             tilesCornersFromOrigin.Add(-right * width / 2);
             tilesOrigins.Add(spline.EvaluatePosition(thisT));
 
-            float nextT;
-            if (i == 0 || i == tilesAmount - 1) { nextT = largeT; }
-            else { nextT = smallT; }
+            if (i == tilesAmount) { totalT = 1; break; }
+            float nextT = 0;
+            Tile_Profile profile = TilesList[i]._Profile;
+            switch (profile.tileSize)
+            {
+                case TileSize.Small: nextT = smallT; break;
+                case TileSize.Medium: nextT = mediumT; break;
+                case TileSize.Large: nextT = largeT; break;
+            }
             totalT += nextT;
 
         }
@@ -181,11 +211,16 @@ public class Board_Controller_simple : MonoBehaviour
         for (int i = 0; i < tilesAmount; i++)
         {
             TileTfData newTileInfo = new();
-            
 
-            float thisT;
-            if (i == 0 || i == tilesAmount - 1) { thisT = largeT; }
-            else { thisT = smallT; }
+
+            float thisT = 0;
+            Tile_Profile profile = TilesList[i]._Profile;
+            switch (profile.tileSize)
+            {
+                case TileSize.Small: thisT = smallT; break;
+                case TileSize.Medium: thisT = mediumT; break;
+                case TileSize.Large: thisT = largeT; break;
+            }
 
             float centerT = totalT + (thisT / 2);
 
@@ -283,7 +318,7 @@ public class Board_Controller_simple : MonoBehaviour
     }
     public void UpdateStructData()
     {
-        TfData = GetStrucrtData(TilesList.Count);
+        TfData = GetStrucrtData();
     }
 
     #region ASSEMBLE/DISASSEMBLE BOARD
@@ -483,9 +518,15 @@ public class Board_Controller_simple : MonoBehaviour
 
         //actualitzar escala (mes endavant)
     }  
-    public void RemoveTile(int index)
+    public IEnumerator C_RemoveTile(int index)
     {
         TileController tileToRemove = TilesList[index];
+
+        if (tileToRemove == GetCurrentPlayerTile())
+        {
+            yield return tileToRemove.C_DealAllDamageToDeal();
+        }
+
         tileToRemove.OnRemovedFromBoard();
         TilesList.RemoveAt(index);
 
@@ -494,7 +535,9 @@ public class Board_Controller_simple : MonoBehaviour
         UpdateStructData();
         MoveTiles_ToTfData(true);
         if(index <= PlayerIndex) { PlayerIndex--; }
-        StartCoroutine(V_StepPlayerToNewPos());
+
+        yield return V_StepPlayerToNewPos();
+
     }
     public void MoveTileInBoard(int from, int to)
     {
@@ -502,6 +545,7 @@ public class Board_Controller_simple : MonoBehaviour
         TilesList.RemoveAt(from);
         TilesList.Insert(to, tileMoved );
 
+        UpdateStructData();
         MoveTiles_ToTfData(true);
     }
     #endregion

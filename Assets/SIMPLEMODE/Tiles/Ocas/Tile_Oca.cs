@@ -9,10 +9,11 @@ public class Tile_Oca : Tile_Profile
     public override IEnumerator OnPlayerLanded()
     {
         yield return base.OnPlayerLanded();
+        yield return _Tile.C_DealAllDamageToDeal();
 
         for (int i = _Tile.indexInBoard + 1; i < BoardController.TilesList.Count; i++)
         {
-            if (base.BoardController.TilesList[i]._Profile is Tile_Oca)
+            if (BoardController.TilesList[i]._Profile is Tile_Oca)
             {
                 yield return BoardController.L_JumpPlayerTo(i, false);
                 GameController.AddMoney(GameController.MoneyToRoll);
@@ -26,7 +27,9 @@ public class Tile_Oca : Tile_Profile
             }
         }
     }
-    public IEnumerator basePlayerLanded() { yield return base.OnPlayerLanded(); } //use this in case you create an Oca that doesnt jump to the next Oca 
+
+    //use this in case you create an Oca that doesnt jump to the next Oca 
+    public IEnumerator basePlayerLanded() { yield return base.OnPlayerLanded(); yield return _Tile.C_DealAllDamageToDeal(); } 
     public override string GetTooltipText()
     {
         string display = "X";
