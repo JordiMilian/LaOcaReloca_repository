@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using static StringTools;
 
 [CreateAssetMenu(menuName = "TileProfile/Ocas/Oca", fileName = "Tile_Oca")]
 public class Tile_Oca : Tile_Profile
@@ -34,6 +35,6 @@ public class Tile_Oca : Tile_Profile
     {
         string display = "X";
         if(GameController != null) { display = GameController.MoneyToRoll.ToString(); }
-        return $"{MathJ.BoldText("ON LANDED: ")}jump to the next Oca get an extra Dice Roll";
+        return $"{ExtraDiceRoll}\n{OnLanded} jump to the next Oca.";
     }
 }

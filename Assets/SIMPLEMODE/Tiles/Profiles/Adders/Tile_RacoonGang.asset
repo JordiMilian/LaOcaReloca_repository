@@ -9,16 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af4c72a89e145304e9e4e308dee9f156, type: 3}
-  m_Name: Tile_Pirate
+  m_Script: {fileID: 11500000, guid: c679bc9c649e3fa40bc532f174bc24ee, type: 3}
+  m_Name: Tile_RacoonGang
   m_EditorClassIdentifier: 
-  BaseDamage: 10
-  Title: PIRATE
-  tileColor: {r: 1, g: 0.8591023, b: 0.24056602, a: 1}
-  tileTexture: {fileID: 2800000, guid: 20a26c1da9cee7d469d3c7c15e08eebd, type: 3}
-  rarity: 1
+  BaseDamage: 15
+  Title: RACOON GANG
+  tileColor: {r: 0.7058824, g: 0.30980393, b: 0.101960786, a: 1}
+  tileTexture: {fileID: 2800000, guid: 031e267e9c37e5243bae8fa6281a7b7e, type: 3}
+  rarity: 2
   tileSize: 1
   uniquePrice: 0
   tileTag: 0
   _Tile: {fileID: 0}
-  moneyOnLanded: 5
+  AmountToTake: 5
+  dmgPerMoney: 5

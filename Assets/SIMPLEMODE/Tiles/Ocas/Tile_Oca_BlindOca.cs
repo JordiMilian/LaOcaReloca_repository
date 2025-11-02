@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using static StringTools;
 
 [CreateAssetMenu(menuName = "TileProfile/Ocas/Blind Oca", fileName = "Tile_BlindOca")]
 public class Tile_Oca_BlindOca : Tile_Oca
@@ -29,8 +30,9 @@ public class Tile_Oca_BlindOca : Tile_Oca
         while (boardOcas[randomIndex] == _Tile);
 
         
+
         yield return BoardController.L_JumpPlayerTo(boardOcas[randomIndex].indexInBoard, false);
-        GameController.AddMoney(GameController.MoneyToRoll);
+        GameController.SetRemainingRolls(GameController.RollsRemaining + 1);
 
     }
     public List<TileController> GetAllOcaTiles()
@@ -46,6 +48,6 @@ public class Tile_Oca_BlindOca : Tile_Oca
     {
         string display = "?";
         if(GameController != null) { display = GameController.MoneyToRoll.ToString(); }
-        return  $"{OnLanded} Jump to another random Oca and gain {display} money";
+        return  $"{ExtraDiceRoll}\n{OnLanded} Jump to another random Oca.";
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+using static StringTools;
 public class Tile_Profile : ScriptableObject
 {
     public float BaseDamage = 10;
@@ -52,7 +52,7 @@ public class Tile_Profile : ScriptableObject
 
     #region DAMAGE MODIFIERS 
     //Separated the logic of modifying in case we want to Override the logic and not the visuals
-    //DO NOT CALL THESE FROM THE TILE LOGIC, THIS IS FOR OVERRIDING ONLY (Look at Tile_Creating for a good examples)
+    //DO NOT CALL THESE FROM THE TILE LOGIC, THIS IS FOR OVERRIDING ONLY (Look at Tile_Creatine for a good examples)
     //IF YOU WANT TO MULTIPLY DAMAGE CALL IT FROM Tile.MultiplyBaseDamage()
     public virtual float AddBaseDamage(float addedDamage)
     {

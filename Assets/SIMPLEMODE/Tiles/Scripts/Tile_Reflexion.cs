@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using static StringTools;
 public class Tile_Reflexion : Tile_Profile
 {
    //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
@@ -19,5 +20,5 @@ public class Tile_Reflexion : Tile_Profile
         }
         yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
     }
-    public override string GetTooltipText() { return $"{OnCrossed} Create a copy of the Tile behind with DMG 0 and destroy itself"; }
+    public override string GetTooltipText() { return $"{NoStep}, {Fragile}\n{OnCrossed} Create a copy of the Tile behind with DMG 0"; }
 }

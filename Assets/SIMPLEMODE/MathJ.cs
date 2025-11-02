@@ -55,7 +55,6 @@ public static class MathJ
         return $"<b>{text}</b>";
     }
     public static string AddDamage(float damage) { return $"<color=blue>+{FloatToString(damage, 1)}dmg<color=black>"; }
-    public static string AddMultiplier(float damage) { return $"<color=red>+{FloatToString(damage, 1)}mult<color=black>"; }
     public static int GetFibonacciValue(int n, int iterations)
     {
         int finalValue = n;

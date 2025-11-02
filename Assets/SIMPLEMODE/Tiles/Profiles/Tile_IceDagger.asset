@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7459a499321eff44b096db2dc7b6743, type: 3}
-  m_Name: Tile_Oca
+  m_Script: {fileID: 11500000, guid: 8814a129442ddaa4c8cbe3ddcb956540, type: 3}
+  m_Name: Tile_IceDagger
   m_EditorClassIdentifier: 
-  BaseDamage: 15
-  Title: OCA
-  tileColor: {r: 0.79607844, g: 0.14901961, b: 0.48235294, a: 1}
-  tileTexture: {fileID: 2800000, guid: cb32741a80bb20b47af412978791aa2b, type: 3}
-  rarity: 4
+  BaseDamage: 50
+  Title: ICE DAGGER
+  tileColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+  tileTexture: {fileID: 2800000, guid: 69ad359a3b34f45428f6fbd5a65813be, type: 3}
+  rarity: 1
   tileSize: 1
-  uniquePrice: 2
-  tileTag: 2
+  uniquePrice: 0
+  tileTag: 0
   _Tile: {fileID: 0}

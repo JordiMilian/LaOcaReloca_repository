@@ -235,10 +235,11 @@ public class ProfilesCreator_Editor : Editor
     {
         return $"using UnityEngine;\n" +
             "using System.Collections;\n" +
+            "using static StringTools;\n" +
             $"public class {scriptName} : Tile_Profile\n" +
             "{\n" +
-            "   //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }\n" +
-            "   //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }\n" +
+            "   //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }\n" +
+            "   //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }\n" +
             "   //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }\n" +
             "   //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }\n" +
             "   //public override string GetTooltipText() { }\n" +

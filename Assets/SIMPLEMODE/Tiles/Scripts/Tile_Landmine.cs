@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
-
+using static StringTools;
 [CreateAssetMenu(menuName = "TileProfile/Landmine", fileName = "Tile_Landmine")]
 public class Tile_Landmine : Tile_Profile
 {
     public override string GetTooltipText()
     {
-        return $"{OnCrossed} Destroy the Tile forward and this Tile";
+        return $"{NoStep}, {Fragile}\n{OnCrossed} Destroy the Tile forward";
     }
     public override IEnumerator OnPlayerStepped()
     {

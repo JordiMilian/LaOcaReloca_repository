@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af4c72a89e145304e9e4e308dee9f156, type: 3}
-  m_Name: Tile_Pirate
+  m_Script: {fileID: 11500000, guid: 22ea7a57deb4ed047848df0cc2c947e4, type: 3}
+  m_Name: Tile_WalkingGiant
   m_EditorClassIdentifier: 
-  BaseDamage: 10
-  Title: PIRATE
-  tileColor: {r: 1, g: 0.8591023, b: 0.24056602, a: 1}
-  tileTexture: {fileID: 2800000, guid: 20a26c1da9cee7d469d3c7c15e08eebd, type: 3}
-  rarity: 1
+  BaseDamage: 20
+  Title: GIANT STEPS
+  tileColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+  tileTexture: {fileID: 2800000, guid: a759a0c3211c7af43b69750db08737ec, type: 3}
+  rarity: 3
   tileSize: 1
   uniquePrice: 0
   tileTag: 0
   _Tile: {fileID: 0}
-  moneyOnLanded: 5
+  addedDamageOnStepped: 20

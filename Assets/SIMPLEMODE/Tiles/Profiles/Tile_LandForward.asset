@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4ac12450af6a7a41bb3029d02097e66, type: 3}
   m_Name: Tile_LandForward
   m_EditorClassIdentifier: 
-  BaseDamage: 1
+  BaseDamage: 0
   Title: METRO STATION
   tileColor: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 1}
   tileTexture: {fileID: 2800000, guid: 43266b1226d22da4b9990d7b68cd0c57, type: 3}
   rarity: 1
+  tileSize: 1
   uniquePrice: 0
   tileTag: 0
   _Tile: {fileID: 0}

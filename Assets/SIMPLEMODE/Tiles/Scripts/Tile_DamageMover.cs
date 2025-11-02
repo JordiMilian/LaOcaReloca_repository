@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static StringTools;
 [CreateAssetMenu(menuName = "TileProfile/DamageMover", fileName = "Tile_DamageMover")]
 public class Tile_DamageMover : Tile_Profile
 {
@@ -20,6 +21,6 @@ public class Tile_DamageMover : Tile_Profile
 
     public override string GetTooltipText()
     {
-        return $"{OnCrossed} Transfer the damage from the previous tile to the next tile and destroy itself";
+        return $"{NoStep}, {Fragile}\n{OnCrossed} Transfer the damage from the previous tile to the next tile";
     }
 }

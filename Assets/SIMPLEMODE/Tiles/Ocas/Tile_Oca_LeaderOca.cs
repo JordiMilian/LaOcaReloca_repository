@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static StringTools;
 [CreateAssetMenu(menuName = "TileProfile/Ocas/LeaderOca", fileName = "Tile_LeaderOca")]
 public class Tile_Oca_LeaderOca : Tile_Oca
 {
@@ -24,7 +25,7 @@ public class Tile_Oca_LeaderOca : Tile_Oca
         yield return base.OnPlayerLanded();
     }
     public override IEnumerator OnPlayerStepped()
-    {
+    {/*
         int OcasCount = 0;
         foreach (TileController tile in BoardController.TilesList)
         {
@@ -32,11 +33,11 @@ public class Tile_Oca_LeaderOca : Tile_Oca
         }
         _Tile.DamagesToDeal.Add(damagePerOca * OcasCount);
         Debug.Log($"Found {OcasCount} ocas");
-
+        */
         yield return base.OnPlayerStepped();
     }
     public override string GetTooltipText()
     {
-        return $"{OnLanded} Add {MathJ.AddDamage( addedDamageAtOcas)} to all other OCA TILES \n{OnCrossed}Deal {damagePerOca} damage per OCA TILE in board";
+        return $"{ExtraDiceRoll}\n{OnLanded} Add {MathJ.AddDamage( addedDamageAtOcas)} to all other OCA TILES and Jump to the next OCA";
     }
 }

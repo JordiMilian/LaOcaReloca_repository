@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using static StringTools;
 public class Tile_RatToken : Tile_Profile
 {
    //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
@@ -13,5 +14,5 @@ public class Tile_RatToken : Tile_Profile
         GameController.remainingStepsToTake++;
         yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
     }
-   public override string GetTooltipText() { return $"{OnCrossed} Deal damage, skip this tile and destroy itself"; }
+   public override string GetTooltipText() { return $"{NoStep}, {Fragile}"; }
 }

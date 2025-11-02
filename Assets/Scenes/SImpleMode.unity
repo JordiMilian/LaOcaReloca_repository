@@ -1879,6 +1879,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a284ac9cab5b5a74785f59dee9d5afe3, type: 2}
   - {fileID: 11400000, guid: 4a33861597503c946af1b5be3effccbb, type: 2}
   - {fileID: 11400000, guid: cb198105c56aaf64ebc52b5e250cf30c, type: 2}
+  - {fileID: 11400000, guid: 7e946df9087c729418b4c1d5a0c5f107, type: 2}
+  - {fileID: 11400000, guid: 96319c527a6b8234abb7c26a558e1296, type: 2}
+  - {fileID: 11400000, guid: c79246b50a24cfd478111d9c3be9565d, type: 2}
 --- !u!4 &400194873
 Transform:
   m_ObjectHideFlags: 0
@@ -2905,12 +2908,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: SwampToken
-  folderName: TokensAndTools
-  title: Swamp
+  assetName: RacoonGang
+  folderName: Adders
+  title: RACOON GANG
   color: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
-  baseDamage: 0
-  rarity: 4
+  baseDamage: 15
+  rarity: 2
   tag: 0
   factory: {fileID: 400194872}
 --- !u!1 &566852619
@@ -7547,7 +7550,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}

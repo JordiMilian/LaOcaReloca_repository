@@ -146,7 +146,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     }
     #region DAMAGE MODIFIERS
     public List<float> DamagesToDeal = new();
-    public virtual float GetBaseDamage()
+    public float GetBaseDamage()
     {
         return _Profile.BaseDamage;
     }
@@ -185,6 +185,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         string displayMessage = "";
         for (int i = 0; i < DamagesToDeal.Count; i++)
         {
+            if(Mathf.Approximately(DamagesToDeal[i], 0)) { continue; }
             displayMessage += MathJ.FloatToString(DamagesToDeal[i], 1);
             if (i != DamagesToDeal.Count - 1) { displayMessage += "+"; }
         }

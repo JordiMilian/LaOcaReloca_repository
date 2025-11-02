@@ -22,4 +22,4 @@ MonoBehaviour:
   tileTag: 0
   _Tile: {fileID: 0}
   swampTokenProfile: {fileID: 11400000, guid: 3cfa6d0fb67a9864e892a2e56bc028ae, type: 2}
-  DamageAddedOnCross: 100
+  DamageAddedOnCross: 50
