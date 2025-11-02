@@ -9,14 +9,14 @@ public class Tile_Pessimist : Tile_Profile
 
     [SerializeField] float multiplierOnEnd = 2;
     [SerializeField] float extraDamageOnLanded = .5f;
-    public override void OnPlacedInBoard() 
+    public override IEnumerator OnPlacedInBoard() 
     {
-        base.OnPlacedInBoard();
+        yield return base.OnPlacedInBoard();
         GameController.OnReachedEndTile_CardEffects.AddEffect(OnReachedEndEffect) ;
     }
-    public override void OnRemovedFromBoard()
+    public override IEnumerator OnRemovedFromBoard()
     {
-        base.OnRemovedFromBoard();
+        yield return base.OnRemovedFromBoard();
         GameController.OnReachedEndTile_CardEffects.RemoveEffect(OnReachedEndEffect);
 
     }

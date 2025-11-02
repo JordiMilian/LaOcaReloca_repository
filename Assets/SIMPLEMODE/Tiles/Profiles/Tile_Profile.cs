@@ -34,8 +34,8 @@ public class Tile_Profile : ScriptableObject
     {
         yield break;
     }
-    public virtual void OnPlacedInBoard() { }
-    public virtual void OnRemovedFromBoard() {}
+    public virtual IEnumerator OnPlacedInBoard() { yield break; }
+    public virtual IEnumerator OnRemovedFromBoard() { yield break; }
     public virtual string GetTooltipText() { return "NO DESCRIPTION FOUND"; }
     #region TOOLTIP INTRO
     protected const string OnCrossed = "<b>- ON CROSSED:</b>";
@@ -44,6 +44,8 @@ public class Tile_Profile : ScriptableObject
     protected const string OnReachedEnd = "<b>- ON REACHED END TILE:</b>";
     protected const string OnReached = "<b>- ON REACHED:</b>";
     protected const string OnAddedDamage = "<b>- ON ADDED DAMAGE TO THIS TILE:</b>";
+    protected const string OnAddedNewTileToBoard = "<b>- ON ADDED NEW TILE TO BOARD:</b>";
+    protected const string OnEnterInBoard = "<b>- ON ENTER IN BOARD:</b>";
     protected string OnLandedOnTag(TileTags tag) { return $"<b>- ON LANDED ON AN {tag.ToString().ToUpper()} TILE:</b>"; }
     protected string OnCrossedOnTag(TileTags tag) { return $"<b>- ON CROSSED A {tag.ToString().ToUpper()} TILE:</b>"; }
     #endregion

@@ -56,9 +56,10 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         {
             float timer = 0;
             const float movingTime = .5f;
-            transform.DOMove(TfData.center, movingTime).SetEase(Ease.OutBack);
 
             RecalculateTextureScaling();
+            transform.DOMove(TfData.center, movingTime).SetEase(Ease.OutBack);
+            
             while (timer < movingTime)
             {
                 timer += Time.deltaTime;
@@ -82,7 +83,6 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
                 //transform.rotation = lerpedRot;
                 yield return null;
             }
-
             SetToTfData();
         }
     }
@@ -247,8 +247,8 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
 
         yield return _Profile.OnPlayerLanded(); 
     }
-    public void OnPlacedInBoard() { _Profile.OnPlacedInBoard(); }
-    public void OnRemovedFromBoard() { _Profile.OnRemovedFromBoard(); }
+    public IEnumerator C_OnPlacedInBoard() { yield return _Profile.OnPlacedInBoard(); }
+    public IEnumerator C_OnRemovedFromBoard() { yield return _Profile.OnRemovedFromBoard(); }
 
     public string GetTooltipText()
     {

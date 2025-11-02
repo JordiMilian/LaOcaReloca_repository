@@ -1877,6 +1877,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: df53b66fc4df9dd4ab1d759f922b574c, type: 2}
   - {fileID: 11400000, guid: 19f565a1bdfcda24290607d90dd8d07c, type: 2}
   - {fileID: 11400000, guid: a284ac9cab5b5a74785f59dee9d5afe3, type: 2}
+  - {fileID: 11400000, guid: 4a33861597503c946af1b5be3effccbb, type: 2}
+  - {fileID: 11400000, guid: cb198105c56aaf64ebc52b5e250cf30c, type: 2}
 --- !u!4 &400194873
 Transform:
   m_ObjectHideFlags: 0
@@ -2248,7 +2250,7 @@ MonoBehaviour:
   factory: {fileID: 400194872}
   TilesList: []
   PlayerPrefab: {fileID: 1266550042}
-  StartingTilesCount: 10
+  StartingTilesCount: 12
   TimeToCreateBoard: 0.52
   OnPlayerMoved:
     m_PersistentCalls:
@@ -2903,13 +2905,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: RatKing
-  folderName: Rats
-  title: RAT KING
+  assetName: SwampToken
+  folderName: TokensAndTools
+  title: Swamp
   color: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
-  baseDamage: 20
-  rarity: 2
-  tag: 3
+  baseDamage: 0
+  rarity: 4
+  tag: 0
   factory: {fileID: 400194872}
 --- !u!1 &566852619
 GameObject:
@@ -7351,6 +7353,10 @@ MonoBehaviour:
   - {fileID: 1547170513799009516, guid: 4e8482089949b5149aff72c891108b7c, type: 3}
   - {fileID: 1547170513799009516, guid: 7ec2b73cc20355a4e9572735718b9fa1, type: 3}
   - {fileID: 1547170513799009516, guid: db55b00471a63b442a73e88152ba911d, type: 3}
+  - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
+  - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
+  - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
+  - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
   - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
   - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
   - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}

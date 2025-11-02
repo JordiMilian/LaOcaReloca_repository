@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_PrintingPress : Tile_Profile
+public class Tile_Reflexion : Tile_Profile
 {
    //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
    //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
@@ -14,7 +14,7 @@ public class Tile_PrintingPress : Tile_Profile
             TileController newTile =  TilesFactory.instance.InstantiateTile(tileBehind._Profile);
             newTile.SetBaseDamage(0);
 
-            BoardController.AddNewTile(newTile, _Tile.indexInBoard);
+            yield return BoardController.C_AddNewTile(newTile, _Tile.indexInBoard);
             GameController.remainingStepsToTake++;
         }
         yield return BoardController.C_RemoveTile(_Tile.indexInBoard);

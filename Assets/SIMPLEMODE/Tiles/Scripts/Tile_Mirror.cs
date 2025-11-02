@@ -11,7 +11,7 @@ public class Tile_Mirror : Tile_Profile
         yield return base.OnPlayerLanded();
         TileController instantiatedEmpty =  TilesFactory.instance.InstantiateTile(emptyProfile);
         int randomIndex = Random.Range(1, BoardController.TilesList.Count - 1);
-        BoardController.AddNewTile(instantiatedEmpty, randomIndex);
+        yield return BoardController.C_AddNewTile(instantiatedEmpty, randomIndex);
         instantiatedEmpty.SetBaseDamage(BaseDamage);
 
    }

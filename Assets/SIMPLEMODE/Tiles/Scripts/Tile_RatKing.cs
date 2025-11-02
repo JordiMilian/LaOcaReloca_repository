@@ -4,14 +4,14 @@ public class Tile_RatKing : Tile_Profile
 {
     [SerializeField] float ratsDamageAdder = .5f;
     [SerializeField] float addedAmountOnLanded = .5f;
-    public override void OnPlacedInBoard()
-    { 
-        base.OnPlacedInBoard(); 
+    public override IEnumerator OnPlacedInBoard()
+    {
+        yield return base.OnPlacedInBoard(); 
         GameController.OnCrossed_CardEffects.AddEffect(OnCrossedCheck);
     }
-    public override void OnRemovedFromBoard() 
-    { 
-        base.OnRemovedFromBoard();
+    public override IEnumerator OnRemovedFromBoard() 
+    {
+        yield return base.OnRemovedFromBoard();
         GameController.OnCrossed_CardEffects.RemoveEffect(OnCrossedCheck);
     }
     public override IEnumerator OnPlayerLanded() 

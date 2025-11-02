@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac4efd5af237a14594b2569d055ad39, type: 3}
+  m_Name: Tile_SwampMonster
+  m_EditorClassIdentifier: 
+  BaseDamage: 150
+  Title: SWAMP MONSTER
+  tileColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+  tileTexture: {fileID: 2800000, guid: d5b0c99ce0ce6dd488acfe87b5a9b1a6, type: 3}
+  rarity: 3
+  tileSize: 1
+  uniquePrice: 0
+  tileTag: 0
+  _Tile: {fileID: 0}
+  swampTokenProfile: {fileID: 11400000, guid: 3cfa6d0fb67a9864e892a2e56bc028ae, type: 2}
+  DamageAddedOnCross: 100

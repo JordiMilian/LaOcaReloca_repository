@@ -2,9 +2,9 @@ using UnityEngine;
 using System.Collections;
 public class Tile_JealousOca : Tile_Oca
 {
-    public override void OnPlacedInBoard() 
+    public override IEnumerator OnPlacedInBoard() 
     {
-        base.OnPlacedInBoard();
+       yield return base.OnPlacedInBoard();
         GameController.OnLanded_CardEffects.AddEffect(OnLandedEffect);
     }
     IEnumerator OnLandedEffect()

@@ -26,6 +26,7 @@ public class GameController_Simple : MonoBehaviour
     public CardEffectsDelegate OnReachedEndTile_CardEffects = new();
     public CardEffectsDelegate OnLanded_CardEffects = new(); //Any card effect that triggers when landing on another tile. The regular Onlanded effect of all cards is not concerned with this
     public CardEffectsDelegate OnCrossed_CardEffects = new();
+    public CardEffectsDelegate OnAddedNewTileToBoard_CardEffect = new();
 
     public static GameController_Simple Instance;
     private void Awake()
@@ -282,7 +283,7 @@ public class GameController_Simple : MonoBehaviour
     {
         RemoveMoney(SelectedTile.GetBuyingPrice());
         //BoardController.ReplaceTileInBoard(tileInBoard, boughtTile);
-        BoardController.AddNewTile(boughtTile, tileInBoard.indexInBoard);
+        StartCoroutine( BoardController.C_AddNewTile(boughtTile, tileInBoard.indexInBoard));
         ShopItem_Controller boughtItem = shopController.GetShopItem(SelectedTile);
         boughtItem.RemoveItem();
 

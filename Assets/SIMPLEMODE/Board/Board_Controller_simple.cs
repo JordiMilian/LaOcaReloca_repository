@@ -167,9 +167,11 @@ public class Board_Controller_simple : MonoBehaviour
             (maxTileLenght * ExtraSmallPercent * smallTilesCount)
             > spline.CalculateLength())
         {
-            mediumT = 1f / (ExtraLargePercent * largeTilesCount) + mediumTilesCount + (ExtraSmallPercent * smallTilesCount);
+            Debug.Log("01 test");
+            mediumT = 1f / ((ExtraLargePercent * largeTilesCount) + mediumTilesCount + (ExtraSmallPercent * smallTilesCount));
             smallT = mediumT * ExtraSmallPercent;
             largeT = mediumT * ExtraLargePercent;
+            Debug.Log("02 test: "+ mediumT);
         }
         else
         {
@@ -457,7 +459,7 @@ public class Board_Controller_simple : MonoBehaviour
                 ;
         yield return new WaitForSeconds(duration);
     }
-    IEnumerator V_JumpPlayerToNewPos()
+    public IEnumerator V_JumpPlayerToNewPos()
     {
         const float duration = .5f;
         Vector3 newPos = TilesList[PlayerIndex].TfData.center;
@@ -483,9 +485,9 @@ public class Board_Controller_simple : MonoBehaviour
 
     #endregion
     #region BOARD EDITING
-    public void ReplaceTileInBoard(TileController oldTileInBoard, TileController newTile)
+    public void ReplaceTileInBoard(TileController oldTileInBoard, TileController newTile) //Not really used
     {
-        oldTileInBoard.OnRemovedFromBoard();
+        oldTileInBoard.C_OnRemovedFromBoard();
         TilesList[oldTileInBoard.indexInBoard] = newTile;
         TilesByPosition[oldTileInBoard.vectorInBoard] = newTile;
         newTile.indexInBoard = oldTileInBoard.indexInBoard;
@@ -497,11 +499,11 @@ public class Board_Controller_simple : MonoBehaviour
         newTile.MoveToTfData();
         newTile.SetTileState(TileState.InBoard);
 
-        newTile.OnPlacedInBoard();
+        newTile.C_OnPlacedInBoard(); //This is a coroutine so It wont work
 
         Destroy(oldTileInBoard.gameObject);
     }
-    public void AddNewTile(TileController tile, int index)
+    public IEnumerator C_AddNewTile(TileController tile, int index)
     {
         TilesList.Insert(index, tile);
 
@@ -509,14 +511,16 @@ public class Board_Controller_simple : MonoBehaviour
 
         MoveTiles_ToTfData(true);
         if (PlayerIndex >= index) { PlayerIndex++; }
-        StartCoroutine(V_StepPlayerToNewPos());
+        yield return V_StepPlayerToNewPos();
 
         tile.SetTileState(TileState.InBoard);
-        tile.OnPlacedInBoard();
+        yield return tile.C_OnPlacedInBoard();
 
         tile.transform.parent = tilesHolder;
 
-        //actualitzar escala (mes endavant)
+        yield return GameController_Simple.Instance.OnAddedNewTileToBoard_CardEffect.C_ActivateEffects();
+
+        GameController_Simple.Instance.shopController.UpdatePrices();
     }  
     public IEnumerator C_RemoveTile(int index)
     {
@@ -527,7 +531,7 @@ public class Board_Controller_simple : MonoBehaviour
             yield return tileToRemove.C_DealAllDamageToDeal();
         }
 
-        tileToRemove.OnRemovedFromBoard();
+        tileToRemove.C_OnRemovedFromBoard();
         TilesList.RemoveAt(index);
 
         Destroy(tileToRemove.gameObject);
@@ -537,6 +541,7 @@ public class Board_Controller_simple : MonoBehaviour
         if(index <= PlayerIndex) { PlayerIndex--; }
 
         yield return V_StepPlayerToNewPos();
+        GameController_Simple.Instance.shopController.UpdatePrices();
 
     }
     public void MoveTileInBoard(int from, int to)

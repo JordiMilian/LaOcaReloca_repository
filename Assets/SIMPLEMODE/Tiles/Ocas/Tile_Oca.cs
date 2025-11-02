@@ -16,7 +16,7 @@ public class Tile_Oca : Tile_Profile
             if (BoardController.TilesList[i]._Profile is Tile_Oca)
             {
                 yield return BoardController.L_JumpPlayerTo(i, false);
-                GameController.AddMoney(GameController.MoneyToRoll);
+                GameController.SetRemainingRolls(GameController.RollsRemaining +1);
                 yield break;
 
             }
@@ -34,6 +34,6 @@ public class Tile_Oca : Tile_Profile
     {
         string display = "X";
         if(GameController != null) { display = GameController.MoneyToRoll.ToString(); }
-        return $"{MathJ.BoldText("ON LANDED: ")}jump to the next Oca and gain {display} money";
+        return $"{MathJ.BoldText("ON LANDED: ")}jump to the next Oca get an extra Dice Roll";
     }
 }

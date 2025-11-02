@@ -3,14 +3,14 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "TileProfile/DicesEnjoyers/Ladybug", fileName = "Tile_Ladybug")]
 public class Tile_Ladybug : Tile_Profile
 {
-    public override void OnPlacedInBoard()
+    public override IEnumerator OnPlacedInBoard()
     {
-        base.OnPlacedInBoard();
+        yield return base.OnPlacedInBoard();
         GameController.OnRolledDice_CardEffects.AddEffect(AddRolledValueToRandomTile);
     }
-    public override void OnRemovedFromBoard()
+    public override IEnumerator OnRemovedFromBoard()
     {
-        base.OnRemovedFromBoard();
+        yield return base.OnRemovedFromBoard();
         GameController.OnRolledDice_CardEffects.RemoveEffect(AddRolledValueToRandomTile);
     }
     IEnumerator AddRolledValueToRandomTile()

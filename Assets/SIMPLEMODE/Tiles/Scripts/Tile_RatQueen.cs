@@ -10,25 +10,23 @@ public class Tile_RatQueen : Tile_Profile
     public override IEnumerator OnPlayerStepped()
     { 
         yield return base.OnPlayerStepped();
-        CreateRandomRat();
-        yield return new WaitForSeconds(0.3f);
+        yield return CreateRandomRat();
     }
     public override IEnumerator OnPlayerLanded()
     {
         yield return base.OnPlayerLanded();
         for (int i = 0; i < ratsAmountOnLanded; i++)
         {
-            CreateRandomRat();
-            yield return new WaitForSeconds(0.3f);
+            yield return CreateRandomRat();
         }
     }
-    void CreateRandomRat()
+    IEnumerator CreateRandomRat()
     {
         TileController ratTokenController = TilesFactory.instance.InstantiateTile(ratTokenTileProfile);
         ratTokenController.transform.position = _Tile.transform.position;
 
         int randomIndex = Random.Range(1, BoardController.TilesList.Count-1);
-        BoardController.AddNewTile(ratTokenController, randomIndex);
+        yield return BoardController.C_AddNewTile(ratTokenController, randomIndex);
     }
    public override string GetTooltipText() { return $"{OnCrossed} Create a random RAT TOKEN \n {OnLanded} Create {ratsAmountOnLanded} random RAT TOKENS"; }
 }
