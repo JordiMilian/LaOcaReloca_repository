@@ -9,7 +9,6 @@ public class Tile_RatToken : Tile_Profile
    public override IEnumerator OnPlayerStepped() 
     {
         yield return base.OnPlayerStepped();
-        yield return new WaitForSeconds(0.3f);
 
         GameController.remainingStepsToTake++;
         yield return BoardController.C_RemoveTile(_Tile.indexInBoard);

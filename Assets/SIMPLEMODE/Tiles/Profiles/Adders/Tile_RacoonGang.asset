@@ -23,3 +23,5 @@ MonoBehaviour:
   _Tile: {fileID: 0}
   AmountToTake: 5
   dmgPerMoney: 5
+  racoonsToCreate: 2
+  racoonToken_Profile: {fileID: 11400000, guid: b367805cbe5071f4d85c493f7ad9bbe5, type: 2}

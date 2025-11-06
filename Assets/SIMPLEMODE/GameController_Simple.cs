@@ -27,6 +27,7 @@ public class GameController_Simple : MonoBehaviour
     public CardEffectsDelegate OnLanded_CardEffects = new(); //Any card effect that triggers when landing on another tile. The regular Onlanded effect of all cards is not concerned with this
     public CardEffectsDelegate OnCrossed_CardEffects = new();
     public CardEffectsDelegate OnAddedNewTileToBoard_CardEffect = new();
+    public CardEffectsDelegate OnRemovedTileFromBoard_CardEffect = new();
 
     public static GameController_Simple Instance;
     private void Awake()
@@ -310,9 +311,9 @@ public class GameController_Simple : MonoBehaviour
         yield return new WaitForSeconds(shakeDuration);
     }
     public float GetCurrentAcumulatedDamage() { return AcumulatedDamage; }
-    IEnumerator DealTotalDamage() //sdfsdf
+    IEnumerator DealTotalDamage() 
     {
-        float totalDamage = AcumulatedDamage;
+        float totalDamage = AcumulatedDamage + currentPoison;
         Enemy_CurrentHP -= totalDamage;
         Enemy_CurrentHP = Mathf.Clamp(Enemy_CurrentHP, 0, Enemy_MaxHP);
         AcumulatedDamage = 0;
@@ -329,16 +330,22 @@ public class GameController_Simple : MonoBehaviour
 
         yield return new WaitForSeconds(shakeDuration);
         
+        HealPoisonOnEndRoll();
 
         if (Mathf.Approximately( Enemy_CurrentHP,0))
         {
+            RemoveAllPoison();
             ChangeGameState(GameState.EncountersTransition);
         }
     }
     void UpdateAcumulatedDamageDisplay()
     {
-        
         TMP_AcumulatedDamage.text = $"<color=white>{MathJ.FloatToString(AcumulatedDamage, 1)}";
+        if (currentPoison > 0)
+        {
+            TMP_AcumulatedDamage.text += $" <color=green>+ {MathJ.FloatToString(currentPoison, 1)}";
+        }
+        
     }
     void UpdateEnemyHPBar()
     {
@@ -349,6 +356,25 @@ public class GameController_Simple : MonoBehaviour
         Enemy_MaxHP = MaxHP;
         Enemy_CurrentHP = MaxHP;
         UpdateEnemyHPBar();
+    }
+    #endregion
+    #region POISON
+    [Header("Poison")]
+    [SerializeField] float currentPoison = 0;
+    [SerializeField] float amountToHealOnEndRoll = 10;
+    public void ApplyPoison(float amount)
+    {
+        currentPoison += amount;
+        UpdateAcumulatedDamageDisplay();
+    }
+    void HealPoisonOnEndRoll()
+    {
+        currentPoison -= amountToHealOnEndRoll;
+        if (currentPoison < 0) { currentPoison = 0; }
+    }
+    void RemoveAllPoison()
+    {
+        currentPoison = 0;
     }
     #endregion
     #region MONEY

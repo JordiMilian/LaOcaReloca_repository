@@ -2,12 +2,12 @@ using DG.Tweening;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 
 public class TileSharedVisuals : MonoBehaviour
 {
     Camera mainCamera;
-    [HideInInspector] public TileTfData originTransform;
     [SerializeField] float heightWhileDragged = .5f;
     GameController_Simple gameController;
     [HideInInspector] public TileController tileBase;
@@ -39,20 +39,33 @@ public class TileSharedVisuals : MonoBehaviour
         transform.localScale = Vector3.zero;
         transform.DOScale(1, duration).SetEase(Ease.OutBounce);
     }
+    Coroutine shakeCoroutine;
     public void shakeTile(Intensity intensity)
     {
+        if (shakeCoroutine != null) { StopCoroutine(shakeCoroutine); }
+        float sTime = 0;
         switch (intensity)
         {
             case Intensity.empty: break;
             case Intensity.low:
-                transform.DOShakeRotation(0.2f, 5f, 4);
+                sTime = .2f;
+                transform.DOShakeRotation(sTime, 5f, 4);
                 break;
             case Intensity.mid:
-                transform.DOShakeRotation(0.4f, 10f, 8);
+                sTime = 0.4f;
+               transform.DOShakeRotation(sTime, 10f, 8);
                 break;
             case Intensity.large:
-                transform.DOShakeRotation(0.6f, 20f, 10);
+                sTime = .6f;
+                transform.DOShakeRotation(sTime, 20f, 10);
                 break;
+        }
+        shakeCoroutine = StartCoroutine( shakeDelay(sTime));
+
+        IEnumerator shakeDelay(float time)
+        {
+            yield return new WaitForSeconds(time);
+            transform.rotation = Quaternion.identity;
         }
     }
     [Header("Message display")]

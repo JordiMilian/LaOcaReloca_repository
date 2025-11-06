@@ -542,6 +542,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         yield return V_StepPlayerToNewPos();
         GameController_Simple.Instance.shopController.UpdatePrices();
+        yield return GameController_Simple.Instance.OnRemovedTileFromBoard_CardEffect.C_ActivateEffects();
 
     }
     public void MoveTileInBoard(int from, int to)

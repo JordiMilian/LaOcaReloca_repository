@@ -1882,6 +1882,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7e946df9087c729418b4c1d5a0c5f107, type: 2}
   - {fileID: 11400000, guid: 96319c527a6b8234abb7c26a558e1296, type: 2}
   - {fileID: 11400000, guid: c79246b50a24cfd478111d9c3be9565d, type: 2}
+  - {fileID: 11400000, guid: 5af28507c202acd4a9bed8f89ccf7e86, type: 2}
+  - {fileID: 11400000, guid: 8dcffe8585aedd7428f1773602d878f5, type: 2}
 --- !u!4 &400194873
 Transform:
   m_ObjectHideFlags: 0
@@ -2908,11 +2910,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: RacoonGang
-  folderName: Adders
-  title: RACOON GANG
-  color: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
-  baseDamage: 15
+  assetName: CompostPile
+  folderName: Poison
+  title: COMPOST PILE
+  color: {r: 0, g: 1, b: 0.050857544, a: 1}
+  baseDamage: 12
   rarity: 2
   tag: 0
   factory: {fileID: 400194872}
@@ -7022,6 +7024,8 @@ MonoBehaviour:
   Enemy_CurrentHP: 100
   TMP_AcumulatedDamage: {fileID: 977100660}
   healthbar: {fileID: 890606827}
+  currentPoison: 0
+  amountToHealOnEndRoll: 10
   OnMoneyUpdated:
     m_PersistentCalls:
       m_Calls: []
