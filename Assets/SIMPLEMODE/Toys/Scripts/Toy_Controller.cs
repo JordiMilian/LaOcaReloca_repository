@@ -10,13 +10,19 @@ public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
     public Toy_Profile _Profile;
     public bool isActive;
     public ToySlot currentSlot;
+    public Transform originTf;
+    bool isInShop;
     
     public void SetProfile(Toy_Profile profile)
     {
         _Profile = Instantiate(profile);
         _Profile.InitializeProfile(this);
 
-        GetComponent<MeshFilter>().mesh = _Profile.toyMesh;
+        if(_Profile.toyMesh != null)
+        {
+            GetComponent<MeshFilter>().mesh = _Profile.toyMesh;
+        }
+            
     }
     public void ActivateToy()
     {
@@ -30,12 +36,16 @@ public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
     #region BUYABLE
     public int GetBuyingPrice()
     {
-        return 50;
+        return 15;
     }
 
     public void OnAppearInShop(ShopItem_Controller shopItemController)
     {
         //Pick a random profile and set it
+        SetProfile(ToysManager.Instance.GetRandomToyProfile());
+        originTf = shopItemController.transform;
+        transform.position = originTf.position;
+        isInShop = true;
     }
 
     public void OnEnablePurchase()
@@ -56,12 +66,12 @@ public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
 
     public string GetTooltipTitle()
     {
-        return _Profile.Name;
+        return _Profile.Title;
     }
 
     public Texture GetTooltipTexture()
     {
-        return null;
+        return _Profile.TooltipTexture;
     }
     public void OnPointerEnter(PointerEventData eventData) { RequestTooltip(); }
     public void OnPointerExit(PointerEventData eventData) { StopRequestTooltip(); }
@@ -76,9 +86,9 @@ public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
     #region MOVEMENT
     public bool isDraggable = true;
     Coroutine dragginCoroutine;
-    public void returnToyToSlot()
+    public void returnToyToOrigin()
     {
-        transform.DOMove(currentSlot.transform.position,.2f).SetEase(Ease.OutBack);
+        transform.DOMove(originTf.transform.position,.5f).SetEase(Ease.OutBack);
     }
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -105,15 +115,34 @@ public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit[] hitsArray;
             hitsArray = Physics.RaycastAll(ray);
+            GameController_Simple gameController = GameController_Simple.Instance;
             foreach (RaycastHit hit in hitsArray)
             {
                 if (hit.collider.TryGetComponent(out ToySlot slotUnder))
                 {
-                    slotUnder.OnPlacedToyInSlot(this);
-                    return;
+                    if(isInShop )
+                    {
+                        if(gameController.CanPurchase(GetBuyingPrice()))
+                        {
+                            isInShop = false;
+                            gameController.RemoveMoney(GetBuyingPrice());
+                            gameController.shopController.GetShopItem(this).RemoveItem();
+                            slotUnder.OnPlacedToyInSlot(this);
+                            return;
+                        }
+                        else
+                        {
+                            returnToyToOrigin();
+                        }
+                    }
+                    else //not in shop
+                    {
+                        slotUnder.OnPlacedToyInSlot(this);
+                        return;
+                    } 
                 }
             }
-            if (isActive) { returnToyToSlot(); }
+            returnToyToOrigin(); 
         }
     }
     IEnumerator C_draggingCoroutine()

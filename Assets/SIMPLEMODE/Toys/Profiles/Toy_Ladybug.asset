@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27f7cfdf5d8d4bf4e958c6c04dfc958f, type: 3}
+  m_Name: Toy_Ladybug
+  m_EditorClassIdentifier: 
+  Title: LADYBUG
+  toyMesh: {fileID: 0}
+  TooltipTexture: {fileID: 2800000, guid: f5b4ba3c33302ef44a7426f300a272a3, type: 3}

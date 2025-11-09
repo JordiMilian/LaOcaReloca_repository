@@ -1514,7 +1514,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ba5fddc5e873df7419d93ae1549e6c45, type: 2}
   - {fileID: 11400000, guid: 329516dabd7e7884cb99d011478da560, type: 2}
   - {fileID: 11400000, guid: 438175391d459544986b93faf3f99580, type: 2}
-  - {fileID: 11400000, guid: 239db7764f97b1147a243eddff33a0ac, type: 2}
   - {fileID: 11400000, guid: c131e48368993dd4eb091bad4ba2aeb4, type: 2}
   - {fileID: 11400000, guid: d86f78ce87d741a4a821a8f12ca66c00, type: 2}
   - {fileID: 11400000, guid: d68e12d0d19562f43a1f758eee639a70, type: 2}
@@ -1525,7 +1524,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d079e72c8f96fde4abf394c594bc9fa6, type: 2}
   - {fileID: 11400000, guid: d1879b766da214340a9f0f752fd2ed0b, type: 2}
   - {fileID: 11400000, guid: b5d6fbc836321e648b390c6cb5abc742, type: 2}
-  - {fileID: 11400000, guid: 0c2769ed4ea47ad46ae8c18189439914, type: 2}
   - {fileID: 11400000, guid: 539488036e63b1f4ab925b3a1340c636, type: 2}
   - {fileID: 11400000, guid: 9f3c3952484c8bd498122cc939029d84, type: 2}
   - {fileID: 11400000, guid: 09d1b94c3f409a94da0ed2fe62f76dc3, type: 2}
@@ -1543,7 +1541,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5af28507c202acd4a9bed8f89ccf7e86, type: 2}
   - {fileID: 11400000, guid: 8dcffe8585aedd7428f1773602d878f5, type: 2}
   - {fileID: 11400000, guid: 18fe0545ba600ab40a80a9f379da9c3e, type: 2}
-  - {fileID: 11400000, guid: cfea2518bd650f34e80a7fc5cd2be86a, type: 2}
 --- !u!4 &400194873
 Transform:
   m_ObjectHideFlags: 0
@@ -1591,6 +1588,10 @@ MonoBehaviour:
   testProfile: {fileID: 11400000, guid: 5d977e1b9ce9d3b4d9c51a0e2c946172, type: 2}
   testProfile2: {fileID: 11400000, guid: 1e5334f08591b3546857672e7493109c, type: 2}
   ToyPrefab: {fileID: 3468063801926346145, guid: e8da9a51bb90f4445a60a3971992606e, type: 3}
+  AllToyProfiles:
+  - {fileID: 11400000, guid: c73b0480f5cd25942a0d7c9fa3a93a34, type: 2}
+  - {fileID: 11400000, guid: 2700e6feffdca6245b975d381406f40b, type: 2}
+  - {fileID: 11400000, guid: 666c48057bbbeca448193145afd076ba, type: 2}
 --- !u!4 &401242999
 Transform:
   m_ObjectHideFlags: 0
@@ -2413,7 +2414,7 @@ GameObject:
   - component: {fileID: 498311903}
   - component: {fileID: 498311905}
   m_Layer: 0
-  m_Name: Cards Creation Tool
+  m_Name: PROFILES TOOLS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2467,14 +2468,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: Malfunction
-  folderName: Poison
-  title: MACHINE MALFUNCTION
+  assetName: gdfg
+  folderName: EmptySynergy
+  title: 
   color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   baseDamage: 9
   rarity: 3
   tag: 0
   factory: {fileID: 400194872}
+  ToyAssetName: Malfunction
+  ToyTitle: TOY TITLE
+  toysManager: {fileID: 401242998}
 --- !u!1 &566852619
 GameObject:
   m_ObjectHideFlags: 0
@@ -5859,19 +5863,18 @@ MonoBehaviour:
   EncountersPrefabs:
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 3768023283977433165, guid: 709f3b0af1a608747937a6059a839aa3, type: 3}
-  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
-  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
-  - {fileID: 3768023283977433165, guid: f0c530ebdba95df4a920f149e158b135, type: 3}
-  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
-  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 3768023283977433165, guid: 860536b0550a4f94e99ba5484f66765f, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 3768023283977433165, guid: 709f3b0af1a608747937a6059a839aa3, type: 3}
+  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   EnemyEncountersHP: 64000000c80000002c010000f4010000bc020000e803000014050000a406000034080000c4090000b80b0000
   AcumulatedDamage: 0
   Enemy_MaxHP: 100
@@ -6090,6 +6093,8 @@ MonoBehaviour:
   - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
   - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
   - {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
+  - {fileID: 3468063801926346145, guid: e8da9a51bb90f4445a60a3971992606e, type: 3}
+  - {fileID: 3468063801926346145, guid: e8da9a51bb90f4445a60a3971992606e, type: 3}
   shopItems:
   - {fileID: 1309579213}
   - {fileID: 1169025460}

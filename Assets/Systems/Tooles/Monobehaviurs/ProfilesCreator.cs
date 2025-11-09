@@ -12,5 +12,8 @@ public class ProfilesCreator : MonoBehaviour
     [HideInInspector] [SerializeField] TileTags tag = TileTags.NoTag;
     public TilesFactory factory;
 
+    [HideInInspector][SerializeField] string ToyAssetName;
+    [HideInInspector][SerializeField] string ToyTitle = "TOY TITLE";
+    public ToysManager toysManager;
 
 }

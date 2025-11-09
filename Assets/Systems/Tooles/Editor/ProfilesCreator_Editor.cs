@@ -11,6 +11,7 @@ public class ProfilesCreator_Editor : Editor
     SerializedProperty prop_color, prop_baseDamage;
     SerializedProperty prop_rarity, prop_tag;
     bool useFolder;
+    SerializedProperty prop_toyAssetName, prop_toyTitle;
 
     private void OnEnable()
     {
@@ -22,9 +23,22 @@ public class ProfilesCreator_Editor : Editor
         prop_baseDamage = serializedObject.FindProperty("baseDamage");
         prop_rarity = serializedObject.FindProperty("rarity");
         prop_tag = serializedObject.FindProperty("tag");
+
+        prop_toyAssetName = serializedObject.FindProperty("ToyAssetName");
+        prop_toyTitle = serializedObject.FindProperty("ToyTitle");
     }
 
     public override void OnInspectorGUI()
+    {
+        CreateTileProfile();
+        ChangeName();
+        ToyProfileCreation();
+    }
+
+    string newName;
+    string oldName;
+    string newTitle;
+    void CreateTileProfile()
     {
         bool showCreateScriptButton = true, showCreateInstanceButton = true;
         bool showDeleteTile = false;
@@ -42,22 +56,22 @@ public class ProfilesCreator_Editor : Editor
         EditorGUILayout.PropertyField(prop_assetName);
 
         GUILayout.BeginHorizontal();
-        
-            useFolder = GUILayout.Toggle(useFolder, "Use Folder");
-            GUI.enabled = useFolder;
-            EditorGUILayout.PropertyField(prop_folderName);
-            GUI.enabled = true;
+
+        useFolder = GUILayout.Toggle(useFolder, "Use Folder");
+        GUI.enabled = useFolder;
+        EditorGUILayout.PropertyField(prop_folderName);
+        GUI.enabled = true;
 
         GUILayout.EndHorizontal();
 
         serializedObject.ApplyModifiedProperties();
 
         #region GET STRINGS
-        string assetName = "Tile_"+prop_assetName.stringValue;
+        string assetName = "Tile_" + prop_assetName.stringValue;
         string folderName = prop_folderName.stringValue;
 
         string instancepath;
-        if(!useFolder)
+        if (!useFolder)
         {
             instancepath = $"Assets/SIMPLEMODE/Tiles/Profiles/{assetName}.asset";
         }
@@ -65,7 +79,7 @@ public class ProfilesCreator_Editor : Editor
         string scriptpath = $"Assets/SIMPLEMODE/Tiles/Scripts/{assetName}.cs";
         #endregion
         #region STRING CHECK
-        if(assetName.Contains(' ') || prop_assetName.stringValue == "")
+        if (assetName.Contains(' ') || prop_assetName.stringValue == "")
         {
             EditorGUILayout.HelpBox("Not valid asset name", MessageType.Error);
             return;
@@ -95,7 +109,7 @@ public class ProfilesCreator_Editor : Editor
             if (GUILayout.Button("Create Script"))
             {
                 //Create the script in the folder
-                File.WriteAllText(scriptpath, GetEmptyScriptContent(assetName));
+                File.WriteAllText(scriptpath, GetEmptyTileProfileContent(assetName));
                 AssetDatabase.Refresh();
                 //We should wait for compiling time
             }
@@ -146,9 +160,9 @@ public class ProfilesCreator_Editor : Editor
                 Selection.activeObject = instance;
             }
         }
-        if(showDeleteTile)
+        if (showDeleteTile)
         {
-            if(GUILayout.Button("Delete tile"))
+            if (GUILayout.Button("Delete tile"))
             {
                 //remove it from the factory
                 Tile_Profile profileToDelete = AssetDatabase.LoadAssetAtPath<Tile_Profile>(instancepath);
@@ -159,18 +173,11 @@ public class ProfilesCreator_Editor : Editor
             }
         }
         #endregion
-
-        ChangeName();
-       
     }
-
-    string newName;
-    string oldName;
-    string newTitle;
     void ChangeName()
     {
         GUILayout.Space(5);
-        GUILayout.Label("TILES CHANGING NAME TOOL");
+        GUILayout.Label("TILES CHANGING NAME TOOL", EditorStyles.whiteBoldLabel);
         GUILayout.Space(10);
 
         GUILayout.BeginHorizontal();
@@ -228,10 +235,91 @@ public class ProfilesCreator_Editor : Editor
 
         
     }
-   
+    void ToyProfileCreation()
+    {
+        bool showCreateScriptButton = true, showCreateInstanceButton = true;
+        Undo.RecordObject(data, "ToyCreator");
+
+        GUILayout.Space(5);
+        GUILayout.Label("TOY PROFILES CREATION TOOL", EditorStyles.whiteBoldLabel);
+        GUILayout.Space(10);
+
+        EditorGUILayout.PropertyField(prop_toyAssetName);
+        serializedObject.ApplyModifiedProperties();
+
+        #region GET STRINGS
+        string assetName = "Toy_" + prop_toyAssetName.stringValue;
+        string ScriptPath = $"Assets/SIMPLEMODE/Toys/Profiles/Scripts/{assetName}.cs";
+        string instancePath = $"Assets/SIMPLEMODE/Toys/Profiles/{assetName}.asset";
+        #endregion
+        #region STRING CHECK
+        if (assetName.Contains(' ') || prop_toyAssetName.stringValue == "")
+        {
+            EditorGUILayout.HelpBox("Not valid asset name", MessageType.Error);
+            return;
+        }
+        Type script_Type = Type.GetType(assetName + ", Assembly-CSharp");
+        if (AssetDatabase.AssetPathExists(instancePath))
+        {
+            EditorGUILayout.HelpBox("That profile already exists", MessageType.Warning);
+            //delete button if necessary
+            showCreateScriptButton = false;
+            showCreateInstanceButton = false;
+        }
+        else if (script_Type != null)
+        {
+            EditorGUILayout.HelpBox("A script with that name already exists, now create the instance", MessageType.Warning);
+            showCreateScriptButton = false;
+        }
+        else
+        {
+            showCreateInstanceButton = false;
+        }
+        #endregion
+        #region BUTTONS
+        if (showCreateScriptButton)
+        {
+            if (GUILayout.Button("Create Script"))
+            {
+                //Create the script in the folder
+                File.WriteAllText(ScriptPath, GetEmptyToyProfileContent(assetName));
+                AssetDatabase.Refresh();
+            }
+        }
+        if (showCreateInstanceButton)
+        {
+            EditorGUILayout.PropertyField(prop_toyTitle);
+
+            if (GUILayout.Button("Create Instance"))
+            {
+                Type SO_type = Type.GetType(assetName + ", Assembly-CSharp");
+                if (SO_type == null)
+                {
+                    Debug.LogError("Could not find type: " + assetName);
+                    return;
+                }
+
+                Toy_Profile instance = (Toy_Profile)ScriptableObject.CreateInstance(SO_type);
+                if (instance == null)
+                {
+                    Debug.LogError("Could not create instance of: " + assetName);
+                    return;
+                }
+
+                instance.Title = prop_toyTitle.stringValue;
+
+                AssetDatabase.CreateAsset(instance, instancePath);
+                data.toysManager.AllToyProfiles.Add(instance);
+                AssetDatabase.SaveAssets();
+
+                Selection.activeObject = instance;
+            }
+        }
+        #endregion
+    }
 
 
-    string GetEmptyScriptContent(string scriptName)
+    string GetEmptyTileProfileContent(string scriptName)
     {
         return $"using UnityEngine;\n" +
             "using System.Collections;\n" +
@@ -243,6 +331,24 @@ public class ProfilesCreator_Editor : Editor
             "   //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }\n" +
             "   //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }\n" +
             "   //public override string GetTooltipText() { }\n" +
+            "}";
+    }
+    string GetEmptyToyProfileContent(string scriptName)
+    {
+        return $"using UnityEngine;\n" +
+            "using System.Collections;\n" +
+            "using static StringTools;\n" +
+            $"public class {scriptName} : Toy_Profile\n" +
+            "{\n" +
+            "   public override void OnActivatedToy()\n" +
+            "{\n" +
+            "\n" +
+            "}\n" +
+            "   public override void OnDeactivatedToy()" +
+            "{\n" +
+            "\n" +
+            "}\n" +
+            "  public override string GetTooltipDescription() { return string.Empty; }\n" +
             "}";
     }
 }

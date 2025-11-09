@@ -7,6 +7,7 @@ public class ToysManager : MonoBehaviour
     public static ToysManager Instance;
     [SerializeField] Toy_Profile testProfile, testProfile2;
     [SerializeField] GameObject ToyPrefab;
+    public List<Toy_Profile> AllToyProfiles;
 
     List<Toy_Controller> instantiatedToys = new List<Toy_Controller>();
     private void Awake()
@@ -26,6 +27,11 @@ public class ToysManager : MonoBehaviour
         return newController;
     }
 
+    public Toy_Profile GetRandomToyProfile()
+    {
+        int randomIndex = Random.Range(0, AllToyProfiles.Count);
+        return AllToyProfiles[randomIndex];
+    }
     public void DestroyToy(Toy_Controller toy)
     {
         instantiatedToys.Remove(toy);
@@ -46,6 +52,7 @@ public class ToysManager : MonoBehaviour
         }
     }
 
+    #region TESTING
     [ContextMenu("Test Instantiate Toy")]
     void TestInstantiateToy()
     {
@@ -61,6 +68,6 @@ public class ToysManager : MonoBehaviour
         testToy.transform.position = new Vector3(0, 3, 0);
 
     }
-
+    #endregion
 
 }

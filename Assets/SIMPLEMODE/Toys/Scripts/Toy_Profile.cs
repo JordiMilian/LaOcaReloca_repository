@@ -2,11 +2,12 @@ using UnityEngine;
 
 public abstract class Toy_Profile : ScriptableObject
 {
-    public string Name;
+    public string Title;
     public Mesh toyMesh;
     protected GameController_Simple _gameController;
     protected Board_Controller_simple _boardController;
     protected Toy_Controller _ToyController;
+    public Texture TooltipTexture;
 
     public void InitializeProfile(Toy_Controller controller)
     {

@@ -9,18 +9,18 @@ public class ToySlot : MonoBehaviour
     {
         if (newToy == currentToy)
         {
-            currentToy.returnToyToSlot();
+            currentToy.returnToyToOrigin();
         }
 
         if (newToy.isActive)
         {
             if(isActive)
             {
-                replaceToys(newToy); //both toys are active, so switch place
+                moveActiveToys(newToy); //both toys are active, so switch place
             }
             else
             {
-                changeToysSlot(newToy); //there is no slot here, so place it here
+                replaceToy(newToy); //there is no slot here, so place it here
             }
         }
         else
@@ -32,7 +32,7 @@ public class ToySlot : MonoBehaviour
             }
 
             SetNewSlot(newToy);
-            newToy.returnToyToSlot();
+            newToy.returnToyToOrigin();
 
             newToy.ActivateToy();
         }
@@ -42,25 +42,22 @@ public class ToySlot : MonoBehaviour
     {
         currentToy = newToy;
         currentToy.currentSlot = this;
+        currentToy.originTf = transform;
         currentToy.isActive = true;
         isActive = true;
     }
-    void replaceToys(Toy_Controller newToy)
+    void moveActiveToys(Toy_Controller newToy)
     {
         Toy_Controller oldToy = currentToy;
         ToySlot otherSlot = newToy.currentSlot;
 
-        currentToy = newToy;
-        otherSlot.currentToy = oldToy;
+        otherSlot.SetNewSlot(oldToy);
+        SetNewSlot(newToy);
 
-        oldToy.currentSlot = newToy.currentSlot;
-        newToy.currentSlot = this;
-        
-
-        oldToy.returnToyToSlot();
-        newToy.returnToyToSlot();
+        oldToy.returnToyToOrigin();
+        newToy.returnToyToOrigin();
     }
-    void changeToysSlot(Toy_Controller newToy)
+    void replaceToy(Toy_Controller newToy)
     {
         ToySlot otherSlot = newToy.currentSlot;
 
@@ -69,6 +66,6 @@ public class ToySlot : MonoBehaviour
         isActive = true;
 
         SetNewSlot(newToy);
-        newToy.returnToyToSlot();
+        newToy.returnToyToOrigin();
     }
 }
