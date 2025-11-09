@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static StringTools;
 [CreateAssetMenu(menuName = "TileProfile/Ocas/LeaderOca", fileName = "Tile_LeaderOca")]
@@ -13,7 +14,7 @@ public class Tile_Oca_LeaderOca : Tile_Oca
         List<TileController> ocasTiles = new();
         foreach (TileController tile in BoardController.TilesList)
         {
-            if (tile._Profile.tileTag == TileTags.Oca) { ocasTiles.Add(tile); }
+            if (tile._Profile.tileTags.Contains(TileTags.Oca)) { ocasTiles.Add(tile); }
         }
         foreach (TileController tile in ocasTiles)
         {

@@ -19,7 +19,7 @@ MonoBehaviour:
   rarity: 2
   tileSize: 1
   uniquePrice: 0
-  tileTag: 3
+  tileTags: 03000000
   _Tile: {fileID: 0}
   ratTokenTileProfile: {fileID: 11400000, guid: 97015eb91c314b64fac18bdee10a8fbe, type: 2}
   ratsAmountOnLanded: 4

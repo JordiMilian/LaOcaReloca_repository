@@ -137,7 +137,7 @@ public class ProfilesCreator_Editor : Editor
                 instance.Title = prop_title.stringValue;
                 instance.BaseDamage = prop_baseDamage.floatValue;
                 instance.rarity = (Rarity)prop_rarity.enumValueIndex;
-                instance.tileTag = (TileTags)prop_tag.enumValueIndex;
+                instance.tileTags = new TileTags[] { (TileTags)prop_tag.enumValueIndex };
 
                 AssetDatabase.CreateAsset(instance, instancepath);
                 data.factory.tileProfiles.Add(instance);

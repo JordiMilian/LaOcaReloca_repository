@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.Events;
 using UnityEngine.Splines;
-using UnityEditor.Rendering;
 
 public class Board_Controller_simple : MonoBehaviour
 {
@@ -518,7 +517,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         tile.transform.parent = tilesHolder;
 
-        yield return GameController_Simple.Instance.OnAddedNewTileToBoard_CardEffect.C_ActivateEffects();
+        yield return GameController_Simple.Instance.OnAddedNewTileToBoard_CardEffect.C_ActivateEffects(tile);
 
         GameController_Simple.Instance.shopController.UpdatePrices();
     }  

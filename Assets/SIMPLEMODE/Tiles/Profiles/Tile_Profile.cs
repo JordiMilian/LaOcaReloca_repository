@@ -10,7 +10,7 @@ public class Tile_Profile : ScriptableObject
     [HideInInspector] public Rarity rarity = Rarity.none;
     public TileSize tileSize = TileSize.Medium;
     [HideInInspector] public int uniquePrice = 0; //IF rarity is Unique, use this value.
-    public TileTags tileTag;
+    public TileTags[] tileTags;
     [HideInInspector] public TileController _Tile;
     protected TileSharedVisuals tileMovement;
     [Space(5)]

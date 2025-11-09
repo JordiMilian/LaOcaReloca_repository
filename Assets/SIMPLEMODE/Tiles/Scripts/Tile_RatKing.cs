@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 public class Tile_RatKing : Tile_Profile
 {
     [SerializeField] float ratsDamageAdder = .5f;
@@ -27,7 +28,7 @@ public class Tile_RatKing : Tile_Profile
     IEnumerator OnCrossedCheck()
     {
         TileController otherTile = BoardController.TilesList[BoardController.PlayerIndex];
-        if (otherTile._Profile.tileTag == TileTags.Rat && otherTile != _Tile)
+        if (otherTile._Profile.tileTags.Contains(TileTags.Rat) && otherTile != _Tile)
         {
             otherTile.DamagesToDeal.Add(otherTile.GetBaseDamage() * ratsDamageAdder);
             tileMovement.shakeTile(Intensity.low);

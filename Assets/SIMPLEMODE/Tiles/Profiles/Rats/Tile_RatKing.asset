@@ -19,7 +19,7 @@ MonoBehaviour:
   rarity: 2
   tileSize: 1
   uniquePrice: 0
-  tileTag: 3
+  tileTags: 03000000
   _Tile: {fileID: 0}
   ratsDamageAdder: 1
   addedAmountOnLanded: 0.25

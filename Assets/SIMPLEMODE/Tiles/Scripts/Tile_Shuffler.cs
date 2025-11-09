@@ -14,7 +14,7 @@ public class Tile_Shuffler : Tile_Profile
         if (_Tile.indexInBoard < BoardController.TilesList.Count - 2) //si no es la penultima
         {
             List<TileController> tilesToShuffle = new();
-            for (int i = BoardController.TilesList.Count - 2; i > BoardController.PlayerIndex + 1; i--)
+            for (int i = BoardController.TilesList.Count - 2; i > _Tile.indexInBoard + 1; i--)
             {
                 TileController tile = BoardController.TilesList[i];
                 tilesToShuffle.Add(tile);
@@ -24,7 +24,7 @@ public class Tile_Shuffler : Tile_Profile
             for (int i = tilesToShuffle.Count - 1; i >= 0; i--)
             {
                 TileController tile = tilesToShuffle[i];
-                int randomIndex = Random.Range(BoardController.PlayerIndex + 1, BoardController.TilesList.Count - 1);
+                int randomIndex = Random.Range(_Tile.indexInBoard + 1, BoardController.TilesList.Count - 1);
                 BoardController.TilesList.Insert(randomIndex, tile);
             }
             BoardController.UpdateStructData();

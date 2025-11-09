@@ -21,4 +21,4 @@ MonoBehaviour:
   uniquePrice: 0
   tileTag: 0
   _Tile: {fileID: 0}
-  poisonAmount: 20
+  poisonAmount: 5

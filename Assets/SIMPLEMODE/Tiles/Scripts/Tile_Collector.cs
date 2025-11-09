@@ -14,8 +14,10 @@ public class Tile_Collector : Tile_Profile
         yield return base.OnRemovedFromBoard();
         GameController.OnAddedNewTileToBoard_CardEffect.RemoveEffect(OnAddedTile);
     }
-    IEnumerator OnAddedTile()
+    IEnumerator OnAddedTile(TileController newTile)
     {
+        if(newTile == _Tile) { yield break; }
+
         GameController.AddMoney(moneyOnAddedTile);
         tileMovement.shakeTile(Intensity.mid);
         yield break;

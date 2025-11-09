@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -96,7 +97,7 @@ public static class MathJ
         List<TileController> tilesWithTag = new();
         foreach (TileController tile in board.TilesList)
         {
-            if (tile._Profile.tileTag == tileTag)
+            if (tile._Profile.tileTags.Contains(tileTag))
             {
                 if (ignoreSelf && tile == thisTile) { continue; }
                 tilesWithTag.Add(tile);

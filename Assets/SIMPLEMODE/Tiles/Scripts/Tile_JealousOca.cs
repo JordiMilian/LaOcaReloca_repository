@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
+using System.Linq;
 public class Tile_JealousOca : Tile_Oca
 {
     public override IEnumerator OnPlacedInBoard() 
@@ -11,7 +12,7 @@ public class Tile_JealousOca : Tile_Oca
     IEnumerator OnLandedEffect()
     {
         TileController landedTile = BoardController.TilesList[BoardController.PlayerIndex];
-        if (landedTile._Profile.tileTag == TileTags.Oca && landedTile != _Tile)
+        if (landedTile._Profile.tileTags.Contains(TileTags.Oca) && landedTile != _Tile)
         {
             _Tile.AddBaseDamage(landedTile.GetBaseDamage());
             yield break;

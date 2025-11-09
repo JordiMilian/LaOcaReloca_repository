@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 public class Tile_Trebol : Tile_Profile
 {
     [SerializeField] int moneyOnLandedOnEmpty = 6;
@@ -10,7 +11,7 @@ public class Tile_Trebol : Tile_Profile
     }
     IEnumerator OnLandedEffect()
     {
-        if (BoardController.TilesList[BoardController.PlayerIndex]._Profile.tileTag == TileTags.Empty)
+        if (BoardController.TilesList[BoardController.PlayerIndex]._Profile.tileTags.Contains(TileTags.Empty))
         {
             GameController.AddMoney(moneyOnLandedOnEmpty);
             tileMovement.shakeTile(Intensity.mid);

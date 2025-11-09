@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "TileProfile/EmptySynergy/MrBeast", fileName = "Tile_MrBeast")]
@@ -12,7 +13,7 @@ public class Tile_MrBeast : Tile_Profile
     {
         foreach(TileController tile in BoardController.TilesList)
         {
-            if(tile._Profile.tileTag == TileTags.Empty)
+            if(tile._Profile.tileTags.Contains(TileTags.Empty))
             {
                 tile.AddBaseDamage(addedDamageToEmptyTiles);
                 yield return new WaitForSeconds(0.1f);

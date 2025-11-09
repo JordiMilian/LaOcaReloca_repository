@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 public class Tile_Shelter : Tile_Profile
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
@@ -19,7 +20,7 @@ public class Tile_Shelter : Tile_Profile
         int emptiesCount = 0;
         foreach (TileController tile in adjacentEmpties)
         {
-            if(tile._Profile.tileTag == TileTags.Empty) 
+            if(tile._Profile.tileTags.Contains(TileTags.Empty)) 
             {
                 emptiesCount++;
                 tile.tileMovement.shakeTile(Intensity.low);
@@ -35,7 +36,7 @@ public class Tile_Shelter : Tile_Profile
 
         foreach (TileController tile in adjacentEmpties)
         {
-            if (tile._Profile.tileTag == TileTags.Empty)
+            if (tile._Profile.tileTags.Contains(TileTags.Empty))
             {
                 emptiesAround.Add(tile);
                 tile.AddBaseDamage(PermaAddedDamage);

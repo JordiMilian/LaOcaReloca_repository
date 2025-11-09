@@ -26,7 +26,7 @@ public class GameController_Simple : MonoBehaviour
     public CardEffectsDelegate OnReachedEndTile_CardEffects = new();
     public CardEffectsDelegate OnLanded_CardEffects = new(); //Any card effect that triggers when landing on another tile. The regular Onlanded effect of all cards is not concerned with this
     public CardEffectsDelegate OnCrossed_CardEffects = new();
-    public CardEffectsDelegate OnAddedNewTileToBoard_CardEffect = new();
+    public CardEffectsDelegate<TileController> OnAddedNewTileToBoard_CardEffect = new();
     public CardEffectsDelegate OnRemovedTileFromBoard_CardEffect = new();
 
     public static GameController_Simple Instance;
@@ -116,6 +116,7 @@ public class GameController_Simple : MonoBehaviour
     {
         dicesController.EnableRollButton();
         dicesController.EnableAddExtraRollValueButton();
+        ToysManager.Instance.EnableToysDrag();
         shopController.EnableShop();
         if(BoardController.PlayerIndex == BoardController.TilesList.Count -1)
         {
@@ -127,6 +128,7 @@ public class GameController_Simple : MonoBehaviour
         dicesController.DisableRollButton();
         dicesController.DisableAddExtraRollValueButton();
         shopController.DisableShop();
+        ToysManager.Instance.DisableToysDrag();
     }
     #endregion
     #region ROLLING DICES

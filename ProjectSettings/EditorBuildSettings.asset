@@ -9,14 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/SImpleMode.unity
+    guid: 5a9140d8f766a03408b33889c8c3b291
+  - enabled: 1
     path: Assets/Systems/LoadingScreen/LoadingScreen.unity
     guid: be7b0d267c2272241a40d12879f769ea
   - enabled: 1
     path: Assets/Scenes/ProceduralCube.unity
     guid: acd3747982fdc77429776a389a8dfa9b
-  - enabled: 1
-    path: Assets/Scenes/SImpleMode.unity
-    guid: 5a9140d8f766a03408b33889c8c3b291
   - enabled: 1
     path: Assets/Scenes/ToolsTesting.unity
     guid: 8a340f4385d70aa468a499366afb5dc0

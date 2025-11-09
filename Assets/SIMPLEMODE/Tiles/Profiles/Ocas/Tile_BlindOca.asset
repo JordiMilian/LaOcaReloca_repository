@@ -17,6 +17,7 @@ MonoBehaviour:
   tileColor: {r: 0.7924528, g: 0.14578143, b: 0.48006102, a: 1}
   tileTexture: {fileID: 2800000, guid: 5e7f11ea31b6b0c499038e63f89fe5dd, type: 3}
   rarity: 2
+  tileSize: 1
   uniquePrice: 0
-  tileTag: 2
+  tileTags: 02000000
   _Tile: {fileID: 0}
