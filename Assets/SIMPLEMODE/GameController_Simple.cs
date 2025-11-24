@@ -24,7 +24,7 @@ public class GameController_Simple : MonoBehaviour
     public CardEffectsDelegate OnRolledDice_CardEffects = new();
     public CardEffectsDelegate OnKilledEnemy_CardEffects = new();
     public CardEffectsDelegate OnReachedEndTile_CardEffects = new();
-    public CardEffectsDelegate OnLanded_CardEffects = new(); //Any card effect that triggers when landing on another tile. The regular Onlanded effect of all cards is not concerned with this
+    public CardEffectsDelegate<TileController> OnLanded_CardEffects = new(); //Any card effect that triggers when landing on another tile. The regular Onlanded effect of all cards is not concerned with this
     public CardEffectsDelegate OnCrossed_CardEffects = new();
     public CardEffectsDelegate<TileController> OnAddedNewTileToBoard_CardEffect = new();
     public CardEffectsDelegate OnRemovedTileFromBoard_CardEffect = new();
@@ -174,7 +174,7 @@ public class GameController_Simple : MonoBehaviour
             }
         }
 
-        yield return OnLanded_CardEffects.C_ActivateEffects();
+        yield return OnLanded_CardEffects.C_ActivateEffects(BoardController.GetCurrentPlayerTile());
 
         yield return BoardController.L_LandPlayerInCurrentPos();
         yield return BoardController.GetCurrentPlayerTile().C_DealAllDamageToDeal();
@@ -411,6 +411,7 @@ public class GameController_Simple : MonoBehaviour
     public int RollsRemaining;
     public int MoneyPerRemainignRoll = 3;
     [SerializeField] TextMeshProUGUI TMP_Rolls;
+    public void UpdateRemainingRolls() { SetRemainingRolls(RollsRemaining); }
     public void SetRemainingRolls(int amount)
     {
         RollsRemaining = amount;

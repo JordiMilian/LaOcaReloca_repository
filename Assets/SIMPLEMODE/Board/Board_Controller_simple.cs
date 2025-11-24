@@ -1,7 +1,7 @@
-using UnityEngine;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Splines;
 
@@ -14,7 +14,13 @@ public class Board_Controller_simple : MonoBehaviour
     public TileController GetCurrentPlayerTile() { return TilesList[PlayerIndex]; }
     public List<TileTfData> TfData = new();
     public Dictionary<Vector2Int, TileController> TilesByPosition = new();
-    public int PlayerIndex { get; private set; }
+    public int PlayerIndex 
+    {
+        get;
+        private set;
+    }
+
+    int _playerIndex;
 
     Transform tilesHolder;
     public static Board_Controller_simple Instance;
@@ -388,7 +394,8 @@ public class Board_Controller_simple : MonoBehaviour
         ;
         yield return new WaitForSeconds(duration);
     }
-    #endregion 
+    #endregion
+
     #region MAIN PUBLIC METHODS FOR BOARD MOVEMENT
     public IEnumerator L_StepPlayer() 
     {
@@ -507,12 +514,13 @@ public class Board_Controller_simple : MonoBehaviour
         TilesList.Insert(index, tile);
 
         UpdateStructData();
-
         MoveTiles_ToTfData(true);
-        if (PlayerIndex >= index) { PlayerIndex++; }
+        if (PlayerIndex > index) { PlayerIndex++; }
+        
         yield return V_StepPlayerToNewPos();
-
         tile.SetTileState(TileState.InBoard);
+        tile.CheckForDraggability(0,0); //per alguna raó he de ficar aixo aqui quan ja s'executa al SetTileState. Si no ho fico no pilla el draggabiility be si es coloca sobre el player
+
         yield return tile.C_OnPlacedInBoard();
 
         tile.transform.parent = tilesHolder;

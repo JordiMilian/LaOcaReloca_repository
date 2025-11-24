@@ -92,8 +92,12 @@ public class Dices_Controller : MonoBehaviour
         LastRolledValue += boughtRollValue;
         ResetBoughtValue();
         SetDicesDraggable(true);
-        TMP_RollDicesText.text = LastRolledValue.ToString();
+        SetMainButtonText( LastRolledValue.ToString());
 
+    }
+    public void SetMainButtonText(string text)
+    {
+        TMP_RollDicesText.text = text;
     }
     #region BUY ROLL VALUE
     int boughtRollValue = 0;

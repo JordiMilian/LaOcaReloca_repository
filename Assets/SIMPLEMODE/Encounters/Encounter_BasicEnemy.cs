@@ -15,6 +15,7 @@ public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
         cameras = CamerasManager.instance;
 
         Dices_Controller.Instance.Button_Rolldices.onClick.AddListener(GameController_Simple.Instance.ChangeStateToRollingDice);
+        Dices_Controller.Instance.SetMainButtonText("Roll Dices");
         gameController.SetRemainingRolls(gameController.MaxRollsPerEncounter);
         //Load board if it's not loaded
 

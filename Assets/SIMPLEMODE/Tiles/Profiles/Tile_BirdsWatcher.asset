@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f9c507d59827a4fa4142642e46335e, type: 3}
+  m_Name: Tile_BirdsWatcher
+  m_EditorClassIdentifier: 
+  BaseDamage: 5
+  Title: BIRDS WATCHER
+  tileColor: {r: 0.7735849, g: 0.507209, b: 0.73361695, a: 1}
+  tileTexture: {fileID: 2800000, guid: b570de4645fa77c4982bf540619f61c2, type: 3}
+  rarity: 2
+  tileSize: 1
+  uniquePrice: 0
+  tileTags: 00000000
+  _Tile: {fileID: 0}
+  dmgPerOca: 2
+  dmgOnLandedAdjacentOca: 40

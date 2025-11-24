@@ -23,6 +23,7 @@ public class Tile_Oca : Tile_Profile
             }
             if(BoardController.TilesList[i]._Profile is Tile_End)
             {
+                GameController.SetRemainingRolls(GameController.RollsRemaining + 1);
                 yield return BoardController.L_JumpPlayerTo(i, true);
                 yield break;
             }

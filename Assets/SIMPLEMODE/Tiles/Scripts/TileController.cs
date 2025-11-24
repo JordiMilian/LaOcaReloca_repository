@@ -228,7 +228,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     }
 
     [HideInInspector] public bool isBehindPlayer;
-    void CheckForDraggability(int from, int to)
+    public void CheckForDraggability(int from, int to)
     {
         isBehindPlayer = BoardController.PlayerIndex >= indexInBoard;
         if (isBehindPlayer) { tileMovement.SetBasicPanelColor_Transparent(); }

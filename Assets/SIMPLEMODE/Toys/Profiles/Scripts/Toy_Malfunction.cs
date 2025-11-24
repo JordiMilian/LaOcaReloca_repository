@@ -17,7 +17,7 @@ public class Toy_Malfunction : Toy_Profile
     IEnumerator OnAddedTile(TileController newTile)
     {
 
-        if (newTile._Profile.tileTags.Contains(TileTags.Token))
+        if (newTile._Profile.tileTags.Contains(TileTags.Token)&& newTile.GetBaseDamage() > 0)
         {
             if (newTile == lastTileSpawnedByThis) //don't trigger on tiles spawned by this 
             {
@@ -46,7 +46,7 @@ public class Toy_Malfunction : Toy_Profile
     }
     public override string GetTooltipDescription() 
     {
-        return $" {OnCustomMessaje("WHEN A NEW TOKEN IS SPAWNED")} {chanceToTrigger * 100}% chance to spawn a copy with 0 DMG.";
+        return $" {OnCustomMessaje("WHEN A NEW TOKEN IS SPAWNED")} If token DMG > 0,  {chanceToTrigger * 100}% chance to spawn a copy with 0 DMG.";
     }
 }
 

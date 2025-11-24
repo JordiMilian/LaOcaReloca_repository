@@ -9,9 +9,9 @@ public class Tile_Trebol : Tile_Profile
         yield return base.OnPlacedInBoard();
         GameController.OnLanded_CardEffects.AddEffect(OnLandedEffect);
     }
-    IEnumerator OnLandedEffect()
+    IEnumerator OnLandedEffect(TileController landedTile)
     {
-        if (BoardController.TilesList[BoardController.PlayerIndex]._Profile.tileTags.Contains(TileTags.Empty))
+        if (landedTile._Profile.tileTags.Contains(TileTags.Empty))
         {
             GameController.AddMoney(moneyOnLandedOnEmpty);
             tileMovement.shakeTile(Intensity.mid);

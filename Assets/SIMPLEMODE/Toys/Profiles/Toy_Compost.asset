@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e3312d5d207e9a409b13e7835ab0ea2, type: 3}
-  m_Name: Toy_Malfunction
+  m_Script: {fileID: 11500000, guid: e4ae6e1bfe51f2d49b3d2aededd660ab, type: 3}
+  m_Name: Toy_Compost
   m_EditorClassIdentifier: 
-  Title: MACHINE MALFUNTION
+  Title: COMPOST
   toyMesh: {fileID: 0}
-  TooltipTexture: {fileID: 2800000, guid: b77a1cb180423d44e9771191a206f243, type: 3}
-  chanceToTrigger: 0.5
+  TooltipTexture: {fileID: 2800000, guid: 802e0bddf4754f3459d85015d57c05a3, type: 3}
+  poisonAmount: 5

@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e3312d5d207e9a409b13e7835ab0ea2, type: 3}
-  m_Name: Toy_Malfunction
+  m_Script: {fileID: 11500000, guid: f159950d347b917479f605b174bfc32b, type: 3}
+  m_Name: Toy_angelFeather
   m_EditorClassIdentifier: 
-  Title: MACHINE MALFUNTION
+  Title: ANGEL FEATHER
   toyMesh: {fileID: 0}
-  TooltipTexture: {fileID: 2800000, guid: b77a1cb180423d44e9771191a206f243, type: 3}
-  chanceToTrigger: 0.5
+  TooltipTexture: {fileID: 2800000, guid: b8bb172e0064ee1449b638e0cbcede5f, type: 3}

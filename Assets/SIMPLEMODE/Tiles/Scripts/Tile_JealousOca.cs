@@ -9,9 +9,8 @@ public class Tile_JealousOca : Tile_Oca
        yield return base.OnPlacedInBoard();
         GameController.OnLanded_CardEffects.AddEffect(OnLandedEffect);
     }
-    IEnumerator OnLandedEffect()
+    IEnumerator OnLandedEffect(TileController landedTile)
     {
-        TileController landedTile = BoardController.TilesList[BoardController.PlayerIndex];
         if (landedTile._Profile.tileTags.Contains(TileTags.Oca) && landedTile != _Tile)
         {
             _Tile.AddBaseDamage(landedTile.GetBaseDamage());

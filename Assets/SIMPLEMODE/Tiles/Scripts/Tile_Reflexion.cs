@@ -14,6 +14,7 @@ public class Tile_Reflexion : Tile_Profile
         {
             TileController newTile =  TilesFactory.instance.InstantiateTile(tileBehind._Profile);
             newTile.SetBaseDamage(0);
+            newTile.transform.position = tileBehind.transform.position;
 
             yield return BoardController.C_AddNewTile(newTile, _Tile.indexInBoard);
             GameController.remainingStepsToTake++;
