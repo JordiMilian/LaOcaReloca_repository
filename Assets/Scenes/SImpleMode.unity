@@ -1541,6 +1541,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5af28507c202acd4a9bed8f89ccf7e86, type: 2}
   - {fileID: 11400000, guid: 18fe0545ba600ab40a80a9f379da9c3e, type: 2}
   - {fileID: 11400000, guid: 98ee3215d7778ea42a0ec27b86078d18, type: 2}
+  - {fileID: 11400000, guid: d01ac694daf56414e9e247c16d3dd99d, type: 2}
+  - {fileID: 11400000, guid: c160215df11105548b153f46b2f38630, type: 2}
 --- !u!4 &400194873
 Transform:
   m_ObjectHideFlags: 0
@@ -2470,13 +2472,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: BirdsWatcher
-  folderName: EmptySynergy
-  title: BIRDS WATCHER
-  color: {r: 0.7735849, g: 0.507209, b: 0.73361695, a: 1}
-  baseDamage: 5
-  rarity: 2
-  tag: 0
+  assetName: GoldEater
+  folderName: Tokens
+  title: GOLD EATER
+  color: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
+  baseDamage: 0
+  rarity: 4
+  tag: 4
   factory: {fileID: 400194872}
   ToyAssetName: angelFeather
   ToyTitle: TOY TITLE
@@ -3404,8 +3406,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 216.12529}
-  m_SizeDelta: {x: 217.1, y: 69.9}
+  m_AnchoredPosition: {x: 0, y: 232.1}
+  m_SizeDelta: {x: 217.1, y: 32.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &977100660
 MonoBehaviour:
@@ -3492,7 +3494,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 24.220215}
+  m_margin: {x: 0, y: 0, z: 0, w: 0.7145386}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
