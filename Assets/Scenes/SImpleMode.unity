@@ -1543,6 +1543,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 98ee3215d7778ea42a0ec27b86078d18, type: 2}
   - {fileID: 11400000, guid: d01ac694daf56414e9e247c16d3dd99d, type: 2}
   - {fileID: 11400000, guid: c160215df11105548b153f46b2f38630, type: 2}
+  - {fileID: 11400000, guid: 0fd0a09cb63c85f48ae66f771fa3c801, type: 2}
 --- !u!4 &400194873
 Transform:
   m_ObjectHideFlags: 0
@@ -1895,6 +1896,9 @@ MonoBehaviour:
   StartingTilesCount: 12
   TimeToCreateBoard: 0.52
   OnPlayerMoved:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBoardModified:
     m_PersistentCalls:
       m_Calls: []
   spline: {fileID: 466753543}
@@ -2472,13 +2476,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: GoldEater
-  folderName: Tokens
-  title: GOLD EATER
-  color: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
-  baseDamage: 0
-  rarity: 4
-  tag: 4
+  assetName: Tree
+  folderName: Plants
+  title: TREE
+  color: {r: 0.18736322, g: 0.41509432, b: 0.1194375, a: 1}
+  baseDamage: 20
+  rarity: 2
+  tag: 0
   factory: {fileID: 400194872}
   ToyAssetName: angelFeather
   ToyTitle: TOY TITLE

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class TileController : MonoBehaviour, IBuyable, ITooltip
     ,IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
@@ -345,8 +346,10 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
 
     bool AttemptStartDragging()
     {
+        
         if (!canBeMoved) { return false; }
         if (isBehindPlayer) { return false; }
+        if (_Profile.tileTags.Contains(TileTags.Unmovable) && tileState == TileState.InBoard) { return false; }
         if (GameController_Simple.Instance.currentGameState == GameState.MovingPlayer) { MoveToTfData(); return false; }
 
         Camera mainCamera = Camera.main;

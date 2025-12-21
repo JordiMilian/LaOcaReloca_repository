@@ -19,6 +19,6 @@ MonoBehaviour:
   rarity: 4
   tileSize: 0
   uniquePrice: 0
-  tileTags: 04000000
+  tileTags: 0400000005000000
   _Tile: {fileID: 0}
   moneyToRemove: 5

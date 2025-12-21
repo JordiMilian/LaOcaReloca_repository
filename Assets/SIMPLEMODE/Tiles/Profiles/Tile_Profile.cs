@@ -36,6 +36,7 @@ public class Tile_Profile : ScriptableObject
     }
     public virtual IEnumerator OnPlacedInBoard() { yield break; }
     public virtual IEnumerator OnRemovedFromBoard() { yield break; }
+
     public virtual string GetTooltipText() { return "NO DESCRIPTION FOUND"; }
     #region TOOLTIP INTRO
     protected const string OnCrossed = "<b>- ON CROSSED:</b>";

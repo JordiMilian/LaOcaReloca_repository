@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Splines;
@@ -36,7 +37,7 @@ public class Board_Controller_simple : MonoBehaviour
     public int StartingTilesCount = 9;
     [SerializeField] float TimeToCreateBoard;
     public UnityEvent<int, int> OnPlayerMoved; //(from, to)
-
+    public UnityEvent OnBoardModified;
 
     #region STARTING BOARD CREATION
     public IEnumerator StartBoard() //called from game controller
@@ -108,6 +109,7 @@ public class Board_Controller_simple : MonoBehaviour
                 tile.SetToTfData();
             }
         }
+        OnBoardModified?.Invoke();
     }
     #endregion
 
@@ -511,7 +513,7 @@ public class Board_Controller_simple : MonoBehaviour
     }
     public IEnumerator C_AddNewTile(TileController tile, int index)
     {
-        TilesList.Insert(index, tile);
+        InsertTile(tile, index);
 
         UpdateStructData();
         MoveTiles_ToTfData(true);
@@ -539,7 +541,7 @@ public class Board_Controller_simple : MonoBehaviour
         }
 
         tileToRemove.C_OnRemovedFromBoard();
-        TilesList.RemoveAt(index);
+        RemoveTile(index);
 
         Destroy(tileToRemove.gameObject);
 
@@ -554,13 +556,90 @@ public class Board_Controller_simple : MonoBehaviour
     }
     public void MoveTileInBoard(int from, int to)
     {
-        TileController tileMoved = TilesList[from];
-        TilesList.RemoveAt(from);
-        TilesList.Insert(to, tileMoved );
+        MoveTile(from, to);
 
         UpdateStructData();
         MoveTiles_ToTfData(true);
     }
+    #endregion
+    #region TILES LIST EDITING
+    List<(int,TileController)> removeAndGetUnmovables(int exception = -1) //get all unmovables registered and remove them from the list. We return the list for future reinsertion
+    {
+        List<(int, TileController)> unmovibleTiles = new List<(int, TileController)>();
+        for (int i = 0; i < TilesList.Count; i++)
+        {
+            if(i == exception) { continue; }
+            TileController tile = TilesList[i];
+            if (tile._Profile.tileTags.Contains(TileTags.Unmovable))
+            {
+                unmovibleTiles.Add((i, tile));
+            }
+        }
+        foreach (var (index,tile) in unmovibleTiles)
+        {
+            TilesList.Remove(tile);
+        }
+        return unmovibleTiles;
+    }
+    void reinsertUnmovables(List<(int, TileController)> unmovables)
+    {
+        foreach (var (index,tile) in unmovables)
+        {
+            int insertIndex = index;
+            if (insertIndex > TilesList.Count - 2)
+            {
+                insertIndex = TilesList.Count - 2;
+            }
+            TilesList.Insert(insertIndex, tile);
+        }
+    }
+    int adjustIndex( int originalIndex, List<(int index, TileController)> unmovables)
+    {
+        int shift = 0;
+        foreach (var (idx, _) in unmovables)
+        {
+            if (idx < originalIndex)
+                shift++;
+        }
+        return originalIndex - shift;
+    }
+    public void InsertTile(TileController newTile,int newIndex)
+    {
+        List<(int, TileController)> unmovibleTiles = removeAndGetUnmovables();
+        newIndex = adjustIndex(newIndex, unmovibleTiles);
+
+        TilesList.Insert(newIndex, newTile);
+
+        reinsertUnmovables(unmovibleTiles);
+
+    }
+    public void RemoveTile(int indexToRemove)
+    {
+        List<(int, TileController)> unmovibleTiles = removeAndGetUnmovables(indexToRemove);
+
+        indexToRemove = adjustIndex(indexToRemove, unmovibleTiles);
+
+        TilesList.RemoveAt(indexToRemove);
+
+        reinsertUnmovables(unmovibleTiles);
+    }
+    public void MoveTile(int from, int to)
+    {
+        List<(int, TileController)> unmovibleTiles = removeAndGetUnmovables();
+
+        
+        from = adjustIndex(from, unmovibleTiles);
+        to = adjustIndex(to, unmovibleTiles);
+
+        TileController tileMoved = TilesList[from];
+
+        TilesList.RemoveAt(from);
+        TilesList.Insert(to, tileMoved);
+
+        reinsertUnmovables(unmovibleTiles);
+    }
+
+
     #endregion
 
 }

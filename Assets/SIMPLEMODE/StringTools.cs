@@ -61,5 +61,6 @@ public static class StringTools
     public static string Fragile = $"{BoldText(ColorText("Fragile","blue"))}"; //Destroy after crossed
     public static string NoStep = $"{BoldText(ColorText("NoStep","blue"))}"; //Takes 0 steps to cross
     public static string Peaceful = $"{BoldText(ColorText("Peaceful", "blue"))}"; //No damage
+    public static string Unmovable = $"{BoldText(ColorText("Unmovable", "blue"))}"; //Unmovable tag
 
 }
