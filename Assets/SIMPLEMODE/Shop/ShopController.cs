@@ -10,7 +10,8 @@ public class ShopController : MonoBehaviour
     public List<GameObject> AllBuyables;
     [Header("UI")]
     public ShopItem_Controller[] shopItems;
-    [SerializeField] int rerollPrice = 5;
+    [SerializeField] int baseRerollPrice = 5;
+    int currentRerollPrice;
     [SerializeField] Button button_Reroll;
     bool shopEnabled = true;
 
@@ -43,13 +44,24 @@ public class ShopController : MonoBehaviour
         shopEnabled = true;
     }
     #endregion
+    private void Start()
+    {
+        GameController_Simple.Instance.OnKilledEnemy.AddListener(ResetRerollPrice);
+        ResetRerollPrice();
+    }
+    void ResetRerollPrice()
+    {
+        currentRerollPrice = baseRerollPrice;
+    }
     public void Button_ReRollShop()
     {
         GameController_Simple gameController = GameController_Simple.Instance;
 
-        if(gameController.CanPurchaseWithoutLosing(rerollPrice))
+        if(gameController.CanPurchaseWithoutLosing(baseRerollPrice))
         {
-            gameController.RemoveMoney(rerollPrice);
+            gameController.RemoveMoney(currentRerollPrice);
+            currentRerollPrice++;
+
             ResetAllShopItems();
             if(shopEnabled == false)
             {

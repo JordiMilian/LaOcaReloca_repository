@@ -38,6 +38,8 @@ public class Board_Controller_simple : MonoBehaviour
     [SerializeField] float TimeToCreateBoard;
     public UnityEvent<int, int> OnPlayerMoved; //(from, to)
     public UnityEvent OnBoardModified;
+    public UnityEvent<TileController> OnAddedTile;
+    public UnityEvent<TileController> OnRemovedTile;
 
     #region STARTING BOARD CREATION
     public IEnumerator StartBoard() //called from game controller
@@ -514,7 +516,7 @@ public class Board_Controller_simple : MonoBehaviour
     public IEnumerator C_AddNewTile(TileController tile, int index)
     {
         InsertTile(tile, index);
-
+        
         UpdateStructData();
         MoveTiles_ToTfData(true);
         if (PlayerIndex > index) { PlayerIndex++; }
@@ -524,6 +526,7 @@ public class Board_Controller_simple : MonoBehaviour
         tile.CheckForDraggability(0,0); //per alguna raó he de ficar aixo aqui quan ja s'executa al SetTileState. Si no ho fico no pilla el draggabiility be si es coloca sobre el player
 
         yield return tile.C_OnPlacedInBoard();
+        OnAddedTile?.Invoke(tile);
 
         tile.transform.parent = tilesHolder;
 
@@ -540,8 +543,9 @@ public class Board_Controller_simple : MonoBehaviour
             yield return tileToRemove.C_DealAllDamageToDeal();
         }
 
-        tileToRemove.C_OnRemovedFromBoard();
+        yield return tileToRemove.C_OnRemovedFromBoard();
         RemoveTile(index);
+        OnRemovedTile?.Invoke(tileToRemove);
 
         Destroy(tileToRemove.gameObject);
 
@@ -603,7 +607,7 @@ public class Board_Controller_simple : MonoBehaviour
         }
         return originalIndex - shift;
     }
-    public void InsertTile(TileController newTile,int newIndex)
+    void InsertTile(TileController newTile,int newIndex)
     {
         List<(int, TileController)> unmovibleTiles = removeAndGetUnmovables();
         newIndex = adjustIndex(newIndex, unmovibleTiles);
@@ -613,7 +617,7 @@ public class Board_Controller_simple : MonoBehaviour
         reinsertUnmovables(unmovibleTiles);
 
     }
-    public void RemoveTile(int indexToRemove)
+    void RemoveTile(int indexToRemove)
     {
         List<(int, TileController)> unmovibleTiles = removeAndGetUnmovables(indexToRemove);
 
@@ -623,7 +627,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         reinsertUnmovables(unmovibleTiles);
     }
-    public void MoveTile(int from, int to)
+    void MoveTile(int from, int to)
     {
         List<(int, TileController)> unmovibleTiles = removeAndGetUnmovables();
 

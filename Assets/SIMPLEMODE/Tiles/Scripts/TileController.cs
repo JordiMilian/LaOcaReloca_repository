@@ -208,6 +208,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
             case TileState.InBoard:
                 BoardController.OnPlayerMoved.RemoveListener(CheckForDraggability);
                 break;
+            default: break;
         }
 
         //ENTER
@@ -224,6 +225,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
                 BoardController.OnPlayerMoved.AddListener(CheckForDraggability);
                 CheckForDraggability(0, BoardController.PlayerIndex);
                 break;
+            default: break;
         }
         tileState = newState;
     }

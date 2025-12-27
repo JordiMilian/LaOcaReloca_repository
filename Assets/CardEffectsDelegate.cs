@@ -18,9 +18,9 @@ public class CardEffectsDelegate
     }
     public IEnumerator C_ActivateEffects()
     {
-        foreach(Func<IEnumerator> effect in CardsCoroutines)
+        for (int i = CardsCoroutines.Count-1; i >= 0; i--)
         {
-            yield return effect();
+            yield return CardsCoroutines[i]();
         }
     }
 }
@@ -40,9 +40,9 @@ public class CardEffectsDelegate<T>
 
     public IEnumerator C_ActivateEffects(T arg)
     {
-        foreach (var effect in CardsCoroutines)
+        for (int i = CardsCoroutines.Count - 1; i >= 0; i--)
         {
-            yield return effect(arg);
+            yield return CardsCoroutines[i](arg);
         }
     }
 }

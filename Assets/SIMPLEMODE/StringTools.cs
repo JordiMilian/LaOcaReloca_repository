@@ -62,5 +62,6 @@ public static class StringTools
     public static string NoStep = $"{BoldText(ColorText("NoStep","blue"))}"; //Takes 0 steps to cross
     public static string Peaceful = $"{BoldText(ColorText("Peaceful", "blue"))}"; //No damage
     public static string Unmovable = $"{BoldText(ColorText("Unmovable", "blue"))}"; //Unmovable tag
+    public static string Growth(float amount) { return $"{BoldText(ColorText($"Growth(+{MathJ.FloatToString(amount,1)})", "blue"))}"; }  //Plants tag
 
 }

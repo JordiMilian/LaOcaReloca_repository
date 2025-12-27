@@ -29,6 +29,8 @@ public class GameController_Simple : MonoBehaviour
     public CardEffectsDelegate<TileController> OnAddedNewTileToBoard_CardEffect = new();
     public CardEffectsDelegate OnRemovedTileFromBoard_CardEffect = new();
 
+    public UnityEvent OnKilledEnemy;
+
     public static GameController_Simple Instance;
     private void Awake()
     {
@@ -275,6 +277,11 @@ public class GameController_Simple : MonoBehaviour
         if(SelectedTile.tileState == TileState.InShop && tileInBoard.tileState == TileState.InBoard)
         {
             PlaceTileFromShopToBoard(tileInBoard, SelectedTile); //The price check is done in the CanPlace()
+        }
+        if(SelectedTile.tileState == TileState.FreePick && tileInBoard.tileState == TileState.InBoard)
+        {
+            StartCoroutine(BoardController.C_AddNewTile(SelectedTile, tileInBoard.indexInBoard));
+            Debug.Log("Placing FreePick tile into board");
         }
         if(SelectedTile.tileState == TileState.InBoard)
         {

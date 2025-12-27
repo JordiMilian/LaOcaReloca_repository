@@ -8,6 +8,7 @@ public abstract class Tile_Plant : Tile_Profile
     {
         yield return base.OnPlacedInBoard();
         GameController.OnRolledDice_CardEffects.AddEffect(C_growPlant);
+        growthModifiers = null;
     }
     public override IEnumerator OnRemovedFromBoard()
     {
@@ -36,6 +37,6 @@ public abstract class Tile_Plant : Tile_Profile
         }
         return growth;
     }
-    public override string GetTooltipText() { return $"{OnRolledDice} Increase this tile {StringTools.AddDamage(GetFinalGrowth())}"; }
+    public override string GetTooltipText() { return $"{StringTools.Growth(GetFinalGrowth())}"; }
 
 }

@@ -46,12 +46,10 @@ public class Tile_Tree : Tile_Plant
             }
         }
     }
-    
     float MultiplyGrowth(float growth)
     {
         return growth * growthMultiplier;
     }
-
    //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }
    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
    //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }

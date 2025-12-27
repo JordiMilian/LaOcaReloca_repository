@@ -14,5 +14,5 @@ public class Tile_SwampToken : Tile_Profile
             yield return BoardController.V_JumpPlayerToNewPos();
         }
     }
-   public override string GetTooltipText() { return "Takes 2 steps to cross"; }
+   public override string GetTooltipText() { return $"{StringTools.Unmovable}\nTakes 2 steps to cross"; }
 }

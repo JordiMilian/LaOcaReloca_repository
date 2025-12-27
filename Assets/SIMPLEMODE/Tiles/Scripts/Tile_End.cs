@@ -11,11 +11,6 @@ public class Tile_End : Tile_Profile
         yield return ReachedEnd();
 
     }
-    public override IEnumerator OnPlayerLanded()
-    {
-        yield return base.OnPlayerLanded();
-        yield return ReachedEnd();
-    }
 
     IEnumerator ReachedEnd()
     {

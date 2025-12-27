@@ -9,17 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f32e38bb558f67439fa97e8fa34bb36, type: 3}
-  m_Name: Tile_Tree
+  m_Script: {fileID: 11500000, guid: c3babcd2697247c46881abdb380f7742, type: 3}
+  m_Name: Tile_Tomato
   m_EditorClassIdentifier: 
-  BaseDamage: 20
-  Title: TREE
+  BaseDamage: 5
+  Title: TOMATO
   tileColor: {r: 0.18736322, g: 0.41509432, b: 0.1194375, a: 1}
-  tileTexture: {fileID: 2800000, guid: 6f5401bf781755548a56f3778455ee01, type: 3}
+  tileTexture: {fileID: 2800000, guid: 1fcc4e6c1e8e5964f976ef2fa066a83b, type: 3}
   rarity: 2
   tileSize: 1
   uniquePrice: 0
   tileTags: 06000000
   _Tile: {fileID: 0}
-  baseGrowth: 5
-  growthMultiplier: 1.5
+  baseGrowth: 10

@@ -31,7 +31,7 @@ public enum Intensity
 }
 public enum TileState
 {
-    none, InShop, InBoard
+    none, InShop, InBoard, FreePick
 }
 public enum Rarity
 {

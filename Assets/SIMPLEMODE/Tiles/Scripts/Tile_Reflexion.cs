@@ -17,8 +17,8 @@ public class Tile_Reflexion : Tile_Profile
             newTile.transform.position = tileBehind.transform.position;
 
             yield return BoardController.C_AddNewTile(newTile, _Tile.indexInBoard);
-            GameController.remainingStepsToTake++;
         }
+        GameController.remainingStepsToTake++;
         yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
     }
     public override string GetTooltipText() { return $"{NoStep}, {Fragile}\n{OnCrossed} Create a copy of the Tile behind with DMG 0"; }

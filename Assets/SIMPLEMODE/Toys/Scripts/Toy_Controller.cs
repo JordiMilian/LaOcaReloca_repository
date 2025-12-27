@@ -2,7 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using DG.Tweening;
+
 
 public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
     , IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
@@ -12,6 +12,7 @@ public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
     public ToySlot currentSlot;
     public Transform originTf;
     bool isInShop;
+    //public TileState currentState = TileState.none;
     
     public void SetProfile(Toy_Profile profile)
     {
@@ -46,6 +47,7 @@ public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
         originTf = shopItemController.transform;
         transform.position = originTf.position;
         isInShop = true;
+        //currentState = TileState.InShop;
     }
 
     public void OnEnablePurchase()
@@ -120,11 +122,12 @@ public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
             {
                 if (hit.collider.TryGetComponent(out ToySlot slotUnder))
                 {
-                    if(isInShop )
+                    if(isInShop)
                     {
                         if(gameController.CanPurchase(GetBuyingPrice()))
                         {
                             isInShop = false;
+                            //currentState = TileState.InBoard;
                             gameController.RemoveMoney(GetBuyingPrice());
                             gameController.shopController.GetShopItem(this).RemoveItem();
                             slotUnder.OnPlacedToyInSlot(this);
