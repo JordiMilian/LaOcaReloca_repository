@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2af1afbefdd39e4fa22fb6b2c754ae1, type: 3}
-  m_Name: Tile_Mirror
+  m_Name: Tile_DobleEmpty
   m_EditorClassIdentifier: 
-  BaseDamage: 11
-  Title: MIRROR
-  tileColor: {r: 0.5157974, g: 0.60891724, b: 0.6320754, a: 1}
-  tileTexture: {fileID: 2800000, guid: 3b181059f6aa0ff499542742fa32ed51, type: 3}
+  BaseDamage: 10
+  Title: DOBLE EMPTY
+  tileColor: {r: 1, g: 1, b: 1, a: 1}
+  tileTexture: {fileID: 2800000, guid: f08db3cc87d23ef4b8693d87e68263fc, type: 3}
   rarity: 2
+  tileSize: 1
   uniquePrice: 0
-  tileTag: 0
+  tileTags: 01000000
   _Tile: {fileID: 0}
   emptyProfile: {fileID: 11400000, guid: ee1314f99f2109444ad254e58ff62988, type: 2}

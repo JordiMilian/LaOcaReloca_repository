@@ -28,6 +28,8 @@ public class Tile_MigrantOca : Tile_Oca
         }
 
         int endIndex = BoardController.PlayerIndex;
+
+        GameController.AddMoney(endIndex - startingIndex);
         GameController.SetRemainingRolls(GameController.RollsRemaining + 1);
     }
    //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }

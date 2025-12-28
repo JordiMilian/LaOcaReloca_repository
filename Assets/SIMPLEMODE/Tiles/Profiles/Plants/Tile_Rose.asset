@@ -21,5 +21,5 @@ MonoBehaviour:
   uniquePrice: 0
   tileTags: 06000000
   _Tile: {fileID: 0}
-  baseGrowth: 3
-  extraRollValue: 3
+  baseGrowth: 2
+  extraRollValue: 2

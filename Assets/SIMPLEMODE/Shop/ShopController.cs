@@ -14,6 +14,7 @@ public class ShopController : MonoBehaviour
     int currentRerollPrice;
     [SerializeField] Button button_Reroll;
     bool shopEnabled = true;
+    [SerializeField] TextMeshProUGUI TMP_buttonText;
 
     public ShopItem_Controller GetShopItem(IBuyable buyable)
     {
@@ -52,6 +53,11 @@ public class ShopController : MonoBehaviour
     void ResetRerollPrice()
     {
         currentRerollPrice = baseRerollPrice;
+        UpdateRerollPriceDisplay();
+    }
+    void UpdateRerollPriceDisplay()
+    {
+        TMP_buttonText.text = $"Reroll -> {currentRerollPrice}$";
     }
     public void Button_ReRollShop()
     {
@@ -61,6 +67,7 @@ public class ShopController : MonoBehaviour
         {
             gameController.RemoveMoney(currentRerollPrice);
             currentRerollPrice++;
+            UpdateRerollPriceDisplay();    
 
             ResetAllShopItems();
             if(shopEnabled == false)

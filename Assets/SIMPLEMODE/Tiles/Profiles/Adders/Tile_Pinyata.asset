@@ -19,8 +19,8 @@ MonoBehaviour:
   rarity: 2
   tileSize: 1
   uniquePrice: 0
-  tileTag: 0
+  tileTags: 
   _Tile: {fileID: 0}
   adjacentDepth: 2
-  addedDmg: 3
-  addedDmgOnlanded: 3
+  addedDmg: 5
+  addedDmgOnlanded: 5

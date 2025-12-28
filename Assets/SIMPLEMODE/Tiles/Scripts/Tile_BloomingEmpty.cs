@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "TileProfile/EmptySynergy/MrBeast", fileName = "Tile_MrBeast")]
-public class Tile_MrBeast : Tile_Profile
+[CreateAssetMenu(menuName = "TileProfile/EmptySynergy/MrBeast", fileName = "Tile_BloomingEmpty")]
+public class Tile_BloomingEmpty : Tile_Profile
 {
     [SerializeField] int addedDamageToEmptyTiles = 2;
 

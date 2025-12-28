@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_Mirror : Tile_Profile
+public class Tile_DobleEmpty : Tile_Profile
 {
    [SerializeField] Tile_Profile emptyProfile;
 
@@ -10,6 +10,7 @@ public class Tile_Mirror : Tile_Profile
    { 
         yield return base.OnPlayerLanded();
         TileController instantiatedEmpty =  TilesFactory.instance.InstantiateTile(emptyProfile);
+        instantiatedEmpty.transform.position = _Tile.transform.position;
         int randomIndex = Random.Range(1, BoardController.TilesList.Count - 1);
         yield return BoardController.C_AddNewTile(instantiatedEmpty, randomIndex);
         instantiatedEmpty.SetBaseDamage(BaseDamage);
