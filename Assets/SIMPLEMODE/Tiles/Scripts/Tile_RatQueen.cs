@@ -24,8 +24,13 @@ public class Tile_RatQueen : Tile_Profile
     {
         TileController ratTokenController = TilesFactory.instance.InstantiateTile(ratTokenTileProfile);
         ratTokenController.transform.position = _Tile.transform.position;
-
-        int randomIndex = Random.Range(1, BoardController.TilesList.Count-1);
+        int randomIndex, ownIndex = _Tile.indexInBoard;
+        do
+        {
+            randomIndex = Random.Range(1, BoardController.TilesList.Count - 1);
+        }
+        while (randomIndex == ownIndex);
+       
         yield return BoardController.C_AddNewTile(ratTokenController, randomIndex);
     }
    public override string GetTooltipText() { return $"{OnCrossed} Create a random RAT TOKEN \n {OnLanded} Create {ratsAmountOnLanded} random RAT TOKENS"; }

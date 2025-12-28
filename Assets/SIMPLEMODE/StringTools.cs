@@ -52,7 +52,7 @@ public static class StringTools
     public static string OnAddedDamage = "<b>- ON ADDED DAMAGE TO THIS TILE:</b>";
     public static string OnAddedNewTileToBoard = "<b>- ON ADDED A NEW TILE TO BOARD:</b>";
     public static string OnRemovedTileFromBoard = OnCustomMessaje("ON REMOVED A TILE FROM BOARD");
-    public static string OnEnterInBoard = "<b>- ON ENTER IN BOARD:</b>";
+    public static string OnEnterInBoard = "<b>- ON ENTER BOARD:</b>";
     public static string OnCustomMessaje(string message) { return $"{BoldText($"- {message}:")}"; }
     public static string OnLandedOnTag(TileTags tag) { return $"<b>- ON LANDED ON AN {tag.ToString().ToUpper()} TILE:</b>"; }
     public static string OnCrossedOnTag(TileTags tag) { return $"<b>- ON CROSSED A {tag.ToString().ToUpper()} TILE:</b>"; }

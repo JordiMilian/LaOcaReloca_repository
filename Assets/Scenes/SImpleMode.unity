@@ -1601,6 +1601,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 96ed2cf40d5467748ac23ba1496f235a, type: 2}
   - {fileID: 11400000, guid: 55bc8a22b29cfcd47b23ac25bad45c2c, type: 2}
   - {fileID: 11400000, guid: f36fa062b5f7faf429097b5aaeba6a47, type: 2}
+  - {fileID: 11400000, guid: f2dac5ec8f0f1c2418fd37b21eadf834, type: 2}
 --- !u!4 &400194873
 Transform:
   m_ObjectHideFlags: 0
@@ -2676,13 +2677,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: Rose
+  assetName: Bridge
   folderName: Plants
-  title: ROSE
-  color: {r: 0.18736322, g: 0.41509432, b: 0.1194375, a: 1}
-  baseDamage: 5
+  title: BRIDGE
+  color: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
+  baseDamage: 15
   rarity: 1
-  tag: 6
+  tag: 0
   factory: {fileID: 400194872}
   ToyAssetName: fertilizer
   ToyTitle: TOY TITLE

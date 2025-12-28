@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4627fd87094c6734ba46454123cdab7b, type: 3}
+  m_Name: Tile_Bridge
+  m_EditorClassIdentifier: 
+  BaseDamage: 15
+  Title: BRIDGE
+  tileColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
+  tileTexture: {fileID: 2800000, guid: a67ccf9b242f98e4eab02b43b7d12597, type: 3}
+  rarity: 1
+  tileSize: 1
+  uniquePrice: 0
+  tileTags: 00000000
+  _Tile: {fileID: 0}
+  otherBridge: {fileID: 0}
+  ignoreSpawnCopy: 0
