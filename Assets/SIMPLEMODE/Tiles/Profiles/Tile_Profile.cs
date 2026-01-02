@@ -25,7 +25,7 @@ public class Tile_Profile : ScriptableObject
     }
     public virtual IEnumerator OnPlayerStepped()
     {
-        _Tile.DamagesToDeal.Add(BaseDamage);
+        _Tile.DamagesToDeal.Add(_Tile.GetModifiedBaseDamage());
         _Tile.DamagesToDeal.Reverse();
 
         yield return GameController.OnCrossed_CardEffects.C_ActivateEffects();

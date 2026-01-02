@@ -18,6 +18,7 @@ public class GameController_Simple : MonoBehaviour
     Camera mainCamera;
     public ShopController shopController;
     public Dices_Controller dicesController;
+    
 
 
     //COROUTINE EVENTS

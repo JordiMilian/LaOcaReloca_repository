@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 using System.Linq;
+using System;
 
 public class TileController : MonoBehaviour, IBuyable, ITooltip
     ,IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
@@ -147,6 +148,17 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     }
     #region DAMAGE MODIFIERS
     public List<float> DamagesToDeal = new();
+    public Func<float, float> BaseDamageModifiers;
+    public float GetModifiedBaseDamage()
+    {
+        if(BaseDamageModifiers == null) { return GetBaseDamage(); }
+        float totalDmg = GetBaseDamage();
+        foreach(Func<float,float> modifier in BaseDamageModifiers.GetInvocationList())
+        {
+            totalDmg = modifier(totalDmg);
+        }
+        return totalDmg;
+    }
     public float GetBaseDamage()
     {
         return _Profile.BaseDamage;
