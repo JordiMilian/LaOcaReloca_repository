@@ -21,7 +21,7 @@ public class Tile_Mushroom : Tile_Plant
         {
             TileController newMushroom = TilesFactory.instance.InstantiateTile(this);
             newMushroom.SetBaseDamage(baseGrowth);
-            int randomIndex = Random.Range(1, BoardController.TilesList.Count - 1);
+            int randomIndex = MathJ.GetRandomIndexInBoard(true);
             yield return BoardController.C_AddNewTile(newMushroom, randomIndex);
         }
     }

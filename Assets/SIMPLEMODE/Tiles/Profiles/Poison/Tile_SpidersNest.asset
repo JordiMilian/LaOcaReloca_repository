@@ -19,8 +19,8 @@ MonoBehaviour:
   rarity: 3
   tileSize: 1
   uniquePrice: 0
-  tileTag: 0
+  tileTags: 
   _Tile: {fileID: 0}
-  spidersOnCrossed: 2
+  spidersOnCrossed: 1
   spidersOnRolledDice: 1
   spiderTokenTileProfile: {fileID: 11400000, guid: 1db486080272d0e4e97bc81f69a5982f, type: 2}

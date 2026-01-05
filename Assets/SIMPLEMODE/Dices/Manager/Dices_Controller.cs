@@ -142,8 +142,8 @@ public class Dices_Controller : MonoBehaviour
     }
     public void SpawnNewDice(GameObject DicePrefab)
     {
-        Vector3 randomPos = UnityEngine.Random.insideUnitSphere * SpawnPos_Radius + diceSpawnPoint.position;
-        Quaternion randomRot = UnityEngine.Random.rotation;
+        Vector3 randomPos = Random.insideUnitSphere * SpawnPos_Radius + diceSpawnPoint.position;
+        Quaternion randomRot = Random.rotation;
         GameObject newDice = Instantiate(DicePrefab, randomPos, randomRot, transform);
         availableDices.Add(newDice.GetComponent<Dice>());
     }

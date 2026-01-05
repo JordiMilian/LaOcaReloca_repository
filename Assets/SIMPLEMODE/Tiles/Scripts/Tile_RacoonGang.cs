@@ -43,7 +43,7 @@ public class Tile_RacoonGang : Tile_Profile
         TileController ratTokenController = TilesFactory.instance.InstantiateTile(racoonToken_Profile);
         ratTokenController.transform.position = _Tile.transform.position;
 
-        int randomIndex = Random.Range(1, BoardController.TilesList.Count - 1);
+        int randomIndex = MathJ.GetRandomIndexInBoard(true);
         yield return BoardController.C_AddNewTile(ratTokenController, randomIndex);
     }
 }

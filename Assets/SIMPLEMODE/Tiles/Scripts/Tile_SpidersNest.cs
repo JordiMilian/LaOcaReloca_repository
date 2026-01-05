@@ -28,7 +28,7 @@ public class Tile_SpidersNest : Tile_Profile
         TileController ratTokenController = TilesFactory.instance.InstantiateTile(spiderTokenTileProfile);
         ratTokenController.transform.position = _Tile.transform.position;
 
-        int randomIndex = Random.Range(1, BoardController.TilesList.Count - 1);
+        int randomIndex = MathJ.GetRandomIndexInBoard(true);
         yield return BoardController.C_AddNewTile(ratTokenController, randomIndex);
     }
     public override string GetTooltipText()

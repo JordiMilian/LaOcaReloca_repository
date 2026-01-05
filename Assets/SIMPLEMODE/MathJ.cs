@@ -20,7 +20,6 @@ public static class MathJ
         if (amount == 0) { return 0; }
         return (int)Mathf.Sign(amount);
     }
-
     public static string FloatToString(float value, int maxDecimals)
     {
         string result = value.ToString("F" + maxDecimals);
@@ -51,10 +50,6 @@ public static class MathJ
         }
         return result;
     }
-    public static string BoldText(string text)
-    {
-        return $"<b>{text}</b>";
-    }
     public static string AddDamage(float damage) { return $"<color=blue>+{FloatToString(damage, 1)}dmg<color=black>"; }
     public static int GetFibonacciValue(int n, int iterations)
     {
@@ -81,6 +76,24 @@ public static class MathJ
             randomTile = board.TilesList[Random.Range(0, board.TilesList.Count)];
         }
         return randomTile;
+    }
+    public static int GetRandomIndexInBoard(bool ignorePlayerIndex)
+    {
+        Board_Controller_simple board = Board_Controller_simple.Instance;
+        if(ignorePlayerIndex)
+        {
+            int random = 0;
+            do
+            {
+                random = Random.Range(1, board.TilesList.Count - 1);
+            }
+            while (random == board.PlayerIndex);
+            return random;
+        }
+        else
+        {
+            return Random.Range(1, board.TilesList.Count - 1);
+        }
     }
     public static TileController GetRandomTileInBoardWithTag(TileTags tileTag, TileController thisTile, bool ignoreSelf = true)
     {
@@ -205,7 +218,6 @@ public static class MathJ
     }
     #endregion
     #endregion
-
     //this functions works with Vector3 but works as If it was Vector2, meaning  (A,0,B) => (A,B). It doesnt consider Y
     public static Vector3 worldToLocal2D(Vector3 world, Vector3 pos, Vector3 right, Vector3 forward)
     {

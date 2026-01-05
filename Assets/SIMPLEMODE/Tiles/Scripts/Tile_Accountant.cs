@@ -25,6 +25,6 @@ public class Tile_Accountant : Tile_Profile
             amountForDisplay = BoardController.TilesList.Count * damagePerIndex;
         }
         return $"{OnCrossed} Deal {MathJ.AddDamage(damagePerIndex)} per tile in board ({amountForDisplay}) \n " +
-            $"{OnLanded} Deal +1 MORE per tile in board permanently";
+            $"{OnLanded} Increase +1 that amount";
     }
 }

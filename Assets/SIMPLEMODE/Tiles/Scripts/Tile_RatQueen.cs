@@ -27,7 +27,7 @@ public class Tile_RatQueen : Tile_Profile
         int randomIndex, ownIndex = _Tile.indexInBoard;
         do
         {
-            randomIndex = Random.Range(1, BoardController.TilesList.Count - 1);
+            randomIndex = MathJ.GetRandomIndexInBoard(true);
         }
         while (randomIndex == ownIndex);
        

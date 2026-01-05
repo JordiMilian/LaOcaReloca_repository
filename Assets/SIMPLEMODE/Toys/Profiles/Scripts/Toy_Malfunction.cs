@@ -5,7 +5,6 @@ using System.Linq;
 public class Toy_Malfunction : Toy_Profile
 {
     [SerializeField] float chanceToTrigger = 0.3f;
-    TileController lastTileSpawnedByThis = null;
     public override void OnActivatedToy()
     {
         _gameController.OnAddedNewTileToBoard_CardEffect.AddEffect(OnAddedTile);
@@ -19,18 +18,13 @@ public class Toy_Malfunction : Toy_Profile
 
         if (newTile._Profile.tileTags.Contains(TileTags.Token)&& newTile.GetBaseDamage() > 0)
         {
-            if (newTile == lastTileSpawnedByThis) //don't trigger on tiles spawned by this 
-            {
-                yield break;
-            }
             if (passedChance())
             {
                 TileController tokenCopy = TilesFactory.instance.InstantiateTile(newTile._Profile);
                 tokenCopy.transform.position = _ToyController.transform.position;
                 tokenCopy.SetBaseDamage(0);
-                lastTileSpawnedByThis = tokenCopy;
 
-                yield return _boardController.C_AddNewTile(tokenCopy, Random.Range(1,_boardController.TilesList.Count -2));
+                yield return _boardController.C_AddNewTile(tokenCopy, MathJ.GetRandomIndexInBoard(true));
             }
         }
 
