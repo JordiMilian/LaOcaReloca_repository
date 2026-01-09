@@ -3,6 +3,7 @@ using System.Collections;
 using static StringTools;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 public class Tile_Tree : Tile_Plant
 {
     List<Tile_Plant> subscribedPlants = new();
@@ -38,7 +39,7 @@ public class Tile_Tree : Tile_Plant
         List<TileController> adjacentTiles = MathJ.GetAdjacentTiles(_Tile);
         foreach (TileController tile in adjacentTiles)
         {
-            if (tile._Profile is Tile_Plant)
+            if (tile._Profile.tileTags.Contains(TileTags.Plant))
             {
                 Tile_Plant plantProfile = (Tile_Plant)tile._Profile;
                 subscribedPlants.Add(plantProfile);

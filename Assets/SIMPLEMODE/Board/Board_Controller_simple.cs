@@ -562,6 +562,10 @@ public class Board_Controller_simple : MonoBehaviour
     {
         MoveTile(from, to);
 
+        if(from > PlayerIndex && to <= PlayerIndex) { PlayerIndex++; }
+        if(from < PlayerIndex && to > PlayerIndex) { PlayerIndex--; }
+
+
         UpdateStructData();
         MoveTiles_ToTfData(true);
     }

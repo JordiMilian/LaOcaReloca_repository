@@ -295,7 +295,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     }
     public void OnAppearInShop(ShopItem_Controller shopItemController)
     {
-        SetTileProfile(TilesFactory.instance.GetRandomProfile());
+        SetTileProfile(TilesFactory.instance.GetRandomProfile(null));
         SetOriginTfData(new TileTfData(shopItemController.buyablePositionTf));
         SetToTfData();
         SetTileState(TileState.InShop);

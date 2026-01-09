@@ -22,6 +22,7 @@ public class GameController_Simple : MonoBehaviour
 
 
     //COROUTINE EVENTS
+
     public CardEffectsDelegate OnRolledDice_CardEffects = new();
     public CardEffectsDelegate OnKilledEnemy_CardEffects = new();
     public CardEffectsDelegate OnReachedEndTile_CardEffects = new();
@@ -31,6 +32,8 @@ public class GameController_Simple : MonoBehaviour
     public CardEffectsDelegate OnRemovedTileFromBoard_CardEffect = new();
 
     public UnityEvent OnKilledEnemy;
+
+    public CardEffectsDelegate OnInsectFly = new(), OnInsectsMoved_CardEffects = new();
 
     public static GameController_Simple Instance;
     private void Awake()
@@ -164,6 +167,9 @@ public class GameController_Simple : MonoBehaviour
     IEnumerator C_MovingPlayer()
     {
         remainingStepsToTake = dicesController.LastRolledValue;
+
+        yield return OnInsectFly.C_ActivateEffects();
+        yield return OnInsectsMoved_CardEffects.C_ActivateEffects();
 
         yield return OnRolledDice_CardEffects.C_ActivateEffects();
 

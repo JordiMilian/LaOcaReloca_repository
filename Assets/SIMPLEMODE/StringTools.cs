@@ -24,7 +24,7 @@ public static class StringTools
             if (c == '0')
             {
                 result = result.Remove(i);
-            }
+            }     
             else
             {
                 return result;
@@ -53,6 +53,8 @@ public static class StringTools
     public static string OnAddedNewTileToBoard = "<b>- ON ADDED A NEW TILE TO BOARD:</b>";
     public static string OnRemovedTileFromBoard = OnCustomMessaje("ON REMOVED A TILE FROM BOARD");
     public static string OnEnterInBoard = "<b>- ON ENTER BOARD:</b>";
+    public static string OnEaten = $"{OnCustomMessaje("ON EATEN")}";
+    public static string OnRotten = $"{OnCustomMessaje("ON ROTTEN")}";
     public static string OnCustomMessaje(string message) { return $"{BoldText($"- {message}:")}"; }
     public static string OnLandedOnTag(TileTags tag) { return $"<b>- ON LANDED ON AN {tag.ToString().ToUpper()} TILE:</b>"; }
     public static string OnCrossedOnTag(TileTags tag) { return $"<b>- ON CROSSED A {tag.ToString().ToUpper()} TILE:</b>"; }
@@ -63,5 +65,6 @@ public static class StringTools
     public static string Peaceful = $"{BoldText(ColorText("Peaceful", "blue"))}"; //No damage
     public static string Unmovable = $"{BoldText(ColorText("Unmovable", "blue"))}"; //Unmovable tag
     public static string Growth(float amount) { return $"{BoldText(ColorText($"Growth(+{FloatToString(amount,1)})", "blue"))}"; }  //Plants tag
-
+    public static string Rot(int remaining) { return BoldText(ColorText($"Rot({remaining})", "blue")); }
+    
 }

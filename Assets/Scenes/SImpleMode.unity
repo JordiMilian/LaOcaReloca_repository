@@ -1647,6 +1647,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 55bc8a22b29cfcd47b23ac25bad45c2c, type: 2}
   - {fileID: 11400000, guid: f36fa062b5f7faf429097b5aaeba6a47, type: 2}
   - {fileID: 11400000, guid: f2dac5ec8f0f1c2418fd37b21eadf834, type: 2}
+  - {fileID: 11400000, guid: db33dd5b77ceac543bdba84ce5962111, type: 2}
 --- !u!4 &400194873
 Transform:
   m_ObjectHideFlags: 0
@@ -2666,7 +2667,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 498311904}
-  - component: {fileID: 498311903}
   - component: {fileID: 498311905}
   m_Layer: 0
   m_Name: PROFILES TOOLS
@@ -2675,27 +2675,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &498311903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 498311902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 923f8008a0b95654ab9aa22ebcaa1b30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AssetName: TilesShuffler
-  DisplayName: SHUFFLER
-  DefaultCrossedDamage: 5
-  BaseCardPrefab: {fileID: 8766472299784947829, guid: 7b89b9a7ad44cc54fab4bd2154cf4715, type: 3}
-  TargetPrefab: {fileID: 8766472299784947829, guid: 5b39ff61b91c819479aa60c2296bed6b, type: 3}
-  CardColor: {r: 0.58569777, g: 0.43961373, b: 0.8396226, a: 1}
-  shopController: {fileID: 1757594647}
-  cardRarity: 2
-  tileTag: 1
 --- !u!4 &498311904
 Transform:
   m_ObjectHideFlags: 0
@@ -7477,12 +7456,12 @@ MonoBehaviour:
   addPitchPerStep: 0.05
   MoneyToRoll: 0
   EncountersPrefabs:
+  - {fileID: 3768023283977433165, guid: 709f3b0af1a608747937a6059a839aa3, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4940970433914737342, guid: a9348b92562d9b4418614630df50438c, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
-  - {fileID: 3768023283977433165, guid: 709f3b0af1a608747937a6059a839aa3, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4940970433914737342, guid: a9348b92562d9b4418614630df50438c, type: 3}

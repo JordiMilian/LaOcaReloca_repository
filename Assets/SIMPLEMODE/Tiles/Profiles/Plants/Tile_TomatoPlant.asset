@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3babcd2697247c46881abdb380f7742, type: 3}
-  m_Name: Tile_Tomato
+  m_Name: Tile_TomatoPlant
   m_EditorClassIdentifier: 
   BaseDamage: 5
-  Title: TOMATO
+  Title: TOMATO PLANT
   tileColor: {r: 0.18736322, g: 0.41509432, b: 0.1194375, a: 1}
   tileTexture: {fileID: 2800000, guid: 1fcc4e6c1e8e5964f976ef2fa066a83b, type: 3}
   rarity: 2
@@ -22,3 +22,4 @@ MonoBehaviour:
   tileTags: 06000000
   _Tile: {fileID: 0}
   baseGrowth: 12
+  tomatoProfile: {fileID: 11400000, guid: db33dd5b77ceac543bdba84ce5962111, type: 2}
