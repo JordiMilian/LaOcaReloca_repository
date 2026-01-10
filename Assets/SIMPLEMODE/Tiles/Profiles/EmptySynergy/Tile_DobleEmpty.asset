@@ -16,7 +16,7 @@ MonoBehaviour:
   Title: DOBLE EMPTY
   tileColor: {r: 1, g: 1, b: 1, a: 1}
   tileTexture: {fileID: 2800000, guid: f08db3cc87d23ef4b8693d87e68263fc, type: 3}
-  rarity: 2
+  rarity: 1
   tileSize: 1
   uniquePrice: 0
   tileTags: 01000000

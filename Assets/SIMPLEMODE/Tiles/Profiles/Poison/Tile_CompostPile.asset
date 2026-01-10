@@ -16,9 +16,9 @@ MonoBehaviour:
   Title: COMPOST PILE
   tileColor: {r: 0, g: 1, b: 0.050857544, a: 1}
   tileTexture: {fileID: 2800000, guid: 802e0bddf4754f3459d85015d57c05a3, type: 3}
-  rarity: 2
+  rarity: 5
   tileSize: 1
   uniquePrice: 0
-  tileTag: 0
+  tileTags: 
   _Tile: {fileID: 0}
   poisonAmount: 5

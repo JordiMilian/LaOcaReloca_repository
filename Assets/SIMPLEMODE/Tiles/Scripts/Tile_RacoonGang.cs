@@ -5,8 +5,8 @@ using static StringTools;
 using NUnit.Framework;
 public class Tile_RacoonGang : Tile_Profile
 {
-    [SerializeField] int AmountToTake = 5;
-    [SerializeField] float dmgPerMoney = 3;
+    [SerializeField] int AmountToTake = 1;
+    [SerializeField] float dmgPerMoney = 15;
     [SerializeField] int racoonsToCreate = 2;
     [SerializeField] Tile_Profile racoonToken_Profile;
     //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }
@@ -36,7 +36,7 @@ public class Tile_RacoonGang : Tile_Profile
             tile.AddBaseDamage(tmpAmount * dmgPerMoney);
         }
     }
-   public override string GetTooltipText() { return $"{OnCrossed} Loose up to {AmountToTake} MONEY and add {AddDamage(dmgPerMoney)} per MONEY lost to Adjacent Tiles\n{OnLanded} Spawn {racoonsToCreate} Racoons"; }
+   public override string GetTooltipText() { return $"{OnCrossed} Loose {AmountToTake} MONEY and add {AddDamage(dmgPerMoney)} to Adjacent Tiles\n{OnLanded} Spawn {racoonsToCreate} Racoons"; }
 
     IEnumerator CreateRandomRacoon()
     {

@@ -15,13 +15,14 @@ MonoBehaviour:
   BaseDamage: 5
   Title: TOMATO
   tileColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
-  tileTexture: {fileID: 2800000, guid: 3c38520d193b5e94e8e3bbe61bb2d0c7, type: 3}
-  rarity: 1
+  tileTexture: {fileID: 2800000, guid: 6efa6b3067bf43c4abcb306c73261685, type: 3}
+  rarity: 0
   tileSize: 1
   uniquePrice: 0
-  tileTags: 00000000
+  tileTags: 07000000
   _Tile: {fileID: 0}
   currentRot: 3
   baseRot: 3
   TreeProfile: {fileID: 11400000, guid: 55bc8a22b29cfcd47b23ac25bad45c2c, type: 2}
   moneyOnEaten: 10
+  chanceToSpawnPlant: 0.5

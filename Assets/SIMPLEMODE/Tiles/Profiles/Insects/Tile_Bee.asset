@@ -16,7 +16,7 @@ MonoBehaviour:
   Title: BEE
   tileColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
   tileTexture: {fileID: 0}
-  rarity: 1
+  rarity: 5
   tileSize: 1
   uniquePrice: 0
   tileTags: 00000000

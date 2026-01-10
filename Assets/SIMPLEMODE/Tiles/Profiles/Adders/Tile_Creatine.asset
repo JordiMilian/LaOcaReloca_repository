@@ -16,8 +16,9 @@ MonoBehaviour:
   Title: CREATINE
   tileColor: {r: 0.70980394, g: 0.3137255, b: 0.105882354, a: 1}
   tileTexture: {fileID: 2800000, guid: 0950e7ea5e26e8a44b0b52b83d74774b, type: 3}
-  rarity: 3
+  rarity: 2
+  tileSize: 1
   uniquePrice: 0
-  tileTag: 0
+  tileTags: 
   _Tile: {fileID: 0}
   multiplieValue: 3

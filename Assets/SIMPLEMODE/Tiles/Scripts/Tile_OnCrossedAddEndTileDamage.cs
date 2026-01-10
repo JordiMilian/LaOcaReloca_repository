@@ -15,7 +15,7 @@ public class Tile_OnCrossedAddEndTileDamage : Tile_Profile
     public override IEnumerator OnPlayerLanded()
     {
         TileController endTile = BoardController.TilesList[BoardController.TilesList.Count - 1];
-        endTile.MultiplyBaseDamage(1.5f);
+        endTile.MultiplyBaseDamage(multiplierOnLanded);
         yield return base.OnPlayerLanded();
     }
     public override string GetTooltipText()

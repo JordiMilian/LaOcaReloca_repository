@@ -16,8 +16,8 @@ MonoBehaviour:
   Title: DAMAGE MOVER
   tileColor: {r: 1, g: 1, b: 1, a: 1}
   tileTexture: {fileID: 2800000, guid: d33917d914f9c5e4aac4411cdfd58fa1, type: 3}
-  rarity: 3
+  rarity: 2
   tileSize: 0
   uniquePrice: 0
-  tileTag: 0
+  tileTags: 
   _Tile: {fileID: 0}

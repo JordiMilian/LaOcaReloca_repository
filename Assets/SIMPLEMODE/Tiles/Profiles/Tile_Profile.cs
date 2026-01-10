@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
+using UnityEditor;
+using System.Collections.Generic;
 public class Tile_Profile : ScriptableObject
 {
     public float BaseDamage = 10;
@@ -74,4 +76,32 @@ public class Tile_Profile : ScriptableObject
         _Tile.SetBaseDamage(BaseDamage * mult);
     }
     #endregion
+#if UNITY_EDITOR
+    //On validate, move this profile to the proper groups according to tags and rarity
+    private void OnValidate()
+    {
+        if(EditorUtility.IsPersistent(this)) //check if the profile is in project window or an instance in memory. Only apply to project 
+        {
+            ProfileGroups_Registry registry = TilesGroupRegistry_singleton.Instance;
+
+            //Remove from all groups
+            foreach (ProfilesGroup group in registry.GetAllGroups())
+            {
+                if (group.tilesList.Remove(this))
+                {
+                    EditorUtility.SetDirty(group);
+                }
+            }
+
+            //Add them to the proper groups
+            List<ProfilesGroup> properGroups = registry.GetGroups(this);
+            foreach (ProfilesGroup group in properGroups)
+            {
+                group.tilesList.Add(this);
+                EditorUtility.SetDirty(group);
+            }
+        }
+        
+    }
+#endif
 }

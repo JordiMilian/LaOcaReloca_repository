@@ -16,8 +16,8 @@ MonoBehaviour:
   Title: LANDMINE
   tileColor: {r: 1, g: 1, b: 1, a: 1}
   tileTexture: {fileID: 2800000, guid: b5a694b8f9ad0014c9d79eb173b01e1c, type: 3}
-  rarity: 3
+  rarity: 2
   tileSize: 0
   uniquePrice: 0
-  tileTag: 0
+  tileTags: 
   _Tile: {fileID: 0}

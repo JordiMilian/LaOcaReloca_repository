@@ -17,8 +17,9 @@ MonoBehaviour:
   tileColor: {r: 0.75764096, g: 1, b: 0.4584905, a: 1}
   tileTexture: {fileID: 2800000, guid: 41bcbfc2cdc6a194fad132717d27aff9, type: 3}
   rarity: 2
+  tileSize: 1
   uniquePrice: 0
-  tileTag: 0
+  tileTags: 
   _Tile: {fileID: 0}
   DicePrefab_OnCrossed: {fileID: 1547170513799009516, guid: 7ec2b73cc20355a4e9572735718b9fa1, type: 3}
   DicePrefab_OnLanded: {fileID: 1547170513799009516, guid: 4e8482089949b5149aff72c891108b7c, type: 3}

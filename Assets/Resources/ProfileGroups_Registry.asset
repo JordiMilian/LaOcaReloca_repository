@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b10b1eb311f7154f8198c362c4d5ca0, type: 3}
+  m_Name: ProfileGroups_Registry
+  m_EditorClassIdentifier: 
+  Common: {fileID: 11400000, guid: afcd58cbc762dce49aa51ee5f2dbd3ed, type: 2}
+  Rare: {fileID: 11400000, guid: f49f44de29499504b9de7790c0ab7514, type: 2}
+  Legendary: {fileID: 11400000, guid: ef497c1117720f74ea054ac3ed6044be, type: 2}
+  Unique: {fileID: 11400000, guid: 3e1e609758c2dc1449237f5caf4594fc, type: 2}
+  Deprecated: {fileID: 11400000, guid: 6fba4bbd5943fdb44ae0c02ec1410adb, type: 2}
+  Curse: {fileID: 11400000, guid: dff35c8a3fcc0dd47b49482cf247ac42, type: 2}
+  Tokens: {fileID: 11400000, guid: 841c36da4d3023b4f84d091b1a50a98c, type: 2}
+  Food: {fileID: 11400000, guid: b62fe726a73c7604083dc9b5ae5a2e89, type: 2}
+  Rest: {fileID: 11400000, guid: 2da7e7b903d2bd749b0ac2e92e7f8425, type: 2}

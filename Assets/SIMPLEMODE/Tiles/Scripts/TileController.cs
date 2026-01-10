@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine.EventSystems;
 using System.Linq;
 using System;
+using UnityEngine.Events;
 
 public class TileController : MonoBehaviour, IBuyable, ITooltip
     ,IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
@@ -24,6 +25,8 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     [SerializeField] Transform zeroRotationTf;
 
     public Tile_Profile _Profile;
+
+    public UnityEvent OnAddedToBoard;
 
     #region NEW TF DATA
     [Header("Mesh references")]
@@ -263,7 +266,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
 
         yield return _Profile.OnPlayerLanded(); 
     }
-    public IEnumerator C_OnPlacedInBoard() { yield return _Profile.OnPlacedInBoard(); }
+    public IEnumerator C_OnPlacedInBoard() { yield return _Profile.OnPlacedInBoard(); OnAddedToBoard?.Invoke(); }
     public IEnumerator C_OnRemovedFromBoard() { yield return _Profile.OnRemovedFromBoard(); }
 
     public string GetTooltipText()
@@ -295,7 +298,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     }
     public void OnAppearInShop(ShopItem_Controller shopItemController)
     {
-        SetTileProfile(TilesFactory.instance.GetRandomProfile(null));
+        //SetTileProfile(TilesFactory.instance.GetRandomProfile(null));
         SetOriginTfData(new TileTfData(shopItemController.buyablePositionTf));
         SetToTfData();
         SetTileState(TileState.InShop);

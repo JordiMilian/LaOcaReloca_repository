@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cdbcdcae3c20f4e99a22ab78a75e68, type: 3}
+  m_Name: PG_Tokens
+  m_EditorClassIdentifier: 
+  GroupName: Tokens
+  tilesList:
+  - {fileID: 11400000, guid: 96ed2cf40d5467748ac23ba1496f235a, type: 2}
+  - {fileID: 11400000, guid: b367805cbe5071f4d85c493f7ad9bbe5, type: 2}
+  - {fileID: 11400000, guid: 1db486080272d0e4e97bc81f69a5982f, type: 2}
+  - {fileID: 11400000, guid: 97015eb91c314b64fac18bdee10a8fbe, type: 2}

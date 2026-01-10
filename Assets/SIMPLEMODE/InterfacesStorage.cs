@@ -35,11 +35,11 @@ public enum TileState
 }
 public enum Rarity
 {
-    none, Common, Rare, Legendary, Unique
+    none, Common, Rare, Legendary, Unique, Deprecated
 }
 public enum TileTags
 {
-    NoTag, Empty, Oca, Rat, Token, Unmovable, Plant, Food
+    NoTag, Empty, Oca, Rat, Token, Unmovable, Plant, Food, Curse
 }
 public enum TileSize
 {

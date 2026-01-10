@@ -16,7 +16,7 @@ MonoBehaviour:
   Title: MACHINE MALFUNCTION
   tileColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   tileTexture: {fileID: 2800000, guid: b77a1cb180423d44e9771191a206f243, type: 3}
-  rarity: 3
+  rarity: 5
   tileSize: 1
   uniquePrice: 0
   tileTags: 00000000

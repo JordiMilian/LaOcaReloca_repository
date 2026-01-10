@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 
 public class ShopController : MonoBehaviour
 {
-    public List<GameObject> AllBuyables;
+    [SerializeField] BuyablesGroup[] buyableGroups;
     [Header("UI")]
     public ShopItem_Controller[] shopItems;
     [SerializeField] int baseRerollPrice = 5;
@@ -88,7 +87,26 @@ public class ShopController : MonoBehaviour
     }
     public GameObject GetRandomBuyableGO()
     {
-        return AllBuyables[UnityEngine.Random.Range(0, AllBuyables.Count)];
+        float totalChance = 0;
+        //Add up all the chances
+        foreach (BuyablesGroup group in buyableGroups)
+        {
+            totalChance += group.ChangeToAppear;
+        }
+
+        float randomChance = Random.Range(0, totalChance);
+        float counting = 0;
+        foreach (BuyablesGroup group in buyableGroups)
+        {
+            float prev = counting;
+            counting += group.ChangeToAppear;
+            if (randomChance <= counting && randomChance > prev)
+            {
+                return group.GetRandomBuyableGO();
+            }
+        }
+        return null;
+
     }
 
     public void UpdatePrices()

@@ -19,5 +19,5 @@ MonoBehaviour:
   rarity: 3
   tileSize: 0
   uniquePrice: 0
-  tileTag: 0
+  tileTags: 
   _Tile: {fileID: 0}

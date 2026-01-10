@@ -33,7 +33,7 @@ public class ToySlot : MonoBehaviour
 
             SetNewSlot(newToy);
             newToy.returnToyToOrigin();
-
+            
             newToy.ActivateToy();
         }
 

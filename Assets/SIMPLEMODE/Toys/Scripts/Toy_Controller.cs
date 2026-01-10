@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 
@@ -12,6 +13,7 @@ public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
     public ToySlot currentSlot;
     public Transform originTf;
     bool isInShop;
+    public UnityEvent OnAddedToBoard;
     //public TileState currentState = TileState.none;
     
     public void SetProfile(Toy_Profile profile)
@@ -28,6 +30,7 @@ public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
     public void ActivateToy()
     {
         _Profile.OnActivatedToy();
+        OnAddedToBoard?.Invoke();
     }
     public void DeactivateToy()
     {

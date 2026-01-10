@@ -19,7 +19,9 @@ public class ShopItem_Controller : MonoBehaviour
     {
         if(buyableGO != null) { Destroy(buyableGO); }
 
-        buyableGO = Instantiate(shopController.GetRandomBuyableGO(), shopController.transform);
+        buyableGO = shopController.GetRandomBuyableGO();
+        buyableGO.transform.position = shopController.transform.position;
+        buyableGO.transform.SetParent(shopController.transform);
         buyable = buyableGO.GetComponent<IBuyable>();
         buyable.OnAppearInShop(this);
 

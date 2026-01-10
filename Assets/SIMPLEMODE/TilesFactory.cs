@@ -34,34 +34,4 @@ public class TilesFactory : MonoBehaviour
 
         return controller;
     }
-
-    public TileController InstantiateRandomTile()
-    {
-        return InstantiateTile(tileProfiles[Random.Range(0, tileProfiles.Count - 1)]);
-    }
-    public Tile_Profile GetRandomProfile(string[] ignoreGroups) 
-    {
-        float totalChance = 0;
-        //Add up all the chances
-        foreach(ProfilesGroup group in ProfileGroups) 
-        { 
-            if (ignoreGroups.Contains(group.GroupName)){ continue; } 
-            totalChance += group.ChangeToAppear; }
-
-        float randomChance = Random.Range(0, totalChance);
-        float counting = 0;
-        foreach( ProfilesGroup group in ProfileGroups )
-        {
-            if (ignoreGroups.Contains(group.GroupName)) { continue; }
-            float prev = counting;
-            counting += group.ChangeToAppear;
-            if(randomChance <= counting && randomChance > prev)
-            {
-                return group.GetRandomProfile();
-            }
-        }
-        return null;
-        return tileProfiles[Random.Range(0, tileProfiles.Count)];
-    }
-
 }

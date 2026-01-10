@@ -16,12 +16,12 @@ MonoBehaviour:
   Title: RACOON GANG
   tileColor: {r: 0.7058824, g: 0.30980393, b: 0.101960786, a: 1}
   tileTexture: {fileID: 2800000, guid: 031e267e9c37e5243bae8fa6281a7b7e, type: 3}
-  rarity: 2
+  rarity: 1
   tileSize: 1
   uniquePrice: 0
-  tileTag: 0
+  tileTags: 
   _Tile: {fileID: 0}
-  AmountToTake: 5
-  dmgPerMoney: 5
+  AmountToTake: 1
+  dmgPerMoney: 15
   racoonsToCreate: 2
   racoonToken_Profile: {fileID: 11400000, guid: b367805cbe5071f4d85c493f7ad9bbe5, type: 2}
