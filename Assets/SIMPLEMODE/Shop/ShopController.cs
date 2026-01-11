@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using System.Security.Cryptography;
 
 public class ShopController : MonoBehaviour
 {
@@ -62,7 +63,7 @@ public class ShopController : MonoBehaviour
     {
         GameController_Simple gameController = GameController_Simple.Instance;
 
-        if(gameController.CanPurchaseWithoutLosing(baseRerollPrice))
+        if(gameController.CanPurchase(currentRerollPrice))
         {
             gameController.RemoveMoney(currentRerollPrice);
             currentRerollPrice++;
@@ -91,7 +92,7 @@ public class ShopController : MonoBehaviour
         //Add up all the chances
         foreach (BuyablesGroup group in buyableGroups)
         {
-            totalChance += group.ChangeToAppear;
+            totalChance += group.ChanceToAppear;
         }
 
         float randomChance = Random.Range(0, totalChance);
@@ -99,7 +100,7 @@ public class ShopController : MonoBehaviour
         foreach (BuyablesGroup group in buyableGroups)
         {
             float prev = counting;
-            counting += group.ChangeToAppear;
+            counting += group.ChanceToAppear;
             if (randomChance <= counting && randomChance > prev)
             {
                 return group.GetRandomBuyableGO();
@@ -107,6 +108,17 @@ public class ShopController : MonoBehaviour
         }
         return null;
 
+    }
+    public void UpdateBuyablesChangePercent()
+    {
+        float total = 0;
+        foreach(BuyablesGroup buyable in buyableGroups) { total += buyable.ChanceToAppear;}
+        foreach(BuyablesGroup buyable in buyableGroups)
+        {
+            float percent = 100 * buyable.ChanceToAppear / total;
+            buyable.ChanceToAppear_PerCent = percent;
+            buyable.ChancePerElement_PerCent = percent / buyable.BuyablesCount();
+        }
     }
 
     public void UpdatePrices()

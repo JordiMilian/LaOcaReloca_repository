@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GroupName: Curses
   tilesList:
-  - {fileID: 11400000, guid: c160215df11105548b153f46b2f38630, type: 2}
   - {fileID: 11400000, guid: 3cfa6d0fb67a9864e892a2e56bc028ae, type: 2}
+  - {fileID: 11400000, guid: c160215df11105548b153f46b2f38630, type: 2}

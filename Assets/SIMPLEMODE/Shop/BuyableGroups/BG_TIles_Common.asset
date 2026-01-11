@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ac8d67dc96dda4ab55569ed8d95308, type: 3}
   m_Name: BG_TIles_Common
   m_EditorClassIdentifier: 
-  ChangeToAppear: 3
+  ChanceToAppear: 3
+  ChanceToAppear_PerCent: 41.666668
+  ChancePerElement_PerCent: 2.1929824
   profilesGroup: {fileID: 11400000, guid: afcd58cbc762dce49aa51ee5f2dbd3ed, type: 2}

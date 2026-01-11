@@ -8,4 +8,8 @@ public class BuyablesGroup_Basic : BuyablesGroup
     {
         return Instantiate(BuyablesList_GO[Random.Range(0,BuyablesList_GO.Length)]); 
     }
+    public override int BuyablesCount()
+    {
+        return BuyablesList_GO.Length;
+    }
 }

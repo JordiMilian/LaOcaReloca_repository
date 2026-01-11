@@ -9,4 +9,8 @@ public class BuyablesGroup_Tiles : BuyablesGroup
     {
        return TilesFactory.instance.InstantiateTile(profilesGroup.GetRandomProfile()).gameObject;
     }
+    public override int BuyablesCount()
+    {
+        return profilesGroup.tilesList.Count;
+    }
 }

@@ -94,7 +94,7 @@ public class Tile_Profile : ScriptableObject
             }
 
             //Add them to the proper groups
-            List<ProfilesGroup> properGroups = registry.GetGroups(this);
+            List<ProfilesGroup> properGroups = registry.GetProfileGroups(this);
             foreach (ProfilesGroup group in properGroups)
             {
                 group.tilesList.Add(this);

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b85169b3e9d6f740b76dc9c27ed82e2, type: 3}
   m_Name: BG_Toys
   m_EditorClassIdentifier: 
-  ChangeToAppear: 0.5
+  ChanceToAppear: 0.7
+  ChanceToAppear_PerCent: 9.722222
+  ChancePerElement_PerCent: 9.722222
   BuyablesList_GO:
   - {fileID: 3468063801926346145, guid: e8da9a51bb90f4445a60a3971992606e, type: 3}
