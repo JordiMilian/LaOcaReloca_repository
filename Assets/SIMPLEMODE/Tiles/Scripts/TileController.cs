@@ -139,7 +139,18 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         tileMovement.UpdateDmgDisplayText();
         _Profile.Initialize();
     }
-
+    public void SetTileMaterial_ToLand()
+    {
+        tileMaterial.SetFloat("_sineScale", 1.05f);
+        tileMaterial.SetFloat("_sineSpeed", 10f);
+        tileMaterial.SetColor("_OutlineColor",_Profile.tileColor * 8);
+    }
+    public void SetTileMaterial_Regular()
+    {
+        tileMaterial.SetFloat("_sineScale", 1f);
+        tileMaterial.SetFloat("_sineSpeed", 0f);
+        tileMaterial.SetColor("_OutlineColor", _Profile.tileColor * 1);
+    }
     private void Awake()
     {
         GameController = GameController_Simple.Instance;

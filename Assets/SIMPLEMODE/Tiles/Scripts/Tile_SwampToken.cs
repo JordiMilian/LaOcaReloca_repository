@@ -14,7 +14,7 @@ public class Tile_SwampToken : Tile_Profile
     }
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
 
-    int remainingSteps = 2;
+    public int remainingSteps = 2;
     
     IEnumerator onRolledDice()
     {

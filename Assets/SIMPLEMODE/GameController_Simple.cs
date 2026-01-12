@@ -5,6 +5,7 @@ using TMPro;
 using DG.Tweening;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public enum GameState
 {
@@ -90,6 +91,9 @@ public class GameController_Simple : MonoBehaviour
             case GameState.FreeMode:
                 OnFreeModeExit();
                 break;
+            case GameState.MovingPlayer:
+                returnToNoTileToLandVisuals();
+                break;
         }
         Debug.Log($"switching gameState from {currentGameState} to {newState}");
         currentGameState = newState;
@@ -173,6 +177,8 @@ public class GameController_Simple : MonoBehaviour
 
         yield return OnRolledDice_CardEffects.C_ActivateEffects();
 
+        SetTileToLandVisuals();
+
         while (remainingStepsToTake > 0)
         {
             yield return BoardController.L_StepPlayer();
@@ -182,7 +188,7 @@ public class GameController_Simple : MonoBehaviour
                 yield return BoardController.GetCurrentPlayerTile().C_DealAllDamageToDeal();
             }
         }
-
+        returnToNoTileToLandVisuals();
         yield return OnLanded_CardEffects.C_ActivateEffects(BoardController.GetCurrentPlayerTile());
 
         yield return BoardController.L_LandPlayerInCurrentPos();
@@ -417,6 +423,53 @@ public class GameController_Simple : MonoBehaviour
     void UpdateMoneyUI()
     {
         TMP_CurrentMoney.text = currentMoney.ToString();
+    }
+    #endregion
+    #region TILE TO LAND VISUALS
+    TileController tileToLand;
+    void SetTileToLandVisuals()
+    {
+        int stepsToConsume = remainingStepsToTake;
+        int currentIndex = BoardController.PlayerIndex; 
+
+        //first check first tile
+        if(BoardController.GetCurrentPlayerTile()._Profile is Tile_SwampToken)
+        {
+            Tile_SwampToken swampToken = (Tile_SwampToken)BoardController.GetCurrentPlayerTile()._Profile;
+            if (swampToken.remainingSteps > 1) { stepsToConsume--; }
+        }
+        //Then the rest of tiles
+        while(stepsToConsume > 0)
+        {
+            stepsToConsume--;
+            int nextIndex = currentIndex + 1;
+
+            if(nextIndex > BoardController.TilesList.Count - 1) { break; }
+
+            currentIndex = nextIndex;
+
+            Tile_Profile currentTile = BoardController.TilesList[currentIndex]._Profile;
+            if (currentTile.tileTags.Contains(TileTags.Token))
+            {
+                stepsToConsume++;
+            }
+            if (currentTile is Tile_SwampToken)
+            {
+                Tile_SwampToken swampToken = (Tile_SwampToken)currentTile;
+                if(swampToken.remainingSteps > 1) { stepsToConsume--; }
+                if (swampToken.remainingSteps == 0 && currentIndex != BoardController.PlayerIndex) { stepsToConsume--; } //swamp tokens stepped once have 0 steps remainig
+            }
+        }
+        tileToLand = BoardController.TilesList[currentIndex];
+        tileToLand.SetTileMaterial_ToLand();
+    }
+    void returnToNoTileToLandVisuals()
+    {
+        if(tileToLand != null)
+        {
+            tileToLand.SetTileMaterial_Regular();
+            tileToLand = null;
+        }
     }
     #endregion
     #region ROLLS PER ENCOUNTER
