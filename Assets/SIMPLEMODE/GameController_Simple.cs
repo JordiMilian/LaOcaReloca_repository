@@ -92,6 +92,7 @@ public class GameController_Simple : MonoBehaviour
                 OnFreeModeExit();
                 break;
             case GameState.MovingPlayer:
+                BoardController.OnBoardModified.RemoveListener(UpdateLandingTile);
                 returnToNoTileToLandVisuals();
                 break;
         }
@@ -178,11 +179,12 @@ public class GameController_Simple : MonoBehaviour
         yield return OnRolledDice_CardEffects.C_ActivateEffects();
 
         SetTileToLandVisuals();
+        BoardController.OnBoardModified.AddListener(UpdateLandingTile);
 
         while (remainingStepsToTake > 0)
         {
-            yield return BoardController.L_StepPlayer();
             remainingStepsToTake--;
+            yield return BoardController.L_StepPlayer();
             if(remainingStepsToTake > 0)
             {
                 yield return BoardController.GetCurrentPlayerTile().C_DealAllDamageToDeal();
@@ -427,6 +429,11 @@ public class GameController_Simple : MonoBehaviour
     #endregion
     #region TILE TO LAND VISUALS
     TileController tileToLand;
+    void UpdateLandingTile()
+    {
+        returnToNoTileToLandVisuals();
+        SetTileToLandVisuals();
+    }
     void SetTileToLandVisuals()
     {
         int stepsToConsume = remainingStepsToTake;

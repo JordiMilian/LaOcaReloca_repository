@@ -15,12 +15,13 @@ public class Tile_End : Tile_Profile
     IEnumerator ReachedEnd()
     {
         GameController.AddMoney(moneyOnReached);
+        GameController.remainingStepsToTake++;
         yield return _Tile.C_DealAllDamageToDeal();
         yield return GameController.OnReachedEndTile_CardEffects.C_ActivateEffects();
         GameController_Simple.Instance.ChangeGameState(GameState.ReachedEnd);
     }
     public override string GetTooltipText()
     {
-        return $"{OnReached} Add {moneyOnReached} coins and return to Start";
+        return StringTools.ExtraDiceRoll + $"\n{OnReached} Add {moneyOnReached} coins and return to Start";
     }
 }
