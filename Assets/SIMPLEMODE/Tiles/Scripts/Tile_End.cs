@@ -15,7 +15,7 @@ public class Tile_End : Tile_Profile
     IEnumerator ReachedEnd()
     {
         GameController.AddMoney(moneyOnReached);
-        GameController.remainingStepsToTake++;
+        GameController.SetRemainingRolls(GameController.RollsRemaining+1);
         yield return _Tile.C_DealAllDamageToDeal();
         yield return GameController.OnReachedEndTile_CardEffects.C_ActivateEffects();
         GameController_Simple.Instance.ChangeGameState(GameState.ReachedEnd);
