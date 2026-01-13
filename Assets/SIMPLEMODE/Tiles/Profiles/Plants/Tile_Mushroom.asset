@@ -22,4 +22,4 @@ MonoBehaviour:
   tileTags: 0600000004000000
   _Tile: {fileID: 0}
   baseGrowth: 2
-  changeToDuplicate: 0.25
+  changeToDuplicate: 0.3

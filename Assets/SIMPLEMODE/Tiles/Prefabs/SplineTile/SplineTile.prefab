@@ -406,6 +406,9 @@ MonoBehaviour:
   tileMovement: {fileID: 0}
   zeroRotationTf: {fileID: 2581699684520252082}
   _Profile: {fileID: 0}
+  OnAddedToBoard:
+    m_PersistentCalls:
+      m_Calls: []
   meshFilter: {fileID: 5443297577267043594}
   meshCollider: {fileID: 7746987551804539669}
   DamagesToDeal: []
@@ -603,7 +606,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.063}
+  m_AnchoredPosition: {x: 0, y: 0.03}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6200291192644541086
