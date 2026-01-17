@@ -418,9 +418,10 @@ public class Board_Controller_simple : MonoBehaviour
     {
         Debug.Log($"Landed in:{PlayerIndex}");
         V_ShakePlayer();
-        TileController thisTile = TilesList[PlayerIndex];
+        TileController currentTile = GetCurrentPlayerTile();
 
-        yield return TilesList[PlayerIndex].OnPlayerLanded();
+        yield return currentTile.OnPlayerLanded();
+        yield return currentTile.OnTileFinished();
     }
     public IEnumerator L_JumpPlayerTo(int IndexOfTile, bool triggerLanded)
     {
@@ -443,6 +444,7 @@ public class Board_Controller_simple : MonoBehaviour
         else
         {
             yield return TilesList[PlayerIndex].OnPlayerStepped();
+            yield return TilesList[PlayerIndex].OnTileFinished();
         }
     }
     public IEnumerator JumpPlayerToStartTile()

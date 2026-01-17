@@ -33,6 +33,6 @@ public class Tile_Pessimist : Tile_Profile
     }
     public override string GetTooltipText()
     {
-        return $"{OnReachedEnd} Deal this tile dmg x{multiplierOnEnd} \n {OnLanded} +{extraDamageOnLanded}";
+        return $"{OnReachedEnd} Deal this tile dmg x{multiplierOnEnd} \n {OnLanded} Increase that amount by +{extraDamageOnLanded}";
     }
 }

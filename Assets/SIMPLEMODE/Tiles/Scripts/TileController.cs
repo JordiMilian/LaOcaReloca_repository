@@ -277,6 +277,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
 
         yield return _Profile.OnPlayerLanded(); 
     }
+    public IEnumerator OnTileFinished() { yield return _Profile.OnTileFinished(); }
     public IEnumerator C_OnPlacedInBoard() { yield return _Profile.OnPlacedInBoard(); OnAddedToBoard?.Invoke(); }
     public IEnumerator C_OnRemovedFromBoard() { yield return _Profile.OnRemovedFromBoard(); }
 
@@ -298,9 +299,9 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         int baseValue;
         switch (_Profile.rarity)
         {
-            case Rarity.Common: { baseValue = 2; break; }
-            case Rarity.Rare: { baseValue = 5; break; }
-            case Rarity.Legendary: { baseValue = 10; break; }
+            case Rarity.Common: { baseValue = 4; break; }
+            case Rarity.Rare: { baseValue = 7; break; }
+            case Rarity.Legendary: { baseValue = 12; break; }
             case Rarity.Unique: { return _Profile.uniquePrice; }
             default: { Debug.LogError("ERROR: Pls set a valid rarity to this Tile"); return 0; }
         }

@@ -32,9 +32,10 @@ public class Tile_Profile : ScriptableObject
 
         yield return GameController.OnCrossed_CardEffects.C_ActivateEffects();
     }
-    public virtual IEnumerator OnPlayerLanded() 
+    public virtual IEnumerator OnPlayerLanded() { yield break; }
+    public virtual IEnumerator OnTileFinished() //Triggered just before stepping out of a tile or after landing. 
     {
-        yield break;
+        yield return _Tile.C_DealAllDamageToDeal();
     }
     public virtual IEnumerator OnPlacedInBoard() { yield break; }
     public virtual IEnumerator OnRemovedFromBoard() { yield break; }

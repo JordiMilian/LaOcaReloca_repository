@@ -16,24 +16,19 @@ public class Tile_Pinyata : Tile_Profile
         return$"{OnCrossed} Add {MathJ.AddDamage(addedDmg)} to tiles around in range {adjacentDepth} \n {OnLanded} Increase that amount by +{addedDmgOnlanded}";
     }
 
-    
-    public override IEnumerator OnPlayerStepped()
-    { 
-        yield return base.OnPlayerStepped();
+    public override IEnumerator OnPlayerLanded() 
+    {
+        addedDmg += addedDmgOnlanded;
+        yield return base.OnPlayerLanded();
+       
+    }
+    public override IEnumerator OnTileFinished()
+    {
         List<TileController> tilesAround = MathJ.GetAdjacentTiles(_Tile, adjacentDepth);
         foreach (TileController tile in tilesAround)
         {
             tile.AddBaseDamage(addedDmg);
         }
-    }
-    public override IEnumerator OnPlayerLanded() 
-    { 
-        yield return base.OnPlayerLanded();
-        List<TileController> tilesAround = MathJ.GetAdjacentTiles(_Tile, adjacentDepth);
-        foreach (TileController tile in tilesAround)
-        {
-            tile.AddBaseDamage(addedDmgOnlanded);
-        }
-        addedDmg += addedDmgOnlanded;
+        return base.OnTileFinished();
     }
 }

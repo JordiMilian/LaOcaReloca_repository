@@ -5,18 +5,16 @@ using UnityEngine;
 public class Tile_Accountant : Tile_Profile
 {
     [SerializeField] int damagePerIndex = 1;
-    public override IEnumerator OnPlayerStepped()
-    {
-        _Tile.DamagesToDeal.Add(BoardController.TilesList.Count * damagePerIndex);
-        yield return base.OnPlayerStepped();
-    }
     public override IEnumerator OnPlayerLanded()
     {
         damagePerIndex++;
-        _Tile.DamagesToDeal.Add(BoardController.TilesList.Count);
         yield return base.OnPlayerLanded();
     }
-
+    public override IEnumerator OnTileFinished()
+    {
+        _Tile.DamagesToDeal.Add(BoardController.TilesList.Count * damagePerIndex);
+        return base.OnTileFinished();
+    }
     public override string GetTooltipText()
     {
         float amountForDisplay = 0;

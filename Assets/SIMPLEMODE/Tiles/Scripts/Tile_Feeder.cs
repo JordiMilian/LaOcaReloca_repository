@@ -29,6 +29,6 @@ public class Tile_Feeder : Tile_Profile
     }
     public override string GetTooltipText()
     {
-        return $"{OnLanded} Add {PercentageToAdd}% of this tile damage to the next tile \n{OnCrossed} Add {MathJ.AddDamage(CrossedDamage)} forward";
+        return $"{OnLanded} Increase by {PercentageToAdd}% of this tile damage the tile forward \n{OnCrossed} Increase {MathJ.AddDamage(CrossedDamage)} the tile forward";
     }
 }

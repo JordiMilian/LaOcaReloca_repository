@@ -173,6 +173,7 @@ public class GameController_Simple : MonoBehaviour
     {
         remainingStepsToTake = dicesController.LastRolledValue;
 
+        //Insects bullshit, maybe delete
         yield return OnInsectFly.C_ActivateEffects();
         yield return OnInsectsMoved_CardEffects.C_ActivateEffects();
 
@@ -187,14 +188,13 @@ public class GameController_Simple : MonoBehaviour
             yield return BoardController.L_StepPlayer();
             if(remainingStepsToTake > 0)
             {
-                yield return BoardController.GetCurrentPlayerTile().C_DealAllDamageToDeal();
+                yield return BoardController.GetCurrentPlayerTile().OnTileFinished();
             }
         }
         returnToNoTileToLandVisuals();
         yield return OnLanded_CardEffects.C_ActivateEffects(BoardController.GetCurrentPlayerTile());
 
         yield return BoardController.L_LandPlayerInCurrentPos();
-        yield return BoardController.GetCurrentPlayerTile().C_DealAllDamageToDeal();
 
         yield return DealTotalDamage();
 

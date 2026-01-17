@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af950cd55f2fca4d953af9a39830aed, type: 3}
   m_Name: Tile_Feeder
   m_EditorClassIdentifier: 
-  BaseDamage: 10
+  BaseDamage: 30
   Title: CHEF
   tileColor: {r: 0.70980394, g: 0.3137255, b: 0.105882354, a: 1}
   tileTexture: {fileID: 2800000, guid: 1f001a25c98ac3e4696767aabe89aa51, type: 3}
@@ -21,5 +21,5 @@ MonoBehaviour:
   uniquePrice: 0
   tileTags: 
   _Tile: {fileID: 0}
-  PercentageToAdd: 50
-  CrossedDamage: 5
+  PercentageToAdd: 100
+  CrossedDamage: 15

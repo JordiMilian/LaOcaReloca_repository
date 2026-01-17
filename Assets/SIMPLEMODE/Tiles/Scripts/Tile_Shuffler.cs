@@ -9,7 +9,13 @@ public class Tile_Shuffler : Tile_Profile
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
     [SerializeField] float DmgPerShuffledTile = 2;
-  public override IEnumerator OnPlayerStepped()
+    [SerializeField] float ExtraDMGOnLanded = 2;
+    public override IEnumerator OnPlayerLanded()
+    {
+        DmgPerShuffledTile += ExtraDMGOnLanded;
+        return base.OnPlayerLanded();
+    }
+    public override IEnumerator OnTileFinished()
     {
         if (_Tile.indexInBoard < BoardController.TilesList.Count - 2) //si no es la penultima
         {
@@ -34,8 +40,17 @@ public class Tile_Shuffler : Tile_Profile
             yield return new WaitForSeconds(0.5f);
             _Tile.DamagesToDeal.Add(DmgPerShuffledTile * tilesToShuffle.Count);
         }
-        yield return base.OnPlayerStepped(); 
+        yield return base.OnTileFinished();
+    }
+    float GetShuffledDmg()
+    {
+        if(BoardController == null || _Tile.tileState != TileState.InBoard) {  return 0f; }
+        float dmg = 0;
+        int tilesForwardCount = (BoardController.TilesList.Count - 2) - (_Tile.indexInBoard + 1);
+        return tilesForwardCount * DmgPerShuffledTile;
 
     }
-    public override string GetTooltipText() { return $"{OnCrossed} Shuffle TILES forward. Deal {MathJ.AddDamage(DmgPerShuffledTile)} per Shuffled tile"; }
+    public override string GetTooltipText() {
+        return $"{OnCrossed} Shuffle TILES forward. Deal {MathJ.AddDamage(DmgPerShuffledTile)} per Shuffled tile ({GetShuffledDmg()})" +
+            $"\n{OnLanded} Increase that amount by {ExtraDMGOnLanded};"; }
 }
