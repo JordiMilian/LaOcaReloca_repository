@@ -36,7 +36,7 @@ public class Tile_RacoonGang : Tile_Profile
             tile.AddBaseDamage(tmpAmount * dmgPerMoney);
         }
     }
-   public override string GetTooltipText() { return $"{OnCrossed} Loose {AmountToTake} MONEY and add {AddDamage(dmgPerMoney)} to Adjacent Tiles\n{OnLanded} Spawn {racoonsToCreate} Racoons"; }
+   public override string GetTooltipText() { return $"{OnCrossed} Loose {AmountToTake} MONEY and increase {AddDamage(dmgPerMoney)} Adjacent Tiles\n{OnLanded} Spawn {racoonsToCreate} Racoons"; }
 
     IEnumerator CreateRandomRacoon()
     {

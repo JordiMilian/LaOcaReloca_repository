@@ -7,19 +7,27 @@ public class Tile_Pirate : Tile_Profile
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
 
     [SerializeField] int moneyOnLanded = 2;
-    public override IEnumerator OnPlayerStepped()
-    {
-        _Tile.DamagesToDeal.Add(GameController.GetCurrentMoney());
-        yield return base.OnPlayerStepped();
-    }
+    [SerializeField] float multiplier = 1;
+
     public override IEnumerator OnPlayerLanded()
     {
-        GameController.AddMoney(moneyOnLanded);
+        multiplier++;
         yield return base.OnPlayerLanded(); 
+    }
+    public override IEnumerator OnTileFinished()
+    {
+        _Tile.DamagesToDeal.Add(currentMoney() * multiplier);
+
+        return base.OnTileFinished();
+    }
+    int currentMoney()
+    {
+        if (GameController != null) { return GameController.GetCurrentMoney(); } else { return 0; }
     }
     public override string GetTooltipText()
     {
-        return $"{OnCrossed} Deal damage equal to your CURRENT MONEY\n{OnLanded} Gain {moneyOnLanded} coins";
+        return $"{OnCrossed} Deal damage equal to your CURRENT MONEY {StringTools.ColorText("X" + multiplier.ToString(),"blue")}({currentMoney() * multiplier})" +
+            $"\n{OnLanded} Increase that amount +1";
     }
 
 }

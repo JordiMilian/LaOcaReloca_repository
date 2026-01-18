@@ -21,5 +21,5 @@ public class Tile_WalkingGiant : Tile_Profile
    public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); GameController.OnCrossed_CardEffects.RemoveEffect(OnCrossedTile); }
    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
    //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
-   public override string GetTooltipText() { return $"{OnCustomMessaje("ON CROSSED A TILE WITH 0 DMG")} Add {StringTools.AddDamage(addedDamageOnStepped)} to this Tile"; }
+   public override string GetTooltipText() { return $"{OnCustomMessaje("WHEN CROSSED A TILE WITH 0 DMG")} Increase {StringTools.AddDamage(addedDamageOnStepped)} this Tile"; }
 }

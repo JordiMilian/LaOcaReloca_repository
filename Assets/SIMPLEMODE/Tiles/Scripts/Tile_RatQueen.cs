@@ -33,5 +33,5 @@ public class Tile_RatQueen : Tile_Profile
        
         yield return BoardController.C_AddNewTile(ratTokenController, randomIndex);
     }
-   public override string GetTooltipText() { return $"{OnCrossed} Create a random RAT TOKEN \n {OnLanded} Create {ratsAmountOnLanded} random RAT TOKENS"; }
+   public override string GetTooltipText() { return $"{OnCrossed} Create a RAT TOKEN \n {OnLanded} Create {ratsAmountOnLanded} RAT TOKENS"; }
 }

@@ -28,5 +28,5 @@ public class Tile_Collector : Tile_Profile
         GameController.RemoveMoney(priceOnCrossed);
 
    }
-   public override string GetTooltipText() { return $"{OnAddedNewTileToBoard} Add +{moneyOnAddedTile} money \n {OnCrossed} Remove -{priceOnCrossed} money"; }
+   public override string GetTooltipText() { return $"{OnAddedNewTileToBoard} Get +{moneyOnAddedTile} money \n {OnCrossed} Remove -{priceOnCrossed} money"; }
 }

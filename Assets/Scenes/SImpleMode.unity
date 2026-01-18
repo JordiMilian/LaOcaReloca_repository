@@ -1648,6 +1648,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f36fa062b5f7faf429097b5aaeba6a47, type: 2}
   - {fileID: 11400000, guid: f2dac5ec8f0f1c2418fd37b21eadf834, type: 2}
   - {fileID: 11400000, guid: db33dd5b77ceac543bdba84ce5962111, type: 2}
+  - {fileID: 11400000, guid: 4c5c00662a985c74b8d3779b6ee44b9e, type: 2}
   ProfileGroups: []
 --- !u!4 &400194873
 Transform:
@@ -2703,12 +2704,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: Bridge
-  folderName: Plants
-  title: BRIDGE
+  assetName: Shareholder
+  folderName: Money
+  title: SHAREHOLDER
   color: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
-  baseDamage: 15
-  rarity: 1
+  baseDamage: 1
+  rarity: 3
   tag: 0
   factory: {fileID: 400194872}
   ToyAssetName: Bread
@@ -7226,7 +7227,7 @@ Transform:
   m_GameObject: {fileID: 1468055907}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071067, y: -0, z: -0, w: 0.7071069}
-  m_LocalPosition: {x: 0, y: 0.027, z: -1.49}
+  m_LocalPosition: {x: 0, y: 0.03, z: -1.53}
   m_LocalScale: {x: 2.4340098, y: 2.4340098, z: 2.4340098}
   m_ConstrainProportionsScale: 0
   m_Children: []

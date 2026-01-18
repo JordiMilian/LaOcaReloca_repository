@@ -31,6 +31,8 @@ public class GameController_Simple : MonoBehaviour
     public CardEffectsDelegate OnCrossed_CardEffects = new();
     public CardEffectsDelegate<TileController> OnAddedNewTileToBoard_CardEffect = new();
     public CardEffectsDelegate OnRemovedTileFromBoard_CardEffect = new();
+    public CardEffectsDelegate<int> OnAddedMoney_CardEffects = new();
+    public CardEffectsDelegate<int> OnRemovedMoney_CardEffects = new();
 
     public UnityEvent OnKilledEnemy;
 
@@ -407,8 +409,8 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] int currentMoney;
 
     [SerializeField] TextMeshProUGUI TMP_CurrentMoney;
-    public void AddMoney(int money) { SetMoney(currentMoney + money); }
-    public void RemoveMoney(int money) { SetMoney(currentMoney - money); }
+    public void AddMoney(int money) { SetMoney(currentMoney + money); StartCoroutine(OnAddedMoney_CardEffects.C_ActivateEffects(money)); }
+    public void RemoveMoney(int money) { SetMoney(currentMoney - money); StartCoroutine(OnRemovedMoney_CardEffects.C_ActivateEffects(money)); }
     void SetMoney(int newMoney)
     { 
         currentMoney = newMoney; 
