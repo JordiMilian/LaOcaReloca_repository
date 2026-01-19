@@ -275,7 +275,7 @@ public class GameController_Simple : MonoBehaviour
         if(SelectedTile.tileState == TileState.InShop)
         {
             ShopItem_Controller shopItem = shopController.GetShopItem(SelectedTile);
-            if (!CanPurchaseWithoutLosing(shopItem.buyable.GetBuyingPrice())) { return false; }
+            if (!CanPurchase(shopItem.buyable.GetBuyingPrice())) { return false; }
         }
        
         if(tileBelow._Profile is Tile_End || tileBelow._Profile is Tile_Start) { return false; }
@@ -420,10 +420,6 @@ public class GameController_Simple : MonoBehaviour
     }
     public int GetCurrentMoney() { return currentMoney; }
     public bool CanPurchase(int price) { return price <= currentMoney; }
-    public bool CanPurchaseWithoutLosing(int price)
-    {
-        return price <= currentMoney;
-    }
     void UpdateMoneyUI()
     {
         TMP_CurrentMoney.text = currentMoney.ToString();

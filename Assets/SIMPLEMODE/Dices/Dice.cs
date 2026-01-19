@@ -59,7 +59,7 @@ public class Dice : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, IBuyab
     void AttemptStartDragging()
     {
         if(!canBeDragged) { return; }
-        if(isInShop && GameController_Simple.Instance.CanPurchaseWithoutLosing(GetBuyingPrice()))
+        if(isInShop && GameController_Simple.Instance.CanPurchase(GetBuyingPrice()))
         {
             OnDiceBought();
         }

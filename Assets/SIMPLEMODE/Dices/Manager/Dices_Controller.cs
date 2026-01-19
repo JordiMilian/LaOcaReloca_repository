@@ -105,7 +105,7 @@ public class Dices_Controller : MonoBehaviour
 
     public void Button_BuyExtraRollValue()
     {
-        if (!gameController.CanPurchaseWithoutLosing(buyRollValuePrice)) { return; }
+        if (!gameController.CanPurchase(buyRollValuePrice)) { return; }
 
         GameController_Simple.Instance.RemoveMoney(buyRollValuePrice);
         AddBoughtValue(1);

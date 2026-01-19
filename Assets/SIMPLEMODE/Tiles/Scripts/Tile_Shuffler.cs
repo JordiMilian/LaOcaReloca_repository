@@ -45,7 +45,6 @@ public class Tile_Shuffler : Tile_Profile
     float GetShuffledDmg()
     {
         if(BoardController == null || _Tile.tileState != TileState.InBoard) {  return 0f; }
-        float dmg = 0;
         int tilesForwardCount = (BoardController.TilesList.Count - 2) - (_Tile.indexInBoard + 1);
         return tilesForwardCount * DmgPerShuffledTile;
 

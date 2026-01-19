@@ -101,8 +101,7 @@ public class Tile_Profile : ScriptableObject
                 group.tilesList.Add(this);
                 EditorUtility.SetDirty(group);
             }
-        }
-        
+        } 
     }
 #endif
 }
