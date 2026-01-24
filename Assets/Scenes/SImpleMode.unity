@@ -1650,6 +1650,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: db33dd5b77ceac543bdba84ce5962111, type: 2}
   - {fileID: 11400000, guid: 4c5c00662a985c74b8d3779b6ee44b9e, type: 2}
   - {fileID: 11400000, guid: 48054ce06b28a9e42b63f6cd7c2e8649, type: 2}
+  - {fileID: 11400000, guid: 3af394dd8b83c404784962302949b360, type: 2}
   ProfileGroups: []
 --- !u!4 &400194873
 Transform:
@@ -2137,6 +2138,7 @@ MonoBehaviour:
   Tile_Oca: {fileID: 11400000, guid: 87f6e8cd18d0886449ea36c62becd500, type: 2}
   factory: {fileID: 400194872}
   TilesList: []
+  tilesHolder: {fileID: 1042064366}
   PlayerPrefab: {fileID: 1266550042}
   StartingTilesCount: 12
   TimeToCreateBoard: 0.52
@@ -2155,8 +2157,9 @@ MonoBehaviour:
   spline: {fileID: 466753543}
   width: 1.05
   maxTileLenght: 1.28
-  ExtraLargePercent: 1.5
+  ExtraLargePercent: 1.6
   ExtraSmallPercent: 0.75
+  ExtraBigPercent: 1.3
   isBoardAssembled: 1
 --- !u!4 &466753542
 Transform:
@@ -2170,9 +2173,7 @@ Transform:
   m_LocalPosition: {x: 0.59, y: 0.08, z: 0.37}
   m_LocalScale: {x: 0.018802136, y: 0.018802136, z: 0.018802136}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 798820325}
-  - {fileID: 1042064366}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 60, z: 0}
 --- !u!114 &466753543
@@ -4113,37 +4114,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 758639378}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &798820324
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 798820325}
-  m_Layer: 0
-  m_Name: UndertilesHolder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &798820325
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798820324}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 466753542}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &834746071
 GameObject:
   m_ObjectHideFlags: 0
@@ -5075,7 +5045,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 466753542}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1102327647
 GameObject:
@@ -8302,6 +8272,7 @@ MonoBehaviour:
   - {fileID: 5945102369988258234, guid: aa82d8a12e82ccb49b10e3ccc9cdd04b, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  - {fileID: 3968545100393761173, guid: f45875c308976734a87bf34965e364a7, type: 3}
   - {fileID: 3768023283977433165, guid: 709f3b0af1a608747937a6059a839aa3, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
@@ -8311,7 +8282,7 @@ MonoBehaviour:
   - {fileID: 5945102369988258234, guid: aa82d8a12e82ccb49b10e3ccc9cdd04b, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 871739014061315704, guid: e2ef2f59b27a2104a8b71557efd13eec, type: 3}
-  EnemyEncountersHP: 64000000c80000002c010000f4010000bc020000e803000014050000a406000034080000c4090000b80b0000
+  EnemyEncountersHP: 64000000c80000002c010000f4010000bc020000e803000014050000a406000034080000c4090000b80b000094110000
   AcumulatedDamage: 0
   Enemy_MaxHP: 100
   Enemy_CurrentHP: 100
@@ -10156,6 +10127,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1715485039}
   - {fileID: 466753542}
+  - {fileID: 1042064366}
   - {fileID: 1757594648}
   - {fileID: 1266550046}
   - {fileID: 1386617555}

@@ -8,5 +8,5 @@ public class Tile_GoldEater : Tile_Profile
     //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
     public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); GameController.RemoveMoney(moneyToRemove); }
-   public override string GetTooltipText() { return $"{Unmovable}\n{OnCrossed} Loose {moneyToRemove} money"; }
+   public override string GetTooltipText() { return $"{OnCrossed} Loose {moneyToRemove} money"; }
 }

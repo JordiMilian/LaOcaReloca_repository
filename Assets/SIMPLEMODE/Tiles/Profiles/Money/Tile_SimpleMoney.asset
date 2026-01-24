@@ -20,6 +20,9 @@ MonoBehaviour:
   tileSize: 1
   uniquePrice: 0
   tileTags: 
+  genericSkills: 
   _Tile: {fileID: 0}
+  StepsToCross: 1
+  remainingSteps: 1
   landedAmount: 10
-  steppedAmount: 1
+  steppedAmount: 2

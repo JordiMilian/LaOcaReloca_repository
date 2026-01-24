@@ -10,9 +10,7 @@ public class Tile_RacoonToken : Tile_Profile
    public override IEnumerator OnPlayerStepped()
    { 
         yield return base.OnPlayerStepped();
-        GameController.remainingStepsToTake++;
         GameController.AddMoney(moneyOnLanded);
-        yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
     }
    public override string GetTooltipText() { return base.GetTooltipText() + $"{OnCrossed} Get {moneyOnLanded} money"; }
 }

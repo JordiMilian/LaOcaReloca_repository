@@ -28,12 +28,11 @@ public class Board_Controller_simple : MonoBehaviour
 
     int _playerIndex;
 
-    Transform tilesHolder;
+    [SerializeField]Transform tilesHolder;
     public static Board_Controller_simple Instance;
     private void Awake()
     {
         Instance = this;
-        tilesHolder = transform.Find("TilesHolder");
     }
     [Header("Player")]
     [SerializeField] GameObject PlayerPrefab;
@@ -51,7 +50,10 @@ public class Board_Controller_simple : MonoBehaviour
     {
         TilesList = InstantiateStartingTiles();
         foreach(TileController tile in TilesList)
-        { yield return tile.C_OnPlacedInBoard(); }
+        {
+            tile.transform.SetParent(tilesHolder);
+            yield return tile.C_OnPlacedInBoard(); 
+        }
 
         TfData =  GetStrucrtData();
         MoveTiles_ToTfData(false);
@@ -129,6 +131,7 @@ public class Board_Controller_simple : MonoBehaviour
     [SerializeField] float maxTileLenght = 3;
     [SerializeField] float ExtraLargePercent = 1.5f;
     [SerializeField] float ExtraSmallPercent = .75f;
+    [SerializeField] float ExtraBigPercent = 1.25f;
 
 
     private void OnDrawGizmosSelected()
@@ -163,9 +166,10 @@ public class Board_Controller_simple : MonoBehaviour
 
         float smallT;
         float mediumT;
+        float bigT;
         float largeT;
 
-        int smallTilesCount = 0, mediumTilesCount = 0, largeTilesCount = 0;
+        int smallTilesCount = 0, mediumTilesCount = 0, largeTilesCount = 0, bigTilesCount = 0;
 
         for (int i = 0; i < tilesAmount; i++)
         {
@@ -174,6 +178,7 @@ public class Board_Controller_simple : MonoBehaviour
             {
                 case TileSize.Small: smallTilesCount++; break;
                 case TileSize.Medium: mediumTilesCount++; break;
+                case TileSize.Big: bigTilesCount++; break;
                 case TileSize.Large: largeTilesCount++; break;
             }
         }
@@ -181,12 +186,14 @@ public class Board_Controller_simple : MonoBehaviour
         //Calculate if its small enough to fit
         if ((maxTileLenght * ExtraLargePercent * largeTilesCount) + 
             (maxTileLenght * mediumTilesCount) + 
+            (maxTileLenght * ExtraBigPercent * bigTilesCount) +
             (maxTileLenght * ExtraSmallPercent * smallTilesCount)
             > spline.CalculateLength())
         {
             Debug.Log("01 test");
             mediumT = 1f / ((ExtraLargePercent * largeTilesCount) + mediumTilesCount + (ExtraSmallPercent * smallTilesCount));
             smallT = mediumT * ExtraSmallPercent;
+            bigT = mediumT * ExtraBigPercent;
             largeT = mediumT * ExtraLargePercent;
             Debug.Log("02 test: "+ mediumT);
         }
@@ -194,6 +201,7 @@ public class Board_Controller_simple : MonoBehaviour
         {
             mediumT = GetTWithLenght(maxTileLenght);
             smallT = GetTWithLenght(maxTileLenght * ExtraSmallPercent);
+            bigT = GetTWithLenght(maxTileLenght* ExtraBigPercent);
             largeT = GetTWithLenght(maxTileLenght * ExtraLargePercent);
 
         }
@@ -219,6 +227,7 @@ public class Board_Controller_simple : MonoBehaviour
             {
                 case TileSize.Small: nextT = smallT; break;
                 case TileSize.Medium: nextT = mediumT; break;
+                    case TileSize.Big: nextT = bigT; break;
                 case TileSize.Large: nextT = largeT; break;
             }
             totalT += nextT;
@@ -238,6 +247,7 @@ public class Board_Controller_simple : MonoBehaviour
             {
                 case TileSize.Small: thisT = smallT; break;
                 case TileSize.Medium: thisT = mediumT; break;
+                case TileSize.Big: thisT = bigT; break;
                 case TileSize.Large: thisT = largeT; break;
             }
 
@@ -306,7 +316,7 @@ public class Board_Controller_simple : MonoBehaviour
             float totalLenght = spline.CalculateLength();
             return Mathf.InverseLerp(0, totalLenght, lenght);
         }
-
+        /*
         //Doesn't really work something is wrong i no tinc ganes de arreglarho
         List<Vector3> sortVertexByLowest(List<Vector3> list)
         {
@@ -334,6 +344,7 @@ public class Board_Controller_simple : MonoBehaviour
             rotated.AddRange(list.GetRange(0, startIndex));
             return rotated;
         }
+        */
     }
     public void UpdateStructData()
     {
@@ -407,7 +418,6 @@ public class Board_Controller_simple : MonoBehaviour
         yield return new WaitForSeconds(duration);
     }
     #endregion
-
     #region MAIN PUBLIC METHODS FOR BOARD MOVEMENT
     public IEnumerator L_LandPlayerInCurrentPos()
     {
@@ -442,19 +452,12 @@ public class Board_Controller_simple : MonoBehaviour
             yield return endTile.OnTileFinished();
         }
     }
-    public void MovePlayerTo(int to) //without triggering any effects. This is used when a tile is deleted below the player for example
-    {
-        TileController TileTo = TilesList[to];
-
-        PlayerIndex = to;
-        TileTo._Profile.remainingSteps = 0;
-    }
     #endregion
     #region PLAYER VISUALS
     public IEnumerator V_StepPlayerToNewPos()//step the player to new pos
     {
         Debug.Log("Step anim");
-        const float duration = 0.2f;
+        const float duration = 0.25f;
         Vector3 newPos = TilesList[PlayerIndex].TfData.center;
 
         float jumpHeight = .5f;
@@ -474,30 +477,6 @@ public class Board_Controller_simple : MonoBehaviour
     {
         const float duration = .5f;
         Vector3 newPos = TilesList[PlayerIndex].TfData.center;
-
-        float jumpHeight = 1;
-        Sequence seq =
-            DOTween.Sequence().
-                Append(PlayerPrefab.transform.DOJump(
-                    newPos,
-                    jumpHeight,
-                    1,
-                    duration
-                    ));
-
-        ;
-        yield return new WaitForSeconds(duration);
-    }
-    public IEnumerator V_JumpPlayerToPreviouspos()
-    {
-        const float duration = .5f;
-        Vector3 newPos;
-        if(PlayerIndex == 0)
-        {
-            newPos = TilesList[PlayerIndex].TfData.center;
-        }
-        else { newPos = TilesList[PlayerIndex - 1].TfData.center; }
-            
 
         float jumpHeight = 1;
         Sequence seq =
@@ -587,20 +566,12 @@ public class Board_Controller_simple : MonoBehaviour
         if (isPlayerTile && isLandedTile)
         {
             GetCurrentPlayerTile()._Profile.remainingSteps = 0;
-            yield return V_JumpPlayerToNewPos();
+            yield return V_StepPlayerToNewPos();
         }
         else if(isPlayerTile)
         {
             yield return V_AirbornePlayer();
         }
-        yield break;
-
-        if (isLandedTile) { yield return V_JumpPlayerToPreviouspos(); }
-        else if (isPlayerTile) { yield return V_AirbornePlayer(); }
-        else { yield return V_StepPlayerToNewPos(); }
-            
-        GameController_Simple.Instance.shopController.UpdatePrices();
-        yield return GameController_Simple.Instance.OnRemovedTileFromBoard_CardEffect.C_ActivateEffects();
 
     }
     public void MoveTileInBoard(int from, int to)

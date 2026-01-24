@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 316b67398c82fac438f7f15e558a0e28, type: 3}
   m_Name: Tile_Executioner
   m_EditorClassIdentifier: 
-  BaseDamage: 75
+  BaseDamage: 50
   Title: EXECUTIONER
   tileColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
   tileTexture: {fileID: 2800000, guid: 716ad37e38bf75845aaf81f2f01f7580, type: 3}
@@ -20,4 +20,7 @@ MonoBehaviour:
   tileSize: 1
   uniquePrice: 0
   tileTags: 
+  genericSkills: 
   _Tile: {fileID: 0}
+  StepsToCross: 1
+  remainingSteps: 1

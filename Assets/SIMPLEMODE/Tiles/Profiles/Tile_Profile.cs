@@ -21,7 +21,15 @@ public class Tile_Profile : ScriptableObject
     protected Board_Controller_simple BoardController;
     protected GameController_Simple GameController;
     public int StepsToCross = 1;
-    public void SetStepsToCross(int newSteps) { StepsToCross = newSteps; remainingSteps = newSteps; }
+    public void SetStepsToCross(int newSteps)
+    {
+        StepsToCross = newSteps; remainingSteps = newSteps;
+        if(newSteps == 1) { tileSize = TileSize.Medium; }
+        else if(newSteps > 1) { tileSize = TileSize.Big; }
+        else {  tileSize = TileSize.Small; }
+        BoardController.UpdateStructData();
+        BoardController.MoveTiles_ToTfData(true);
+    }
     [HideInInspector] public int remainingSteps = 1;
     
     public void Initialize()
@@ -63,7 +71,7 @@ public class Tile_Profile : ScriptableObject
     {
         remainingSteps = StepsToCross;
     }
-    public virtual IEnumerator OnPlacedInBoard() { remainingSteps = StepsToCross; yield break; }
+    public virtual IEnumerator OnPlacedInBoard() { remainingSteps = StepsToCross ; yield break; }
     public virtual IEnumerator OnRemovedFromBoard() { yield break; }
     #endregion
     #region TOOLTIP TEXT

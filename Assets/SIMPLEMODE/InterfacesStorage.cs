@@ -48,7 +48,7 @@ public enum GenericSkills
 }
 public enum TileSize
 {
-    Small, Medium, Large
+    Small, Medium, Big,Large
 }
 public enum TileMessageType
 {

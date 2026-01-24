@@ -16,7 +16,7 @@ public class Tile_Reflexion : Tile_Profile
             newTile.SetBaseDamage(0);
             newTile.transform.position = tileBehind.transform.position;
 
-            yield return BoardController.C_AddNewTile(newTile, _Tile.indexInBoard);
+            yield return BoardController.C_AddNewTile(newTile, tileBehind.indexInBoard);
         }
     }
     public override string GetTooltipText() { return $"{OnCrossed} Create a copy of the Tile behind with DMG 0"; }

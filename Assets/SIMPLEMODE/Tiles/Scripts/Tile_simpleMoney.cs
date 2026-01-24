@@ -18,6 +18,6 @@ public class Tile_simpleMoney : Tile_Profile
     }
     public override string GetTooltipText()
     {
-        return $"{OnCrossed} Add {steppedAmount} money\n{OnLanded} Add {landedAmount} money ";
+        return $"{OnCrossed} Get {steppedAmount} money\n{OnLanded} Get {landedAmount} money ";
     }
 }

@@ -129,14 +129,22 @@ public static class MathJ
             
             if (positiveIndex < board.TilesList.Count)
             {
-                if(positiveIndex == board.TilesList.Count -1 && ignoreEnd == false) { adjacentTiles.Add(board.TilesList[positiveIndex]); }
-                else { adjacentTiles.Add(board.TilesList[positiveIndex]); }
+                TileController tile = board.TilesList[positiveIndex];
+                if(tile._Profile is Tile_End && ignoreEnd) { }
+                else
+                {
+                    adjacentTiles.Add(tile);
+                }
 
             }
             if(negativeIndex >= 0)
             {
-                if(negativeIndex == 0 && ignoreStart == false) { adjacentTiles.Add(board.TilesList[negativeIndex]); }
-                else { adjacentTiles.Add(board.TilesList[negativeIndex]); }
+                TileController tile = board.TilesList[negativeIndex];
+                if(tile._Profile is Tile_Start && ignoreStart) { }
+                else
+                {
+                    adjacentTiles.Add(tile);
+                }
             }
         }
         return adjacentTiles;
