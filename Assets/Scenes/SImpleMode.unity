@@ -1649,6 +1649,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f2dac5ec8f0f1c2418fd37b21eadf834, type: 2}
   - {fileID: 11400000, guid: db33dd5b77ceac543bdba84ce5962111, type: 2}
   - {fileID: 11400000, guid: 4c5c00662a985c74b8d3779b6ee44b9e, type: 2}
+  - {fileID: 11400000, guid: 48054ce06b28a9e42b63f6cd7c2e8649, type: 2}
   ProfileGroups: []
 --- !u!4 &400194873
 Transform:
@@ -2139,7 +2140,7 @@ MonoBehaviour:
   PlayerPrefab: {fileID: 1266550042}
   StartingTilesCount: 12
   TimeToCreateBoard: 0.52
-  OnPlayerMoved:
+  OnPlayerIndexSet:
     m_PersistentCalls:
       m_Calls: []
   OnBoardModified:
@@ -2704,9 +2705,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: Shareholder
-  folderName: Money
-  title: SHAREHOLDER
+  assetName: SpeedingPotion
+  folderName: ToolTiles
+  title: SPEEDING POTION
   color: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
   baseDamage: 1
   rarity: 3

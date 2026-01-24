@@ -232,7 +232,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         switch(tileState)
         {
             case TileState.InBoard:
-                BoardController.OnPlayerMoved.RemoveListener(CheckForDraggability);
+                BoardController.OnPlayerIndexSet.RemoveListener(CheckForDraggability);
                 break;
             default: break;
         }
@@ -248,7 +248,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
             case TileState.InBoard:
                 if(_Profile is Tile_End || _Profile is Tile_Start) { canBeMoved = false; break; }
                 canBeMoved = true;
-                BoardController.OnPlayerMoved.AddListener(CheckForDraggability);
+                BoardController.OnPlayerIndexSet.AddListener(CheckForDraggability);
                 CheckForDraggability(0, BoardController.PlayerIndex);
                 break;
             default: break;
@@ -281,10 +281,6 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     public IEnumerator C_OnPlacedInBoard() { yield return _Profile.OnPlacedInBoard(); OnAddedToBoard?.Invoke(); }
     public IEnumerator C_OnRemovedFromBoard() { yield return _Profile.OnRemovedFromBoard(); }
 
-    public string GetTooltipText()
-    {
-        return _Profile.GetTooltipText();
-    }
     #endregion
     #region BUY/SELL
     
@@ -335,7 +331,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     void StopForcingThisTooltip() { TooltipManager.Instance.StopForcingThisTooltip(this); }
     public string GetTooltipDescription()
     {
-        return _Profile.GetTooltipText();
+        return _Profile.GetGenericSkillsText()+ _Profile.GetTooltipText();
     }
     public string GetTooltipTitle()
     {
@@ -378,7 +374,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         
         if (!canBeMoved) { return false; }
         if (isBehindPlayer) { return false; }
-        if (_Profile.tileTags.Contains(TileTags.Unmovable) && tileState == TileState.InBoard) { return false; }
+        if (_Profile.genericSkills.Contains(GenericSkills.Unmovable) && tileState == TileState.InBoard) { return false; }
         if (GameController_Simple.Instance.currentGameState == GameState.MovingPlayer) { MoveToTfData(); return false; }
 
         Camera mainCamera = Camera.main;

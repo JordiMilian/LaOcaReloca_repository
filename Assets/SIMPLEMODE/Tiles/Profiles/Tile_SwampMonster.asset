@@ -19,7 +19,10 @@ MonoBehaviour:
   rarity: 3
   tileSize: 1
   uniquePrice: 0
-  tileTags: 05000000
+  tileTags: 
+  genericSkills: 01000000
   _Tile: {fileID: 0}
+  StepsToCross: 1
+  remainingSteps: 1
   swampTokenProfile: {fileID: 11400000, guid: 3cfa6d0fb67a9864e892a2e56bc028ae, type: 2}
   DamageAddedOnCross: 50

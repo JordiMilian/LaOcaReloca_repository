@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 public class Tile_SwampToken : Tile_Profile
 {
+    /*
     public override IEnumerator OnPlacedInBoard() 
     { 
         yield return base.OnPlacedInBoard();
@@ -41,5 +42,5 @@ public class Tile_SwampToken : Tile_Profile
             yield return BoardController.V_JumpPlayerToNewPos();
         }
     }
-   public override string GetTooltipText() { return $"{StringTools.Unmovable}\nTakes 2 steps to cross"; }
+    */
 }

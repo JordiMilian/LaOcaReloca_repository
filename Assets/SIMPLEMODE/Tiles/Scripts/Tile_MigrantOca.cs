@@ -33,7 +33,7 @@ public class Tile_MigrantOca : Tile_Oca
         GameController.SetRemainingRolls(GameController.RollsRemaining + 1);
     }
    //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
-   public override string GetTooltipText() { return $"{ExtraDiceRoll}\n{OnLanded} Jump to the next Oca and gain {moneyPerTile} money per tile skipped"; }
+   public override string GetTooltipText() { return $"{OnLanded} Jump to the next Oca and gain {moneyPerTile} money per tile skipped"; }
 
 
 }

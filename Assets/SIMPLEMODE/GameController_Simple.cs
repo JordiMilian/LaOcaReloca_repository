@@ -184,25 +184,50 @@ public class GameController_Simple : MonoBehaviour
         SetTileToLandVisuals();
         BoardController.OnBoardModified.AddListener(UpdateLandingTile);
 
-        while (remainingStepsToTake > 0)
+        TileController currentTile = BoardController.GetCurrentPlayerTile();
+
+        //Check if we step out of current tile
+        if(currentTile._Profile.remainingSteps <= 0)
         {
-            remainingStepsToTake--;
-            yield return BoardController.L_StepPlayer();
-            if(remainingStepsToTake > 0)
+            currentTile._Profile.OnSteppedOut();
+            BoardController.PlayerIndex++;
+        }
+        while(remainingStepsToTake > 0)
+        {
+            //Get tile
+            currentTile = BoardController.GetCurrentPlayerTile();
+            bool isLandingIteration = GetTileToLand() == currentTile && remainingStepsToTake == 1;
+
+            //stepping visuals
+            yield return BoardController.V_StepPlayerToNewPos();
+
+            //stepping logic
+            yield return currentTile.OnPlayerStepped();
+            if (!isLandingIteration) { yield return currentTile.OnTileFinished(); }
+
+            //remove step if necessary
+            if (currentTile._Profile.remainingSteps > 0)
             {
-                yield return BoardController.GetCurrentPlayerTile().OnTileFinished();
+                remainingStepsToTake--;
+                currentTile._Profile.remainingSteps--;
+            }
+
+            //check for step to next 
+            if (currentTile._Profile.remainingSteps <= 0 && remainingStepsToTake > 0)
+            {
+                currentTile._Profile.OnSteppedOut();
+                BoardController.PlayerIndex++;
             }
         }
+        //handle landing
         returnToNoTileToLandVisuals();
-        yield return OnLanded_CardEffects.C_ActivateEffects(BoardController.GetCurrentPlayerTile());
+        yield return OnLanded_CardEffects.C_ActivateEffects(currentTile);
 
         yield return BoardController.L_LandPlayerInCurrentPos();
-
         yield return DealTotalDamage();
 
         if(RollsRemaining <= 0) { ChangeGameState(GameState.PlayerDied); }
-        else { ChangeGameState(GameState.FreeMode); }
-           
+        else { ChangeGameState(GameState.FreeMode); }  
     }
     public void ChangeStateToRollingDice()
     {
@@ -214,7 +239,7 @@ public class GameController_Simple : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f); 
         yield return DealTotalDamage();
-        yield return BoardController.JumpPlayerToStartTile();
+        yield return BoardController.L_JumpPlayerTo(0,false);
 
         ChangeGameState(GameState.FreeMode);
     }
@@ -332,7 +357,7 @@ public class GameController_Simple : MonoBehaviour
         AcumulatedDamage += amount;
         UpdateAcumulatedDamageDisplay();
 
-        const float shakeDuration = .15f;
+        const float shakeDuration = .05f;
         TMP_AcumulatedDamage.rectTransform.DOShakeRotation(shakeDuration, 30);
         yield return new WaitForSeconds(shakeDuration);
     }
@@ -432,40 +457,27 @@ public class GameController_Simple : MonoBehaviour
         returnToNoTileToLandVisuals();
         SetTileToLandVisuals();
     }
-    void SetTileToLandVisuals()
+    public TileController GetTileToLand()
     {
         int stepsToConsume = remainingStepsToTake;
-        int currentIndex = BoardController.PlayerIndex; 
-
-        //first check first tile
-        if(BoardController.GetCurrentPlayerTile()._Profile is Tile_SwampToken)
+        int currentIndex = BoardController.PlayerIndex;
+        while (stepsToConsume > 0)
         {
-            Tile_SwampToken swampToken = (Tile_SwampToken)BoardController.GetCurrentPlayerTile()._Profile;
-            if (swampToken.remainingSteps > 1) { stepsToConsume--; }
-        }
-        //Then the rest of tiles
-        while(stepsToConsume > 0)
-        {
-            stepsToConsume--;
-            int nextIndex = currentIndex + 1;
-
-            if(nextIndex > BoardController.TilesList.Count - 1) { break; }
-
-            currentIndex = nextIndex;
-
             Tile_Profile currentTile = BoardController.TilesList[currentIndex]._Profile;
-            if (currentTile.tileTags.Contains(TileTags.Token))
+            for (int i = 0; i < currentTile.remainingSteps; i++)
             {
-                stepsToConsume++;
+                stepsToConsume--;
+                if(stepsToConsume <= 0) { return currentTile._Tile; }
             }
-            if (currentTile is Tile_SwampToken)
-            {
-                Tile_SwampToken swampToken = (Tile_SwampToken)currentTile;
-                if(swampToken.remainingSteps > 1) { stepsToConsume--; }
-                if (swampToken.remainingSteps == 0 && currentIndex != BoardController.PlayerIndex) { stepsToConsume--; } //swamp tokens stepped once have 0 steps remainig
-            }
+            
+            if(currentIndex >= BoardController.TilesList.Count - 1) { return currentTile._Tile; }
+            currentIndex++;
         }
-        tileToLand = BoardController.TilesList[currentIndex];
+        return BoardController.TilesList[currentIndex];
+    }
+    void SetTileToLandVisuals()
+    {
+        tileToLand = GetTileToLand();
         tileToLand.SetTileMaterial_ToLand();
     }
     void returnToNoTileToLandVisuals()

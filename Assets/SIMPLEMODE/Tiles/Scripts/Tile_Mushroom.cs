@@ -26,10 +26,6 @@ public class Tile_Mushroom : Tile_Plant
         }
     }
    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
-   public override IEnumerator OnPlayerStepped() 
-    { 
-        yield return base.OnPlayerStepped(); 
-        yield return BoardController.C_RemoveTile(_Tile.indexInBoard); 
-        GameController.remainingStepsToTake++; }
-   public override string GetTooltipText() { return  base.GetTooltipText() + $",{Fragile},{NoStep}" +$"\n{OnRolledDice} {changeToDuplicate * 100}% change to spawn a copy of this tile with {baseGrowth} DMG"; }
+
+   public override string GetTooltipText() { return base.GetTooltipText()+ $"\n{OnRolledDice} {changeToDuplicate * 100}% change to spawn a copy of this tile with {baseGrowth} DMG"; }
 }

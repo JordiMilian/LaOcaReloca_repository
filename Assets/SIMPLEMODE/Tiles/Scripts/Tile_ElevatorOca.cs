@@ -15,5 +15,5 @@ public class Tile_ElevatorOca : Tile_Oca
         GameController.SetRemainingRolls(GameController.RollsRemaining + 1);
         yield return BoardController.L_JumpPlayerTo(BoardController.TilesList.Count - 1, false);
     }
-    public override string GetTooltipText() { return $"{ExtraDiceRoll}\n{OnLanded} Jump to the END TILE"; }
+    public override string GetTooltipText() { return $"{OnLanded} Jump to the END TILE"; }
 }

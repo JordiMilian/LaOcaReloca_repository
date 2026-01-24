@@ -39,7 +39,12 @@ public enum Rarity
 }
 public enum TileTags
 {
-    NoTag, Empty, Oca, Rat, Token, Unmovable, Plant, Food, Curse
+    NoTag, Empty, Oca, Rat, Token, Curse,
+    Plant, Food
+}
+public enum GenericSkills
+{
+   Fragile, Unmovable, ExtraDiceroll, Golden
 }
 public enum TileSize
 {

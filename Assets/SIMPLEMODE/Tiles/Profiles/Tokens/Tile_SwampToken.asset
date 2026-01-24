@@ -19,5 +19,8 @@ MonoBehaviour:
   rarity: 0
   tileSize: 0
   uniquePrice: 0
-  tileTags: 0500000008000000
+  tileTags: 05000000
+  genericSkills: 01000000
   _Tile: {fileID: 0}
+  StepsToCross: 2
+  remainingSteps: 1

@@ -34,7 +34,7 @@ public class TileController_Editor : Editor
 
         // Show card description preview
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Card Description",  refs.GetTooltipText(), EditorStyles.helpBox);
+        EditorGUILayout.LabelField("Card Description", refs.GetGenericSkillsText()+ refs.GetTooltipText(), EditorStyles.helpBox);
 
         serializedObject.ApplyModifiedProperties();
     }

@@ -15,12 +15,10 @@ public class Tile_DamageMover : Tile_Profile
             tileBehind.RemoveBaseDamage(tileBehind.GetBaseDamage());
             yield return new WaitForSeconds(0.3f);
         }
-        yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
-        GameController.remainingStepsToTake++;
     }
 
     public override string GetTooltipText()
     {
-        return $"{NoStep}, {Fragile}\n{OnCrossed} Transfer the damage from the previous tile to the next tile";
+        return $"{OnCrossed} Transfer the damage from the tile behind to the tile forward";
     }
 }

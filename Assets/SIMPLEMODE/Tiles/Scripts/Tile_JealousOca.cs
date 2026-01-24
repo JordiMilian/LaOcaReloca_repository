@@ -20,6 +20,6 @@ public class Tile_JealousOca : Tile_Oca
    //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
    //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
-   public override string GetTooltipText() { return $"{ExtraDiceRoll}\n{OnLanded} Jump to the next OCA.\n{OnCustomMessaje("ON LANDED ON ANOTHER OCA")} Add that tile's base damage to this tile "; }
+   public override string GetTooltipText() { return $"{OnLanded} Jump to the next OCA.\n{OnCustomMessaje("ON LANDED ON ANOTHER OCA")} Add that tile's base damage to this tile "; }
 
 }

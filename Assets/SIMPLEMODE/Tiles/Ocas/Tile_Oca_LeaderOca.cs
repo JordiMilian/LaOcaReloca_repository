@@ -39,6 +39,6 @@ public class Tile_Oca_LeaderOca : Tile_Oca
     }
     public override string GetTooltipText()
     {
-        return $"{ExtraDiceRoll}\n{OnLanded} Add {MathJ.AddDamage( addedDamageAtOcas)} to all other OCA TILES and Jump to the next OCA";
+        return $"{OnLanded} Add {MathJ.AddDamage( addedDamageAtOcas)} to all other OCA TILES and Jump to the next OCA";
     }
 }

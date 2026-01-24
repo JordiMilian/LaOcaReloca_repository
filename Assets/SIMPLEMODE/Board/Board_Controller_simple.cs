@@ -12,13 +12,18 @@ public class Board_Controller_simple : MonoBehaviour
     [SerializeField] TilesFactory factory;
 
     public List<TileController> TilesList = new();
-    public TileController GetCurrentPlayerTile() { return TilesList[PlayerIndex]; }
+    public TileController GetCurrentPlayerTile(int extra = 0) { return TilesList[PlayerIndex+extra]; }
     public List<TileTfData> TfData = new();
     public Dictionary<Vector2Int, TileController> TilesByPosition = new();
     public int PlayerIndex 
     {
-        get;
-        private set;
+        get { return _playerIndex; }
+        set
+        {
+            int prevValue = _playerIndex; 
+            _playerIndex = value;
+            OnPlayerIndexSet?.Invoke(prevValue,_playerIndex);
+        }
     }
 
     int _playerIndex;
@@ -36,7 +41,7 @@ public class Board_Controller_simple : MonoBehaviour
     [Header("Board visualization")]
     public int StartingTilesCount = 9;
     [SerializeField] float TimeToCreateBoard;
-    public UnityEvent<int, int> OnPlayerMoved; //(from, to)
+    public UnityEvent<int, int> OnPlayerIndexSet; //(from, to)
     public UnityEvent OnBoardModified;
     public UnityEvent<TileController> OnAddedTile;
     public UnityEvent<TileController> OnRemovedTile;
@@ -45,13 +50,16 @@ public class Board_Controller_simple : MonoBehaviour
     public IEnumerator StartBoard() //called from game controller
     {
         TilesList = InstantiateStartingTiles();
+        foreach(TileController tile in TilesList)
+        { yield return tile.C_OnPlacedInBoard(); }
+
         TfData =  GetStrucrtData();
         MoveTiles_ToTfData(false);
         yield return C_AnimateStartingTiles();
 
 
         PlayerIndex = 0;
-        OnPlayerMoved?.Invoke(0, 0);
+        yield return L_JumpPlayerTo(0, false);
         playerSidePos = PlayerPrefab.transform.position;
         yield return V_StepPlayerToNewPos();
     }
@@ -401,19 +409,6 @@ public class Board_Controller_simple : MonoBehaviour
     #endregion
 
     #region MAIN PUBLIC METHODS FOR BOARD MOVEMENT
-    public IEnumerator L_StepPlayer() 
-    {
-        if (PlayerIndex == TilesList.Count - 1) { yield break; }
-  
-
-        int stepAmount = 1;
-        PlayerIndex += stepAmount;
-
-        OnPlayerMoved?.Invoke(PlayerIndex - stepAmount, PlayerIndex);
-
-        yield return V_StepPlayerToNewPos();
-        yield return TilesList[PlayerIndex].OnPlayerStepped();
-    }
     public IEnumerator L_LandPlayerInCurrentPos()
     {
         Debug.Log($"Landed in:{PlayerIndex}");
@@ -430,32 +425,36 @@ public class Board_Controller_simple : MonoBehaviour
 
         int originalIndex = PlayerIndex;
         PlayerIndex = IndexOfTile;
-        OnPlayerMoved?.Invoke(originalIndex, PlayerIndex);
+        TilesList[originalIndex]._Profile.OnSteppedOut();
 
+        TileController endTile = GetCurrentPlayerTile();
+        endTile._Profile.remainingSteps--;
         yield return V_JumpPlayerToNewPos();
         V_ShakePlayer();
         if(triggerLanded)
         {
-            GameController_Simple.Instance.remainingStepsToTake = 1;
-            yield return TilesList[PlayerIndex].OnPlayerStepped();
-            GameController_Simple.Instance.remainingStepsToTake = 0;
+            yield return endTile.OnPlayerStepped();
             yield return L_LandPlayerInCurrentPos();
         }
         else
         {
-            yield return TilesList[PlayerIndex].OnPlayerStepped();
-            yield return TilesList[PlayerIndex].OnTileFinished();
+            yield return endTile.OnPlayerStepped();
+            yield return endTile.OnTileFinished();
         }
     }
-    public IEnumerator JumpPlayerToStartTile()
+    public void MovePlayerTo(int to) //without triggering any effects. This is used when a tile is deleted below the player for example
     {
-        yield return L_JumpPlayerTo(0, true);
+        TileController TileTo = TilesList[to];
+
+        PlayerIndex = to;
+        TileTo._Profile.remainingSteps = 0;
     }
     #endregion
     #region PLAYER VISUALS
-    IEnumerator V_StepPlayerToNewPos()//step the player to new pos
+    public IEnumerator V_StepPlayerToNewPos()//step the player to new pos
     {
-        const float duration = 0.25f;
+        Debug.Log("Step anim");
+        const float duration = 0.2f;
         Vector3 newPos = TilesList[PlayerIndex].TfData.center;
 
         float jumpHeight = .5f;
@@ -489,10 +488,42 @@ public class Board_Controller_simple : MonoBehaviour
         ;
         yield return new WaitForSeconds(duration);
     }
-    
+    public IEnumerator V_JumpPlayerToPreviouspos()
+    {
+        const float duration = .5f;
+        Vector3 newPos;
+        if(PlayerIndex == 0)
+        {
+            newPos = TilesList[PlayerIndex].TfData.center;
+        }
+        else { newPos = TilesList[PlayerIndex - 1].TfData.center; }
+            
+
+        float jumpHeight = 1;
+        Sequence seq =
+            DOTween.Sequence().
+                Append(PlayerPrefab.transform.DOJump(
+                    newPos,
+                    jumpHeight,
+                    1,
+                    duration
+                    ));
+
+        ;
+        yield return new WaitForSeconds(duration);
+    }
     void V_ShakePlayer()
     {
         PlayerPrefab.transform.DOShakePosition(0.2f, .1f, 1);
+    }
+    public IEnumerator V_AirbornePlayer()
+    {
+        TileController currentTile = GetCurrentPlayerTile(1);
+        const float duration = .2f;
+        PlayerPrefab.transform.DOMove(
+            currentTile.TfData.origin + (Vector3.up * .5f),
+            duration);
+        yield return new WaitForSeconds(duration);
     }
 
     #endregion
@@ -539,11 +570,8 @@ public class Board_Controller_simple : MonoBehaviour
     public IEnumerator C_RemoveTile(int index)
     {
         TileController tileToRemove = TilesList[index];
-
-        if (tileToRemove == GetCurrentPlayerTile())
-        {
-            yield return tileToRemove.C_DealAllDamageToDeal();
-        }
+        bool isPlayerTile = index == PlayerIndex;
+        bool isLandedTile = tileToRemove == GameController_Simple.Instance.GetTileToLand();
 
         yield return tileToRemove.C_OnRemovedFromBoard();
         RemoveTile(index);
@@ -553,9 +581,24 @@ public class Board_Controller_simple : MonoBehaviour
 
         UpdateStructData();
         MoveTiles_ToTfData(true);
-        if(index <= PlayerIndex) { PlayerIndex--; }
 
-        yield return V_StepPlayerToNewPos();
+        
+        if(index <= PlayerIndex) { PlayerIndex--; }
+        if (isPlayerTile && isLandedTile)
+        {
+            GetCurrentPlayerTile()._Profile.remainingSteps = 0;
+            yield return V_JumpPlayerToNewPos();
+        }
+        else if(isPlayerTile)
+        {
+            yield return V_AirbornePlayer();
+        }
+        yield break;
+
+        if (isLandedTile) { yield return V_JumpPlayerToPreviouspos(); }
+        else if (isPlayerTile) { yield return V_AirbornePlayer(); }
+        else { yield return V_StepPlayerToNewPos(); }
+            
         GameController_Simple.Instance.shopController.UpdatePrices();
         yield return GameController_Simple.Instance.OnRemovedTileFromBoard_CardEffect.C_ActivateEffects();
 
@@ -580,7 +623,7 @@ public class Board_Controller_simple : MonoBehaviour
         {
             if(i == exception) { continue; }
             TileController tile = TilesList[i];
-            if (tile._Profile.tileTags.Contains(TileTags.Unmovable))
+            if (tile._Profile.genericSkills.Contains(GenericSkills.Unmovable))
             {
                 unmovibleTiles.Add((i, tile));
             }

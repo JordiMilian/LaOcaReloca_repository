@@ -20,5 +20,8 @@ MonoBehaviour:
   tileSize: 0
   uniquePrice: 0
   tileTags: 04000000
+  genericSkills: 00000000
   _Tile: {fileID: 0}
+  StepsToCross: 0
+  remainingSteps: 1
   poison: 5

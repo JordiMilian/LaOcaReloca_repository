@@ -13,13 +13,13 @@ public class Tile_End : Tile_Profile
 
     IEnumerator ReachedEnd()
     {
-        GameController.SetRemainingRolls(GameController.RollsRemaining+1);
-        yield return _Tile.C_DealAllDamageToDeal();
         yield return GameController.OnReachedEndTile_CardEffects.C_ActivateEffects();
+        yield return base.OnPlayerLanded();
+        yield return base.OnTileFinished();
         GameController_Simple.Instance.ChangeGameState(GameState.ReachedEnd);
     }
     public override string GetTooltipText()
     {
-        return StringTools.ExtraDiceRoll + $"\n{OnReached} return to Start";
+        return $"{OnCrossed} Return to Start";
     }
 }

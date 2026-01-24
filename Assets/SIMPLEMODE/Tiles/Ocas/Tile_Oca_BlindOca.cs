@@ -48,6 +48,6 @@ public class Tile_Oca_BlindOca : Tile_Oca
     {
         string display = "?";
         if(GameController != null) { display = GameController.MoneyToRoll.ToString(); }
-        return  $"{ExtraDiceRoll}\n{OnLanded} Jump to another random Oca.";
+        return  $"{OnLanded} Jump to another random Oca.";
     }
 }

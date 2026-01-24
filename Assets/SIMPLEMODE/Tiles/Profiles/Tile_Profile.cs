@@ -3,6 +3,7 @@ using System.Collections;
 using static StringTools;
 using UnityEditor;
 using System.Collections.Generic;
+using System.Linq;
 public class Tile_Profile : ScriptableObject
 {
     public float BaseDamage = 10;
@@ -13,11 +14,15 @@ public class Tile_Profile : ScriptableObject
     public TileSize tileSize = TileSize.Medium;
     [HideInInspector] public int uniquePrice = 0; //IF rarity is Unique, use this value.
     public TileTags[] tileTags;
+    public List<GenericSkills> genericSkills = new();
     [HideInInspector] public TileController _Tile;
     protected TileSharedVisuals tileMovement;
     [Space(5)]
     protected Board_Controller_simple BoardController;
     protected GameController_Simple GameController;
+    public int StepsToCross = 1;
+    public void SetStepsToCross(int newSteps) { StepsToCross = newSteps; remainingSteps = newSteps; }
+    [HideInInspector] public int remainingSteps = 1;
     
     public void Initialize()
     {
@@ -25,22 +30,68 @@ public class Tile_Profile : ScriptableObject
         GameController = GameController_Simple.Instance;
         tileMovement = _Tile.tileMovement;
     }
+    #region VIRTUAL LOGIC
     public virtual IEnumerator OnPlayerStepped()
     {
         _Tile.DamagesToDeal.Add(_Tile.GetModifiedBaseDamage());
         _Tile.DamagesToDeal.Reverse();
 
+        //if (genericSkills.Contains(GenericSkills.NoStep)) { GameController.remainingStepsToTake++; }
+
         yield return GameController.OnCrossed_CardEffects.C_ActivateEffects();
     }
-    public virtual IEnumerator OnPlayerLanded() { yield break; }
+    public virtual IEnumerator OnPlayerLanded()
+    {
+        if (genericSkills.Contains(GenericSkills.ExtraDiceroll)) { GameController.SetRemainingRolls(GameController.RollsRemaining +1); }
+        yield break;
+
+    }
     public virtual IEnumerator OnTileFinished() //Triggered just before stepping out of a tile or after landing. 
     {
         yield return _Tile.C_DealAllDamageToDeal();
-    }
-    public virtual IEnumerator OnPlacedInBoard() { yield break; }
-    public virtual IEnumerator OnRemovedFromBoard() { yield break; }
 
-    public virtual string GetTooltipText() { return "NO DESCRIPTION FOUND"; }
+        if(genericSkills.Contains(GenericSkills.Golden))
+        {
+            GameController.AddMoney(1);
+        }
+        if (genericSkills.Contains(GenericSkills.Fragile))
+        {
+            yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
+        }
+    }
+    public virtual void OnSteppedOut()
+    {
+        remainingSteps = StepsToCross;
+    }
+    public virtual IEnumerator OnPlacedInBoard() { remainingSteps = StepsToCross; yield break; }
+    public virtual IEnumerator OnRemovedFromBoard() { yield break; }
+    #endregion
+    #region TOOLTIP TEXT
+    public virtual string GetGenericSkillsText()
+    {
+        List<string> skillStrings = new();
+
+        string stepsString = "";
+        if (StepsToCross == 0) { stepsString = "0 steps"; }
+        else if (StepsToCross > 1) { stepsString = $"{StepsToCross} steps"; }
+        if(stepsString.Length > 0) { skillStrings.Add(CustomSkill(stepsString)); }
+        
+        foreach (GenericSkills skill in genericSkills) { skillStrings.Add(CustomSkill(skill.ToString())); }
+
+        string finalString = "";
+        for (int i = 0; i < skillStrings.Count; i++)
+        {
+            finalString += skillStrings[i];
+            if (i < skillStrings.Count - 1) { finalString += ", "; }
+        }
+        if (skillStrings.Count > 0) { finalString += "\n"; }
+
+        return finalString;
+    }
+    public virtual string GetTooltipText() 
+    {
+        return "";
+    }
     #region TOOLTIP INTRO
     protected const string OnCrossed = "<b>- ON CROSSED:</b>";
     protected const string OnLanded = "<b>- ON LANDED:</b>";
@@ -49,11 +100,11 @@ public class Tile_Profile : ScriptableObject
     protected const string OnReached = "<b>- ON REACHED:</b>";
     protected const string OnAddedDamage = "<b>- ON ADDED DAMAGE TO THIS TILE:</b>";
     protected const string OnAddedNewTileToBoard = "<b>- ON ADDED NEW TILE TO BOARD:</b>";
-    protected const string OnEnterInBoard = "<b>- ON ENTER IN BOARD:</b>";
+    protected const string OnEnterInBoard = "<b>- ON ENTER BOARD:</b>";
     protected string OnLandedOnTag(TileTags tag) { return $"<b>- ON LANDED ON AN {tag.ToString().ToUpper()} TILE:</b>"; }
     protected string OnCrossedOnTag(TileTags tag) { return $"<b>- ON CROSSED A {tag.ToString().ToUpper()} TILE:</b>"; }
     #endregion
-
+    #endregion
     #region DAMAGE MODIFIERS 
     //Separated the logic of modifying in case we want to Override the logic and not the visuals
     //DO NOT CALL THESE FROM THE TILE LOGIC, THIS IS FOR OVERRIDING ONLY (Look at Tile_Creatine for a good examples)

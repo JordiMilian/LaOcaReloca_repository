@@ -18,8 +18,6 @@ public class Tile_Reflexion : Tile_Profile
 
             yield return BoardController.C_AddNewTile(newTile, _Tile.indexInBoard);
         }
-        GameController.remainingStepsToTake++;
-        yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
     }
-    public override string GetTooltipText() { return $"{NoStep}, {Fragile}\n{OnCrossed} Create a copy of the Tile behind with DMG 0"; }
+    public override string GetTooltipText() { return $"{OnCrossed} Create a copy of the Tile behind with DMG 0"; }
 }

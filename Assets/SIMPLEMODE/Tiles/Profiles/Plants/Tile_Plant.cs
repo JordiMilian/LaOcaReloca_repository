@@ -37,6 +37,6 @@ public abstract class Tile_Plant : Tile_Profile
         }
         return growth;
     }
-    public override string GetTooltipText() { return $"{StringTools.Growth(GetFinalGrowth())}"; }
+    public override string GetTooltipText() { return StringTools.Growth(GetFinalGrowth()); }
 
 }

@@ -17,14 +17,12 @@ public class Tile_Oca : Tile_Profile
             if (BoardController.TilesList[i]._Profile is Tile_Oca)
             {
                 yield return BoardController.L_JumpPlayerTo(i, false);
-                GameController.SetRemainingRolls(GameController.RollsRemaining +1);
                 yield break;
 
             }
             if(BoardController.TilesList[i]._Profile is Tile_End)
             {
-                GameController.SetRemainingRolls(GameController.RollsRemaining + 1);
-                yield return BoardController.L_JumpPlayerTo(i, true);
+                yield return BoardController.L_JumpPlayerTo(i, false);
                 yield break;
             }
         }
@@ -36,6 +34,6 @@ public class Tile_Oca : Tile_Profile
     {
         string display = "X";
         if(GameController != null) { display = GameController.MoneyToRoll.ToString(); }
-        return $"{ExtraDiceRoll}\n{OnLanded} jump to the next Oca.";
+        return $"{OnLanded} jump to the next Oca.";
     }
 }

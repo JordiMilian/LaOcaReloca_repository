@@ -20,4 +20,7 @@ MonoBehaviour:
   tileSize: 2
   uniquePrice: 999
   tileTags: 
+  genericSkills: 
   _Tile: {fileID: 0}
+  StepsToCross: 0
+  remainingSteps: 1

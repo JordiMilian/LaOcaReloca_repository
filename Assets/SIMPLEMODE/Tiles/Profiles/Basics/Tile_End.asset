@@ -20,5 +20,7 @@ MonoBehaviour:
   tileSize: 2
   uniquePrice: 999
   tileTags: 
+  genericSkills: 02000000
   _Tile: {fileID: 0}
-  moneyOnReached: 3
+  StepsToCross: 1
+  remainingSteps: 1

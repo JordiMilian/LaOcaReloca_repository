@@ -14,5 +14,5 @@ public class Tile_RacoonToken : Tile_Profile
         GameController.AddMoney(moneyOnLanded);
         yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
     }
-   public override string GetTooltipText() { return $"{NoStep}, {Fragile}\n{OnCrossed} Get {moneyOnLanded} money"; }
+   public override string GetTooltipText() { return base.GetTooltipText() + $"{OnCrossed} Get {moneyOnLanded} money"; }
 }

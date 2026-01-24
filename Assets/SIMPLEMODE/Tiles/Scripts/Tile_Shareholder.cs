@@ -21,5 +21,5 @@ public class Tile_Shareholder : Tile_Profile
     }
    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
    //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
-   public override string GetTooltipText() { return StringTools.OnCustomMessaje("WHEN ADDED MONEY") + "Increase this tile DMG by that amount of money"; }
+   public override string GetTooltipText() { return StringTools.OnCustomMessaje("WHEN GETTING MONEY") + "Increase this tile DMG by that amount of money"; }
 }

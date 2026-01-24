@@ -6,12 +6,4 @@ public class Tile_RatToken : Tile_Profile
    //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
    //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
-   public override IEnumerator OnPlayerStepped() 
-    {
-        yield return base.OnPlayerStepped();
-
-        GameController.remainingStepsToTake++;
-        yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
-    }
-   public override string GetTooltipText() { return $"{NoStep}, {Fragile}"; }
 }
