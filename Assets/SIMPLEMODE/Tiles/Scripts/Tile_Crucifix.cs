@@ -5,43 +5,7 @@ using UnityEngine;
 using static StringTools;
 public class Tile_Crucifix : Tile_Profile
 {
-    [SerializeField] float addedDamageToOtherTiles = 2;
-    public override IEnumerator OnPlayerLanded()
-    {
-        
-        float totalDamage = 0;
 
-        List<TileController> axisTiles = MathJ.GetBothAxisTiles(_Tile);
-        foreach (TileController tile in axisTiles)
-        {
-            yield return addTileDamage(tile);
-        }
-
-        tileMovement.shakeTile(Intensity.large);
-
-        _Tile.DamagesToDeal.Add(totalDamage);
-        yield return base.OnPlayerLanded();
-        //
-        IEnumerator addTileDamage(TileController tile)
-        {
-            totalDamage += tile.GetBaseDamage();
-            tile.tileMovement.shakeTile(Intensity.mid);
-            yield return new WaitForSeconds(0.05f);
-        }
-    }
-    public override IEnumerator OnPlayerStepped()
-    {
-        List<TileController> axisTiles = MathJ.GetBothAxisTiles(_Tile);
-        foreach (TileController tile in axisTiles)
-        {
-            tile.AddBaseDamage(addedDamageToOtherTiles);
-        }
-        yield return base.OnPlayerStepped();
-    }
-    public override string GetTooltipText()
-    {
-        return $"{OnLanded} Deal the BASE DMG of all TILES in the same axis \n{OnCrossed} Add {MathJ.AddDamage(addedDamageToOtherTiles)} to all TILES in the same axis";
-    }
 
 
 }

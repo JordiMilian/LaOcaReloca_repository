@@ -11,10 +11,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     ,IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 
 {
-    [HideInInspector] public TileState tileState = TileState.none;
-
     [HideInInspector] public int indexInBoard;
-    [HideInInspector] public Vector2Int vectorInBoard;
     public Material tileMaterial;
 
     //Basic references to other scripts
@@ -26,7 +23,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
 
     public Tile_Profile _Profile;
 
-    public UnityEvent OnAddedToBoard;
+    public UnityEvent OnAddedToBoard; //currently used by encounters that trigger when you place a tile in board (curse per money)
 
     #region NEW TF DATA
     [Header("Mesh references")]
@@ -127,6 +124,16 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         Gizmos.DrawLine(TfData.center + squarePos[3], TfData.center + squarePos[0]);
     }
     #endregion
+    #region BASIC SETUP
+    private void Awake()
+    {
+        GameController = GameController_Simple.Instance;
+        BoardController = Board_Controller_simple.Instance;
+        tileMovement = GetComponent<TileSharedVisuals>();
+
+        tileMaterial = Instantiate(tileMaterial);
+        GetComponent<MeshRenderer>().material = tileMaterial;
+    }
     public void SetTileProfile(Tile_Profile profile)
     {
         _Profile = Instantiate(profile);
@@ -139,6 +146,8 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         tileMovement.UpdateDmgDisplayText();
         _Profile.Initialize();
     }
+    #endregion
+    #region SET MATERIAL TO LAND
     public void SetTileMaterial_ToLand()
     {
         tileMaterial.SetFloat("_sineScale", 1.05f);
@@ -151,15 +160,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         tileMaterial.SetFloat("_sineSpeed", 0f);
         tileMaterial.SetColor("_OutlineColor", _Profile.tileColor * 1);
     }
-    private void Awake()
-    {
-        GameController = GameController_Simple.Instance;
-        BoardController = Board_Controller_simple.Instance;
-        tileMovement = GetComponent<TileSharedVisuals>();
-
-        tileMaterial = Instantiate(tileMaterial);
-        GetComponent<MeshRenderer>().material = tileMaterial;
-    }
+    #endregion
     #region DAMAGE MODIFIERS
     public List<float> DamagesToDeal = new();
     public Func<float, float> BaseDamageModifiers;
@@ -224,6 +225,8 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         DamagesToDeal.Clear();
     }
     #endregion
+    #region TILE STATE
+    [HideInInspector] public TileState tileState = TileState.none;
     public void SetTileState(TileState newState)
     {
         if(newState == tileState) { return; }
@@ -255,15 +258,8 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         }
         tileState = newState;
     }
-
-    [HideInInspector] public bool isBehindPlayer;
-    public void CheckForDraggability(int from, int to)
-    {
-        isBehindPlayer = BoardController.PlayerIndex >= indexInBoard;
-        if (isBehindPlayer) { tileMovement.SetBasicPanelColor_Transparent(); }
-        else { tileMovement.SetBasicPanelColor(); }
-    }
-    #region MAIN VIRTUAL LOGIC METHODS
+    #endregion
+    #region CALL PROFILE LOGIC
 
     public IEnumerator OnPlayerStepped()
     {
@@ -346,6 +342,13 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     public bool canBeMoved = true;
     Coroutine draggingCoroutine;
     [SerializeField] float heightWhileDragged = 1;
+    [HideInInspector] public bool isBehindPlayer;
+    public void CheckForDraggability(int from, int to)
+    {
+        isBehindPlayer = BoardController.PlayerIndex >= indexInBoard;
+        if (isBehindPlayer) { tileMovement.SetBasicPanelColor_Transparent(); }
+        else { tileMovement.SetBasicPanelColor(); }
+    }
     public void OnPointerDown(PointerEventData eventData)
     {
         if( AttemptStartDragging())

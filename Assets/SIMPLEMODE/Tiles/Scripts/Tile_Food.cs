@@ -19,6 +19,7 @@ public class Tile_Food : Tile_Profile
     }
     public virtual IEnumerator OnEaten()
     {
+        yield return _Tile.C_DealAllDamageToDeal();
         yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
     }
    public override IEnumerator OnPlacedInBoard()

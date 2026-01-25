@@ -511,9 +511,7 @@ public class Board_Controller_simple : MonoBehaviour
     {
         oldTileInBoard.C_OnRemovedFromBoard();
         TilesList[oldTileInBoard.indexInBoard] = newTile;
-        TilesByPosition[oldTileInBoard.vectorInBoard] = newTile;
         newTile.indexInBoard = oldTileInBoard.indexInBoard;
-        newTile.vectorInBoard = oldTileInBoard.vectorInBoard;
 
         newTile.transform.parent = transform;
 

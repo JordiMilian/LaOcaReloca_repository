@@ -150,6 +150,7 @@ public static class MathJ
         return adjacentTiles;
     }
     #region DEPRECATED
+    /*
     public static List<TileController> GetTilesAround(TileController thisTile, bool ignoreSelf)
     {
         Board_Controller_simple board = Board_Controller_simple.Instance;
@@ -224,6 +225,7 @@ public static class MathJ
         if (!ignoreSelf) tilesInAxis.Add(thisTile);
         return tilesInAxis;
     }
+    */
     #endregion
     #endregion
     //this functions works with Vector3 but works as If it was Vector2, meaning  (A,0,B) => (A,B). It doesnt consider Y

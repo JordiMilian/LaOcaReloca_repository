@@ -3,8 +3,7 @@ using System.Collections;
 using static StringTools;
 public class Tile_Tomato : Tile_Food
 {
-    [SerializeField] Tile_Profile TreeProfile;
-    [SerializeField] int moneyOnEaten = 10;
+    [SerializeField] int moneyOnEaten = 10, moneyOnRotten = 1;
     [SerializeField] float chanceToSpawnPlant = .5f;
     //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }
     //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }
@@ -14,22 +13,13 @@ public class Tile_Tomato : Tile_Food
     {
         return base.GetTooltipText() +
             $"\n{StringTools.OnEaten} Get +{moneyOnEaten} money" +
-            $"\n{StringTools.OnRotten} {chanceToSpawnPlant * 100}% chance to spawn a Tomato Plant";
+            $"\n{StringTools.OnRotten} Get +{moneyOnRotten} money";
     }
 
     public override IEnumerator OnRotten()
     {
-        int indexInBoard = _Tile.indexInBoard;
         yield return base.OnRotten();
-
-        if(Random.Range(0f,1f) < chanceToSpawnPlant)
-        {
-            TileController treeTile = TilesFactory.instance.InstantiateTile(TreeProfile);
-            yield return BoardController.C_AddNewTile(treeTile, indexInBoard);
-
-        }
-
-
+        GameController.AddMoney(moneyOnEaten);
     }
     public override IEnumerator OnEaten()
     {
