@@ -11,8 +11,9 @@ public class Tile_DamageMover : Tile_Profile
         if(tileBehind._Profile is not Tile_Start)
         {
             TileController tileForward = BoardController.TilesList[_Tile.indexInBoard + 1];
-            tileForward.AddBaseDamage(tileBehind.GetBaseDamage());
-            tileBehind.RemoveBaseDamage(tileBehind.GetBaseDamage());
+            float damageBehind = tileBehind.GetBaseDamage();
+            yield return tileBehind.RemoveBaseDamage(damageBehind);
+            yield return tileForward.AddBaseDamage(damageBehind);
             yield return new WaitForSeconds(0.3f);
         }
     }

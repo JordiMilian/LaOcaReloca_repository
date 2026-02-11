@@ -10,7 +10,7 @@ public class Tile_Shareholder : Tile_Profile
     }
     IEnumerator OnAddedMoney(int amount)
     {
-        _Tile.AddBaseDamage(amount);
+        yield return _Tile.AddBaseDamage(amount);
         yield break;
     }
 

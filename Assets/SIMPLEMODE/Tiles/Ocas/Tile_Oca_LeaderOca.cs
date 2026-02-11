@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static StringTools;
 [CreateAssetMenu(menuName = "TileProfile/Ocas/LeaderOca", fileName = "Tile_LeaderOca")]
@@ -18,8 +19,8 @@ public class Tile_Oca_LeaderOca : Tile_Oca
         }
         foreach (TileController tile in ocasTiles)
         {
-            if (tile == this) { continue; }
-            tile.AddBaseDamage(addedDamageAtOcas);
+            if (tile == _Tile) { continue; }
+            yield return tile.AddBaseDamage(addedDamageAtOcas);
             tile.tileMovement.shakeTile(Intensity.low);
             yield return new WaitForSeconds(0.1f);
         }

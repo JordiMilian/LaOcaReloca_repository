@@ -20,7 +20,7 @@ public class Tile_Ladybug : Tile_Profile
         TileController randomTile = MathJ.GetRandomTileInBoard(_Tile, true,true);
 
 
-        randomTile.AddBaseDamage(lastRolledvalue);
+        yield return randomTile.AddBaseDamage(lastRolledvalue);
 
         //Feedback
         tileMovement.shakeTile(Intensity.mid);

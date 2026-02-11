@@ -13,7 +13,7 @@ public class Tile_JealousOca : Tile_Oca
     {
         if (landedTile._Profile.tileTags.Contains(TileTags.Oca) && landedTile != _Tile)
         {
-            _Tile.AddBaseDamage(landedTile.GetBaseDamage());
+            yield return _Tile.AddBaseDamage(landedTile.GetBaseDamage());
             yield break;
         }   
     }

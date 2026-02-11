@@ -26,7 +26,7 @@ public class Board_Controller_simple : MonoBehaviour
         }
     }
 
-    int _playerIndex;
+    [SerializeField] int _playerIndex;
 
     [SerializeField]Transform tilesHolder;
     public static Board_Controller_simple Instance;
@@ -191,7 +191,7 @@ public class Board_Controller_simple : MonoBehaviour
             > spline.CalculateLength())
         {
             Debug.Log("01 test");
-            mediumT = 1f / ((ExtraLargePercent * largeTilesCount) + mediumTilesCount + (ExtraSmallPercent * smallTilesCount));
+            mediumT = 1f / ((ExtraLargePercent * largeTilesCount) + mediumTilesCount + (ExtraSmallPercent * smallTilesCount) + (ExtraBigPercent * bigTilesCount));
             smallT = mediumT * ExtraSmallPercent;
             bigT = mediumT * ExtraBigPercent;
             largeT = mediumT * ExtraLargePercent;
@@ -456,7 +456,6 @@ public class Board_Controller_simple : MonoBehaviour
     #region PLAYER VISUALS
     public IEnumerator V_StepPlayerToNewPos()//step the player to new pos
     {
-        Debug.Log("Step anim");
         const float duration = 0.25f;
         Vector3 newPos = TilesList[PlayerIndex].TfData.center;
 
@@ -529,7 +528,7 @@ public class Board_Controller_simple : MonoBehaviour
         
         UpdateStructData();
         MoveTiles_ToTfData(true);
-        if (PlayerIndex > index) { PlayerIndex++; }
+        if (PlayerIndex >= index) { PlayerIndex++; }
         
         yield return V_StepPlayerToNewPos();
         tile.SetTileState(TileState.InBoard);
@@ -570,13 +569,17 @@ public class Board_Controller_simple : MonoBehaviour
         {
             yield return V_AirbornePlayer();
         }
+        else
+        {
+            yield return V_StepPlayerToNewPos();
+        }
 
     }
     public void MoveTileInBoard(int from, int to)
     {
         MoveTile(from, to);
 
-        if(from > PlayerIndex && to <= PlayerIndex) { PlayerIndex++; }
+        if(from > PlayerIndex && to < PlayerIndex) { PlayerIndex++; }
         if(from < PlayerIndex && to > PlayerIndex) { PlayerIndex--; }
 
 
@@ -647,6 +650,7 @@ public class Board_Controller_simple : MonoBehaviour
     }
     void MoveTile(int from, int to)
     {
+        if(from > to) { to += 1; }
         List<(int, TileController)> unmovibleTiles = removeAndGetUnmovables();
 
         

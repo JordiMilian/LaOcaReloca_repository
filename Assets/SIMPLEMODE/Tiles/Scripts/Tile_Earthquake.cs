@@ -11,11 +11,20 @@ public class Tile_Earthquake : Tile_Profile
         yield return base.OnPlayerLanded();
         for (int i = 0; i < tilesOnLanded; i++)
         {
-            TileController randomTile = MathJ.GetRandomTileInBoard(_Tile);
-            yield return randomTile.OnPlayerStepped();
-            if (randomTile != null) { yield return randomTile.C_DealAllDamageToDeal(); }
+            yield return TriggerRandomTile();
         }
    }
-   //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
+  public override IEnumerator OnPlayerStepped()
+    {
+        yield return base.OnPlayerStepped();
+        yield return TriggerRandomTile();
+    }
+
+    IEnumerator TriggerRandomTile()
+    {
+        TileController randomTile = MathJ.GetRandomTileInBoard(_Tile);
+        yield return randomTile.OnPlayerStepped();
+        yield return randomTile.OnTileFinished(); 
+    }
    public override string GetTooltipText() { return $"{OnLanded} Trigger the OnCrossed effect of {tilesOnLanded} Random Tiles\n{OnCrossed} Trigger the OnCrossed effect of {tilesOnCrossed} Random Tiles"; }
 }

@@ -11,9 +11,6 @@ public class Tile_SpiderToken : Tile_Profile
     { 
         yield return base.OnPlayerStepped();
         GameController.ApplyPoison(poison);
-
-        GameController.remainingStepsToTake++;
-        yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
     }
    public override string GetTooltipText() { return base.GetTooltipText()+$"{OnCrossed} Apply {poison} poison"; }
 }

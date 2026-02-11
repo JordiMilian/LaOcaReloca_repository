@@ -15,7 +15,7 @@ public class Tile_BloomingEmpty : Tile_Profile
         {
             if(tile._Profile.tileTags.Contains(TileTags.Empty))
             {
-                tile.AddBaseDamage(addedDamageToEmptyTiles);
+                yield return tile.AddBaseDamage(addedDamageToEmptyTiles);
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -27,7 +27,7 @@ public class Tile_BloomingEmpty : Tile_Profile
 
         if(randomEmpty != null)
         {
-            randomEmpty.AddBaseDamage(addedDamageToEmptyTiles);
+            yield return randomEmpty.AddBaseDamage(addedDamageToEmptyTiles);
         }
 
         yield return base.OnPlayerStepped();

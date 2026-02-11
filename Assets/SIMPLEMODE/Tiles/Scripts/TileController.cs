@@ -183,26 +183,26 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         _Profile.BaseDamage = newDamage;
         tileMovement.UpdateDmgDisplayText();
     }
-    public virtual void AddBaseDamage(float dmgToAdd)
+    public virtual IEnumerator AddBaseDamage(float dmgToAdd)
     {
         float addedDmg = _Profile.AddBaseDamage(dmgToAdd);
         
         tileMovement.shakeTile(Intensity.mid);
-        tileMovement.DisplayMessage("+" + MathJ.FloatToString(addedDmg, 1), TileMessageType.AddBaseDamage);
+        yield return tileMovement.DisplayMessage("+" + MathJ.FloatToString(addedDmg, 1), TileMessageType.AddBaseDamage);
     }
-    public void RemoveBaseDamage(float damageToRemove)
+    public IEnumerator RemoveBaseDamage(float damageToRemove)
     {
        float removedDmg = _Profile.RemoveBaseDamage(damageToRemove);
 
         tileMovement.shakeTile(Intensity.mid);
-        tileMovement.DisplayMessage($"-{removedDmg}", TileMessageType.AddBaseDamage);
+        yield return tileMovement.DisplayMessage($"-{removedDmg}", TileMessageType.AddBaseDamage);
     }
-    public void MultiplyBaseDamage(float mult)
+    public IEnumerator C_MultiplyBaseDamage(float mult)
     {
         _Profile.MultiplyBaseDamage(mult);
 
         tileMovement.shakeTile(Intensity.mid);
-        tileMovement.DisplayMessage($"x{mult}", TileMessageType.AddBaseDamage);
+        yield return tileMovement.DisplayMessage($"x{mult}", TileMessageType.AddBaseDamage);
     }
     public IEnumerator C_DealAllDamageToDeal()
     {
@@ -217,7 +217,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
             displayMessage += MathJ.FloatToString(DamagesToDeal[i], 1);
             if (i != DamagesToDeal.Count - 1) { displayMessage += "+"; }
         }
-        tileMovement.DisplayMessage(displayMessage, TileMessageType.DealDamage);
+        yield return tileMovement.DisplayMessage(displayMessage, TileMessageType.DealDamage);
 
         foreach (float dmg in DamagesToDeal) { totalDamage += dmg; }
         yield return GameController.C_AddAcumulatedDamage(totalDamage);

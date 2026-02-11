@@ -17,7 +17,7 @@ public class Toy_Ladybug : Toy_Profile
 
         TileController randomTile = MathJ.GetRandomTileInBoard(null, false, true);
 
-        randomTile.AddBaseDamage(lastRolledvalue);
+        yield return randomTile.AddBaseDamage(lastRolledvalue);
 
         yield return new WaitForSeconds(0.25f);
     }

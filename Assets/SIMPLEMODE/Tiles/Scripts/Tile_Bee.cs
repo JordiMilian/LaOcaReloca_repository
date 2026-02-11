@@ -46,7 +46,7 @@ public class Tile_Bee : Tile_Insect
         List<TileController> adjacentTiles = MathJ.GetAdjacentTiles(_Tile);
         foreach (TileController tile in adjacentTiles)
         {
-            tile.AddBaseDamage(1);
+            yield return tile.AddBaseDamage(1);
         }
 
     }

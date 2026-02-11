@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
+using Unity.VisualScripting;
 [CreateAssetMenu(menuName = "TileProfile/DamageAdders/Pinyata", fileName = "Tile_Pinyata")]
 public class Tile_Pinyata : Tile_Profile
 {
@@ -27,8 +28,9 @@ public class Tile_Pinyata : Tile_Profile
         List<TileController> tilesAround = MathJ.GetAdjacentTiles(_Tile, adjacentDepth);
         foreach (TileController tile in tilesAround)
         {
-            tile.AddBaseDamage(addedDmg);
+            CoroutineRunner.instance.StartCoroutine(tile.AddBaseDamage(addedDmg));
         }
-        return base.OnTileFinished();
+        yield return new WaitForSeconds(MessajesManager.instance.GetDurationMultiplier());
+        yield return base.OnTileFinished();
     }
 }

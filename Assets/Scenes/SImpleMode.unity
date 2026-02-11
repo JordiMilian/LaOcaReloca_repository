@@ -783,8 +783,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 35.8
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 5.2
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1651,6 +1651,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c5c00662a985c74b8d3779b6ee44b9e, type: 2}
   - {fileID: 11400000, guid: 48054ce06b28a9e42b63f6cd7c2e8649, type: 2}
   - {fileID: 11400000, guid: 3af394dd8b83c404784962302949b360, type: 2}
+  - {fileID: 11400000, guid: f25724a3fa6a51346bd223a0a04c12c1, type: 2}
+  - {fileID: 11400000, guid: 284af5225a508684ea7f79bbd17cc6e8, type: 2}
   ProfileGroups: []
 --- !u!4 &400194873
 Transform:
@@ -2138,6 +2140,7 @@ MonoBehaviour:
   Tile_Oca: {fileID: 11400000, guid: 87f6e8cd18d0886449ea36c62becd500, type: 2}
   factory: {fileID: 400194872}
   TilesList: []
+  _playerIndex: 0
   tilesHolder: {fileID: 1042064366}
   PlayerPrefab: {fileID: 1266550042}
   StartingTilesCount: 12
@@ -2706,13 +2709,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: SpeedingPotion
-  folderName: ToolTiles
-  title: SPEEDING POTION
+  assetName: RatPrincess
+  folderName: Rats
+  title: RAT PRINCESS
   color: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
-  baseDamage: 1
-  rarity: 3
-  tag: 0
+  baseDamage: 10
+  rarity: 1
+  tag: 3
   factory: {fileID: 400194872}
   ToyAssetName: Bread
   ToyTitle: TOY TITLE
@@ -3379,7 +3382,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 35.8
-    OrthographicSize: 5
+    OrthographicSize: 5.2
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -5042,6 +5045,52 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1060075877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1060075879}
+  - component: {fileID: 1060075878}
+  m_Layer: 0
+  m_Name: MessajesManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1060075878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060075877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ef3cccbe7b9ec54e8cd88ff33190103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  durationMultiplier: 1
+  minMultiplier: 0.5
+--- !u!4 &1060075879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060075877}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.43175, y: -0.03137, z: 0.39056}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8258,6 +8307,9 @@ MonoBehaviour:
   OnKilledEnemy:
     m_PersistentCalls:
       m_Calls: []
+  OnRolledDice:
+    m_PersistentCalls:
+      m_Calls: []
   intersecticTiles: []
   remainingStepsToTake: 0
   StepSound: {fileID: 0}
@@ -8265,8 +8317,8 @@ MonoBehaviour:
   MoneyToRoll: 0
   EncountersPrefabs:
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
-  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4940970433914737342, guid: a9348b92562d9b4418614630df50438c, type: 3}
+  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 5945102369988258234, guid: aa82d8a12e82ccb49b10e3ccc9cdd04b, type: 3}
@@ -10153,3 +10205,4 @@ SceneRoots:
   - {fileID: 688350910}
   - {fileID: 1713846432}
   - {fileID: 1104277166}
+  - {fileID: 1060075879}

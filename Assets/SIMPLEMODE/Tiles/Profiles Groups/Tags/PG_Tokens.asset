@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GroupName: Tokens
   tilesList:
-  - {fileID: 11400000, guid: 1db486080272d0e4e97bc81f69a5982f, type: 2}
-  - {fileID: 11400000, guid: 96ed2cf40d5467748ac23ba1496f235a, type: 2}
   - {fileID: 11400000, guid: 97015eb91c314b64fac18bdee10a8fbe, type: 2}
   - {fileID: 11400000, guid: b367805cbe5071f4d85c493f7ad9bbe5, type: 2}
+  - {fileID: 11400000, guid: 1db486080272d0e4e97bc81f69a5982f, type: 2}
+  - {fileID: 11400000, guid: 96ed2cf40d5467748ac23ba1496f235a, type: 2}

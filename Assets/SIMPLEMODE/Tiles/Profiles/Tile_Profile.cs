@@ -46,7 +46,7 @@ public class Tile_Profile : ScriptableObject
 
         //if (genericSkills.Contains(GenericSkills.NoStep)) { GameController.remainingStepsToTake++; }
 
-        yield return GameController.OnCrossed_CardEffects.C_ActivateEffects();
+        yield return GameController.OnCrossed_CardEffects.C_ActivateEffects(_Tile);
     }
     public virtual IEnumerator OnPlayerLanded()
     {

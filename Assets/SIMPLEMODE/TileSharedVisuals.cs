@@ -12,6 +12,7 @@ public class TileSharedVisuals : MonoBehaviour
     GameController_Simple gameController;
     [HideInInspector] public TileController tileBase;
     [SerializeField] TextMeshProUGUI TMP_DamageDisplay;
+    float messageDurationMultiplier = 1; 
     
     private void Awake()
     {
@@ -70,7 +71,7 @@ public class TileSharedVisuals : MonoBehaviour
     }
     [Header("Message display")]
     [SerializeField] TextMeshProUGUI messageDisplay;
-    public void DisplayMessage(string message, TileMessageType messageType)
+    public IEnumerator DisplayMessage(string message, TileMessageType messageType)
     {
         Color msgColor = Color.white;
         switch (messageType)
@@ -91,11 +92,16 @@ public class TileSharedVisuals : MonoBehaviour
         messageDisplay.color = msgColor;
         messageDisplay.text = message;
 
-        Sequence msgSeq = DOTween.Sequence();
-        msgSeq.Append(messageDisplay.rectTransform.DOScale(1, 0.5f)).
-            Append(messageDisplay.rectTransform.DOShakeRotation(.4f, 10)).
-            Append(messageDisplay.rectTransform.DOScale(0, 0.3f));
+        float durationMultiplier = MessajesManager.instance.GetDurationMultiplier();
+        
 
+        Sequence msgSeq = DOTween.Sequence();
+        msgSeq.Append(messageDisplay.rectTransform.DOScale(1, 0.2f * durationMultiplier)).
+            Append(messageDisplay.rectTransform.DOShakeRotation(.4f * durationMultiplier, 10)).
+            Append(messageDisplay.rectTransform.DOScale(0, 0.2f * durationMultiplier));
+        float waitTime = .6f * durationMultiplier;
+        if(messageType == TileMessageType.DealDamage) { waitTime /= 2; }
+        yield return new WaitForSeconds(waitTime);
     }
     #endregion
 

@@ -21,7 +21,7 @@ public class Tile_BirdsWatcher : Tile_Profile
         {
             if (landedTile._Profile.tileTags.Contains(TileTags.Oca))
             {
-                _Tile.AddBaseDamage(dmgOnLandedAdjacentOca);
+                yield return _Tile.AddBaseDamage(dmgOnLandedAdjacentOca);
                 yield break;
             }
         }
@@ -50,12 +50,12 @@ public class Tile_BirdsWatcher : Tile_Profile
                 finalDamage += dmgPerOca;
             }
         }*/
-        _Tile.AddBaseDamage(finalDamage);
+        yield return _Tile.AddBaseDamage(finalDamage);
         yield return base.OnPlayerStepped();
 
     }
     public override string GetTooltipText() {
-        return $"{OnCrossed} Increase {AddDamage(dmgPerOca)} this Tile per OCA in board\n" +
-             $"{OnCustomMessaje("On Landed on Adjacent OCA")} increase {AddDamage(dmgOnLandedAdjacentOca)} this Tile";
+        return $"{OnCrossed} Increase {AddDamageString(dmgPerOca)} this Tile per OCA in board\n" +
+             $"{OnCustomMessaje("On Landed on Adjacent OCA")} increase {AddDamageString(dmgOnLandedAdjacentOca)} this Tile";
     }
 }

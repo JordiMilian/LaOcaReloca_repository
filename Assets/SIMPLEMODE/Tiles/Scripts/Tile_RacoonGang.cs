@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using static StringTools;
 using NUnit.Framework;
+using Unity.VisualScripting;
 public class Tile_RacoonGang : Tile_Profile
 {
     [SerializeField] int AmountToTake = 1;
@@ -33,10 +34,11 @@ public class Tile_RacoonGang : Tile_Profile
         List<TileController> tilesAround = MathJ.GetAdjacentTiles(_Tile, 1);
         foreach (TileController tile in tilesAround)
         {
-            tile.AddBaseDamage(tmpAmount * dmgPerMoney);
+            CoroutineRunner.instance.StartCoroutine( tile.AddBaseDamage(tmpAmount * dmgPerMoney));
         }
+        yield return new WaitForSeconds(MessajesManager.instance.GetDurationMultiplier());
     }
-   public override string GetTooltipText() { return $"{OnCrossed} Loose {AmountToTake} MONEY and increase {AddDamage(dmgPerMoney)} Adjacent Tiles\n{OnLanded} Spawn {racoonsToCreate} Racoons"; }
+   public override string GetTooltipText() { return $"{OnCrossed} Loose {AmountToTake} MONEY and increase {AddDamageString(dmgPerMoney)} Adjacent Tiles\n{OnLanded} Spawn {racoonsToCreate} Racoons"; }
 
     IEnumerator CreateRandomRacoon()
     {

@@ -10,7 +10,7 @@ public class CardEffectsDelegate
 
     public void AddEffect(Func<IEnumerator> enumerator)
     {
-        CardsCoroutines.Add(enumerator);
+        CardsCoroutines.Add(enumerator); 
     }
     public void RemoveEffect(Func<IEnumerator> enumerator)
     {
@@ -30,6 +30,7 @@ public class CardEffectsDelegate<T>
 
     public void AddEffect(Func<T, IEnumerator> enumerator)
     {
+
         CardsCoroutines.Add(enumerator);
     }
 

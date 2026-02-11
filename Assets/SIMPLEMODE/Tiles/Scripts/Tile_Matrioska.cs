@@ -8,13 +8,15 @@ public class Tile_Matrioska : Tile_Profile
     [SerializeField] float multiplyCurrentDamageBy = 3;
     public override IEnumerator OnPlayerStepped()
    {
-        timesCrossed++;
-        
-        _Tile.MultiplyBaseDamage(multiplyCurrentDamageBy);
         yield return base.OnPlayerStepped();
+
+        timesCrossed++;
+        yield return _Tile.C_MultiplyBaseDamage(multiplyCurrentDamageBy);
+        
 
         if (timesCrossed >= timesNeededToCross)
         {
+            yield return _Tile.C_DealAllDamageToDeal();
             yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
         }
     }

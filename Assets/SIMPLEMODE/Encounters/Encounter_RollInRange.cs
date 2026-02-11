@@ -50,7 +50,7 @@ public class Encounter_RollInRange : MonoBehaviour, IEncounter
                 for (int i = 0; i < tilesAffectedOnLost; i++)
                 {
                     TileController randomTile = MathJ.GetRandomTileInBoard(null, false, true, false);
-                    randomTile.RemoveBaseDamage(RemoveDamageOnLost);
+                    yield return randomTile.RemoveBaseDamage(RemoveDamageOnLost);
                 }
             }
             yield return new WaitForSeconds(1f);

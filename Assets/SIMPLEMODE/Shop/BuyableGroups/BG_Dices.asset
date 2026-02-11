@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b85169b3e9d6f740b76dc9c27ed82e2, type: 3}
   m_Name: BG_Dices
   m_EditorClassIdentifier: 
-  ChangeToAppear: 1
+  ChanceToAppear: 0.7
+  ChanceToAppear_PerCent: 10
+  ChancePerElement_PerCent: 3.3333333
   BuyablesList_GO:
   - {fileID: 1547170513799009516, guid: db55b00471a63b442a73e88152ba911d, type: 3}
   - {fileID: 1547170513799009516, guid: 4e8482089949b5149aff72c891108b7c, type: 3}

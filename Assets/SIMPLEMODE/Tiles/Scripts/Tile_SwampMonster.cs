@@ -42,7 +42,7 @@ public class Tile_SwampMonster : Tile_Profile
     }
    public override IEnumerator OnPlayerStepped() 
    { 
-        _Tile.AddBaseDamage(DamageAddedOnCross);
+        yield return _Tile.AddBaseDamage(DamageAddedOnCross);
         yield return base.OnPlayerStepped();
     }
    public override string GetTooltipText() { return $"{OnEnterInBoard} Spawn 2 SWAMPS around \n {OnCrossed} Increase {MathJ.AddDamage(DamageAddedOnCross)} this tile"; }

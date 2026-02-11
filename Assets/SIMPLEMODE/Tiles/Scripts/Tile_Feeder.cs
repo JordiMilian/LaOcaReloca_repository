@@ -12,7 +12,7 @@ public class Tile_Feeder : Tile_Profile
         TileController nextTile = BoardController.TilesList[_Tile.indexInBoard + 1];
         if(nextTile != null)
         {
-            nextTile.AddBaseDamage
+            yield return nextTile.AddBaseDamage
                 (BaseDamage * (PercentageToAdd /100));
             yield return new WaitForSeconds(0.3f);
         }
@@ -23,7 +23,7 @@ public class Tile_Feeder : Tile_Profile
         TileController nextTile = BoardController.TilesList[_Tile.indexInBoard + 1];
         if (nextTile != null)
         {
-            nextTile.AddBaseDamage(CrossedDamage);
+            yield return nextTile.AddBaseDamage(CrossedDamage);
             yield return new WaitForSeconds(0.3f);
         }
     }

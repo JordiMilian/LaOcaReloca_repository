@@ -1,11 +1,12 @@
-using UnityEngine;
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
-using DG.Tweening;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using System.Linq;
 
 public enum GameState
 {
@@ -28,13 +29,14 @@ public class GameController_Simple : MonoBehaviour
     public CardEffectsDelegate OnKilledEnemy_CardEffects = new();
     public CardEffectsDelegate OnReachedEndTile_CardEffects = new();
     public CardEffectsDelegate<TileController> OnLanded_CardEffects = new(); //Any card effect that triggers when landing on another tile. The regular Onlanded effect of all cards is not concerned with this
-    public CardEffectsDelegate OnCrossed_CardEffects = new();
+    public CardEffectsDelegate<TileController> OnCrossed_CardEffects = new();
     public CardEffectsDelegate<TileController> OnAddedNewTileToBoard_CardEffect = new();
     public CardEffectsDelegate OnRemovedTileFromBoard_CardEffect = new();
     public CardEffectsDelegate<int> OnAddedMoney_CardEffects = new();
     public CardEffectsDelegate<int> OnRemovedMoney_CardEffects = new();
 
     public UnityEvent OnKilledEnemy;
+    public UnityEvent OnRolledDice; //Usefull to reset effects for each roll of dices
 
     public CardEffectsDelegate OnInsectFly = new(), OnInsectsMoved_CardEffects = new();
 
@@ -179,6 +181,7 @@ public class GameController_Simple : MonoBehaviour
         yield return OnInsectFly.C_ActivateEffects();
         yield return OnInsectsMoved_CardEffects.C_ActivateEffects();
 
+        OnRolledDice?.Invoke();
         yield return OnRolledDice_CardEffects.C_ActivateEffects();
 
         SetTileToLandVisuals();
@@ -306,7 +309,7 @@ public class GameController_Simple : MonoBehaviour
         if(tileBelow._Profile is Tile_End || tileBelow._Profile is Tile_Start) { return false; }
         return true;
     }
-    public void PlaceTile() //Called from TileMovement OnMouseUp
+    public void PlaceTile() //Called from TileMovement OnMouseUp //Aixo es un cacao de Indices que deu s'apiadi de mi
     {
         TileController tileInBoard = null;
         foreach (TileController tile in intersecticTiles) //Search for the tile in board
@@ -315,27 +318,60 @@ public class GameController_Simple : MonoBehaviour
             tileInBoard = tile;
             break;
         }
-        //Depending on state, do something
-        if(SelectedTile.tileState == TileState.InShop && tileInBoard.tileState == TileState.InBoard)
+
+        //SEE IF TILE IS PLACED FORWARD OR BACKWARD. If backwards, move the index one behind
+
+        int indexToPlace = tileInBoard.indexInBoard;
+        if (isMouseForwardFromTile(tileInBoard))
         {
-            PlaceTileFromShopToBoard(tileInBoard, SelectedTile); //The price check is done in the CanPlace()
+            indexToPlace++;
+        }
+
+        //Depending on state, do something
+        if (SelectedTile.tileState == TileState.InShop && tileInBoard.tileState == TileState.InBoard)
+        {
+            PlaceTileFromShopToBoard(indexToPlace, SelectedTile); //The price check is done in the CanPlace()
         }
         if(SelectedTile.tileState == TileState.FreePick && tileInBoard.tileState == TileState.InBoard)
         {
-            StartCoroutine(BoardController.C_AddNewTile(SelectedTile, tileInBoard.indexInBoard));
+            StartCoroutine(BoardController.C_AddNewTile(SelectedTile, indexToPlace));
             Debug.Log("Placing FreePick tile into board");
         }
         if(SelectedTile.tileState == TileState.InBoard)
         {
-            BoardController.MoveTileInBoard(SelectedTile.indexInBoard, tileInBoard.indexInBoard);
+            BoardController.MoveTileInBoard(SelectedTile.indexInBoard, indexToPlace-1);
             //MoveTilesInBoard(SelectedTile.indexInBoard, tileInBoard.indexInBoard);
         }
+
+        bool isMouseForwardFromTile(TileController tile)
+        {
+            Vector3 TileTangent = tile.TfData.forward;
+            Plane groundPlane = new Plane(tile.TfData.up, tile.TfData.center);
+
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit[] hitsArray = Physics.RaycastAll(ray);
+
+            Vector3 pointInPlane = tile.TfData.center;
+
+            if (groundPlane.Raycast(ray, out float enter))
+            {
+                pointInPlane = ray.GetPoint(enter);
+            }
+            Vector3 VectorToPoint = (pointInPlane - tile.TfData.center).normalized;
+            float Dot = Vector3.Dot(TileTangent, VectorToPoint);
+
+            if (Dot < 0)
+            {
+                return false;
+            }
+            else { return true; }
+        }
     }
-    void PlaceTileFromShopToBoard(TileController tileInBoard, TileController boughtTile)
+    void PlaceTileFromShopToBoard(int index, TileController boughtTile)
     {
         RemoveMoney(SelectedTile.GetBuyingPrice());
         //BoardController.ReplaceTileInBoard(tileInBoard, boughtTile);
-        StartCoroutine( BoardController.C_AddNewTile(boughtTile, tileInBoard.indexInBoard));
+        StartCoroutine( BoardController.C_AddNewTile(boughtTile, index));
         ShopItem_Controller boughtItem = shopController.GetShopItem(SelectedTile);
         boughtItem.RemoveItem();
 
