@@ -1653,7 +1653,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3af394dd8b83c404784962302949b360, type: 2}
   - {fileID: 11400000, guid: f25724a3fa6a51346bd223a0a04c12c1, type: 2}
   - {fileID: 11400000, guid: 284af5225a508684ea7f79bbd17cc6e8, type: 2}
-  ProfileGroups: []
+  - {fileID: 11400000, guid: c26de09467c388a48af7b4fd39a58682, type: 2}
 --- !u!4 &400194873
 Transform:
   m_ObjectHideFlags: 0
@@ -2709,13 +2709,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d8317201849a46a65af673bd54699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetName: RatPrincess
-  folderName: Rats
-  title: RAT PRINCESS
+  assetName: PoisonSpikes
+  folderName: Poison
+  title: POISON SPIKES
   color: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
-  baseDamage: 10
+  baseDamage: 5
   rarity: 1
-  tag: 3
+  tag: 0
   factory: {fileID: 400194872}
   ToyAssetName: Bread
   ToyTitle: TOY TITLE

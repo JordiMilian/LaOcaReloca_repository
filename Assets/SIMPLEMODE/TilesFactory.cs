@@ -8,8 +8,7 @@ public class TilesFactory : MonoBehaviour
 {
     
     [SerializeField] GameObject EmptyPrefab;
-    public List<Tile_Profile> tileProfiles = new();
-    public ProfilesGroup[] ProfileGroups;
+    public List<Tile_Profile> tileProfiles = new();//USELESS, WE USE PROFILE GROUPS NOW
 
 
 

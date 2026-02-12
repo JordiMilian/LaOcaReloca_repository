@@ -40,7 +40,7 @@ public static class StringTools
     {
         return $"<color={colorName}>{text}<color=black>";
     }
-    public static string AddDamageString(float damage) { return $"<color=blue>+{FloatToString(damage, 1)}DMG<color=black>"; }
+    public static string AddDamageString(float damage) { return $"<color=blue>+{FloatToString(damage, 1)} dmg<color=black>"; }
     public static string AddMultiplier(float damage) { return $"<color=red>+{FloatToString(damage, 1)}mult<color=black>"; }
 
     #region TOOLTIP INTRO

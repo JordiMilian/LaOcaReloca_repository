@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3cdbcdcae3c20f4e99a22ab78a75e68, type: 3}
-  m_Name: PG_Curses
+  m_Script: {fileID: 11500000, guid: 855ba8230e4d1e745aa8b96bcd3b683c, type: 3}
+  m_Name: Toy_Stickers
   m_EditorClassIdentifier: 
-  GroupName: Curses
-  tilesList:
-  - {fileID: 11400000, guid: c160215df11105548b153f46b2f38630, type: 2}
-  - {fileID: 11400000, guid: 3cfa6d0fb67a9864e892a2e56bc028ae, type: 2}
+  Title: STICKERS
+  toyMesh: {fileID: 0}
+  TooltipTexture: {fileID: 2800000, guid: 3d229f7e946341a4db629d445548939c, type: 3}
+  valueAdded: 2

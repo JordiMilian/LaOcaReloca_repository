@@ -9,18 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7cf7cca38271da42bf3e28cb5cb2017, type: 3}
-  m_Name: Tile_SlowingPotion
+  m_Script: {fileID: 11500000, guid: 19d5ab93309b82745b0a70e26d9a61ab, type: 3}
+  m_Name: Tile_PoisonSpikes
   m_EditorClassIdentifier: 
-  BaseDamage: 1
-  Title: SLOWING POTION
+  BaseDamage: 5
+  Title: POISON SPIKES
   tileColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
-  tileTexture: {fileID: 2800000, guid: e98467bfbb1e1914c8ad02fd21506372, type: 3}
-  rarity: 2
-  tileSize: 0
+  tileTexture: {fileID: 2800000, guid: 40b49e0fed67b8a489e358761a88af08, type: 3}
+  rarity: 1
+  tileSize: 1
   uniquePrice: 0
   tileTags: 00000000
-  genericSkills: 00000000
+  genericSkills: 
   _Tile: {fileID: 0}
-  StepsToCross: 0
+  StepsToCross: 1
   remainingSteps: 1
+  poisonOnCrossed: 15
+  addedPoisonOnLanded: 5

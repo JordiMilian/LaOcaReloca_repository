@@ -41,12 +41,14 @@ public class Tile_Profile : ScriptableObject
     #region VIRTUAL LOGIC
     public virtual IEnumerator OnPlayerStepped()
     {
+        yield return GameController.OnCrossed_CardEffects.C_ActivateEffects(_Tile);
+
         _Tile.DamagesToDeal.Add(_Tile.GetModifiedBaseDamage());
         _Tile.DamagesToDeal.Reverse();
 
         //if (genericSkills.Contains(GenericSkills.NoStep)) { GameController.remainingStepsToTake++; }
 
-        yield return GameController.OnCrossed_CardEffects.C_ActivateEffects(_Tile);
+        
     }
     public virtual IEnumerator OnPlayerLanded()
     {
@@ -85,6 +87,8 @@ public class Tile_Profile : ScriptableObject
         if(stepsString.Length > 0) { skillStrings.Add(CustomSkill(stepsString)); }
         
         foreach (GenericSkills skill in genericSkills) { skillStrings.Add(CustomSkill(skill.ToString())); }
+
+        if (tileTags.Contains(TileTags.Token)) { skillStrings.Add(CustomSkill("Token")); }
 
         string finalString = "";
         for (int i = 0; i < skillStrings.Count; i++)

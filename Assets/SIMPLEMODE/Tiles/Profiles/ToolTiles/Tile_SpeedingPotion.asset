@@ -15,7 +15,7 @@ MonoBehaviour:
   BaseDamage: 1
   Title: SPEEDING POTION
   tileColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
-  tileTexture: {fileID: 0}
+  tileTexture: {fileID: 2800000, guid: 253d1293a147bdb459fcf17c663c13fe, type: 3}
   rarity: 2
   tileSize: 0
   uniquePrice: 0
