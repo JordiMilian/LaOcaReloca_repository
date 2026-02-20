@@ -12,7 +12,6 @@ public abstract class Tile_Plant : Tile_Profile
         { PlantsManager.Instance = new PlantsManager(); PlantsManager.Instance.Initialize(); }
 
         PlantsManager.Instance.PlantsGrowthCoroutine.AddCoroutine(C_growPlant);
-        GameController.OnRolledDice_CardEffects.AddEffect(C_growPlant);
         growthModifiers = null;
     }
     public override IEnumerator OnRemovedFromBoard()
