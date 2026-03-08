@@ -9,7 +9,7 @@ public class ToysManager : MonoBehaviour
     [SerializeField] GameObject ToyPrefab;
     public List<Toy_Profile> AllToyProfiles;
 
-    List<Toy_Controller> instantiatedToys = new List<Toy_Controller>();
+    public List<Toy_Controller> instantiatedToys = new List<Toy_Controller>();
     private void Awake()
     {
         if (Instance == null) { Instance = this; }

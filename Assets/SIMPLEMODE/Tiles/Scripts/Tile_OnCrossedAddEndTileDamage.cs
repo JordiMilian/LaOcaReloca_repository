@@ -20,6 +20,6 @@ public class Tile_OnCrossedAddEndTileDamage : Tile_Profile
     }
     public override string GetTooltipText()
     {
-        return $"{OnLanded} Multiply the END TILE dmg x{multiplierOnLanded} \n{OnCrossed} Add {damageToAdd} damage to the END TILE";
+        return $"{OnLanded} Multiply the END TILE dmg x{multiplierOnLanded} \n{OnCrossed} Give {StringTools.AddDamageString(damageToAdd)} to the END TILE";
     }
 }

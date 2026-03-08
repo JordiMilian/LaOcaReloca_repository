@@ -16,10 +16,13 @@ MonoBehaviour:
   Title: INVESTOR
   tileColor: {r: 0.22192237, g: 0.2383527, b: 0.2679245, a: 1}
   tileTexture: {fileID: 2800000, guid: 746023d1529a8ac41bc144d7726c5ce1, type: 3}
-  rarity: 1
+  rarity: 3
   tileSize: 1
   uniquePrice: 0
   tileTags: 
+  genericSkills: 
   _Tile: {fileID: 0}
-  damageToAdd: 15
+  StepsToCross: 1
+  remainingSteps: 1
+  damageToAdd: 10
   multiplierOnLanded: 2

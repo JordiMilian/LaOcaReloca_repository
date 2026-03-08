@@ -538,6 +538,41 @@ public class GameController_Simple : MonoBehaviour
         TMP_Rolls.text = $"{RollsRemaining}/{MaxRollsPerEncounter}";
     }
     #endregion
+    #region LOAD DATA
+    public IEnumerator C_LoadBoard(SaveLoadBoard.GameSaveInfo info)
+    {
+        //Destroy current tiles
+        for (int i = BoardController.TilesList.Count -1; i<= 0; i--)
+        {
+            TileController tile = BoardController.TilesList[i];
+            yield return tile.C_OnRemovedFromBoard();
+            Destroy(tile.gameObject);
+        }
+        yield return null;
+        BoardController.TilesList.Clear();
+        foreach(Tile_Profile profile in info.tiles)
+        {
+            Debug.Log("progile?");
+            BoardController.TilesList.Add(TilesFactory.instance.InstantiateTile(Instantiate(profile)));
+        }
+        foreach(TileController tile in BoardController.TilesList)
+        {
+            yield return tile.C_OnPlacedInBoard();
+        }
+
+        BoardController.PlayerIndex = info.currentIndex;
+
+        yield return BoardController.L_JumpPlayerTo(info.currentIndex,false);
+        //TO DO TOYS
+        //TO DO DICES
+        //TO DO REMAINING DICEROLLS
+
+        //TO DO CURRENT ENCOUNTER??? Encounter index at least?
+
+    }
+
+
+    #endregion
     private void Update()
     {
         GetIntersectingTilesToMouse();

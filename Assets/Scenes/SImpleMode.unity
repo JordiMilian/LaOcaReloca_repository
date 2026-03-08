@@ -1709,6 +1709,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 86ba36bd8320df147ad0c12838593a2f, type: 2}
   - {fileID: 11400000, guid: e4e1aeb201b37944685231d5a1b1694d, type: 2}
   - {fileID: 11400000, guid: ec050a4051b09204aa4078cd436d6c97, type: 2}
+  instantiatedToys: []
 --- !u!4 &401242999
 Transform:
   m_ObjectHideFlags: 0
@@ -5565,6 +5566,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209016242}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1212200747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1212200749}
+  - component: {fileID: 1212200748}
+  m_Layer: 0
+  m_Name: SaveSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1212200748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212200747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc26c95dcee79d044b291baa2934a7db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1212200749
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212200747}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.35631, y: -0.03137, z: 2.76183}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1246852221
 GameObject:
   m_ObjectHideFlags: 0
@@ -8317,8 +8362,8 @@ MonoBehaviour:
   MoneyToRoll: 0
   EncountersPrefabs:
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
-  - {fileID: 4940970433914737342, guid: a9348b92562d9b4418614630df50438c, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  - {fileID: 4940970433914737342, guid: a9348b92562d9b4418614630df50438c, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 5945102369988258234, guid: aa82d8a12e82ccb49b10e3ccc9cdd04b, type: 3}
@@ -10206,3 +10251,4 @@ SceneRoots:
   - {fileID: 1713846432}
   - {fileID: 1104277166}
   - {fileID: 1060075879}
+  - {fileID: 1212200749}
