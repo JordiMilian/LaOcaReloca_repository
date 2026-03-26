@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Tile_AddSetValueForward : Tile_Profile
+public class Tile_AddSetValueForward : TileStateClass
 {
     [SerializeField] int Amount = 5;
     public override IEnumerator OnPlayerStepped()

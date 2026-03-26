@@ -8,7 +8,7 @@ public class ProfileGroups_Registry : ScriptableObject
     [SerializeField] ProfilesGroup Common, Rare, Legendary, Unique, Deprecated;
     [SerializeField] ProfilesGroup Curse, Tokens, Food;
     [SerializeField] ProfilesGroup Rest;
-    public List<ProfilesGroup> GetProfileGroups(Tile_Profile profile)
+    public List<ProfilesGroup> GetProfileGroups(TileStateClass profile)
     {
         List<ProfilesGroup> groups = new();
         switch (profile.rarity)

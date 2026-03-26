@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using static StringTools;
 using System.Linq;
-public class Tile_Malfunction : Tile_Profile
+public class Tile_Malfunction : TileStateClass
 {
     [SerializeField] float chanceToTrigger = 0.3f;
     [SerializeField] int limit = 10, spawnedTokens = 0;

@@ -2,7 +2,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 [CreateAssetMenu(menuName = "TileProfile/Accountant", fileName = "Tile_Accountant")]
-public class Tile_Accountant : Tile_Profile
+public class Tile_Accountant : TileStateClass
 {
     [SerializeField] int damagePerIndex = 1;
     public override IEnumerator OnPlayerLanded()

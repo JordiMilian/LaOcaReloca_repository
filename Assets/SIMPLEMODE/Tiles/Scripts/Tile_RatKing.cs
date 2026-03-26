@@ -3,7 +3,7 @@ using System.Collections;
 using System.Linq;
 using NUnit.Framework;
 using System.Collections.Generic;
-public class Tile_RatKing : Tile_Profile
+public class Tile_RatKing : TileStateClass
 {
     [SerializeField] float ratsDamageAdder = .5f;
     [SerializeField] float addedAmountOnLanded = .5f;

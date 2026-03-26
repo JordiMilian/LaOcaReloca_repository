@@ -140,7 +140,7 @@ public class ProfilesCreator_Editor : Editor
                     return;
                 }
 
-                Tile_Profile instance = (Tile_Profile)ScriptableObject.CreateInstance(SO_type);
+                TileStateClass instance = (TileStateClass)ScriptableObject.CreateInstance(SO_type);
                 if (instance == null)
                 {
                     Debug.LogError("Could not create instance of: " + assetName);
@@ -165,7 +165,7 @@ public class ProfilesCreator_Editor : Editor
             if (GUILayout.Button("Delete tile"))
             {
                 //remove it from the factory
-                Tile_Profile profileToDelete = AssetDatabase.LoadAssetAtPath<Tile_Profile>(instancepath);
+                TileStateClass profileToDelete = AssetDatabase.LoadAssetAtPath<TileStateClass>(instancepath);
                 data.factory.tileProfiles.Remove(profileToDelete);
 
                 AssetDatabase.DeleteAsset(scriptpath);
@@ -226,7 +226,7 @@ public class ProfilesCreator_Editor : Editor
                 AssetDatabase.RenameAsset(scriptPath, newAssetName);
 
                 //Rename title
-                Tile_Profile profile = AssetDatabase.LoadAssetAtPath<Tile_Profile>(AssetDatabase.GUIDToAssetPath(GUIDsFound[rightIndex]));
+                TileStateClass profile = AssetDatabase.LoadAssetAtPath<TileStateClass>(AssetDatabase.GUIDToAssetPath(GUIDsFound[rightIndex]));
                 profile.Title = newTitle;
 
                 AssetDatabase.Refresh();

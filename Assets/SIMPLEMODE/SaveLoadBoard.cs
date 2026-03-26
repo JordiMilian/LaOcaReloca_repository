@@ -7,7 +7,7 @@ public class SaveLoadBoard : MonoBehaviour
 {
     public class GameSaveInfo
     {
-        public List<Tile_Profile> tiles = new();
+        public List<TileStateClass> tiles = new();
         public List<Toy_Profile> toys = new();
         public List<Dice> dices = new();
         public int currentIndex;

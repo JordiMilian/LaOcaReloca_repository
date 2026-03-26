@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_tercera : Tile_Profile
+public class Tile_tercera : TileStateClass
 {
    //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
    //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }

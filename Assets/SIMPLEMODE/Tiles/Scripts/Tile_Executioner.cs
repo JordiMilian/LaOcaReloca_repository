@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 [CreateAssetMenu(menuName = "TileProfile/Executioner", fileName = "Tile_Executioner")]
-public class Tile_Executioner : Tile_Profile
+public class Tile_Executioner : TileStateClass
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }

@@ -4,7 +4,7 @@ using static StringTools;
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
-public class Tile_Profile : ScriptableObject
+public class TileStateClass : ScriptableObject
 {
     public float BaseDamage = 10;
     public string Title = "NO TITLE";
@@ -44,11 +44,7 @@ public class Tile_Profile : ScriptableObject
         yield return GameController.OnCrossed_CardEffects.C_ActivateEffects(_Tile);
 
         _Tile.DamagesToDeal.Add(_Tile.GetModifiedBaseDamage());
-        _Tile.DamagesToDeal.Reverse();
-
-        //if (genericSkills.Contains(GenericSkills.NoStep)) { GameController.remainingStepsToTake++; }
-
-        
+        _Tile.DamagesToDeal.Reverse();        
     }
     public virtual IEnumerator OnPlayerLanded()
     {

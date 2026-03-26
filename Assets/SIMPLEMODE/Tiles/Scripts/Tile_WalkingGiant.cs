@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_WalkingGiant : Tile_Profile
+public class Tile_WalkingGiant : TileStateClass
 {
     [SerializeField] float addedDamageOnStepped = 25;
    public override IEnumerator OnPlacedInBoard()

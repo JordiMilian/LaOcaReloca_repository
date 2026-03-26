@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_Bridge : Tile_Profile
+public class Tile_Bridge : TileStateClass
 {
    [HideInInspector] public Tile_Bridge otherBridge;
    [HideInInspector] public bool ignoreSpawnCopy = false;

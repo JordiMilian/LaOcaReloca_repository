@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using static StringTools;
 using System.Linq;
-public class Tile_RatPrincess : Tile_Profile
+public class Tile_RatPrincess : TileStateClass
 {
     [SerializeField] int moneyOnRat = 1;
    public override IEnumerator OnPlacedInBoard() 

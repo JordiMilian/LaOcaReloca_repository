@@ -3,7 +3,7 @@ using System.Collections;
 using static StringTools;
 using NUnit.Framework;
 using System.Collections.Generic;
-public class Tile_SlowingPotion : Tile_Profile
+public class Tile_SlowingPotion : TileStateClass
 {
    //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }
    //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }

@@ -6,7 +6,7 @@ public class Tile_TomatoPlant : Tile_Plant
     //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }
     //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
-    [SerializeField] Tile_Profile tomatoProfile;
+    [SerializeField] TileStateClass tomatoProfile;
    public override IEnumerator OnPlayerStepped() 
     { 
         yield return base.OnPlayerStepped();

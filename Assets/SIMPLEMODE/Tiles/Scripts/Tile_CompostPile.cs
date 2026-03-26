@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_CompostPile : Tile_Profile
+public class Tile_CompostPile : TileStateClass
 {
     [SerializeField] float poisonAmount = 20;
     public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); GameController.OnRemovedTileFromBoard_CardEffect.AddEffect(OnRemovedCard); }

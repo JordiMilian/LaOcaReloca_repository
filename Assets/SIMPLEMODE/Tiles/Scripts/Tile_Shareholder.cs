@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_Shareholder : Tile_Profile
+public class Tile_Shareholder : TileStateClass
 {
    public override IEnumerator OnPlacedInBoard() 
     {

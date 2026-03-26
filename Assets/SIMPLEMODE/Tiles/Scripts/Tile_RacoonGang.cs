@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using static StringTools;
 using NUnit.Framework;
 using Unity.VisualScripting;
-public class Tile_RacoonGang : Tile_Profile
+public class Tile_RacoonGang : TileStateClass
 {
     [SerializeField] int AmountToTake = 1;
     [SerializeField] float dmgPerMoney = 15;
     [SerializeField] int racoonsToCreate = 2;
-    [SerializeField] Tile_Profile racoonToken_Profile;
+    [SerializeField] TileStateClass racoonToken_Profile;
     //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }
     //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }
     public override IEnumerator OnPlayerLanded()

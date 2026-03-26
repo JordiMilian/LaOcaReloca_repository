@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_TowerOfDices : Tile_Profile
+public class Tile_TowerOfDices : TileStateClass
 {
    public override IEnumerator OnPlacedInBoard() 
     {

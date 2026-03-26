@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_Earthquake : Tile_Profile
+public class Tile_Earthquake : TileStateClass
 {
     [SerializeField] int tilesOnLanded = 3, tilesOnCrossed = 1;
     //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }

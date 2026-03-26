@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_RacoonToken : Tile_Profile
+public class Tile_RacoonToken : TileStateClass
 {
     [SerializeField] int moneyOnLanded = 1;
    //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }

@@ -14,14 +14,14 @@ public class TilesTestSpawning : MonoBehaviour
     public void AttemptSpawn()
     {
 #if UNITY_EDITOR
-        Tile_Profile profile = null;
+        TileStateClass profile = null;
 
         string profileName = "Tile_" + inputField.text + ".asset";
         
         string basicFolderPath = "Assets/SIMPLEMODE/Tiles/Profiles/" + profileName;
         if(AssetDatabase.AssetPathExists(basicFolderPath))
         {
-            profile = AssetDatabase.LoadAssetAtPath<Tile_Profile>(basicFolderPath);
+            profile = AssetDatabase.LoadAssetAtPath<TileStateClass>(basicFolderPath);
         }
         else
         {
@@ -31,7 +31,7 @@ public class TilesTestSpawning : MonoBehaviour
                 string fullPath = subfolderPath + "/" + profileName;
                 if (AssetDatabase.AssetPathExists(fullPath))
                 {
-                    profile = AssetDatabase.LoadAssetAtPath<Tile_Profile>(fullPath);
+                    profile = AssetDatabase.LoadAssetAtPath<TileStateClass>(fullPath);
                     break;
                 }
             }

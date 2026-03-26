@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_DobleEmpty : Tile_Profile
+public class Tile_DobleEmpty : TileStateClass
 {
-   [SerializeField] Tile_Profile emptyProfile;
+   [SerializeField] TileStateClass emptyProfile;
 
    //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
    //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }

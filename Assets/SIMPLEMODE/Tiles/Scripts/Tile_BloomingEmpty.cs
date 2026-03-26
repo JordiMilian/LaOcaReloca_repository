@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "TileProfile/EmptySynergy/MrBeast", fileName = "Tile_BloomingEmpty")]
-public class Tile_BloomingEmpty : Tile_Profile
+public class Tile_BloomingEmpty : TileStateClass
 {
     [SerializeField] int addedDamageToEmptyTiles = 2;
 

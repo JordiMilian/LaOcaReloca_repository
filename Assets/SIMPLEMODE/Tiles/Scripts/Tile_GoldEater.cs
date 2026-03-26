@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_GoldEater : Tile_Profile
+public class Tile_GoldEater : TileStateClass
 {
     [SerializeField] int moneyToRemove = 5;
     //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }

@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_SpidersNest : Tile_Profile
+public class Tile_SpidersNest : TileStateClass
 {
     [SerializeField] int spidersOnCrossed = 1, spidersOnRolledDice = 1;
-    [SerializeField] Tile_Profile spiderTokenTileProfile;
+    [SerializeField] TileStateClass spiderTokenTileProfile;
     public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); GameController.OnRolledDice_CardEffects.AddEffect(SpawnRolledDiceSpiders); }
     public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); GameController.OnRolledDice_CardEffects.RemoveEffect(SpawnRolledDiceSpiders); }
     public override IEnumerator OnPlayerStepped() 

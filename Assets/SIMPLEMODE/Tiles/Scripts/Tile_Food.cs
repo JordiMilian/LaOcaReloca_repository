@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_Food : Tile_Profile
+public class Tile_Food : TileStateClass
 {
     public int currentRot, baseRot;
 

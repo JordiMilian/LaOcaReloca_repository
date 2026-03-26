@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_RatQueen : Tile_Profile
+public class Tile_RatQueen : TileStateClass
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
     
-    [SerializeField] Tile_Profile ratTokenTileProfile;
+    [SerializeField] TileStateClass ratTokenTileProfile;
     [SerializeField] int ratsAmountOnLanded = 3;
     public override IEnumerator OnPlayerStepped()
     { 

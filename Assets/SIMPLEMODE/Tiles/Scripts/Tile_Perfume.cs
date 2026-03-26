@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_Perfume : Tile_Profile
+public class Tile_Perfume : TileStateClass
 {
     [SerializeField] float perfumeDamage = 5;
     [SerializeField] float increaseDmg = 2;

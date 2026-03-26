@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
-public class Tile_SkipStep : Tile_Profile
+public class Tile_SkipStep : TileStateClass
 {
     public override IEnumerator OnPlayerStepped()
     {

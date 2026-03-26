@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 [CreateAssetMenu(menuName = "TileProfile/DamageAdders/Creatine", fileName = "Tile_Creatine")]
-public class Tile_Creatine : Tile_Profile
+public class Tile_Creatine : TileStateClass
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }

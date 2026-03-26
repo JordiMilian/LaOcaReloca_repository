@@ -21,7 +21,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
 
     [SerializeField] Transform zeroRotationTf;
 
-    public Tile_Profile _Profile;
+    public TileStateClass _Profile;
 
     public UnityEvent OnAddedToBoard; //currently used by encounters that trigger when you place a tile in board (curse per money)
 
@@ -134,7 +134,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         tileMaterial = Instantiate(tileMaterial);
         GetComponent<MeshRenderer>().material = tileMaterial;
     }
-    public void SetTileProfile(Tile_Profile profile)
+    public void SetTileProfile(TileStateClass profile)
     {
         _Profile = Instantiate(profile);
         _Profile._Tile = this;

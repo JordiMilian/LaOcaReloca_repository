@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_Insect : Tile_Profile
+public class Tile_Insect : TileStateClass
 {
    public override IEnumerator OnPlacedInBoard()
     {

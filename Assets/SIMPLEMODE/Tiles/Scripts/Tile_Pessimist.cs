@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 [CreateAssetMenu(menuName = "TileProfile/EndSynergy/Pessimiest", fileName = "Tile_Pessimist")]
-public class Tile_Pessimist : Tile_Profile
+public class Tile_Pessimist : TileStateClass
 {
    
     //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }

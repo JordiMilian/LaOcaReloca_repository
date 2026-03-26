@@ -499,7 +499,7 @@ public class GameController_Simple : MonoBehaviour
         int currentIndex = BoardController.PlayerIndex;
         while (stepsToConsume > 0)
         {
-            Tile_Profile currentTile = BoardController.TilesList[currentIndex]._Profile;
+            TileStateClass currentTile = BoardController.TilesList[currentIndex]._Profile;
             for (int i = 0; i < currentTile.remainingSteps; i++)
             {
                 stepsToConsume--;
@@ -550,7 +550,7 @@ public class GameController_Simple : MonoBehaviour
         }
         yield return null;
         BoardController.TilesList.Clear();
-        foreach(Tile_Profile profile in info.tiles)
+        foreach(TileStateClass profile in info.tiles)
         {
             Debug.Log("progile?");
             BoardController.TilesList.Add(TilesFactory.instance.InstantiateTile(Instantiate(profile)));

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using static StringTools;
 using System.Linq;
-public class Tile_RatPrince : Tile_Profile
+public class Tile_RatPrince : TileStateClass
 {
     [SerializeField] float DmgOnCrossedRat = 5;
    public override IEnumerator OnPlacedInBoard() 

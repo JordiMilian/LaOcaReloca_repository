@@ -16,9 +16,9 @@ using UnityEngine;
 public class ProfilesGroup : ScriptableObject
 {
     public string GroupName;
-    public List<Tile_Profile> tilesList = new();
+    public List<TileStateClass> tilesList = new();
 
-    public Tile_Profile GetRandomProfile()
+    public TileStateClass GetRandomProfile()
     {
         return tilesList[Random.Range(0, tilesList.Count)];
     }

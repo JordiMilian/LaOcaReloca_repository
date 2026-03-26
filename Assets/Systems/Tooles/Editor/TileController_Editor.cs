@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(Tile_Profile),true)]
+[CustomEditor(typeof(TileStateClass),true)]
 public class TileController_Editor : Editor
 {
-    Tile_Profile refs;
+    TileStateClass refs;
 
     SerializedProperty rarityProp;
     SerializedProperty uniquePriceProp;
     private void OnEnable()
     {
-        refs = target as Tile_Profile;
+        refs = target as TileStateClass;
 
         rarityProp = serializedObject.FindProperty("rarity");
         uniquePriceProp = serializedObject.FindProperty("uniquePrice");

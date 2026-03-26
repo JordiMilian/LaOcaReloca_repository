@@ -8,7 +8,7 @@ public class TilesFactory : MonoBehaviour
 {
     
     [SerializeField] GameObject EmptyPrefab;
-    public List<Tile_Profile> tileProfiles = new();//USELESS, WE USE PROFILE GROUPS NOW
+    public List<TileStateClass> tileProfiles = new();//USELESS, WE USE PROFILE GROUPS NOW
 
 
 
@@ -24,7 +24,7 @@ public class TilesFactory : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public TileController InstantiateTile(Tile_Profile profile)
+    public TileController InstantiateTile(TileStateClass profile)
     {
         GameObject newTile = Instantiate(EmptyPrefab);
 

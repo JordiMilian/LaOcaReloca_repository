@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 [CreateAssetMenu(menuName = "TileProfile/Money/Pirate", fileName = "Tile_Pirate")]
-public class Tile_Pirate : Tile_Profile
+public class Tile_Pirate : TileStateClass
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }

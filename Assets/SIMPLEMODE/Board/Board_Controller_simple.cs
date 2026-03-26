@@ -8,7 +8,7 @@ using UnityEngine.Splines;
 
 public class Board_Controller_simple : MonoBehaviour
 {
-    [SerializeField] Tile_Profile Tile_Empty, Tile_Start, Tile_End, Tile_Oca;
+    [SerializeField] TileStateClass Tile_Empty, Tile_Start, Tile_End, Tile_Oca;
     [SerializeField] TilesFactory factory;
 
     public List<TileController> TilesList = new();
@@ -71,7 +71,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         for (int i = 0; i < StartingTilesCount; i++)
         {
-            Tile_Profile profileToSpawn;
+            TileStateClass profileToSpawn;
             if (i == 0) { profileToSpawn = Tile_Start; }
             else if (i == StartingTilesCount - 1) { profileToSpawn = Tile_End; }
             else if (i % 4 == 0) { profileToSpawn = Tile_Oca; }
@@ -173,7 +173,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         for (int i = 0; i < tilesAmount; i++)
         {
-            Tile_Profile profile = TilesList[i]._Profile;
+            TileStateClass profile = TilesList[i]._Profile;
             switch (profile.tileSize)
             {
                 case TileSize.Small: smallTilesCount++; break;
@@ -222,7 +222,7 @@ public class Board_Controller_simple : MonoBehaviour
 
             if (i == tilesAmount) { totalT = 1; break; }
             float nextT = 0;
-            Tile_Profile profile = TilesList[i]._Profile;
+            TileStateClass profile = TilesList[i]._Profile;
             switch (profile.tileSize)
             {
                 case TileSize.Small: nextT = smallT; break;
@@ -242,7 +242,7 @@ public class Board_Controller_simple : MonoBehaviour
 
 
             float thisT = 0;
-            Tile_Profile profile = TilesList[i]._Profile;
+            TileStateClass profile = TilesList[i]._Profile;
             switch (profile.tileSize)
             {
                 case TileSize.Small: thisT = smallT; break;

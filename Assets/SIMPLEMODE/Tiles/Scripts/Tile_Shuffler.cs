@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [CreateAssetMenu(menuName = "TileProfile/Shuffler", fileName = "TileProfile_Shuffler")]
-public class Tile_Shuffler : Tile_Profile
+public class Tile_Shuffler : TileStateClass
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }

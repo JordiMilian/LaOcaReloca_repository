@@ -1,7 +1,7 @@
 using UnityEngine;
 using static StringTools;
 [CreateAssetMenu(menuName = "TileProfile/Basics/Start", fileName = "Tile_Start")]
-public class Tile_Start : Tile_Profile
+public class Tile_Start : TileStateClass
 {
     public override string GetTooltipText()
     {

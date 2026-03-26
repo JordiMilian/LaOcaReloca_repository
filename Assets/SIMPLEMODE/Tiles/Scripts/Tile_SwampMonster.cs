@@ -3,9 +3,9 @@ using System.Collections;
 using NUnit.Framework;
 using System.Linq;
 using System.Collections.Generic;
-public class Tile_SwampMonster : Tile_Profile
+public class Tile_SwampMonster : TileStateClass
 {
-    [SerializeField] Tile_Profile swampTokenProfile;
+    [SerializeField] TileStateClass swampTokenProfile;
     [SerializeField] float DamageAddedOnCross = 100;
     public override IEnumerator OnPlacedInBoard() 
    {
@@ -31,12 +31,12 @@ public class Tile_SwampMonster : Tile_Profile
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
 
-    public static void RemoveSkill(Tile_Profile profile, GenericSkills skill)
+    public static void RemoveSkill(TileStateClass profile, GenericSkills skill)
     {
         profile.genericSkills.Add(skill);
 
     }
-    public static void AddSkill(Tile_Profile profile, GenericSkills skill)
+    public static void AddSkill(TileStateClass profile, GenericSkills skill)
     {
         profile.genericSkills.Remove(skill);
     }

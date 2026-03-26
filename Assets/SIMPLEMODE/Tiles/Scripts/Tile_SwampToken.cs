@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_SwampToken : Tile_Profile
+public class Tile_SwampToken : TileStateClass
 {
     /*
     public override IEnumerator OnPlacedInBoard() 

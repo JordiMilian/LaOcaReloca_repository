@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using static StringTools;
 [CreateAssetMenu(menuName = "TileProfile/Landmine", fileName = "Tile_Landmine")]
-public class Tile_Landmine : Tile_Profile
+public class Tile_Landmine : TileStateClass
 {
     public override string GetTooltipText()
     {

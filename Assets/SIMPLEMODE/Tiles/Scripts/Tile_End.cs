@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 [CreateAssetMenu(menuName = "TileProfile/Basics/End", fileName = "Tile_End")]
-public class Tile_End : Tile_Profile
+public class Tile_End : TileStateClass
 {
     public override IEnumerator OnPlayerStepped()
     {

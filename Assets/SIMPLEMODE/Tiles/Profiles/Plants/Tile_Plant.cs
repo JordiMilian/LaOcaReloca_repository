@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public abstract class Tile_Plant : Tile_Profile
+public abstract class Tile_Plant : TileStateClass
 {
     public override IEnumerator OnPlacedInBoard()
     {

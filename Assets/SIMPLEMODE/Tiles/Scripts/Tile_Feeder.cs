@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "TileProfile/DamageAdders/Feeder", fileName = "Tile_Feeder")]
-public class Tile_Feeder : Tile_Profile
+public class Tile_Feeder : TileStateClass
 {
     [SerializeField] float PercentageToAdd = 20;
     [SerializeField] float CrossedDamage = 5;

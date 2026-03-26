@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Linq;
-public class Tile_Trebol : Tile_Profile
+public class Tile_Trebol : TileStateClass
 {
     [SerializeField] int moneyOnLandedOnEmpty = 6;
     public override IEnumerator OnPlacedInBoard() 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using static StringTools;
 
 [CreateAssetMenu(menuName = "TileProfile/Ocas/Oca", fileName = "Tile_Oca")]
-public class Tile_Oca : Tile_Profile
+public class Tile_Oca : TileStateClass
 {
     
     public override IEnumerator OnPlayerLanded()

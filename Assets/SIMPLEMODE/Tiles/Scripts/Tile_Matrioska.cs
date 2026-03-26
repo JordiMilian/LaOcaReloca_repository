@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 [CreateAssetMenu(menuName = "TileProfile/DamageAdders/Matrioska", fileName = "Tile_Matrioska")]
-public class Tile_Matrioska : Tile_Profile
+public class Tile_Matrioska : TileStateClass
 {
     [SerializeField] int timesCrossed;
     [SerializeField] int timesNeededToCross = 3;

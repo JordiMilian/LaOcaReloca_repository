@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_Collector : Tile_Profile
+public class Tile_Collector : TileStateClass
 {
     [SerializeField] int moneyOnAddedTile = 2;
     [SerializeField] int priceOnCrossed = 2;

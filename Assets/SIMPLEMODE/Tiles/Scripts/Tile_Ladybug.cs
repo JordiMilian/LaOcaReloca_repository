@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 [CreateAssetMenu(menuName = "TileProfile/DicesEnjoyers/Ladybug", fileName = "Tile_Ladybug")]
-public class Tile_Ladybug : Tile_Profile
+public class Tile_Ladybug : TileStateClass
 {
     public override IEnumerator OnPlacedInBoard()
     {

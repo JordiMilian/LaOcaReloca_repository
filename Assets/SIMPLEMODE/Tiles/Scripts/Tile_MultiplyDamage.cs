@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "TileProfile/Multiplier", fileName = "Tile_Multiplier")]
-public class Tile_MultiplyDamage : Tile_Profile
+public class Tile_MultiplyDamage : TileStateClass
 {
     [SerializeField] float multiplierOnLanded = 4;
     [SerializeField] float multiplierOnStepped = 1.5f;

@@ -4,7 +4,7 @@ using static StringTools;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-public class Tile_BirdsWatcher : Tile_Profile
+public class Tile_BirdsWatcher : TileStateClass
 {
     [SerializeField] float dmgPerOca = 2;
     [SerializeField] float dmgOnLandedAdjacentOca = 30;

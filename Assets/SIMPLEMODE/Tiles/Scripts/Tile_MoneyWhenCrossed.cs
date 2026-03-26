@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tile_MoneyWhenCrossed : Tile_Profile
+public class Tile_MoneyWhenCrossed : TileStateClass
 {
     [SerializeField] int money;
     public override IEnumerator OnPlayerStepped()
