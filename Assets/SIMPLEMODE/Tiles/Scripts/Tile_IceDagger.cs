@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_IceDagger : TileStateClass
+public class Tile_IceDagger : TileInfo
 {
    //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }
    //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }

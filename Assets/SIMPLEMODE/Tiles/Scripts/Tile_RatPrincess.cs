@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using static StringTools;
 using System.Linq;
-public class Tile_RatPrincess : TileStateClass
+public class Tile_RatPrincess : TileInfo
 {
     [SerializeField] int moneyOnRat = 1;
    public override IEnumerator OnPlacedInBoard() 
@@ -12,7 +12,7 @@ public class Tile_RatPrincess : TileStateClass
     }
     IEnumerator onCrossedTile(TileController tile)
     {
-        if(tile != _Tile && tile._Profile.tileTags.Contains(TileTags.Rat))
+        if(tile != _Controller && tile._Profile.tileTags.Contains(TileTags.Rat))
         {
             GameController.AddMoney(moneyOnRat);
             yield break;

@@ -4,7 +4,7 @@ using static StringTools;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-public class Tile_BirdsWatcher : TileStateClass
+public class Tile_BirdsWatcher : TileInfo
 {
     [SerializeField] float dmgPerOca = 2;
     [SerializeField] float dmgOnLandedAdjacentOca = 30;
@@ -17,11 +17,11 @@ public class Tile_BirdsWatcher : TileStateClass
     }
     IEnumerator C_CheckForAdjacentOcas(TileController landedTile)
     {
-        if( Mathf.Abs(_Tile.indexInBoard - landedTile.indexInBoard) == 1)
+        if( Mathf.Abs(_Controller.indexInBoard - landedTile.indexInBoard) == 1)
         {
             if (landedTile._Profile.tileTags.Contains(TileTags.Oca))
             {
-                yield return _Tile.AddBaseDamage(dmgOnLandedAdjacentOca);
+                yield return _Controller.AddBaseDamage(dmgOnLandedAdjacentOca);
                 yield break;
             }
         }
@@ -37,7 +37,7 @@ public class Tile_BirdsWatcher : TileStateClass
    public override IEnumerator OnPlayerStepped() 
     {
         float finalDamage = 0;
-        List<TileController> ocas = MathJ.GetAllTilesWithTag(TileTags.Oca, _Tile, true);
+        List<TileController> ocas = MathJ.GetAllTilesWithTag(TileTags.Oca, _Controller, true);
 
         finalDamage = ocas.Count * dmgPerOca;
 
@@ -50,7 +50,7 @@ public class Tile_BirdsWatcher : TileStateClass
                 finalDamage += dmgPerOca;
             }
         }*/
-        yield return _Tile.AddBaseDamage(finalDamage);
+        yield return _Controller.AddBaseDamage(finalDamage);
         yield return base.OnPlayerStepped();
 
     }

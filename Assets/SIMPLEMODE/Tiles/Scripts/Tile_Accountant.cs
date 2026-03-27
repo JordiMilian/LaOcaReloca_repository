@@ -2,7 +2,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 [CreateAssetMenu(menuName = "TileProfile/Accountant", fileName = "Tile_Accountant")]
-public class Tile_Accountant : TileStateClass
+public class Tile_Accountant : TileInfo
 {
     [SerializeField] int damagePerIndex = 1;
     public override IEnumerator OnPlayerLanded()
@@ -12,7 +12,7 @@ public class Tile_Accountant : TileStateClass
     }
     public override IEnumerator OnTileFinished()
     {
-        _Tile.DamagesToDeal.Add(BoardController.TilesList.Count * damagePerIndex);
+        _Controller.DamagesToDeal.Add(BoardController.TilesList.Count * damagePerIndex);
         return base.OnTileFinished();
     }
     public override string GetTooltipText()

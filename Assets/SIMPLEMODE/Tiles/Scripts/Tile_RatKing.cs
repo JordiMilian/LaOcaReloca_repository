@@ -3,7 +3,7 @@ using System.Collections;
 using System.Linq;
 using NUnit.Framework;
 using System.Collections.Generic;
-public class Tile_RatKing : TileStateClass
+public class Tile_RatKing : TileInfo
 {
     [SerializeField] float ratsDamageAdder = .5f;
     [SerializeField] float addedAmountOnLanded = .5f;
@@ -11,7 +11,7 @@ public class Tile_RatKing : TileStateClass
     {
         yield return base.OnPlacedInBoard();
 
-        List<TileController> currentRats = MathJ.GetAllTilesWithTag(TileTags.Rat, _Tile, true);
+        List<TileController> currentRats = MathJ.GetAllTilesWithTag(TileTags.Rat, _Controller, true);
         foreach (TileController rat in currentRats)
         {
             modifyRat(rat);
@@ -43,7 +43,7 @@ public class Tile_RatKing : TileStateClass
     List<TileController> modifiedRats = new();
     void OnAddedTile(TileController newTile)
     {
-        if(newTile == _Tile) { return; }
+        if(newTile == _Controller) { return; }
         if(newTile._Profile.tileTags.Contains(TileTags.Rat))
         {
             modifyRat(newTile);
@@ -51,7 +51,7 @@ public class Tile_RatKing : TileStateClass
     }
     void OnRemovedTile(TileController removedTile)
     {
-        if (removedTile == _Tile) { return; }
+        if (removedTile == _Controller) { return; }
         if (removedTile._Profile.tileTags.Contains(TileTags.Rat))
         {
             unmodifyRat(removedTile);

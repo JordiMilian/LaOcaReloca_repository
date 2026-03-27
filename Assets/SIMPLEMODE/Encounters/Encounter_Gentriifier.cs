@@ -9,7 +9,7 @@ public class Encounter_Gentriifier : Encounter_SelectedTileEffect
         if (controler == null) { return; }
         if(controler._Profile is Tile_Start || controler._Profile is Tile_End) { return; }
 
-        TileStateClass selectedTile =controler._Profile;
+        TileInfo selectedTile =controler._Profile;
         for (int i = selectedTile.genericSkills.Count -1 ; i >= 0; i--)
         {
             selectedTile.genericSkills.RemoveAt(i);

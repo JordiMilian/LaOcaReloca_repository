@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_Food : TileStateClass
+public class Tile_Food : TileInfo
 {
     public int currentRot, baseRot;
 
@@ -15,12 +15,12 @@ public class Tile_Food : TileStateClass
     }
     public virtual IEnumerator OnRotten()
     {
-        yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
+        yield return BoardController.C_RemoveTile(_Controller.indexInBoard);
     }
     public virtual IEnumerator OnEaten()
     {
-        yield return _Tile.C_DealAllDamageToDeal();
-        yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
+        yield return _Controller.C_DealAllDamageToDeal();
+        yield return BoardController.C_RemoveTile(_Controller.indexInBoard);
     }
    public override IEnumerator OnPlacedInBoard()
     {

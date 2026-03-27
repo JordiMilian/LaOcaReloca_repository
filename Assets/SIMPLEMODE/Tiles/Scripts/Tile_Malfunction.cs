@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using static StringTools;
 using System.Linq;
-public class Tile_Malfunction : TileStateClass
+public class Tile_Malfunction : TileInfo
 {
     [SerializeField] float chanceToTrigger = 0.3f;
     [SerializeField] int limit = 10, spawnedTokens = 0;
@@ -32,12 +32,12 @@ public class Tile_Malfunction : TileStateClass
             if (passedChance())
             {
                 TileController tokenCopy = TilesFactory.instance.InstantiateTile(newTile._Profile);
-                tokenCopy.transform.position = _Tile.transform.position;
+                tokenCopy.transform.position = _Controller.transform.position;
                 tokenCopy.SetBaseDamage(0);
                 lastTileSpawnedByThis = tokenCopy;
 
                 tileMovement.shakeTile(Intensity.mid);
-                yield return BoardController.C_AddNewTile(tokenCopy, _Tile.indexInBoard);
+                yield return BoardController.C_AddNewTile(tokenCopy, _Controller.indexInBoard);
                 spawnedTokens++;
             }
         }

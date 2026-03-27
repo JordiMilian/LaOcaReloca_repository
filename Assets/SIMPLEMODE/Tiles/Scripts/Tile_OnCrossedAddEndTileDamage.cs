@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 [CreateAssetMenu(menuName = "TileProfile/EndSynergy/Investor", fileName = "Tile_Investor")]
-public class Tile_OnCrossedAddEndTileDamage : TileStateClass
+public class Tile_OnCrossedAddEndTileDamage : TileInfo
 {
     [SerializeField] int damageToAdd = 5;
     [SerializeField] float multiplierOnLanded = 1.5f;

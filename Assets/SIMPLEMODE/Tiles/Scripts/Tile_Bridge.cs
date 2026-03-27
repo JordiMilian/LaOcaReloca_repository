@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_Bridge : TileStateClass
+public class Tile_Bridge : TileInfo
 {
    [HideInInspector] public Tile_Bridge otherBridge;
    [HideInInspector] public bool ignoreSpawnCopy = false;
@@ -14,9 +14,9 @@ public class Tile_Bridge : TileStateClass
         otherBridge = bridgeCopy._Profile as Tile_Bridge;
         otherBridge.otherBridge = this;
         otherBridge.ignoreSpawnCopy = true;
-        bridgeCopy.transform.position = _Tile.transform.position;
+        bridgeCopy.transform.position = _Controller.transform.position;
 
-        yield return BoardController.C_AddNewTile(bridgeCopy, _Tile.indexInBoard +1);
+        yield return BoardController.C_AddNewTile(bridgeCopy, _Controller.indexInBoard +1);
 
         otherBridge.ignoreSpawnCopy = false;
     }
@@ -31,10 +31,10 @@ public class Tile_Bridge : TileStateClass
    public override IEnumerator OnPlayerLanded()
     {
         yield return base.OnPlayerLanded();
-        yield return _Tile.C_DealAllDamageToDeal();
+        yield return _Controller.C_DealAllDamageToDeal();
         if(otherBridge !=null)
         {
-            yield return BoardController.L_JumpPlayerTo(otherBridge._Tile.indexInBoard, false);
+            yield return BoardController.L_JumpPlayerTo(otherBridge._Controller.indexInBoard, false);
         }
         
     }

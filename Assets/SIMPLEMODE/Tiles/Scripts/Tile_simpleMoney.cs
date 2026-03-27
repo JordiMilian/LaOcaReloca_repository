@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 [CreateAssetMenu(menuName = "TileProfile/Money/SimpleMoney", fileName = "Tile_SimpleMoney")]
-public class Tile_simpleMoney : TileStateClass
+public class Tile_simpleMoney : TileInfo
 {
     [SerializeField] int landedAmount = 10;
     [SerializeField] int steppedAmount = 1;

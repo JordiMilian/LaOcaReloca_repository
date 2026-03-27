@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_SpiderToken : TileStateClass
+public class Tile_SpiderToken : TileInfo
 {
     [SerializeField] float poison = 10;
    //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }

@@ -10,7 +10,7 @@ public class SplineTile : MonoBehaviour, IPointerClickHandler
     [SerializeField] MeshCollider meshCollider;
     [SerializeField] Material tileMaterial;
     TileTfData TfData;
-    public TileStateClass tileProfile;
+    public TileInfo tileProfile;
     bool isDataSet = false;//this is for gizmo drawing for now
     
     private void Awake()

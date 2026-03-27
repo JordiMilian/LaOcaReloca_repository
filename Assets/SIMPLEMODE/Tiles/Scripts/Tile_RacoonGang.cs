@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using static StringTools;
 using NUnit.Framework;
 using Unity.VisualScripting;
-public class Tile_RacoonGang : TileStateClass
+public class Tile_RacoonGang : TileInfo
 {
-    [SerializeField] int AmountToTake = 1;
-    [SerializeField] float dmgPerMoney = 15;
-    [SerializeField] int racoonsToCreate = 2;
-    [SerializeField] TileStateClass racoonToken_Profile;
+    public int AmountToTake = 1;
+    public float dmgPerMoney = 15;
+    public int racoonsToCreate = 2;
+    [SerializeField] TileConfig racoonToken_Profile;
     //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }
     //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }
     public override IEnumerator OnPlayerLanded()
@@ -19,7 +19,6 @@ public class Tile_RacoonGang : TileStateClass
         {
             yield return CreateRandomRacoon();
         }
-
     }
    public override IEnumerator OnPlayerStepped()
     { 
@@ -31,7 +30,7 @@ public class Tile_RacoonGang : TileStateClass
         }
         GameController.RemoveMoney(tmpAmount);
 
-        List<TileController> tilesAround = MathJ.GetAdjacentTiles(_Tile, 1);
+        List<TileController> tilesAround = MathJ.GetAdjacentTiles(_Controller, 1);
         foreach (TileController tile in tilesAround)
         {
             CoroutineRunner.instance.StartCoroutine( tile.AddBaseDamage(tmpAmount * dmgPerMoney));
@@ -42,10 +41,20 @@ public class Tile_RacoonGang : TileStateClass
 
     IEnumerator CreateRandomRacoon()
     {
-        TileController ratTokenController = TilesFactory.instance.InstantiateTile(racoonToken_Profile);
-        ratTokenController.transform.position = _Tile.transform.position;
+        TileController ratTokenController = TilesFactory.instance.InstantiateTile(racoonToken_Profile._TileStateClass);
+        ratTokenController.transform.position = _Controller.transform.position;
 
         int randomIndex = MathJ.GetRandomIndexInBoard(true);
         yield return BoardController.C_AddNewTile(ratTokenController, randomIndex);
+    }
+
+    public override TileInfo GetTileCopy()
+    {
+        Tile_RacoonGang newRacoon = (Tile_RacoonGang)CopyBaseStatsIntoOther(new Tile_RacoonGang());
+        newRacoon.dmgPerMoney = dmgPerMoney;
+        newRacoon.racoonsToCreate = racoonsToCreate;
+        newRacoon.AmountToTake = AmountToTake;
+
+        return newRacoon;
     }
 }

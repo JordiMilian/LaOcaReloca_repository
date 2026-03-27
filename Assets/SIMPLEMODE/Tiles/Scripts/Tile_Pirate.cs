@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 [CreateAssetMenu(menuName = "TileProfile/Money/Pirate", fileName = "Tile_Pirate")]
-public class Tile_Pirate : TileStateClass
+public class Tile_Pirate : TileInfo
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
@@ -16,7 +16,7 @@ public class Tile_Pirate : TileStateClass
     }
     public override IEnumerator OnTileFinished()
     {
-        _Tile.DamagesToDeal.Add(currentMoney() * multiplier);
+        _Controller.DamagesToDeal.Add(currentMoney() * multiplier);
 
         return base.OnTileFinished();
     }

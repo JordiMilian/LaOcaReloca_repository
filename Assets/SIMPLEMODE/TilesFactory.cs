@@ -8,9 +8,6 @@ public class TilesFactory : MonoBehaviour
 {
     
     [SerializeField] GameObject EmptyPrefab;
-    public List<TileStateClass> tileProfiles = new();//USELESS, WE USE PROFILE GROUPS NOW
-
-
 
     public static TilesFactory instance;
     private void Awake()
@@ -24,13 +21,14 @@ public class TilesFactory : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public TileController InstantiateTile(TileStateClass profile)
+    public TileController InstantiateTile(TileInfo info)
     {
         GameObject newTile = Instantiate(EmptyPrefab);
 
         TileController controller = newTile.GetComponent<TileController>();
-        controller.SetTileProfile(profile);
+        controller.SetTileProfile(info);
 
         return controller;
     }
+
 }

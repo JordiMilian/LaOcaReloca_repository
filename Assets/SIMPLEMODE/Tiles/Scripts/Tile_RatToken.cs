@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_RatToken : TileStateClass
+public class Tile_RatToken : TileInfo
 {
    //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
    //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }

@@ -8,11 +8,11 @@ public class Tile_MigrantOca : Tile_Oca
     [SerializeField] int moneyPerTile = 1;
     public override IEnumerator OnPlayerLanded() 
    { 
-        int startingIndex = _Tile.indexInBoard;
+        int startingIndex = _Controller.indexInBoard;
 
         yield return basePlayerLanded();
 
-        for (int i = _Tile.indexInBoard + 1; i < BoardController.TilesList.Count; i++)
+        for (int i = _Controller.indexInBoard + 1; i < BoardController.TilesList.Count; i++)
         {
             if (BoardController.TilesList[i]._Profile is Tile_Oca)
             {
@@ -35,5 +35,10 @@ public class Tile_MigrantOca : Tile_Oca
    //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
    public override string GetTooltipText() { return $"{OnLanded} Jump to the next Oca and gain {moneyPerTile} money per tile skipped"; }
 
-
+    public override TileInfo GetTileCopy()
+    {
+        Tile_MigrantOca newOca =  (Tile_MigrantOca)base.CopyBaseStatsIntoOther(new Tile_MigrantOca());
+        newOca.moneyPerTile = moneyPerTile;
+        return newOca;
+    }
 }

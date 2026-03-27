@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_Insect : TileStateClass
+public class Tile_Insect : TileInfo
 {
    public override IEnumerator OnPlacedInBoard()
     {
@@ -20,7 +20,7 @@ public class Tile_Insect : TileStateClass
     public virtual IEnumerator Fly()
     {
         int RandomIndex = MathJ.GetRandomIndexInBoard(true);
-        BoardController.MoveTileInBoard(_Tile.indexInBoard, RandomIndex);
+        BoardController.MoveTileInBoard(_Controller.indexInBoard, RandomIndex);
         yield break;
     }
     public virtual IEnumerator OnLandedFly()
@@ -30,7 +30,7 @@ public class Tile_Insect : TileStateClass
    public override IEnumerator OnPlayerLanded() //Insects should make base.OnPlayerLanded by the end of its logic
     {
         yield return base.OnPlayerLanded(); 
-        yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
+        yield return BoardController.C_RemoveTile(_Controller.indexInBoard);
     }
    //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
    //public override string GetTooltipText() { }

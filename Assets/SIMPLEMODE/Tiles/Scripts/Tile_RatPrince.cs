@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using static StringTools;
 using System.Linq;
-public class Tile_RatPrince : TileStateClass
+public class Tile_RatPrince : TileInfo
 {
     [SerializeField] float DmgOnCrossedRat = 5;
    public override IEnumerator OnPlacedInBoard() 
@@ -12,9 +12,9 @@ public class Tile_RatPrince : TileStateClass
     }
     IEnumerator onCrossedTile(TileController tile)
     {
-        if(tile != _Tile && tile._Profile.tileTags.Contains(TileTags.Rat))
+        if(tile != _Controller && tile._Profile.tileTags.Contains(TileTags.Rat))
         {
-            yield return _Tile.AddBaseDamage(DmgOnCrossedRat);
+            yield return _Controller.AddBaseDamage(DmgOnCrossedRat);
         }
     }
    public override IEnumerator OnRemovedFromBoard() 

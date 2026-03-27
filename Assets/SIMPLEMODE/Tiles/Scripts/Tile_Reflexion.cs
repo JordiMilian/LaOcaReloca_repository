@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_Reflexion : TileStateClass
+public class Tile_Reflexion : TileInfo
 {
    //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
    //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
@@ -9,7 +9,7 @@ public class Tile_Reflexion : TileStateClass
    public override IEnumerator OnPlayerStepped()
    { 
         yield return base.OnPlayerStepped();
-        TileController tileBehind = BoardController.TilesList[_Tile.indexInBoard - 1];
+        TileController tileBehind = BoardController.TilesList[_Controller.indexInBoard - 1];
         if(tileBehind._Profile is not Tile_Start)
         {
             TileController newTile =  TilesFactory.instance.InstantiateTile(tileBehind._Profile);

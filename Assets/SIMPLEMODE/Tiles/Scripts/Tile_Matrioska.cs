@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 [CreateAssetMenu(menuName = "TileProfile/DamageAdders/Matrioska", fileName = "Tile_Matrioska")]
-public class Tile_Matrioska : TileStateClass
+public class Tile_Matrioska : TileInfo
 {
     [SerializeField] int timesCrossed;
     [SerializeField] int timesNeededToCross = 3;
@@ -11,13 +11,13 @@ public class Tile_Matrioska : TileStateClass
         yield return base.OnPlayerStepped();
 
         timesCrossed++;
-        yield return _Tile.C_MultiplyBaseDamage(multiplyCurrentDamageBy);
+        yield return _Controller.C_MultiplyBaseDamage(multiplyCurrentDamageBy);
         
 
         if (timesCrossed >= timesNeededToCross)
         {
-            yield return _Tile.C_DealAllDamageToDeal();
-            yield return BoardController.C_RemoveTile(_Tile.indexInBoard);
+            yield return _Controller.C_DealAllDamageToDeal();
+            yield return BoardController.C_RemoveTile(_Controller.indexInBoard);
         }
     }
     public override string GetTooltipText()

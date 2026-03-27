@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_WalkingGiant : TileStateClass
+public class Tile_WalkingGiant : TileInfo
 {
     [SerializeField] float addedDamageOnStepped = 25;
    public override IEnumerator OnPlacedInBoard()
@@ -13,7 +13,7 @@ public class Tile_WalkingGiant : TileStateClass
     {
         if(Mathf.Approximately(tile.GetBaseDamage(),0))
         {
-            yield return _Tile.AddBaseDamage(addedDamageOnStepped);
+            yield return _Controller.AddBaseDamage(addedDamageOnStepped);
             tileMovement.shakeTile(Intensity.mid);
             yield return new WaitForSeconds(0.3f);
         }

@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_DobleEmpty : TileStateClass
+public class Tile_DobleEmpty : TileInfo
 {
-   [SerializeField] TileStateClass emptyProfile;
+   [SerializeField] TileInfo emptyProfile;
 
    //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
    //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
@@ -10,7 +10,7 @@ public class Tile_DobleEmpty : TileStateClass
    { 
         yield return base.OnPlayerLanded();
         TileController instantiatedEmpty =  TilesFactory.instance.InstantiateTile(emptyProfile);
-        instantiatedEmpty.transform.position = _Tile.transform.position;
+        instantiatedEmpty.transform.position = _Controller.transform.position;
         int randomIndex = Random.Range(1, BoardController.TilesList.Count - 1);
         yield return BoardController.C_AddNewTile(instantiatedEmpty, randomIndex);
         instantiatedEmpty.SetBaseDamage(BaseDamage);

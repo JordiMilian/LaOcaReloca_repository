@@ -8,7 +8,7 @@ using UnityEngine.Splines;
 
 public class Board_Controller_simple : MonoBehaviour
 {
-    [SerializeField] TileStateClass Tile_Empty, Tile_Start, Tile_End, Tile_Oca;
+    [SerializeField] TileConfig Tile_Empty, Tile_Start, Tile_End, Tile_Oca;
     [SerializeField] TilesFactory factory;
 
     public List<TileController> TilesList = new();
@@ -71,12 +71,12 @@ public class Board_Controller_simple : MonoBehaviour
 
         for (int i = 0; i < StartingTilesCount; i++)
         {
-            TileStateClass profileToSpawn;
-            if (i == 0) { profileToSpawn = Tile_Start; }
-            else if (i == StartingTilesCount - 1) { profileToSpawn = Tile_End; }
-            else if (i % 4 == 0) { profileToSpawn = Tile_Oca; }
+            TileInfo profileToSpawn;
+            if (i == 0) { profileToSpawn = Tile_Start.GetCopyOfConfig(); }
+            else if (i == StartingTilesCount - 1) { profileToSpawn = Tile_End.GetCopyOfConfig(); }
+            else if (i % 4 == 0) { profileToSpawn = Tile_Oca.GetCopyOfConfig(); }
             //else if(i % 3 == 0) { prefabToSpawn = Tile_Money; }
-            else { profileToSpawn = Tile_Empty; }
+            else { profileToSpawn = Tile_Empty.GetCopyOfConfig(); }
 
             TileController newTile = factory.InstantiateTile(profileToSpawn);
             tempTiles.Add(newTile);
@@ -173,7 +173,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         for (int i = 0; i < tilesAmount; i++)
         {
-            TileStateClass profile = TilesList[i]._Profile;
+            TileInfo profile = TilesList[i]._Profile;
             switch (profile.tileSize)
             {
                 case TileSize.Small: smallTilesCount++; break;
@@ -222,7 +222,7 @@ public class Board_Controller_simple : MonoBehaviour
 
             if (i == tilesAmount) { totalT = 1; break; }
             float nextT = 0;
-            TileStateClass profile = TilesList[i]._Profile;
+            TileInfo profile = TilesList[i]._Profile;
             switch (profile.tileSize)
             {
                 case TileSize.Small: nextT = smallT; break;
@@ -242,7 +242,7 @@ public class Board_Controller_simple : MonoBehaviour
 
 
             float thisT = 0;
-            TileStateClass profile = TilesList[i]._Profile;
+            TileInfo profile = TilesList[i]._Profile;
             switch (profile.tileSize)
             {
                 case TileSize.Small: thisT = smallT; break;

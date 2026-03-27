@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "TileProfile/EmptySynergy/MrBeast", fileName = "Tile_BloomingEmpty")]
-public class Tile_BloomingEmpty : TileStateClass
+public class Tile_BloomingEmpty : TileInfo
 {
     [SerializeField] int addedDamageToEmptyTiles = 2;
 
@@ -23,7 +23,7 @@ public class Tile_BloomingEmpty : TileStateClass
     }
     public override IEnumerator OnPlayerStepped()
     {
-        TileController randomEmpty = MathJ.GetRandomTileInBoardWithTag(TileTags.Empty, _Tile, true);
+        TileController randomEmpty = MathJ.GetRandomTileInBoardWithTag(TileTags.Empty, _Controller, true);
 
         if(randomEmpty != null)
         {

@@ -6,6 +6,7 @@ using System;
 [CustomEditor(typeof(ProfilesCreator))]
 public class ProfilesCreator_Editor : Editor
 {
+    /*
     ProfilesCreator data;
     SerializedProperty prop_assetName, prop_folderName, prop_title;
     SerializedProperty prop_color, prop_baseDamage;
@@ -351,4 +352,5 @@ public class ProfilesCreator_Editor : Editor
             "  public override string GetTooltipDescription() { return string.Empty; }\n" +
             "}";
     }
+    */
 }

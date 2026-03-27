@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_Earthquake : TileStateClass
+public class Tile_Earthquake : TileInfo
 {
     [SerializeField] int tilesOnLanded = 3, tilesOnCrossed = 1;
     //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }
@@ -22,7 +22,7 @@ public class Tile_Earthquake : TileStateClass
 
     IEnumerator TriggerRandomTile()
     {
-        TileController randomTile = MathJ.GetRandomTileInBoard(_Tile);
+        TileController randomTile = MathJ.GetRandomTileInBoard(_Controller);
         yield return randomTile.OnPlayerStepped();
         yield return randomTile.OnTileFinished(); 
     }

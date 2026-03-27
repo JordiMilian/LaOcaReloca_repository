@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_RatQueen : TileStateClass
+public class Tile_RatQueen : TileInfo
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
     
-    [SerializeField] TileStateClass ratTokenTileProfile;
+    [SerializeField] TileInfo ratTokenTileProfile;
     [SerializeField] int ratsAmountOnLanded = 3;
     public override IEnumerator OnPlayerStepped()
     { 
@@ -23,8 +23,8 @@ public class Tile_RatQueen : TileStateClass
     IEnumerator CreateRandomRat()
     {
         TileController ratTokenController = TilesFactory.instance.InstantiateTile(ratTokenTileProfile);
-        ratTokenController.transform.position = _Tile.transform.position;
-        int randomIndex, ownIndex = _Tile.indexInBoard;
+        ratTokenController.transform.position = _Controller.transform.position;
+        int randomIndex, ownIndex = _Controller.indexInBoard;
         do
         {
             randomIndex = MathJ.GetRandomIndexInBoard(true);

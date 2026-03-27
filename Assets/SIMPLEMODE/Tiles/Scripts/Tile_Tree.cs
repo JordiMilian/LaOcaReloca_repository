@@ -36,7 +36,7 @@ public class Tile_Tree : Tile_Plant
     }
     void subscribeToAdjacentPlants()
     {
-        List<TileController> adjacentTiles = MathJ.GetAdjacentTiles(_Tile);
+        List<TileController> adjacentTiles = MathJ.GetAdjacentTiles(_Controller);
         foreach (TileController tile in adjacentTiles)
         {
             if (tile._Profile.tileTags.Contains(TileTags.Plant))

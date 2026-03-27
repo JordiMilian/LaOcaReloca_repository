@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Unity.VisualScripting;
 [CreateAssetMenu(menuName = "TileProfile/DamageAdders/Pinyata", fileName = "Tile_Pinyata")]
-public class Tile_Pinyata : TileStateClass
+public class Tile_Pinyata : TileInfo
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
@@ -25,7 +25,7 @@ public class Tile_Pinyata : TileStateClass
     }
     public override IEnumerator OnTileFinished()
     {
-        List<TileController> tilesAround = MathJ.GetAdjacentTiles(_Tile, adjacentDepth);
+        List<TileController> tilesAround = MathJ.GetAdjacentTiles(_Controller, adjacentDepth);
         foreach (TileController tile in tilesAround)
         {
             CoroutineRunner.instance.StartCoroutine(tile.AddBaseDamage(addedDmg));

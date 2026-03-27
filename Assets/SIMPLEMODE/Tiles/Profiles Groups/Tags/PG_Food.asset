@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: PG_Food
   m_EditorClassIdentifier: 
   GroupName: Food
-  tilesList:
-  - {fileID: 11400000, guid: db33dd5b77ceac543bdba84ce5962111, type: 2}
+  tilesList: []

@@ -8,7 +8,7 @@ public class ProfileGroups_Registry : ScriptableObject
     [SerializeField] ProfilesGroup Common, Rare, Legendary, Unique, Deprecated;
     [SerializeField] ProfilesGroup Curse, Tokens, Food;
     [SerializeField] ProfilesGroup Rest;
-    public List<ProfilesGroup> GetProfileGroups(TileStateClass profile)
+    public List<ProfilesGroup> GetProfileGroups(TileInfo profile)
     {
         List<ProfilesGroup> groups = new();
         switch (profile.rarity)
@@ -18,6 +18,7 @@ public class ProfileGroups_Registry : ScriptableObject
             case Rarity.Legendary: groups.Add(Legendary); break;
             case Rarity.Unique: groups.Add(Unique); break;
             case Rarity.Deprecated: groups.Add(Deprecated); return groups; //if its deprecated don't add it anywhere else
+            default: break;
         }
 
         foreach (TileTags tag in profile.tileTags) 
@@ -27,6 +28,7 @@ public class ProfileGroups_Registry : ScriptableObject
                 case TileTags.Token: groups.Add(Tokens);break;
                 case TileTags.Curse: groups.Add(Curse);break;
                 case TileTags.Food: groups.Add(Food);break;
+                default: continue;
             }
         }
 

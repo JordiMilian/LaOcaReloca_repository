@@ -16,10 +16,11 @@ using UnityEngine;
 public class ProfilesGroup : ScriptableObject
 {
     public string GroupName;
-    public List<TileStateClass> tilesList = new();
+    public List<TileConfig> tilesList = new();
 
-    public TileStateClass GetRandomProfile()
+    public TileInfo GetRandomProfile()
     {
-        return tilesList[Random.Range(0, tilesList.Count)];
+        if(tilesList.Count == 0) { return null; }
+        return tilesList[Random.Range(0, tilesList.Count)]._TileStateClass;
     }
 }

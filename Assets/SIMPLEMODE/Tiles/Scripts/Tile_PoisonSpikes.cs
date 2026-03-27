@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_PoisonSpikes : TileStateClass
+public class Tile_PoisonSpikes : TileInfo
 {
     [SerializeField] int poisonOnCrossed = 15;
     [SerializeField] int addedPoisonOnLanded = 5;

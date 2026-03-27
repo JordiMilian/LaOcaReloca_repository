@@ -1603,57 +1603,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EmptyPrefab: {fileID: 7756313677030007718, guid: 3533b023690d3b14db5fda8b2aca9803, type: 3}
-  tileProfiles:
-  - {fileID: 11400000, guid: 87f6e8cd18d0886449ea36c62becd500, type: 2}
-  - {fileID: 11400000, guid: bb7518c65198e7a47a97f733e324f934, type: 2}
-  - {fileID: 11400000, guid: ee1314f99f2109444ad254e58ff62988, type: 2}
-  - {fileID: 11400000, guid: 32d1622c41d705d429c815e7204c1cf7, type: 2}
-  - {fileID: 11400000, guid: ee777195ce6c7ea42bd3bbd986a95444, type: 2}
-  - {fileID: 11400000, guid: 53b97f7d5922af04db658dea21641eaf, type: 2}
-  - {fileID: 11400000, guid: 49fc486e12ea0494da19cece3b5e41d6, type: 2}
-  - {fileID: 11400000, guid: ba5fddc5e873df7419d93ae1549e6c45, type: 2}
-  - {fileID: 11400000, guid: 329516dabd7e7884cb99d011478da560, type: 2}
-  - {fileID: 11400000, guid: 438175391d459544986b93faf3f99580, type: 2}
-  - {fileID: 11400000, guid: c131e48368993dd4eb091bad4ba2aeb4, type: 2}
-  - {fileID: 11400000, guid: d86f78ce87d741a4a821a8f12ca66c00, type: 2}
-  - {fileID: 11400000, guid: d68e12d0d19562f43a1f758eee639a70, type: 2}
-  - {fileID: 11400000, guid: 3c37319dc707e9741a7f405c8cb944ad, type: 2}
-  - {fileID: 11400000, guid: a6a88e0d3ff7bf344ac29c6491dd4f7c, type: 2}
-  - {fileID: 11400000, guid: a2086781205550e44baa1511d48b7cc5, type: 2}
-  - {fileID: 11400000, guid: 503ec199befa82645a8c8370c23ab291, type: 2}
-  - {fileID: 11400000, guid: d079e72c8f96fde4abf394c594bc9fa6, type: 2}
-  - {fileID: 11400000, guid: d1879b766da214340a9f0f752fd2ed0b, type: 2}
-  - {fileID: 11400000, guid: b5d6fbc836321e648b390c6cb5abc742, type: 2}
-  - {fileID: 11400000, guid: 539488036e63b1f4ab925b3a1340c636, type: 2}
-  - {fileID: 11400000, guid: 9f3c3952484c8bd498122cc939029d84, type: 2}
-  - {fileID: 11400000, guid: 09d1b94c3f409a94da0ed2fe62f76dc3, type: 2}
-  - {fileID: 11400000, guid: f9a071a72f324264289f8e11e90b5b0e, type: 2}
-  - {fileID: 11400000, guid: 7995ec5d3bc48b448b725dab96cdcdd5, type: 2}
-  - {fileID: 11400000, guid: 366b679aec72be7448729be482814b8e, type: 2}
-  - {fileID: 11400000, guid: df53b66fc4df9dd4ab1d759f922b574c, type: 2}
-  - {fileID: 11400000, guid: 19f565a1bdfcda24290607d90dd8d07c, type: 2}
-  - {fileID: 11400000, guid: a284ac9cab5b5a74785f59dee9d5afe3, type: 2}
-  - {fileID: 11400000, guid: 4a33861597503c946af1b5be3effccbb, type: 2}
-  - {fileID: 11400000, guid: cb198105c56aaf64ebc52b5e250cf30c, type: 2}
-  - {fileID: 11400000, guid: 7e946df9087c729418b4c1d5a0c5f107, type: 2}
-  - {fileID: 11400000, guid: 96319c527a6b8234abb7c26a558e1296, type: 2}
-  - {fileID: 11400000, guid: c79246b50a24cfd478111d9c3be9565d, type: 2}
-  - {fileID: 11400000, guid: 5af28507c202acd4a9bed8f89ccf7e86, type: 2}
-  - {fileID: 11400000, guid: 18fe0545ba600ab40a80a9f379da9c3e, type: 2}
-  - {fileID: 11400000, guid: 98ee3215d7778ea42a0ec27b86078d18, type: 2}
-  - {fileID: 11400000, guid: d01ac694daf56414e9e247c16d3dd99d, type: 2}
-  - {fileID: 11400000, guid: 0fd0a09cb63c85f48ae66f771fa3c801, type: 2}
-  - {fileID: 11400000, guid: 96ed2cf40d5467748ac23ba1496f235a, type: 2}
-  - {fileID: 11400000, guid: 55bc8a22b29cfcd47b23ac25bad45c2c, type: 2}
-  - {fileID: 11400000, guid: f36fa062b5f7faf429097b5aaeba6a47, type: 2}
-  - {fileID: 11400000, guid: f2dac5ec8f0f1c2418fd37b21eadf834, type: 2}
-  - {fileID: 11400000, guid: db33dd5b77ceac543bdba84ce5962111, type: 2}
-  - {fileID: 11400000, guid: 4c5c00662a985c74b8d3779b6ee44b9e, type: 2}
-  - {fileID: 11400000, guid: 48054ce06b28a9e42b63f6cd7c2e8649, type: 2}
-  - {fileID: 11400000, guid: 3af394dd8b83c404784962302949b360, type: 2}
-  - {fileID: 11400000, guid: f25724a3fa6a51346bd223a0a04c12c1, type: 2}
-  - {fileID: 11400000, guid: 284af5225a508684ea7f79bbd17cc6e8, type: 2}
-  - {fileID: 11400000, guid: c26de09467c388a48af7b4fd39a58682, type: 2}
 --- !u!4 &400194873
 Transform:
   m_ObjectHideFlags: 0
@@ -2135,10 +2084,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92b13a61af872d74a84e4611c154a735, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tile_Empty: {fileID: 11400000, guid: ee1314f99f2109444ad254e58ff62988, type: 2}
-  Tile_Start: {fileID: 11400000, guid: 92d6573b0230a074c8b2219c08f8637e, type: 2}
-  Tile_End: {fileID: 11400000, guid: 2475b45799a806c4080cc06fd962169a, type: 2}
-  Tile_Oca: {fileID: 11400000, guid: 87f6e8cd18d0886449ea36c62becd500, type: 2}
+  Tile_Empty: {fileID: 11400000, guid: ae3987ee5cdff2449bfe6a0c5551586d, type: 2}
+  Tile_Start: {fileID: 11400000, guid: 03d0042d530c7cf458e91546ba567f71, type: 2}
+  Tile_End: {fileID: 11400000, guid: 3badff7d6194009459b47535bcf190d2, type: 2}
+  Tile_Oca: {fileID: 11400000, guid: 3f233431ec1d6b64b8dba57c28bea89c, type: 2}
   factory: {fileID: 400194872}
   TilesList: []
   _playerIndex: 0

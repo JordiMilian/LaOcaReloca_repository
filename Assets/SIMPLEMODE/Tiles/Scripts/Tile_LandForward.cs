@@ -2,13 +2,13 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 [CreateAssetMenu(menuName = "TileProfile/LandForward", fileName = "Tile_LandForward")]
-public class Tile_LandForward : TileStateClass
+public class Tile_LandForward : TileInfo
 {
     public override IEnumerator OnPlayerLanded()
     {
         yield return base.OnPlayerLanded();
         yield return GameController.C_AddAcumulatedDamage(-GameController.GetCurrentAcumulatedDamage());
-        yield return BoardController.L_JumpPlayerTo(_Tile.indexInBoard + 1, true);
+        yield return BoardController.L_JumpPlayerTo(_Controller.indexInBoard + 1, true);
     }
     public override string GetTooltipText()
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class Tile_TowerOfDices : TileStateClass
+public class Tile_TowerOfDices : TileInfo
 {
    public override IEnumerator OnPlacedInBoard() 
     {
@@ -18,7 +18,7 @@ public class Tile_TowerOfDices : TileStateClass
 
     IEnumerator OnRolledDices()
     {
-        _Tile.DamagesToDeal.Add(BaseDamage * Dices_Controller.Instance.LastRolledDicesCount);
-        yield return _Tile.C_DealAllDamageToDeal();
+        _Controller.DamagesToDeal.Add(BaseDamage * Dices_Controller.Instance.LastRolledDicesCount);
+        yield return _Controller.C_DealAllDamageToDeal();
     }
 }

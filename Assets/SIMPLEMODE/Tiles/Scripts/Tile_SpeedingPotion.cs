@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static StringTools;
-public class Tile_SpeedingPotion : TileStateClass
+public class Tile_SpeedingPotion : TileInfo
 {
    //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }
    //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }
@@ -10,7 +10,7 @@ public class Tile_SpeedingPotion : TileStateClass
    public override IEnumerator OnPlayerStepped() 
     {
         yield return base.OnPlayerStepped();
-        List<TileController> adjacentTiles = MathJ.GetAdjacentTiles(_Tile, 1, true, true);
+        List<TileController> adjacentTiles = MathJ.GetAdjacentTiles(_Controller, 1, true, true);
 
         foreach (TileController adjacentTile in adjacentTiles)
         {

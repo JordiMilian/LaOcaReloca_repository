@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 [CreateAssetMenu(menuName = "TileProfile/EndSynergy/Pessimiest", fileName = "Tile_Pessimist")]
-public class Tile_Pessimist : TileStateClass
+public class Tile_Pessimist : TileInfo
 {
    
     //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
@@ -23,8 +23,8 @@ public class Tile_Pessimist : TileStateClass
     IEnumerator OnReachedEndEffect()
     {
         tileMovement.shakeTile(Intensity.mid);
-        _Tile.DamagesToDeal.Add(BaseDamage * multiplierOnEnd);
-        yield return _Tile.C_DealAllDamageToDeal(); 
+        _Controller.DamagesToDeal.Add(BaseDamage * multiplierOnEnd);
+        yield return _Controller.C_DealAllDamageToDeal(); 
     }
     public override IEnumerator OnPlayerLanded() 
     { 

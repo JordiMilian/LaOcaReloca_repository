@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public abstract class Tile_Plant : TileStateClass
+public abstract class Tile_Plant : TileInfo
 {
     public override IEnumerator OnPlacedInBoard()
     {
@@ -29,7 +29,7 @@ public abstract class Tile_Plant : TileStateClass
     IEnumerator C_growPlant()
     {
         Debug.Log("plants 02.25 grow plant");
-        yield return _Tile.AddBaseDamage(GetFinalGrowth());
+        yield return _Controller.AddBaseDamage(GetFinalGrowth());
         yield break;
     }
     float GetFinalGrowth()

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static StringTools;
-public class Tile_Crucifix : TileStateClass
+public class Tile_Crucifix : TileInfo
 {
 
 

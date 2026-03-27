@@ -23,7 +23,7 @@ public class Tile_Bee : Tile_Insect
         }
         modifiedPlants.Clear();
 
-        List<TileController> adjacentTiles = MathJ.GetAdjacentTiles(_Tile,1,true);
+        List<TileController> adjacentTiles = MathJ.GetAdjacentTiles(_Controller,1,true);
         foreach (TileController tile in adjacentTiles)
         {
             if(tile._Profile is Tile_Plant)
@@ -43,7 +43,7 @@ public class Tile_Bee : Tile_Insect
     public override IEnumerator OnLandedFly()
     {
         yield return base.OnLandedFly();
-        List<TileController> adjacentTiles = MathJ.GetAdjacentTiles(_Tile);
+        List<TileController> adjacentTiles = MathJ.GetAdjacentTiles(_Controller);
         foreach (TileController tile in adjacentTiles)
         {
             yield return tile.AddBaseDamage(1);

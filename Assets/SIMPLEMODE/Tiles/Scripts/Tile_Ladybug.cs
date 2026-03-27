@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 [CreateAssetMenu(menuName = "TileProfile/DicesEnjoyers/Ladybug", fileName = "Tile_Ladybug")]
-public class Tile_Ladybug : TileStateClass
+public class Tile_Ladybug : TileInfo
 {
     public override IEnumerator OnPlacedInBoard()
     {
@@ -17,7 +17,7 @@ public class Tile_Ladybug : TileStateClass
     {
         int lastRolledvalue = GameController.dicesController.LastRolledValue;
 
-        TileController randomTile = MathJ.GetRandomTileInBoard(_Tile, true,true);
+        TileController randomTile = MathJ.GetRandomTileInBoard(_Controller, true,true);
 
 
         yield return randomTile.AddBaseDamage(lastRolledvalue);

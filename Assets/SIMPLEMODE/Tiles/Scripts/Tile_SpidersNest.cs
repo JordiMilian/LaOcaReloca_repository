@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_SpidersNest : TileStateClass
+public class Tile_SpidersNest : TileInfo
 {
     [SerializeField] int spidersOnCrossed = 1, spidersOnRolledDice = 1;
-    [SerializeField] TileStateClass spiderTokenTileProfile;
+    [SerializeField] TileInfo spiderTokenTileProfile;
     public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); GameController.OnRolledDice_CardEffects.AddEffect(SpawnRolledDiceSpiders); }
     public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); GameController.OnRolledDice_CardEffects.RemoveEffect(SpawnRolledDiceSpiders); }
     public override IEnumerator OnPlayerStepped() 
@@ -26,7 +26,7 @@ public class Tile_SpidersNest : TileStateClass
     IEnumerator CreateRandomSpider()
     {
         TileController ratTokenController = TilesFactory.instance.InstantiateTile(spiderTokenTileProfile);
-        ratTokenController.transform.position = _Tile.transform.position;
+        ratTokenController.transform.position = _Controller.transform.position;
 
         int randomIndex = MathJ.GetRandomIndexInBoard(true);
         yield return BoardController.C_AddNewTile(ratTokenController, randomIndex);

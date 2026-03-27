@@ -2,14 +2,14 @@ using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "TileProfile/DamageAdders/Feeder", fileName = "Tile_Feeder")]
-public class Tile_Feeder : TileStateClass
+public class Tile_Feeder : TileInfo
 {
     [SerializeField] float PercentageToAdd = 20;
     [SerializeField] float CrossedDamage = 5;
     public override IEnumerator OnPlayerLanded()
     {
         yield return base.OnPlayerLanded();
-        TileController nextTile = BoardController.TilesList[_Tile.indexInBoard + 1];
+        TileController nextTile = BoardController.TilesList[_Controller.indexInBoard + 1];
         if(nextTile != null)
         {
             yield return nextTile.AddBaseDamage
@@ -20,7 +20,7 @@ public class Tile_Feeder : TileStateClass
     public override IEnumerator OnPlayerStepped()
     {
         yield return base.OnPlayerStepped();
-        TileController nextTile = BoardController.TilesList[_Tile.indexInBoard + 1];
+        TileController nextTile = BoardController.TilesList[_Controller.indexInBoard + 1];
         if (nextTile != null)
         {
             yield return nextTile.AddBaseDamage(CrossedDamage);

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 [CreateAssetMenu(menuName = "TileProfile/Executioner", fileName = "Tile_Executioner")]
-public class Tile_Executioner : TileStateClass
+public class Tile_Executioner : TileInfo
 {
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
@@ -16,7 +16,7 @@ public class Tile_Executioner : TileStateClass
 
         if (BoardController.TilesList.Count == 3) { yield break; } //if its just this tile + Start + End
 
-        TileController randomTile = MathJ.GetRandomTileInBoard(_Tile, true); ;
+        TileController randomTile = MathJ.GetRandomTileInBoard(_Controller, true); ;
 
         randomTile._Profile.genericSkills.Add(GenericSkills.Fragile);
         randomTile.tileMovement.shakeTile(Intensity.mid);

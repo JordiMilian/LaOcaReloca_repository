@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Tile_Shareholder : TileStateClass
+public class Tile_Shareholder : TileInfo
 {
    public override IEnumerator OnPlacedInBoard() 
     {
@@ -10,7 +10,7 @@ public class Tile_Shareholder : TileStateClass
     }
     IEnumerator OnAddedMoney(int amount)
     {
-        yield return _Tile.AddBaseDamage(amount);
+        yield return _Controller.AddBaseDamage(amount);
         yield break;
     }
 

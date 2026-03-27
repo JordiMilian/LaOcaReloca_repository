@@ -11,9 +11,9 @@ public class Tile_JealousOca : Tile_Oca
     }
     IEnumerator OnLandedEffect(TileController landedTile)
     {
-        if (landedTile._Profile.tileTags.Contains(TileTags.Oca) && landedTile != _Tile)
+        if (landedTile._Profile.tileTags.Contains(TileTags.Oca) && landedTile != _Controller)
         {
-            yield return _Tile.AddBaseDamage(landedTile.GetBaseDamage());
+            yield return _Controller.AddBaseDamage(landedTile.GetBaseDamage());
             yield break;
         }   
     }

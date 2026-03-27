@@ -13,6 +13,7 @@ public class TilesTestSpawning : MonoBehaviour
 
     public void AttemptSpawn()
     {
+        /*
 #if UNITY_EDITOR
         TileStateClass profile = null;
 
@@ -44,6 +45,7 @@ public class TilesTestSpawning : MonoBehaviour
         }
         freePick.SpawnTile(profile);
 #endif
+        */
 
     }
     public void AttemptSpawn_Toy()

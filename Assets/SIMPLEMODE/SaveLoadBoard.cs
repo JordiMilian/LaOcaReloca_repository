@@ -7,7 +7,7 @@ public class SaveLoadBoard : MonoBehaviour
 {
     public class GameSaveInfo
     {
-        public List<TileStateClass> tiles = new();
+        public List<TileInfo> tiles = new();
         public List<Toy_Profile> toys = new();
         public List<Dice> dices = new();
         public int currentIndex;
@@ -22,7 +22,7 @@ public class SaveLoadBoard : MonoBehaviour
         //TILES
         foreach(TileController tileC in board.TilesList)
         {
-            newInfo.tiles.Add(Instantiate(tileC._Profile));
+            //newInfo.tiles.Add(Instantiate(tileC._Profile));
         }
 
         //CURRENT INDEX
