@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b71f8b7b9baf745a221bd76998692b, type: 3}
   m_Name: Oca
   m_EditorClassIdentifier: 
-  _TileStateClass:
-    rid: 8635916799977717833
+  _configInfo:
+    rid: 3293105537501364290
   references:
     version: 2
     RefIds:
-    - rid: 8635916799977717833
+    - rid: 3293105537501364290
       type: {class: Tile_Oca, ns: , asm: Assembly-CSharp}
       data:
-        BaseDamage: 25
+        BaseDamage: 10
         Title: OCA
         tileColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
         tileTexture: {fileID: 2800000, guid: cb32741a80bb20b47af412978791aa2b, type: 3}
         rarity: 1
         tileSize: 1
         uniquePrice: 0
-        tileTags: 02000000
+        tileTags: 
         genericSkills: 
         _Controller: {fileID: 0}
         StepsToCross: 1

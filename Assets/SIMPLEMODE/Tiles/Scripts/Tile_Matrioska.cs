@@ -24,4 +24,12 @@ public class Tile_Matrioska : TileInfo
     {
         return $"{OnCrossed} Multiply this TILE dmg by x{multiplyCurrentDamageBy} \nDestroyed after crossing {timesNeededToCross}({timesNeededToCross - timesCrossed}) times";
     }
+    public override TileInfo GetCopy()
+    {
+        Tile_Matrioska newTile = (Tile_Matrioska)CopyBaseStatsIntoOther(new Tile_Matrioska());
+        newTile.timesCrossed = timesCrossed;
+        newTile.timesNeededToCross = timesNeededToCross;
+        newTile.multiplyCurrentDamageBy = multiplyCurrentDamageBy;
+        return newTile;
+    }
 }

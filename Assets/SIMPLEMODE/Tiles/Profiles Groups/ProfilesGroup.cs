@@ -21,6 +21,6 @@ public class ProfilesGroup : ScriptableObject
     public TileInfo GetRandomProfile()
     {
         if(tilesList.Count == 0) { return null; }
-        return tilesList[Random.Range(0, tilesList.Count)]._TileStateClass;
+        return tilesList[Random.Range(0, tilesList.Count)]._configInfo;
     }
 }

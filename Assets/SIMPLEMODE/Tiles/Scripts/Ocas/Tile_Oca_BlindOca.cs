@@ -40,7 +40,7 @@ public class Tile_Oca_BlindOca : Tile_Oca
         List<TileController> ocaTiles = new();
         foreach (TileController tile in BoardController.TilesList)
         {
-            if (tile._Profile is Tile_Oca) { ocaTiles.Add(tile); }
+            if (tile._Info is Tile_Oca) { ocaTiles.Add(tile); }
         }
         return ocaTiles;
     }

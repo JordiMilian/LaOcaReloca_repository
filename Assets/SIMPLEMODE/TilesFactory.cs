@@ -26,7 +26,7 @@ public class TilesFactory : MonoBehaviour
         GameObject newTile = Instantiate(EmptyPrefab);
 
         TileController controller = newTile.GetComponent<TileController>();
-        controller.SetTileProfile(info);
+        controller.SetTileProfile(info.GetCopy());
 
         return controller;
     }

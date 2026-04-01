@@ -23,7 +23,7 @@ public class Tile_Malfunction : TileInfo
         {
             yield break;
         }
-        if (newTile._Profile.tileTags.Contains(TileTags.Token))
+        if (newTile._Info.tileTags.Contains(TileTags.Token))
         {
             if(newTile == lastTileSpawnedByThis) //don't trigger on tiles spawned by this 
             {
@@ -31,7 +31,7 @@ public class Tile_Malfunction : TileInfo
             }
             if (passedChance())
             {
-                TileController tokenCopy = TilesFactory.instance.InstantiateTile(newTile._Profile);
+                TileController tokenCopy = TilesFactory.instance.InstantiateTile(newTile._Info);
                 tokenCopy.transform.position = _Controller.transform.position;
                 tokenCopy.SetBaseDamage(0);
                 lastTileSpawnedByThis = tokenCopy;

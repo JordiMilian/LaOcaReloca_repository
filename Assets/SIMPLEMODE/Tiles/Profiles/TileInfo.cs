@@ -143,7 +143,8 @@ public class TileInfo
         _Controller.SetBaseDamage(BaseDamage * mult);
     }
     #endregion
-    public virtual TileInfo GetTileCopy()
+    #region COPYING
+    public virtual TileInfo GetCopy()
     {
         return CopyBaseStatsIntoOther(new TileInfo());
     }
@@ -161,7 +162,7 @@ public class TileInfo
         otherState.StepsToCross = StepsToCross;
         return otherState;
     }
-
+    #endregion
 #if UNITY_EDITOR
     //On validate, move this profile to the proper groups according to tags and rarity
     /*

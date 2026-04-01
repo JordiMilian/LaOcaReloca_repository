@@ -8,7 +8,7 @@ public class Tile_DamageMover : TileInfo
     {
         yield return base.OnPlayerStepped();
         TileController tileBehind = BoardController.TilesList[_Controller.indexInBoard - 1];
-        if(tileBehind._Profile is not Tile_Start)
+        if(tileBehind._Info is not Tile_Start)
         {
             TileController tileForward = BoardController.TilesList[_Controller.indexInBoard + 1];
             float damageBehind = tileBehind.GetBaseDamage();

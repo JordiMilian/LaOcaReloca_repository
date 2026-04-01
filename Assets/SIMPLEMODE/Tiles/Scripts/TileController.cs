@@ -21,7 +21,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
 
     [SerializeField] Transform zeroRotationTf;
 
-    public TileInfo _Profile;
+    public TileInfo _Info;
 
     public UnityEvent OnAddedToBoard; //currently used by encounters that trigger when you place a tile in board (curse per money)
 
@@ -136,15 +136,15 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     }
     public void SetTileProfile(TileInfo profile)
     {
-        _Profile = profile;
-        _Profile._Controller = this;
-        tileMaterial.SetColor("_OutlineColor", _Profile.tileColor);
-        if(_Profile.tileTexture != null)
+        _Info = profile;
+        _Info._Controller = this;
+        tileMaterial.SetColor("_OutlineColor", _Info.tileColor);
+        if(_Info.tileTexture != null)
         {
-            tileMaterial.SetTexture("_mainTexture", _Profile.tileTexture);
+            tileMaterial.SetTexture("_mainTexture", _Info.tileTexture);
         }
         tileMovement.UpdateDmgDisplayText();
-        _Profile.Initialize();
+        _Info.Initialize();
     }
     #endregion
     #region SET MATERIAL TO LAND
@@ -152,13 +152,13 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     {
         tileMaterial.SetFloat("_sineScale", 1.05f);
         tileMaterial.SetFloat("_sineSpeed", 10f);
-        tileMaterial.SetColor("_OutlineColor",_Profile.tileColor * 8);
+        tileMaterial.SetColor("_OutlineColor",_Info.tileColor * 8);
     }
     public void SetTileMaterial_Regular()
     {
         tileMaterial.SetFloat("_sineScale", 1f);
         tileMaterial.SetFloat("_sineSpeed", 0f);
-        tileMaterial.SetColor("_OutlineColor", _Profile.tileColor * 1);
+        tileMaterial.SetColor("_OutlineColor", _Info.tileColor * 1);
     }
     #endregion
     #region DAMAGE MODIFIERS
@@ -176,30 +176,30 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     }
     public float GetBaseDamage()
     {
-        return _Profile.BaseDamage;
+        return _Info.BaseDamage;
     }
     public void SetBaseDamage(float newDamage)
     {
-        _Profile.BaseDamage = newDamage;
+        _Info.BaseDamage = newDamage;
         tileMovement.UpdateDmgDisplayText();
     }
     public virtual IEnumerator AddBaseDamage(float dmgToAdd)
     {
-        float addedDmg = _Profile.AddBaseDamage(dmgToAdd);
+        float addedDmg = _Info.AddBaseDamage(dmgToAdd);
         
         tileMovement.shakeTile(Intensity.mid);
         yield return tileMovement.DisplayMessage("+" + MathJ.FloatToString(addedDmg, 1), TileMessageType.AddBaseDamage);
     }
     public IEnumerator RemoveBaseDamage(float damageToRemove)
     {
-       float removedDmg = _Profile.RemoveBaseDamage(damageToRemove);
+       float removedDmg = _Info.RemoveBaseDamage(damageToRemove);
 
         tileMovement.shakeTile(Intensity.mid);
         yield return tileMovement.DisplayMessage($"-{removedDmg}", TileMessageType.AddBaseDamage);
     }
     public IEnumerator C_MultiplyBaseDamage(float mult)
     {
-        _Profile.MultiplyBaseDamage(mult);
+        _Info.MultiplyBaseDamage(mult);
 
         tileMovement.shakeTile(Intensity.mid);
         yield return tileMovement.DisplayMessage($"x{mult}", TileMessageType.AddBaseDamage);
@@ -249,7 +249,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
                 canBeMoved = true;
                 break;
             case TileState.InBoard:
-                if(_Profile is Tile_End || _Profile is Tile_Start) { canBeMoved = false; break; }
+                if(_Info is Tile_End || _Info is Tile_Start) { canBeMoved = false; break; }
                 canBeMoved = true;
                 BoardController.OnPlayerIndexSet.AddListener(CheckForDraggability);
                 CheckForDraggability(0, BoardController.PlayerIndex);
@@ -264,18 +264,18 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     public IEnumerator OnPlayerStepped()
     {
         //Add visual and sound feedback
-       yield return _Profile.OnPlayerStepped();
+       yield return _Info.OnPlayerStepped();
     }
     public IEnumerator OnPlayerLanded()
     {
         //Add more visual and sound feedback
         tileMovement.shakeTile(Intensity.mid);
 
-        yield return _Profile.OnPlayerLanded(); 
+        yield return _Info.OnPlayerLanded(); 
     }
-    public IEnumerator OnTileFinished() { yield return _Profile.OnTileFinished(); }
-    public IEnumerator C_OnPlacedInBoard() { yield return _Profile.OnPlacedInBoard(); OnAddedToBoard?.Invoke(); }
-    public IEnumerator C_OnRemovedFromBoard() { yield return _Profile.OnRemovedFromBoard(); }
+    public IEnumerator OnTileFinished() { yield return _Info.OnTileFinished(); }
+    public IEnumerator C_OnPlacedInBoard() { yield return _Info.OnPlacedInBoard(); OnAddedToBoard?.Invoke(); }
+    public IEnumerator C_OnRemovedFromBoard() { yield return _Info.OnRemovedFromBoard(); }
 
     #endregion
     #region BUY/SELL
@@ -285,16 +285,16 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         int repeatedCards = 0;
         foreach (TileController tile in BoardController.TilesList)
         {
-            if (tile._Profile.GetType() == _Profile.GetType()) { repeatedCards++; }
+            if (tile._Info.GetType() == _Info.GetType()) { repeatedCards++; }
         }
 
         int baseValue;
-        switch (_Profile.rarity)
+        switch (_Info.rarity)
         {
             case Rarity.Common: { baseValue = 4; break; }
             case Rarity.Rare: { baseValue = 7; break; }
             case Rarity.Legendary: { baseValue = 12; break; }
-            case Rarity.Unique: { return _Profile.uniquePrice; }
+            case Rarity.Unique: { return _Info.uniquePrice; }
             default: { Debug.LogError("ERROR: Pls set a valid rarity to this Tile"); return 0; }
         }
         return MathJ.GetFibonacciValue(baseValue, repeatedCards);
@@ -327,15 +327,15 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     void StopForcingThisTooltip() { TooltipManager.Instance.StopForcingThisTooltip(this); }
     public string GetTooltipDescription()
     {
-        return _Profile.GetGenericSkillsText()+ _Profile.GetTooltipText();
+        return _Info.GetGenericSkillsText()+ _Info.GetTooltipText();
     }
     public string GetTooltipTitle()
     {
-        return _Profile.Title;
+        return _Info.Title;
     }
     public Texture GetTooltipTexture()
     {
-        return _Profile.tileTexture;
+        return _Info.tileTexture;
     }
     #endregion
     #region DRAGGING
@@ -377,7 +377,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         
         if (!canBeMoved) { return false; }
         if (isBehindPlayer) { return false; }
-        if (_Profile.genericSkills.Contains(GenericSkills.Unmovable) && tileState == TileState.InBoard) { return false; }
+        if (_Info.genericSkills.Contains(GenericSkills.Unmovable) && tileState == TileState.InBoard) { return false; }
         if (GameController_Simple.Instance.currentGameState == GameState.MovingPlayer) { MoveToTfData(); return false; }
 
         Camera mainCamera = Camera.main;

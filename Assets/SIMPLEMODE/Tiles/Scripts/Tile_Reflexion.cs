@@ -10,9 +10,9 @@ public class Tile_Reflexion : TileInfo
    { 
         yield return base.OnPlayerStepped();
         TileController tileBehind = BoardController.TilesList[_Controller.indexInBoard - 1];
-        if(tileBehind._Profile is not Tile_Start)
+        if(tileBehind._Info is not Tile_Start)
         {
-            TileController newTile =  TilesFactory.instance.InstantiateTile(tileBehind._Profile);
+            TileController newTile =  TilesFactory.instance.InstantiateTile(tileBehind._Info);
             newTile.SetBaseDamage(0);
             newTile.transform.position = tileBehind.transform.position;
 

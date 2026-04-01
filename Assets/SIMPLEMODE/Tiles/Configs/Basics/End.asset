@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b71f8b7b9baf745a221bd76998692b, type: 3}
   m_Name: End
   m_EditorClassIdentifier: 
-  _TileStateClass:
-    rid: 8635916799977717838
+  _configInfo:
+    rid: 3293105537501364295
   references:
     version: 2
     RefIds:
-    - rid: 8635916799977717838
+    - rid: 3293105537501364295
       type: {class: Tile_End, ns: , asm: Assembly-CSharp}
       data:
-        BaseDamage: 50
+        BaseDamage: 10
         Title: END
         tileColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
         tileTexture: {fileID: 2800000, guid: bd5ac074cddf68047b2e254d7cc08c0b, type: 3}
@@ -28,7 +28,7 @@ MonoBehaviour:
         tileSize: 3
         uniquePrice: 0
         tileTags: 
-        genericSkills: 02000000
+        genericSkills: 
         _Controller: {fileID: 0}
         StepsToCross: 1
         remainingSteps: 1

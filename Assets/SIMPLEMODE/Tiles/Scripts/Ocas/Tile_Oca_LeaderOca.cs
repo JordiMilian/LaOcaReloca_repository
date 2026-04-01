@@ -15,7 +15,7 @@ public class Tile_Oca_LeaderOca : Tile_Oca
         List<TileController> ocasTiles = new();
         foreach (TileController tile in BoardController.TilesList)
         {
-            if (tile._Profile.tileTags.Contains(TileTags.Oca)) { ocasTiles.Add(tile); }
+            if (tile._Info.tileTags.Contains(TileTags.Oca)) { ocasTiles.Add(tile); }
         }
         foreach (TileController tile in ocasTiles)
         {

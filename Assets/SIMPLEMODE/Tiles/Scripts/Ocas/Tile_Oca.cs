@@ -14,13 +14,13 @@ public class Tile_Oca : TileInfo
 
         for (int i = _Controller.indexInBoard + 1; i < BoardController.TilesList.Count; i++)
         {
-            if (BoardController.TilesList[i]._Profile is Tile_Oca)
+            if (BoardController.TilesList[i]._Info is Tile_Oca)
             {
                 yield return BoardController.L_JumpPlayerTo(i, false);
                 yield break;
 
             }
-            if(BoardController.TilesList[i]._Profile is Tile_End)
+            if(BoardController.TilesList[i]._Info is Tile_End)
             {
                 yield return BoardController.L_JumpPlayerTo(i, false);
                 yield break;

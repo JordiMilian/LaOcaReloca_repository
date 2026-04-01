@@ -71,7 +71,7 @@ public static class MathJ
         Board_Controller_simple board = Board_Controller_simple.Instance;
 
         TileController randomTile = board.TilesList[Random.Range(0, board.TilesList.Count)];
-        while(ignoreSelf && randomTile == thisTile || ignoreEnd && randomTile._Profile is Tile_End || (ignoreStart && randomTile._Profile is Tile_Start))
+        while(ignoreSelf && randomTile == thisTile || ignoreEnd && randomTile._Info is Tile_End || (ignoreStart && randomTile._Info is Tile_Start))
         {
             randomTile = board.TilesList[Random.Range(0, board.TilesList.Count)];
         }
@@ -110,7 +110,7 @@ public static class MathJ
         List<TileController> tilesWithTag = new();
         foreach (TileController tile in board.TilesList)
         {
-            if (tile._Profile.tileTags.Contains(tileTag))
+            if (tile._Info.tileTags.Contains(tileTag))
             {
                 if (ignoreSelf && tile == thisTile) { continue; }
                 tilesWithTag.Add(tile);
@@ -130,7 +130,7 @@ public static class MathJ
             if (positiveIndex < board.TilesList.Count)
             {
                 TileController tile = board.TilesList[positiveIndex];
-                if(tile._Profile is Tile_End && ignoreEnd) { }
+                if(tile._Info is Tile_End && ignoreEnd) { }
                 else
                 {
                     adjacentTiles.Add(tile);
@@ -140,7 +140,7 @@ public static class MathJ
             if(negativeIndex >= 0)
             {
                 TileController tile = board.TilesList[negativeIndex];
-                if(tile._Profile is Tile_Start && ignoreStart) { }
+                if(tile._Info is Tile_Start && ignoreStart) { }
                 else
                 {
                     adjacentTiles.Add(tile);

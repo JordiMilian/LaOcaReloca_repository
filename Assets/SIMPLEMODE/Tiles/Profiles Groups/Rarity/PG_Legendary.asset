@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PG_Legendary
   m_EditorClassIdentifier: 
   GroupName: Legendary
-  tilesList: []
+  tilesList:
+  - {fileID: 11400000, guid: 61c7ec68a00017e4f88a970760fa933b, type: 2}

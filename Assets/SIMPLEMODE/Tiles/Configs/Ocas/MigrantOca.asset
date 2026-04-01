@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b71f8b7b9baf745a221bd76998692b, type: 3}
   m_Name: MigrantOca
   m_EditorClassIdentifier: 
-  _TileStateClass:
-    rid: 8635916799977717834
+  _configInfo:
+    rid: 3293105537501364291
   references:
     version: 2
     RefIds:
-    - rid: 8635916799977717834
+    - rid: 3293105537501364291
       type: {class: Tile_MigrantOca, ns: , asm: Assembly-CSharp}
       data:
-        BaseDamage: 25
-        Title: MIGRANT OCA
+        BaseDamage: 10
+        Title: MIGRANT
         tileColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
         tileTexture: {fileID: 2800000, guid: 3fb44357d977e9443a7a395a26193240, type: 3}
-        rarity: 2
+        rarity: 1
         tileSize: 1
         uniquePrice: 0
-        tileTags: 02000000
+        tileTags: 
         genericSkills: 
         _Controller: {fileID: 0}
         StepsToCross: 1

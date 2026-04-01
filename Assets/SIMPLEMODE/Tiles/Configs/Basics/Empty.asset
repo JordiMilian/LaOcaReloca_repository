@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b71f8b7b9baf745a221bd76998692b, type: 3}
   m_Name: Empty
   m_EditorClassIdentifier: 
-  _TileStateClass:
-    rid: 8635916799977717836
+  _configInfo:
+    rid: 3293105537501364294
   references:
     version: 2
     RefIds:
-    - rid: 8635916799977717836
+    - rid: 3293105537501364294
       type: {class: Tile_Empty, ns: , asm: Assembly-CSharp}
       data:
         BaseDamage: 10
@@ -27,7 +27,7 @@ MonoBehaviour:
         rarity: 4
         tileSize: 1
         uniquePrice: 1
-        tileTags: 01000000
+        tileTags: 
         genericSkills: 
         _Controller: {fileID: 0}
         StepsToCross: 1

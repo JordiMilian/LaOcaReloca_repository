@@ -12,7 +12,7 @@ public class Tile_RatPrincess : TileInfo
     }
     IEnumerator onCrossedTile(TileController tile)
     {
-        if(tile != _Controller && tile._Profile.tileTags.Contains(TileTags.Rat))
+        if(tile != _Controller && tile._Info.tileTags.Contains(TileTags.Rat))
         {
             GameController.AddMoney(moneyOnRat);
             yield break;

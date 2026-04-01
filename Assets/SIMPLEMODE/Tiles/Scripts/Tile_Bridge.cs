@@ -11,7 +11,7 @@ public class Tile_Bridge : TileInfo
         if (ignoreSpawnCopy) { yield break; }
 
         TileController bridgeCopy = TilesFactory.instance.InstantiateTile(this);
-        otherBridge = bridgeCopy._Profile as Tile_Bridge;
+        otherBridge = bridgeCopy._Info as Tile_Bridge;
         otherBridge.otherBridge = this;
         otherBridge.ignoreSpawnCopy = true;
         bridgeCopy.transform.position = _Controller.transform.position;

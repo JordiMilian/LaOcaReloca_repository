@@ -72,11 +72,11 @@ public class Board_Controller_simple : MonoBehaviour
         for (int i = 0; i < StartingTilesCount; i++)
         {
             TileInfo profileToSpawn;
-            if (i == 0) { profileToSpawn = Tile_Start.GetCopyOfConfig(); }
-            else if (i == StartingTilesCount - 1) { profileToSpawn = Tile_End.GetCopyOfConfig(); }
-            else if (i % 4 == 0) { profileToSpawn = Tile_Oca.GetCopyOfConfig(); }
+            if (i == 0) { profileToSpawn = Tile_Start._configInfo; }
+            else if (i == StartingTilesCount - 1) { profileToSpawn = Tile_End._configInfo; }
+            else if (i % 4 == 0) { profileToSpawn = Tile_Oca._configInfo; }
             //else if(i % 3 == 0) { prefabToSpawn = Tile_Money; }
-            else { profileToSpawn = Tile_Empty.GetCopyOfConfig(); }
+            else { profileToSpawn = Tile_Empty._configInfo; }
 
             TileController newTile = factory.InstantiateTile(profileToSpawn);
             tempTiles.Add(newTile);
@@ -173,7 +173,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         for (int i = 0; i < tilesAmount; i++)
         {
-            TileInfo profile = TilesList[i]._Profile;
+            TileInfo profile = TilesList[i]._Info;
             switch (profile.tileSize)
             {
                 case TileSize.Small: smallTilesCount++; break;
@@ -222,7 +222,7 @@ public class Board_Controller_simple : MonoBehaviour
 
             if (i == tilesAmount) { totalT = 1; break; }
             float nextT = 0;
-            TileInfo profile = TilesList[i]._Profile;
+            TileInfo profile = TilesList[i]._Info;
             switch (profile.tileSize)
             {
                 case TileSize.Small: nextT = smallT; break;
@@ -242,7 +242,7 @@ public class Board_Controller_simple : MonoBehaviour
 
 
             float thisT = 0;
-            TileInfo profile = TilesList[i]._Profile;
+            TileInfo profile = TilesList[i]._Info;
             switch (profile.tileSize)
             {
                 case TileSize.Small: thisT = smallT; break;
@@ -428,28 +428,31 @@ public class Board_Controller_simple : MonoBehaviour
         yield return currentTile.OnPlayerLanded();
         yield return currentTile.OnTileFinished();
     }
-    public IEnumerator L_JumpPlayerTo(int IndexOfTile, bool triggerLanded)
+    public IEnumerator L_JumpPlayerTo(int IndexOfTile, bool triggerLanded, bool triggerStepped = true)
     {
         if(IndexOfTile < 0) { Debug.LogWarning($"WARNING: {IndexOfTile} is not a valid index to jump"); IndexOfTile = 0; }
         if(IndexOfTile > TilesList.Count - 1) { Debug.LogWarning($"WARNING: {IndexOfTile} is not a valid index to jump"); IndexOfTile = TilesList.Count - 1; }
 
         int originalIndex = PlayerIndex;
         PlayerIndex = IndexOfTile;
-        TilesList[originalIndex]._Profile.OnSteppedOut();
+        TilesList[originalIndex]._Info.OnSteppedOut();
 
         TileController endTile = GetCurrentPlayerTile();
-        endTile._Profile.remainingSteps--;
+        endTile._Info.remainingSteps--;
         yield return V_JumpPlayerToNewPos();
         V_ShakePlayer();
         if(triggerLanded)
         {
-            yield return endTile.OnPlayerStepped();
+            if (triggerStepped) { yield return endTile.OnPlayerStepped(); }
             yield return L_LandPlayerInCurrentPos();
         }
         else
         {
-            yield return endTile.OnPlayerStepped();
-            yield return endTile.OnTileFinished();
+            if (triggerStepped)
+            {
+                yield return endTile.OnPlayerStepped();
+                yield return endTile.OnTileFinished();
+            }
         }
     }
     #endregion
@@ -562,7 +565,7 @@ public class Board_Controller_simple : MonoBehaviour
         if(index <= PlayerIndex) { PlayerIndex--; }
         if (isPlayerTile && isLandedTile)
         {
-            GetCurrentPlayerTile()._Profile.remainingSteps = 0;
+            GetCurrentPlayerTile()._Info.remainingSteps = 0;
             yield return V_StepPlayerToNewPos();
         }
         else if(isPlayerTile)
@@ -595,7 +598,7 @@ public class Board_Controller_simple : MonoBehaviour
         {
             if(i == exception) { continue; }
             TileController tile = TilesList[i];
-            if (tile._Profile.genericSkills.Contains(GenericSkills.Unmovable))
+            if (tile._Info.genericSkills.Contains(GenericSkills.Unmovable))
             {
                 unmovibleTiles.Add((i, tile));
             }

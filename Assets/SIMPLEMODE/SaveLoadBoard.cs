@@ -1,10 +1,12 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SaveLoadBoard : MonoBehaviour
 {
+    [Serializable]
     public class GameSaveInfo
     {
         public List<TileInfo> tiles = new();
@@ -12,21 +14,22 @@ public class SaveLoadBoard : MonoBehaviour
         public List<Dice> dices = new();
         public int currentIndex;
     }
-    GameSaveInfo currentSave;
+    [SerializeField] GameSaveInfo currentSave;
 
     void UpdateCurrentData()
     {
-         GameSaveInfo newInfo = new GameSaveInfo();
+        GameSaveInfo newInfo = new GameSaveInfo();
         Board_Controller_simple board = Board_Controller_simple.Instance;
 
         //TILES
         foreach(TileController tileC in board.TilesList)
         {
-            //newInfo.tiles.Add(Instantiate(tileC._Profile));
+            newInfo.tiles.Add(tileC._Info.GetCopy());
         }
 
         //CURRENT INDEX
         newInfo.currentIndex = board.PlayerIndex;
+        currentSave = newInfo;
 
         //TOYS (Per ara centrarse en les tiles)
         /* 
@@ -61,6 +64,11 @@ public class SaveLoadBoard : MonoBehaviour
             {
                 AttemptSave(0);
             }
+            if (Keyboard.current[Key.T].wasPressedThisFrame)
+            {
+                Debug.Log("save test");
+                UpdateCurrentData();
+            }
         }
         if (Keyboard.current[Key.L].isPressed)
         {
@@ -68,6 +76,11 @@ public class SaveLoadBoard : MonoBehaviour
             {
                 AttemptLoad(0);
                 Debug.Log("Loaded 0");
+            }
+            if (Keyboard.current[Key.T].wasPressedThisFrame)
+            {
+                Debug.Log("load test");
+                StartCoroutine(GameController_Simple.Instance.C_LoadBoard(currentSave));
             }
         }
 

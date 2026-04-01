@@ -18,7 +18,7 @@ public class Tile_Executioner : TileInfo
 
         TileController randomTile = MathJ.GetRandomTileInBoard(_Controller, true); ;
 
-        randomTile._Profile.genericSkills.Add(GenericSkills.Fragile);
+        randomTile._Info.genericSkills.Add(GenericSkills.Fragile);
         randomTile.tileMovement.shakeTile(Intensity.mid);
         
     }

@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: PG_Tokens
   m_EditorClassIdentifier: 
   GroupName: Tokens
-  tilesList:
-  - {fileID: 11400000, guid: 82efdc10339c6474b9d7f67cb9c9f498, type: 2}
+  tilesList: []

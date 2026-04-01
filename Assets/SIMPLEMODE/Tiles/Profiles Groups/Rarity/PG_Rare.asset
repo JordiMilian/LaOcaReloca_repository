@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GroupName: Rare
   tilesList:
-  - {fileID: 11400000, guid: 95a269a0a74833443955358e33ecc44b, type: 2}
-  - {fileID: 11400000, guid: 7997f6211f79c8541a632383fbbfce1e, type: 2}
+  - {fileID: 11400000, guid: d25db7802a1a8d64ebf4c17aa9303e3b, type: 2}

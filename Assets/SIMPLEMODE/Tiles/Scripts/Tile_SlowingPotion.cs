@@ -15,7 +15,7 @@ public class Tile_SlowingPotion : TileInfo
 
         foreach(TileController adjacentTile in adjacentTiles)
         {
-            adjacentTile._Profile.SetStepsToCross(adjacentTile._Profile.StepsToCross +1);
+            adjacentTile._Info.SetStepsToCross(adjacentTile._Info.StepsToCross +1);
         }
     }
    public override string GetTooltipText() { return $"{OnCrossed} Adjacent Tiles take +1 steps to cross"; }

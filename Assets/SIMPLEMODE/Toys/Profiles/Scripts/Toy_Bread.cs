@@ -38,14 +38,14 @@ public class Toy_Bread : Toy_Profile
     }
     void OnAddedTile( TileController newTile)
     {
-        if(newTile._Profile.tileTags.Contains(TileTags.Oca))
+        if(newTile._Info.tileTags.Contains(TileTags.Oca))
         {
             ModifyOca(newTile);
         }
     }
     void OnRemovedTile( TileController removedTile)
     {
-        if(removedTile._Profile.tileTags.Contains(TileTags.Oca))
+        if(removedTile._Info.tileTags.Contains(TileTags.Oca))
         {
             UnModifyOca(removedTile);
         }

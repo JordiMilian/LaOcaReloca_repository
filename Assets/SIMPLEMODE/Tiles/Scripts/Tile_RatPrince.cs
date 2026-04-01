@@ -12,7 +12,7 @@ public class Tile_RatPrince : TileInfo
     }
     IEnumerator onCrossedTile(TileController tile)
     {
-        if(tile != _Controller && tile._Profile.tileTags.Contains(TileTags.Rat))
+        if(tile != _Controller && tile._Info.tileTags.Contains(TileTags.Rat))
         {
             yield return _Controller.AddBaseDamage(DmgOnCrossedRat);
         }

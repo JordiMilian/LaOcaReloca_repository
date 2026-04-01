@@ -11,7 +11,7 @@ public class Toy_fertilizer : Toy_Profile
     {
         subscribedPlants = new();
         List<TileController> tilePlants = MathJ.GetAllTilesWithTag(TileTags.Plant,null, false);
-        foreach(TileController tile in tilePlants) { subscribedPlants.Add((Tile_Plant)tile._Profile); }
+        foreach(TileController tile in tilePlants) { subscribedPlants.Add((Tile_Plant)tile._Info); }
 
         foreach (Tile_Plant plant in subscribedPlants)
         {
@@ -42,17 +42,17 @@ public class Toy_fertilizer : Toy_Profile
 
     private void OnAddedTile(TileController newTile)
     {
-        if(newTile._Profile is Tile_Plant)
+        if(newTile._Info is Tile_Plant)
         {
             
-            modifyGrowth((Tile_Plant)newTile._Profile);
+            modifyGrowth((Tile_Plant)newTile._Info);
         }
     }
     void OnRemovedTile(TileController removedTile)
     {
-        if (removedTile._Profile is Tile_Plant)
+        if (removedTile._Info is Tile_Plant)
         {
-            removeModify((Tile_Plant)removedTile._Profile);
+            removeModify((Tile_Plant)removedTile._Info);
         }
     }
    

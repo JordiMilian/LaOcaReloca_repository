@@ -16,11 +16,11 @@ public class Toy_Malfunction : Toy_Profile
     IEnumerator OnAddedTile(TileController newTile)
     {
 
-        if (newTile._Profile.tileTags.Contains(TileTags.Token)&& newTile.GetBaseDamage() > 0)
+        if (newTile._Info.tileTags.Contains(TileTags.Token)&& newTile.GetBaseDamage() > 0)
         {
             if (passedChance())
             {
-                TileController tokenCopy = TilesFactory.instance.InstantiateTile(newTile._Profile);
+                TileController tokenCopy = TilesFactory.instance.InstantiateTile(newTile._Info);
                 tokenCopy.transform.position = _ToyController.transform.position;
                 tokenCopy.SetBaseDamage(0);
 

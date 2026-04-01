@@ -14,7 +14,7 @@ public class Tile_SpeedingPotion : TileInfo
 
         foreach (TileController adjacentTile in adjacentTiles)
         {
-            adjacentTile._Profile.SetStepsToCross(0);
+            adjacentTile._Info.SetStepsToCross(0);
         }
     }
    public override string GetTooltipText() { return $"{OnCrossed} Adjacent Tiles take 0 steps to cross"; }

@@ -9,12 +9,7 @@ public class TileConfig : ScriptableObject
     
     [SerializeReference]
     [InlineProperty]
-    public TileInfo _TileStateClass;
-
-    public TileInfo GetCopyOfConfig()
-    {
-        return _TileStateClass.GetTileCopy();
-    }
+    public TileInfo _configInfo;
 
 #if UNITY_EDITOR
     //On validate, move this profile to the proper groups according to tags and rarity
@@ -33,7 +28,7 @@ public class TileConfig : ScriptableObject
         }
 
         //Add them to the proper groups
-        List<ProfilesGroup> properGroups = registry.GetProfileGroups(_TileStateClass);
+        List<ProfilesGroup> properGroups = registry.GetProfileGroups(_configInfo);
         foreach (ProfilesGroup group in properGroups)
         {
             group.tilesList.Add(this);

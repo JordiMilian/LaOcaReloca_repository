@@ -13,7 +13,7 @@ public class Tile_BloomingEmpty : TileInfo
     {
         foreach(TileController tile in BoardController.TilesList)
         {
-            if(tile._Profile.tileTags.Contains(TileTags.Empty))
+            if(tile._Info.tileTags.Contains(TileTags.Empty))
             {
                 yield return tile.AddBaseDamage(addedDamageToEmptyTiles);
                 yield return new WaitForSeconds(0.1f);

@@ -41,14 +41,14 @@ public class Tile_RacoonGang : TileInfo
 
     IEnumerator CreateRandomRacoon()
     {
-        TileController ratTokenController = TilesFactory.instance.InstantiateTile(racoonToken_Profile._TileStateClass);
+        TileController ratTokenController = TilesFactory.instance.InstantiateTile(racoonToken_Profile._configInfo);
         ratTokenController.transform.position = _Controller.transform.position;
 
         int randomIndex = MathJ.GetRandomIndexInBoard(true);
         yield return BoardController.C_AddNewTile(ratTokenController, randomIndex);
     }
 
-    public override TileInfo GetTileCopy()
+    public override TileInfo GetCopy()
     {
         Tile_RacoonGang newRacoon = (Tile_RacoonGang)CopyBaseStatsIntoOther(new Tile_RacoonGang());
         newRacoon.dmgPerMoney = dmgPerMoney;

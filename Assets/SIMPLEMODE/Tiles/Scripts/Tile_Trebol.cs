@@ -11,7 +11,7 @@ public class Tile_Trebol : TileInfo
     }
     IEnumerator OnLandedEffect(TileController landedTile)
     {
-        if (landedTile._Profile.tileTags.Contains(TileTags.Empty))
+        if (landedTile._Info.tileTags.Contains(TileTags.Empty))
         {
             GameController.AddMoney(moneyOnLandedOnEmpty);
             tileMovement.shakeTile(Intensity.mid);

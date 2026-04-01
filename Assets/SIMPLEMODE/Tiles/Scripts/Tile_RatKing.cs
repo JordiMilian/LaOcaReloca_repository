@@ -44,7 +44,7 @@ public class Tile_RatKing : TileInfo
     void OnAddedTile(TileController newTile)
     {
         if(newTile == _Controller) { return; }
-        if(newTile._Profile.tileTags.Contains(TileTags.Rat))
+        if(newTile._Info.tileTags.Contains(TileTags.Rat))
         {
             modifyRat(newTile);
         }
@@ -52,7 +52,7 @@ public class Tile_RatKing : TileInfo
     void OnRemovedTile(TileController removedTile)
     {
         if (removedTile == _Controller) { return; }
-        if (removedTile._Profile.tileTags.Contains(TileTags.Rat))
+        if (removedTile._Info.tileTags.Contains(TileTags.Rat))
         {
             unmodifyRat(removedTile);
         }

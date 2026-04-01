@@ -67,7 +67,7 @@ public class Encounter_TileBuyer : MonoBehaviour, IEncounter, ITooltip
                 yield break;
             }
             TileController soldTile = tileSelector.GetClosestTileInRange();
-            if(soldTile == null || soldTile._Profile is Tile_Start || soldTile._Profile is Tile_End)
+            if(soldTile == null || soldTile._Info is Tile_Start || soldTile._Info is Tile_End)
             {
                 yield break;
             }

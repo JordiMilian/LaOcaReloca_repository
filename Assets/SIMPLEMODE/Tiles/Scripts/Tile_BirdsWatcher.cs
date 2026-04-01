@@ -19,7 +19,7 @@ public class Tile_BirdsWatcher : TileInfo
     {
         if( Mathf.Abs(_Controller.indexInBoard - landedTile.indexInBoard) == 1)
         {
-            if (landedTile._Profile.tileTags.Contains(TileTags.Oca))
+            if (landedTile._Info.tileTags.Contains(TileTags.Oca))
             {
                 yield return _Controller.AddBaseDamage(dmgOnLandedAdjacentOca);
                 yield break;

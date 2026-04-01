@@ -39,9 +39,9 @@ public class Tile_Tree : Tile_Plant
         List<TileController> adjacentTiles = MathJ.GetAdjacentTiles(_Controller);
         foreach (TileController tile in adjacentTiles)
         {
-            if (tile._Profile.tileTags.Contains(TileTags.Plant))
+            if (tile._Info.tileTags.Contains(TileTags.Plant))
             {
-                Tile_Plant plantProfile = (Tile_Plant)tile._Profile;
+                Tile_Plant plantProfile = (Tile_Plant)tile._Info;
                 subscribedPlants.Add(plantProfile);
                 plantProfile.growthModifiers += MultiplyGrowth;
             }

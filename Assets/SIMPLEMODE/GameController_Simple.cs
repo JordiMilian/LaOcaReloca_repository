@@ -190,9 +190,9 @@ public class GameController_Simple : MonoBehaviour
         TileController currentTile = BoardController.GetCurrentPlayerTile();
 
         //Check if we step out of current tile
-        if(currentTile._Profile.remainingSteps <= 0)
+        if(currentTile._Info.remainingSteps <= 0)
         {
-            currentTile._Profile.OnSteppedOut();
+            currentTile._Info.OnSteppedOut();
             BoardController.PlayerIndex++;
         }
         while(remainingStepsToTake > 0)
@@ -209,16 +209,16 @@ public class GameController_Simple : MonoBehaviour
             if (!isLandingIteration) { yield return currentTile.OnTileFinished(); }
 
             //remove step if necessary
-            if (currentTile._Profile.remainingSteps > 0)
+            if (currentTile._Info.remainingSteps > 0)
             {
                 remainingStepsToTake--;
-                currentTile._Profile.remainingSteps--;
+                currentTile._Info.remainingSteps--;
             }
 
             //check for step to next 
-            if (currentTile._Profile.remainingSteps <= 0 && remainingStepsToTake > 0)
+            if (currentTile._Info.remainingSteps <= 0 && remainingStepsToTake > 0)
             {
-                currentTile._Profile.OnSteppedOut();
+                currentTile._Info.OnSteppedOut();
                 BoardController.PlayerIndex++;
             }
         }
@@ -306,7 +306,7 @@ public class GameController_Simple : MonoBehaviour
             if (!CanPurchase(shopItem.buyable.GetBuyingPrice())) { return false; }
         }
        
-        if(tileBelow._Profile is Tile_End || tileBelow._Profile is Tile_Start) { return false; }
+        if(tileBelow._Info is Tile_End || tileBelow._Info is Tile_Start) { return false; }
         return true;
     }
     public void PlaceTile() //Called from TileMovement OnMouseUp //Aixo es un cacao de Indices que deu s'apiadi de mi
@@ -499,7 +499,7 @@ public class GameController_Simple : MonoBehaviour
         int currentIndex = BoardController.PlayerIndex;
         while (stepsToConsume > 0)
         {
-            TileInfo currentTile = BoardController.TilesList[currentIndex]._Profile;
+            TileInfo currentTile = BoardController.TilesList[currentIndex]._Info;
             for (int i = 0; i < currentTile.remainingSteps; i++)
             {
                 stepsToConsume--;
@@ -542,18 +542,17 @@ public class GameController_Simple : MonoBehaviour
     public IEnumerator C_LoadBoard(SaveLoadBoard.GameSaveInfo info)
     {
         //Destroy current tiles
-        for (int i = BoardController.TilesList.Count -1; i<= 0; i--)
+        for (int i = BoardController.TilesList.Count -1; i >= 0; i--)
         {
             TileController tile = BoardController.TilesList[i];
             yield return tile.C_OnRemovedFromBoard();
             Destroy(tile.gameObject);
         }
-        yield return null;
         BoardController.TilesList.Clear();
         foreach(TileInfo profile in info.tiles)
         {
             Debug.Log("progile?");
-           // BoardController.TilesList.Add(TilesFactory.instance.InstantiateTile(Instantiate(profile)));
+            BoardController.TilesList.Add(TilesFactory.instance.InstantiateTile(profile));
         }
         foreach(TileController tile in BoardController.TilesList)
         {
@@ -562,7 +561,8 @@ public class GameController_Simple : MonoBehaviour
 
         BoardController.PlayerIndex = info.currentIndex;
 
-        yield return BoardController.L_JumpPlayerTo(info.currentIndex,false);
+        BoardController.MoveTiles_ToTfData(false);
+        yield return BoardController.L_JumpPlayerTo(info.currentIndex,false,false);
         //TO DO TOYS
         //TO DO DICES
         //TO DO REMAINING DICEROLLS

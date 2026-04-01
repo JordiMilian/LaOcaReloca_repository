@@ -15,7 +15,7 @@ public class Toy_Trebol : Toy_Profile
     }
     IEnumerator OnLandedEffect(TileController landedTile)
     {
-        if (landedTile._Profile.tileTags.Contains(TileTags.Empty))
+        if (landedTile._Info.tileTags.Contains(TileTags.Empty))
         {
             _gameController.AddMoney(moneyOnLandedOnEmpty);
             yield return new WaitForSeconds(0.5f);

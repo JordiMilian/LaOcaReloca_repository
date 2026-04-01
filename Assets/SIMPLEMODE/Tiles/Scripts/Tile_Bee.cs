@@ -26,9 +26,9 @@ public class Tile_Bee : Tile_Insect
         List<TileController> adjacentTiles = MathJ.GetAdjacentTiles(_Controller,1,true);
         foreach (TileController tile in adjacentTiles)
         {
-            if(tile._Profile is Tile_Plant)
+            if(tile._Info is Tile_Plant)
             {
-                Tile_Plant plant = (Tile_Plant)tile._Profile;
+                Tile_Plant plant = (Tile_Plant)tile._Info;
                 plant.growthModifiers += plantModify;
                 modifiedPlants.Add(plant);
             }

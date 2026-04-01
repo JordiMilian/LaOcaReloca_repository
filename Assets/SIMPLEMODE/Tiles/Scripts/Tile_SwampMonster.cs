@@ -16,17 +16,17 @@ public class Tile_SwampMonster : TileInfo
         newSwamp01.transform.position = _Controller.transform.position;
 
         yield return BoardController.C_AddNewTile(newSwamp01, _Controller.indexInBoard-1);
-        RemoveSkill(newSwamp01._Profile, GenericSkills.Unmovable);
+        RemoveSkill(newSwamp01._Info, GenericSkills.Unmovable);
 
         TileController newSwamp02 = TilesFactory.instance.InstantiateTile(swampTokenProfile);
         newSwamp02.transform.position = _Controller.transform.position;
 
         yield return BoardController.C_AddNewTile(newSwamp02, _Controller.indexInBoard +1);
-        RemoveSkill(newSwamp02._Profile, GenericSkills.Unmovable);
+        RemoveSkill(newSwamp02._Info, GenericSkills.Unmovable);
 
         AddSkill(this, GenericSkills.Unmovable);
-        AddSkill(newSwamp01._Profile, GenericSkills.Unmovable);
-        AddSkill(newSwamp02._Profile, GenericSkills.Unmovable);
+        AddSkill(newSwamp01._Info, GenericSkills.Unmovable);
+        AddSkill(newSwamp02._Info, GenericSkills.Unmovable);
     }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }

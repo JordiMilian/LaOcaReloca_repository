@@ -15,4 +15,11 @@ public class Tile_Creatine : TileInfo
         return totalAddedDamage;
     }
     public override string GetTooltipText() { return $"{OnAddedDamage} Multiply x{multiplieValue} the added amount"; }
+
+    public override TileInfo GetCopy()
+    {
+        Tile_Creatine newTile = (Tile_Creatine)CopyBaseStatsIntoOther(new Tile_Creatine());
+        newTile.multiplieValue = multiplieValue;
+        return newTile;
+    }
 }
