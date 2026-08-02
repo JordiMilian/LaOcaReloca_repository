@@ -4,6 +4,13 @@ using static StringTools;
 public class Tile_Mushroom : Tile_Plant
 {
    [SerializeField] float changeToDuplicate = .1f;
+    public override TileInfo GetCopy()
+    {
+        Tile_Mushroom newInfo = (Tile_Mushroom)CopyBaseStatsIntoOther(new  Tile_Mushroom());
+        newInfo.baseGrowth = baseGrowth;
+        newInfo.changeToDuplicate = changeToDuplicate;
+        return newInfo;
+    }
    public override IEnumerator OnPlacedInBoard() 
     {
         yield return base.OnPlacedInBoard();

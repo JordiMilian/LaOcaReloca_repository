@@ -8,5 +8,11 @@ public class Tile_GoldEater : TileInfo
     //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
     public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); GameController.RemoveMoney(moneyToRemove); }
-   public override string GetTooltipText() { return $"{OnCrossed} Loose {moneyToRemove} money"; }
+    public override TileInfo GetCopy()
+    {
+        Tile_GoldEater newInfo = (Tile_GoldEater)CopyBaseStatsIntoOther(new Tile_GoldEater());
+        newInfo.moneyToRemove = moneyToRemove;
+        return newInfo;
+    }
+    public override string GetTooltipText() { return $"{OnCrossed} Loose {moneyToRemove} money"; }
 }

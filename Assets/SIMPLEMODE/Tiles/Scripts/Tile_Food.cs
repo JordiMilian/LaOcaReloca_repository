@@ -3,7 +3,8 @@ using System.Collections;
 using static StringTools;
 public class Tile_Food : TileInfo
 {
-    public int currentRot, baseRot;
+    [HideInInspector] public int currentRot;
+    public int baseRot;
 
     IEnumerator OnRolled()
     {
@@ -38,6 +39,7 @@ public class Tile_Food : TileInfo
         yield return base.OnPlayerLanded();
         yield return OnEaten();
     }
-   //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
-   public override string GetTooltipText() { return Rot(currentRot); }
+    
+    //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
+    public override string GetTooltipText() { return Rot(currentRot); }
 }

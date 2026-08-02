@@ -13,7 +13,4 @@ MonoBehaviour:
   m_Name: PG_Rest
   m_EditorClassIdentifier: 
   GroupName: 
-  tilesList:
-  - {fileID: 11400000, guid: 3badff7d6194009459b47535bcf190d2, type: 2}
-  - {fileID: 11400000, guid: 66baf4db10c91bc4db9293d7fc80c607, type: 2}
-  - {fileID: 11400000, guid: 03d0042d530c7cf458e91546ba567f71, type: 2}
+  tilesList: []

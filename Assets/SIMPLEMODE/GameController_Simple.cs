@@ -472,6 +472,7 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] TextMeshProUGUI TMP_CurrentMoney;
     public void AddMoney(int money) { SetMoney(currentMoney + money); StartCoroutine(OnAddedMoney_CardEffects.C_ActivateEffects(money)); }
     public void RemoveMoney(int money) { SetMoney(currentMoney - money); StartCoroutine(OnRemovedMoney_CardEffects.C_ActivateEffects(money)); }
+    public void ForceSetMoney(int newMoney) { SetMoney(newMoney); } //for save system actually
     void SetMoney(int newMoney)
     { 
         currentMoney = newMoney; 
@@ -551,7 +552,6 @@ public class GameController_Simple : MonoBehaviour
         BoardController.TilesList.Clear();
         foreach(TileInfo profile in info.tiles)
         {
-            Debug.Log("progile?");
             BoardController.TilesList.Add(TilesFactory.instance.InstantiateTile(profile));
         }
         foreach(TileController tile in BoardController.TilesList)

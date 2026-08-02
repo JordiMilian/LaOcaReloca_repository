@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class FreePick : MonoBehaviour
 {
-    public TileController SpawnTile(TileInfo profile)
+    public TileController SpawnTile(TileInfo info)
     {
-        TileController instantiatedTile = TilesFactory.instance.InstantiateTile(profile);
+        TileController instantiatedTile = TilesFactory.instance.InstantiateTile(info);
         instantiatedTile.transform.position = transform.position;
         instantiatedTile.SetOriginTfData(new TileTfData(transform));
         instantiatedTile.SetToTfData();

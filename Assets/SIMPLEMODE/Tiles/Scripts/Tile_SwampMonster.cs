@@ -5,20 +5,20 @@ using System.Linq;
 using System.Collections.Generic;
 public class Tile_SwampMonster : TileInfo
 {
-    [SerializeField] TileInfo swampTokenProfile;
+    [SerializeField] TileConfig swampTokenProfile;
     [SerializeField] float DamageAddedOnCross = 100;
     public override IEnumerator OnPlacedInBoard() 
    {
         yield return base.OnPlacedInBoard();
         RemoveSkill(this, GenericSkills.Unmovable);
 
-        TileController newSwamp01 = TilesFactory.instance.InstantiateTile(swampTokenProfile);
+        TileController newSwamp01 = TilesFactory.instance.InstantiateTile(swampTokenProfile._configInfo);
         newSwamp01.transform.position = _Controller.transform.position;
 
         yield return BoardController.C_AddNewTile(newSwamp01, _Controller.indexInBoard-1);
         RemoveSkill(newSwamp01._Info, GenericSkills.Unmovable);
 
-        TileController newSwamp02 = TilesFactory.instance.InstantiateTile(swampTokenProfile);
+        TileController newSwamp02 = TilesFactory.instance.InstantiateTile(swampTokenProfile._configInfo);
         newSwamp02.transform.position = _Controller.transform.position;
 
         yield return BoardController.C_AddNewTile(newSwamp02, _Controller.indexInBoard +1);
@@ -46,4 +46,12 @@ public class Tile_SwampMonster : TileInfo
         yield return base.OnPlayerStepped();
     }
    public override string GetTooltipText() { return $"{OnEnterInBoard} Spawn 2 SWAMPS around \n {OnCrossed} Increase {MathJ.AddDamage(DamageAddedOnCross)} this tile"; }
+    public override TileInfo GetCopy()
+    {
+        Tile_SwampMonster newInfo = (Tile_SwampMonster)CopyBaseStatsIntoOther(new Tile_SwampMonster());
+        newInfo.DamageAddedOnCross = DamageAddedOnCross;
+        newInfo.swampTokenProfile = swampTokenProfile;
+        return newInfo;
+    }
+
 }

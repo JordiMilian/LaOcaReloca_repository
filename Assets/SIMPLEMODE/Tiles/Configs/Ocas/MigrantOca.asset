@@ -27,7 +27,7 @@ MonoBehaviour:
         rarity: 1
         tileSize: 1
         uniquePrice: 0
-        tileTags: 
+        tileTags: 02000000
         genericSkills: 
         _Controller: {fileID: 0}
         StepsToCross: 1

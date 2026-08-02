@@ -20,10 +20,10 @@ MonoBehaviour:
     - rid: 3293105537501364288
       type: {class: Tile_Creatine, ns: , asm: Assembly-CSharp}
       data:
-        BaseDamage: 10
-        Title: NO TITLE
+        BaseDamage: 1
+        Title: CREATINE
         tileColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-        tileTexture: {fileID: 0}
+        tileTexture: {fileID: 2800000, guid: 0950e7ea5e26e8a44b0b52b83d74774b, type: 3}
         rarity: 3
         tileSize: 1
         uniquePrice: 0

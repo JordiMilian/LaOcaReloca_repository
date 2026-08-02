@@ -1658,6 +1658,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 86ba36bd8320df147ad0c12838593a2f, type: 2}
   - {fileID: 11400000, guid: e4e1aeb201b37944685231d5a1b1694d, type: 2}
   - {fileID: 11400000, guid: ec050a4051b09204aa4078cd436d6c97, type: 2}
+  - {fileID: 11400000, guid: 4647ba811ff28264c85cc3b7e17aad0f, type: 2}
   instantiatedToys: []
 --- !u!4 &401242999
 Transform:
@@ -2665,7 +2666,7 @@ MonoBehaviour:
   color: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
   baseDamage: 5
   rarity: 1
-  tag: 0
+  tiletag: 0
   factory: {fileID: 400194872}
   ToyAssetName: Bread
   ToyTitle: TOY TITLE
@@ -5544,6 +5545,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc26c95dcee79d044b291baa2934a7db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentSave:
+    toys: []
+    dices: []
+    currentIndex: 0
 --- !u!4 &1212200749
 Transform:
   m_ObjectHideFlags: 0

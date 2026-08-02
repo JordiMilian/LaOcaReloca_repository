@@ -8,8 +8,13 @@ using static StringTools;
 [CreateAssetMenu(menuName = "TileProfile/Ocas/LeaderOca", fileName = "Tile_LeaderOca")]
 public class Tile_Oca_LeaderOca : Tile_Oca
 {
-    [SerializeField] int damagePerOca = 1;
     [SerializeField] float addedDamageAtOcas = 10;
+    public override TileInfo GetCopy()
+    {
+        Tile_Oca_LeaderOca newInfo = (Tile_Oca_LeaderOca)CopyBaseStatsIntoOther(new Tile_Oca_LeaderOca());
+        newInfo.addedDamageAtOcas = addedDamageAtOcas;
+        return newInfo;
+    }
     public override IEnumerator OnPlayerLanded()
     {
         List<TileController> ocasTiles = new();

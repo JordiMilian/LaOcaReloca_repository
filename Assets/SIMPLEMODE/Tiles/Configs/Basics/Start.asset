@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 3293105537501364296
       type: {class: Tile_Start, ns: , asm: Assembly-CSharp}
       data:
-        BaseDamage: 10
+        BaseDamage: 0
         Title: START
         tileColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
         tileTexture: {fileID: 2800000, guid: 94d3ec87b78ae314f97acad2ec06c275, type: 3}

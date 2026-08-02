@@ -9,7 +9,7 @@ public class ProfilesCreator : MonoBehaviour
     [HideInInspector] [SerializeField] Color color = Color.white;
     [HideInInspector] [SerializeField] float baseDamage;
     [HideInInspector] [SerializeField] Rarity rarity = Rarity.Common;
-    [HideInInspector] [SerializeField] TileTags tag = TileTags.NoTag;
+    [HideInInspector] [SerializeField] TileTags tiletag = TileTags.NoTag;
     public TilesFactory factory;
 
     [HideInInspector][SerializeField] string ToyAssetName;

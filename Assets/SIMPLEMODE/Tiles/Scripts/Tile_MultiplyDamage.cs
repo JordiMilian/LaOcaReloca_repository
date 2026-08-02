@@ -19,7 +19,13 @@ public class Tile_MultiplyDamage : TileInfo
 
         yield return base.OnPlayerStepped();
     }
-
+    public override TileInfo GetCopy()
+    {
+        Tile_MultiplyDamage newInfo = (Tile_MultiplyDamage)CopyBaseStatsIntoOther(new Tile_MultiplyDamage());
+        newInfo.multiplierOnLanded = multiplierOnLanded;
+        newInfo.multiplierOnStepped = multiplierOnStepped;
+        return newInfo;
+    }
     public override string GetTooltipText()
     {
         return $"{OnLanded} Multiply the dmg of a RANDOM TILE x{multiplierOnLanded} \n{OnCrossed} Multiply the dmg of a RANDOM TILE x{multiplierOnStepped}";

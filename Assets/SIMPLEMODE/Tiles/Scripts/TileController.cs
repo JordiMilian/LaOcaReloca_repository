@@ -134,9 +134,9 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         tileMaterial = Instantiate(tileMaterial);
         GetComponent<MeshRenderer>().material = tileMaterial;
     }
-    public void SetTileProfile(TileInfo profile)
+    public void SetTileProfile(TileInfo info)
     {
-        _Info = profile;
+        _Info = info;
         _Info._Controller = this;
         tileMaterial.SetColor("_OutlineColor", _Info.tileColor);
         if(_Info.tileTexture != null)

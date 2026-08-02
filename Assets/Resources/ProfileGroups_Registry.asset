@@ -21,3 +21,4 @@ MonoBehaviour:
   Tokens: {fileID: 11400000, guid: 841c36da4d3023b4f84d091b1a50a98c, type: 2}
   Food: {fileID: 11400000, guid: b62fe726a73c7604083dc9b5ae5a2e89, type: 2}
   Rest: {fileID: 11400000, guid: 2da7e7b903d2bd749b0ac2e92e7f8425, type: 2}
+  All: {fileID: 11400000, guid: fbbdb2be089980440b75df34b7b61827, type: 2}

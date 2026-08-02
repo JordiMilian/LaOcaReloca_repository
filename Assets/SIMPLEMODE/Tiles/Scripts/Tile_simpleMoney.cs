@@ -6,6 +6,14 @@ public class Tile_simpleMoney : TileInfo
 {
     [SerializeField] int landedAmount = 10;
     [SerializeField] int steppedAmount = 1;
+
+    public override TileInfo GetCopy()
+    {
+        Tile_simpleMoney newInfo = (Tile_simpleMoney)CopyBaseStatsIntoOther(new Tile_simpleMoney());
+        newInfo.landedAmount = landedAmount;
+        newInfo.steppedAmount = steppedAmount;
+        return newInfo;
+    }
     public override IEnumerator OnPlayerStepped()
     {
         yield return base.OnPlayerStepped();

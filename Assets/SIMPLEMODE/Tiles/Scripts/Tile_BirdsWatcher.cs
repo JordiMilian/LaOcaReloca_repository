@@ -9,6 +9,13 @@ public class Tile_BirdsWatcher : TileInfo
     [SerializeField] float dmgPerOca = 2;
     [SerializeField] float dmgOnLandedAdjacentOca = 30;
 
+    public override TileInfo GetCopy()
+    {
+        Tile_BirdsWatcher newInfo = (Tile_BirdsWatcher)CopyBaseStatsIntoOther(new Tile_BirdsWatcher());
+        newInfo.dmgPerOca = dmgPerOca;
+        newInfo.dmgOnLandedAdjacentOca = dmgOnLandedAdjacentOca;
+        return newInfo;
+    }
     public override IEnumerator OnPlacedInBoard()
     { 
         yield return base.OnPlacedInBoard();

@@ -71,14 +71,14 @@ public class Board_Controller_simple : MonoBehaviour
 
         for (int i = 0; i < StartingTilesCount; i++)
         {
-            TileInfo profileToSpawn;
-            if (i == 0) { profileToSpawn = Tile_Start._configInfo; }
-            else if (i == StartingTilesCount - 1) { profileToSpawn = Tile_End._configInfo; }
-            else if (i % 4 == 0) { profileToSpawn = Tile_Oca._configInfo; }
+            TileConfig profileToSpawn;
+            if (i == 0) { profileToSpawn = Tile_Start; }
+            else if (i == StartingTilesCount - 1) { profileToSpawn = Tile_End; }
+            else if (i % 4 == 0) { profileToSpawn = Tile_Oca; }
             //else if(i % 3 == 0) { prefabToSpawn = Tile_Money; }
-            else { profileToSpawn = Tile_Empty._configInfo; }
+            else { profileToSpawn = Tile_Empty; }
 
-            TileController newTile = factory.InstantiateTile(profileToSpawn);
+            TileController newTile = factory.InstantiateTileFromConfig(profileToSpawn);
             tempTiles.Add(newTile);
 
         }
@@ -554,6 +554,7 @@ public class Board_Controller_simple : MonoBehaviour
 
         yield return tileToRemove.C_OnRemovedFromBoard();
         RemoveTile(index);
+        yield return GameController_Simple.Instance.OnRemovedTileFromBoard_CardEffect.C_ActivateEffects();
         OnRemovedTile?.Invoke(tileToRemove);
 
         Destroy(tileToRemove.gameObject);

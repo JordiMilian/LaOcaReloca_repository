@@ -23,4 +23,12 @@ public class ProfilesGroup : ScriptableObject
         if(tilesList.Count == 0) { return null; }
         return tilesList[Random.Range(0, tilesList.Count)]._configInfo;
     }
+    public TileConfig GetConfigById(string id)
+    {
+        foreach(TileConfig tile in tilesList)
+        {
+            if(tile._configId == id) { return tile; }
+        }
+        return  null;
+    }
 }

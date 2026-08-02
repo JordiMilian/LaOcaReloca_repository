@@ -26,5 +26,12 @@ public class Tile_Earthquake : TileInfo
         yield return randomTile.OnPlayerStepped();
         yield return randomTile.OnTileFinished(); 
     }
-   public override string GetTooltipText() { return $"{OnLanded} Trigger the OnCrossed effect of {tilesOnLanded} Random Tiles\n{OnCrossed} Trigger the OnCrossed effect of {tilesOnCrossed} Random Tiles"; }
+    public override TileInfo GetCopy()
+    {
+        Tile_Earthquake newInfo = (Tile_Earthquake)CopyBaseStatsIntoOther(new Tile_Earthquake());
+        newInfo.tilesOnLanded = tilesOnLanded; 
+        newInfo.tilesOnCrossed = tilesOnCrossed;
+        return newInfo;
+    }
+    public override string GetTooltipText() { return $"{OnLanded} Trigger the OnCrossed effect of {tilesOnLanded} Random Tiles\n{OnCrossed} Trigger the OnCrossed effect of {tilesOnCrossed} Random Tiles"; }
 }

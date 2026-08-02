@@ -8,6 +8,14 @@ public class Tile_Tree : Tile_Plant
 {
     List<Tile_Plant> subscribedPlants = new();
     [SerializeField] float growthMultiplier = 1.5f;
+
+    public override TileInfo GetCopy()
+    {
+        Tile_Tree newInfo = (Tile_Tree)CopyBaseStatsIntoOther(new Tile_Tree());
+        newInfo.growthMultiplier = growthMultiplier;
+        newInfo.baseGrowth = baseGrowth;
+        return newInfo;
+    }
     public override IEnumerator OnPlacedInBoard() 
     { 
         yield return base.OnPlacedInBoard(); 

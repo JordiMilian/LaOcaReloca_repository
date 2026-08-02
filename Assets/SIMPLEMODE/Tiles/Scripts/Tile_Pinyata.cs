@@ -12,6 +12,15 @@ public class Tile_Pinyata : TileInfo
 
     [SerializeField] int adjacentDepth = 2;
     [SerializeField] float addedDmg, addedDmgOnlanded;
+
+    public override TileInfo GetCopy()
+    {
+        Tile_Pinyata newInfo = (Tile_Pinyata)CopyBaseStatsIntoOther(new Tile_Pinyata());
+        newInfo.adjacentDepth = adjacentDepth;
+        newInfo.addedDmg = addedDmg;
+        newInfo.addedDmgOnlanded = addedDmgOnlanded;
+        return newInfo;
+    }
     public override string GetTooltipText() 
     {
         return$"{OnCrossed} Add {MathJ.AddDamage(addedDmg)} to tiles around in range {adjacentDepth} \n {OnLanded} Increase that amount by +{addedDmgOnlanded}";

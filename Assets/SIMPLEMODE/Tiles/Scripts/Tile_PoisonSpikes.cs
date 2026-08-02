@@ -19,4 +19,12 @@ public class Tile_PoisonSpikes : TileInfo
     }
     public override string GetTooltipText() { return $"{OnCrossed} Deal {poisonOnCrossed} poison" +
             $"\n{OnLanded} Increase that amount by {addedPoisonOnLanded}"; }
+
+    public override TileInfo GetCopy()
+    {
+        Tile_PoisonSpikes newInfo = (Tile_PoisonSpikes)CopyBaseStatsIntoOther(new Tile_PoisonSpikes());
+        newInfo.poisonOnCrossed = poisonOnCrossed;
+        newInfo.addedPoisonOnLanded = addedPoisonOnLanded;
+        return newInfo;
+    }
 }

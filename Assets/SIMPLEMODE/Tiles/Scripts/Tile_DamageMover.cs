@@ -22,4 +22,9 @@ public class Tile_DamageMover : TileInfo
     {
         return $"{OnCrossed} Transfer the damage from the tile behind to the tile forward";
     }
+    public override TileInfo GetCopy()
+    {
+        Tile_DamageMover newInfo = (Tile_DamageMover)CopyBaseStatsIntoOther(new Tile_DamageMover());
+        return newInfo;
+    }
 }

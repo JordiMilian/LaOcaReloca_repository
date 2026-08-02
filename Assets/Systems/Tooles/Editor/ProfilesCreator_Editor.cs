@@ -141,7 +141,8 @@ public class ProfilesCreator_Editor : Editor
                     return;
                 }
 
-                TileStateClass instance = (TileStateClass)ScriptableObject.CreateInstance(SO_type);
+                TileConfig instance = (TileConfig)ScriptableObject.CreateInstance(SO_type);
+                TileInfo configInstance = 
                 if (instance == null)
                 {
                     Debug.LogError("Could not create instance of: " + assetName);
@@ -227,7 +228,7 @@ public class ProfilesCreator_Editor : Editor
                 AssetDatabase.RenameAsset(scriptPath, newAssetName);
 
                 //Rename title
-                TileStateClass profile = AssetDatabase.LoadAssetAtPath<TileStateClass>(AssetDatabase.GUIDToAssetPath(GUIDsFound[rightIndex]));
+                TileConfig profile = AssetDatabase.LoadAssetAtPath<TileConfig>(AssetDatabase.GUIDToAssetPath(GUIDsFound[rightIndex]));
                 profile.Title = newTitle;
 
                 AssetDatabase.Refresh();

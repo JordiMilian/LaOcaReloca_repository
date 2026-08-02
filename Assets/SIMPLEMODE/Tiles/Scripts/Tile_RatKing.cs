@@ -7,6 +7,14 @@ public class Tile_RatKing : TileInfo
 {
     [SerializeField] float ratsDamageAdder = .5f;
     [SerializeField] float addedAmountOnLanded = .5f;
+
+    public override TileInfo GetCopy()
+    {
+        Tile_RatKing newInfo = (Tile_RatKing)CopyBaseStatsIntoOther(new Tile_RatKing());
+        newInfo.ratsDamageAdder = ratsDamageAdder;
+        newInfo.addedAmountOnLanded = addedAmountOnLanded;
+        return newInfo;
+    }
     public override IEnumerator OnPlacedInBoard()
     {
         yield return base.OnPlacedInBoard();

@@ -9,6 +9,14 @@ public class Tile_Pessimist : TileInfo
 
     [SerializeField] float multiplierOnEnd = 2;
     [SerializeField] float extraDamageOnLanded = .5f;
+
+    public override TileInfo GetCopy()
+    {
+        Tile_Pessimist newInfo = (Tile_Pessimist)CopyBaseStatsIntoOther(new Tile_Pessimist());
+        newInfo.multiplierOnEnd = multiplierOnEnd;
+        newInfo.extraDamageOnLanded = extraDamageOnLanded;
+        return newInfo;
+    }
     public override IEnumerator OnPlacedInBoard() 
     {
         yield return base.OnPlacedInBoard();

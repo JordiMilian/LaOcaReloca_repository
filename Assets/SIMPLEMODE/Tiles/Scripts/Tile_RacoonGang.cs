@@ -9,7 +9,7 @@ public class Tile_RacoonGang : TileInfo
     public int AmountToTake = 1;
     public float dmgPerMoney = 15;
     public int racoonsToCreate = 2;
-    [SerializeField] TileConfig racoonToken_Profile;
+    [SerializeField] TileConfig racoonToken_Config;
     //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }
     //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }
     public override IEnumerator OnPlayerLanded()
@@ -41,7 +41,7 @@ public class Tile_RacoonGang : TileInfo
 
     IEnumerator CreateRandomRacoon()
     {
-        TileController ratTokenController = TilesFactory.instance.InstantiateTile(racoonToken_Profile._configInfo);
+        TileController ratTokenController = TilesFactory.instance.InstantiateTile(racoonToken_Config._configInfo);
         ratTokenController.transform.position = _Controller.transform.position;
 
         int randomIndex = MathJ.GetRandomIndexInBoard(true);
@@ -52,6 +52,7 @@ public class Tile_RacoonGang : TileInfo
     {
         Tile_RacoonGang newRacoon = (Tile_RacoonGang)CopyBaseStatsIntoOther(new Tile_RacoonGang());
         newRacoon.dmgPerMoney = dmgPerMoney;
+        newRacoon.racoonToken_Config = racoonToken_Config;
         newRacoon.racoonsToCreate = racoonsToCreate;
         newRacoon.AmountToTake = AmountToTake;
 

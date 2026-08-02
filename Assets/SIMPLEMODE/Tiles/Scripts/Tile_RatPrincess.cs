@@ -5,7 +5,14 @@ using System.Linq;
 public class Tile_RatPrincess : TileInfo
 {
     [SerializeField] int moneyOnRat = 1;
-   public override IEnumerator OnPlacedInBoard() 
+
+    public override TileInfo GetCopy()
+    {
+        Tile_RatPrincess newInfo = (Tile_RatPrincess)CopyBaseStatsIntoOther(new Tile_RatPrincess());
+        newInfo.moneyOnRat = moneyOnRat;
+        return newInfo;
+    }
+    public override IEnumerator OnPlacedInBoard() 
     {
         yield return base.OnPlacedInBoard();
         GameController.OnCrossed_CardEffects.AddEffect(onCrossedTile);

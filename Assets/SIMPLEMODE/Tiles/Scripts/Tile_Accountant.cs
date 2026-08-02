@@ -5,6 +5,12 @@ using UnityEngine;
 public class Tile_Accountant : TileInfo
 {
     [SerializeField] int damagePerIndex = 1;
+    public override TileInfo GetCopy()
+    {
+        Tile_Accountant newInfo = (Tile_Accountant)CopyBaseStatsIntoOther(new Tile_Accountant());
+        newInfo.damagePerIndex = damagePerIndex;
+        return newInfo;
+    }
     public override IEnumerator OnPlayerLanded()
     {
         damagePerIndex++;

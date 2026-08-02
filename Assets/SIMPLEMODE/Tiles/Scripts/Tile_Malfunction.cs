@@ -7,6 +7,15 @@ public class Tile_Malfunction : TileInfo
     [SerializeField] float chanceToTrigger = 0.3f;
     [SerializeField] int limit = 10, spawnedTokens = 0;
     TileController lastTileSpawnedByThis = null;
+    public override TileInfo GetCopy()
+    {
+        Tile_Malfunction newInfo = (Tile_Malfunction)CopyBaseStatsIntoOther(new Tile_Malfunction());
+        newInfo.chanceToTrigger = chanceToTrigger;
+        newInfo.limit = limit;
+        newInfo.spawnedTokens = spawnedTokens;
+        newInfo.lastTileSpawnedByThis = lastTileSpawnedByThis;
+        return newInfo;
+    }
     public override IEnumerator OnPlacedInBoard() 
     {
         yield return base.OnPlacedInBoard();
@@ -52,6 +61,7 @@ public class Tile_Malfunction : TileInfo
         return false;
     }
    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
+
    public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); spawnedTokens = 0; }
    public override string GetTooltipText() { return $"{OnCustomMessaje("WHEN A NEW TOKEN IS SPAWNED")} {chanceToTrigger * 100}% chance to spawn a copy with 0 DMG. Limit {limit}({limit-spawnedTokens})\n"
             +$"{OnCrossed} Restart limit"; }

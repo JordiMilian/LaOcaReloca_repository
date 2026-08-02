@@ -20,4 +20,11 @@ public class Tile_AddDiceOnLanded : TileInfo
     {
         return $"{OnLanded} Add a D6 \n{OnCrossed} Add a Single-Use D6";
     }
+    public override TileInfo GetCopy()
+    {
+        Tile_AddDiceOnLanded newInfo = (Tile_AddDiceOnLanded)CopyBaseStatsIntoOther(new Tile_AddDiceOnLanded());
+        newInfo.DicePrefab_OnCrossed = DicePrefab_OnCrossed;
+        newInfo.DicePrefab_OnLanded = DicePrefab_OnLanded;
+        return newInfo;
+    }
 }

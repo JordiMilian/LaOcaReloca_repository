@@ -22,5 +22,9 @@ public class Tile_Executioner : TileInfo
         randomTile.tileMovement.shakeTile(Intensity.mid);
         
     }
-
+    public override TileInfo GetCopy()
+    {
+        Tile_Executioner newInfo = (Tile_Executioner)CopyBaseStatsIntoOther(new Tile_Executioner());
+        return newInfo;
+    }
 }

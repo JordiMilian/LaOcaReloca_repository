@@ -18,7 +18,6 @@ public class Tile_MigrantOca : Tile_Oca
             {
                 yield return BoardController.L_JumpPlayerTo(i, false);
                 break;
-
             }
             if (BoardController.TilesList[i]._Info is Tile_End)
             {
@@ -26,7 +25,6 @@ public class Tile_MigrantOca : Tile_Oca
                 break;
             }
         }
-
         int endIndex = BoardController.PlayerIndex;
 
         GameController.AddMoney(endIndex - startingIndex);

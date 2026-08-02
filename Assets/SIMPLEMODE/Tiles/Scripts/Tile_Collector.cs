@@ -4,7 +4,14 @@ public class Tile_Collector : TileInfo
 {
     [SerializeField] int moneyOnAddedTile = 2;
     [SerializeField] int priceOnCrossed = 2;
-   public override IEnumerator OnPlacedInBoard() 
+    public override TileInfo GetCopy()
+    {
+        Tile_Collector newInfo = (Tile_Collector)CopyBaseStatsIntoOther(new Tile_Collector());
+        newInfo.moneyOnAddedTile = moneyOnAddedTile;
+        newInfo.priceOnCrossed = priceOnCrossed;
+        return newInfo;
+    }
+    public override IEnumerator OnPlacedInBoard() 
    {
         yield return base.OnPlacedInBoard();
         GameController.OnAddedNewTileToBoard_CardEffect.AddEffect(OnAddedTile);

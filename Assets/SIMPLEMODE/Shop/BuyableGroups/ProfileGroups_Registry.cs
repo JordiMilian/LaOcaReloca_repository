@@ -7,10 +7,11 @@ public class ProfileGroups_Registry : ScriptableObject
 {
     [SerializeField] ProfilesGroup Common, Rare, Legendary, Unique, Deprecated;
     [SerializeField] ProfilesGroup Curse, Tokens, Food;
-    [SerializeField] ProfilesGroup Rest;
+    [SerializeField] ProfilesGroup Rest, All;
     public List<ProfilesGroup> GetProfileGroups(TileInfo profile)
     {
         List<ProfilesGroup> groups = new();
+        groups.Add(All);
         switch (profile.rarity)
         {
             case Rarity.Common: groups.Add(Common); break;

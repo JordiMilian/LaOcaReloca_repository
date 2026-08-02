@@ -8,8 +8,9 @@ using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 using static StringTools;
 [System.Serializable]
-public class TileInfo
+public abstract class TileInfo
 {
+    public string _configId;
     public float BaseDamage = 10;
     public string Title = "NO TITLE";
     public Color tileColor = Color.gray;
@@ -144,10 +145,8 @@ public class TileInfo
     }
     #endregion
     #region COPYING
-    public virtual TileInfo GetCopy()
-    {
-        return CopyBaseStatsIntoOther(new TileInfo());
-    }
+    
+
     protected TileInfo CopyBaseStatsIntoOther(TileInfo otherState)
     {
         otherState.BaseDamage = BaseDamage;
@@ -162,6 +161,15 @@ public class TileInfo
         otherState.StepsToCross = StepsToCross;
         return otherState;
     }
+    //public abstract TileInfo GetCopy();
+    
+    public virtual TileInfo GetCopy()
+    {
+        TileInfo newInfo = (TileInfo)Activator.CreateInstance(GetType());
+        CopyBaseStatsIntoOther(newInfo);
+        return newInfo;
+    }
+    
     #endregion
 #if UNITY_EDITOR
     //On validate, move this profile to the proper groups according to tags and rarity

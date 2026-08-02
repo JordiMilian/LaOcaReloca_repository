@@ -7,6 +7,14 @@ public class Tile_Rose : Tile_Plant
     //public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); }
     //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
+
+    public override TileInfo GetCopy()
+    {
+        Tile_Rose newInfo = (Tile_Rose)CopyBaseStatsIntoOther(new Tile_Rose());
+        newInfo.extraRollValue = extraRollValue;
+        newInfo.baseGrowth = baseGrowth;
+        return newInfo;
+    }
     public override IEnumerator OnPlayerStepped() 
     {
         yield return base.OnPlayerStepped();

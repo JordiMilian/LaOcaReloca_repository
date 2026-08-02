@@ -13,39 +13,39 @@ public class TilesTestSpawning : MonoBehaviour
 
     public void AttemptSpawn()
     {
-        /*
-#if UNITY_EDITOR
-        TileStateClass profile = null;
-
-        string profileName = "Tile_" + inputField.text + ".asset";
         
-        string basicFolderPath = "Assets/SIMPLEMODE/Tiles/Profiles/" + profileName;
+#if UNITY_EDITOR
+        TileConfig config = null;
+
+        string profileName = inputField.text + ".asset";
+        
+        string basicFolderPath = "Assets/SIMPLEMODE/Tiles/Configs/" + profileName;
         if(AssetDatabase.AssetPathExists(basicFolderPath))
         {
-            profile = AssetDatabase.LoadAssetAtPath<TileStateClass>(basicFolderPath);
+            config = AssetDatabase.LoadAssetAtPath<TileConfig>(basicFolderPath);
         }
         else
         {
-            string[] subfolderPaths = AssetDatabase.GetSubFolders("Assets/SIMPLEMODE/Tiles/Profiles");
+            string[] subfolderPaths = AssetDatabase.GetSubFolders("Assets/SIMPLEMODE/Tiles/Configs");
             foreach (string subfolderPath in subfolderPaths)
             {
                 string fullPath = subfolderPath + "/" + profileName;
                 if (AssetDatabase.AssetPathExists(fullPath))
                 {
-                    profile = AssetDatabase.LoadAssetAtPath<TileStateClass>(fullPath);
+                    config = AssetDatabase.LoadAssetAtPath<TileConfig>(fullPath);
                     break;
                 }
             }
         }
             
-        if(profile == null)
+        if(config == null)
         {
-            Debug.LogError("Tile Profile not found: " + profileName);
+            Debug.LogWarning("TileConfig not found: " + profileName);
             return;
         }
-        freePick.SpawnTile(profile);
+        freePick.SpawnTile(config._configInfo);
 #endif
-        */
+        
 
     }
     public void AttemptSpawn_Toy()

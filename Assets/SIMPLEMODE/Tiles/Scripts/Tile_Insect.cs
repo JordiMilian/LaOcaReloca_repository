@@ -32,6 +32,12 @@ public class Tile_Insect : TileInfo
         yield return base.OnPlayerLanded(); 
         yield return BoardController.C_RemoveTile(_Controller.indexInBoard);
     }
-   //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
-   //public override string GetTooltipText() { }
+
+    public override TileInfo GetCopy()
+    {
+        Tile_Insect newInfo = (Tile_Insect)CopyBaseStatsIntoOther(new Tile_Insect());
+        return newInfo;
+    }
+    //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
+    //public override string GetTooltipText() { }
 }

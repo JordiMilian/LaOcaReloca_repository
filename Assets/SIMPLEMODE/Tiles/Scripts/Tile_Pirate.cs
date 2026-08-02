@@ -9,6 +9,13 @@ public class Tile_Pirate : TileInfo
     [SerializeField] int moneyOnLanded = 2;
     [SerializeField] float multiplier = 1;
 
+    public override TileInfo GetCopy()
+    {
+        Tile_Pirate newInfo = (Tile_Pirate)CopyBaseStatsIntoOther(new Tile_Pirate());
+        newInfo.moneyOnLanded = moneyOnLanded;
+        newInfo.multiplier = multiplier;
+        return newInfo;
+    }
     public override IEnumerator OnPlayerLanded()
     {
         multiplier++;

@@ -6,7 +6,16 @@ public class Tile_Perfume : TileInfo
     [SerializeField] float perfumeDamage = 5;
     [SerializeField] float increaseDmg = 2;
     bool isPerfumed;
-   public override IEnumerator OnPlacedInBoard() 
+
+    public override TileInfo GetCopy()
+    {
+        Tile_Perfume newInfo = (Tile_Perfume)CopyBaseStatsIntoOther(new Tile_Perfume());
+        newInfo.perfumeDamage = perfumeDamage;
+        newInfo.increaseDmg = increaseDmg;
+        newInfo.isPerfumed = isPerfumed;
+        return newInfo;
+    }
+    public override IEnumerator OnPlacedInBoard() 
     { 
         yield return base.OnPlacedInBoard();
         GameController.OnRolledDice.AddListener(UnsubscribeToCrossed);

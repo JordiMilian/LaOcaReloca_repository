@@ -5,7 +5,7 @@ public class Tile_RatQueen : TileInfo
     //public override void OnPlacedInBoard() { base.OnPlacedInBoard(); }
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
     
-    [SerializeField] TileInfo ratTokenTileProfile;
+    [SerializeField] TileConfig ratTokenTileProfile;
     [SerializeField] int ratsAmountOnLanded = 3;
     public override IEnumerator OnPlayerStepped()
     { 
@@ -22,7 +22,7 @@ public class Tile_RatQueen : TileInfo
     }
     IEnumerator CreateRandomRat()
     {
-        TileController ratTokenController = TilesFactory.instance.InstantiateTile(ratTokenTileProfile);
+        TileController ratTokenController = TilesFactory.instance.InstantiateTile(ratTokenTileProfile._configInfo);
         ratTokenController.transform.position = _Controller.transform.position;
         int randomIndex, ownIndex = _Controller.indexInBoard;
         do
@@ -33,5 +33,12 @@ public class Tile_RatQueen : TileInfo
        
         yield return BoardController.C_AddNewTile(ratTokenController, randomIndex);
     }
-   public override string GetTooltipText() { return $"{OnCrossed} Create a RAT TOKEN \n {OnLanded} Create {ratsAmountOnLanded} RAT TOKENS"; }
+    public override TileInfo GetCopy()
+    {
+        Tile_RatQueen newInfo = (Tile_RatQueen)CopyBaseStatsIntoOther(new Tile_RatQueen());
+        newInfo.ratTokenTileProfile = ratTokenTileProfile;
+        newInfo.ratsAmountOnLanded = ratsAmountOnLanded;
+        return newInfo;
+    }
+    public override string GetTooltipText() { return $"{OnCrossed} Create a RAT TOKEN \n {OnLanded} Create {ratsAmountOnLanded} RAT TOKENS"; }
 }

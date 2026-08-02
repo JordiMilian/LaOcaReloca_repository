@@ -10,6 +10,8 @@ public class TileConfig : ScriptableObject
     [SerializeReference]
     [InlineProperty]
     public TileInfo _configInfo;
+    public Texture _texture;
+    public string _configId;
 
 #if UNITY_EDITOR
     //On validate, move this profile to the proper groups according to tags and rarity

@@ -27,6 +27,13 @@ public class Tile_Feeder : TileInfo
             yield return new WaitForSeconds(0.3f);
         }
     }
+    public override TileInfo GetCopy()
+    {
+        Tile_Feeder newInfo = (Tile_Feeder)CopyBaseStatsIntoOther(new Tile_Feeder());
+        newInfo.PercentageToAdd = PercentageToAdd;
+        newInfo.CrossedDamage = CrossedDamage;
+        return newInfo;
+    }
     public override string GetTooltipText()
     {
         return $"{OnLanded} Increase by {PercentageToAdd}% of this tile damage the tile forward \n{OnCrossed} Increase {MathJ.AddDamage(CrossedDamage)} the tile forward";

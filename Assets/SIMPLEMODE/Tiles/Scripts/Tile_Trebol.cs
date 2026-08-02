@@ -26,4 +26,10 @@ public class Tile_Trebol : TileInfo
     { 
        return OnLandedOnTag(TileTags.Empty) + $" Add {moneyOnLandedOnEmpty} money";
     }
+    public override TileInfo GetCopy()
+    {
+        Tile_Trebol newInfo = (Tile_Trebol)CopyBaseStatsIntoOther(new Tile_Trebol());
+        newInfo.moneyOnLandedOnEmpty = moneyOnLandedOnEmpty;
+        return newInfo;
+    }
 }

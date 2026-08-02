@@ -1,9 +1,10 @@
 using NUnit.Framework;
+using Sirenix.Serialization;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 public class SaveLoadBoard : MonoBehaviour
 {
     [Serializable]
@@ -13,6 +14,7 @@ public class SaveLoadBoard : MonoBehaviour
         public List<Toy_Profile> toys = new();
         public List<Dice> dices = new();
         public int currentIndex;
+        public int money;
     }
     [SerializeField] GameSaveInfo currentSave;
 
@@ -30,6 +32,8 @@ public class SaveLoadBoard : MonoBehaviour
         //CURRENT INDEX
         newInfo.currentIndex = board.PlayerIndex;
         currentSave = newInfo;
+
+        currentSave.money = GameController_Simple.Instance.GetCurrentMoney();
 
         //TOYS (Per ara centrarse en les tiles)
         /* 
@@ -49,12 +53,56 @@ public class SaveLoadBoard : MonoBehaviour
     void SaveCurrentData(int index)
     {
         UpdateCurrentData();
-        string jsonString = JsonUtility.ToJson(currentSave);
-        PlayerPrefs.SetString("Save" + index, jsonString);
+
+        byte[] bytes = SerializationUtility.SerializeValue(
+        currentSave,
+        DataFormat.JSON
+        );
+
+        string json = System.Text.Encoding.UTF8.GetString(bytes);
+
+        PlayerPrefs.SetString($"Save{index}", json);
         PlayerPrefs.Save();
     }
+    void LoadSave(int index)
+    {
+        string json = PlayerPrefs.GetString($"Save{index}");
 
+        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
 
+        currentSave = SerializationUtility.DeserializeValue<GameSaveInfo>(
+            bytes,
+            DataFormat.JSON);
+
+        GameController_Simple game = GameController_Simple.Instance;
+        StartCoroutine(game.C_LoadBoard(currentSave));
+        game.ForceSetMoney(currentSave.money);
+    }
+
+    void AttemptSave(int number)
+    {
+        if (GameController_Simple.Instance.currentGameState == GameState.FreeMode)
+        {
+            SaveCurrentData(number);
+        }
+        else { Debug.Log("Not in freemode"); }
+    }
+    void AttemptLoad(int number)
+    {
+        if (GameController_Simple.Instance.currentGameState == GameState.FreeMode)
+        {
+            if (PlayerPrefs.HasKey("Save" + number))
+            {
+
+               LoadSave(number);
+            }
+            else
+            {
+                Debug.LogWarning("Empty Save");
+            }
+        }
+        else { Debug.Log("Not in freemode"); }
+    }
 
     private void Update()
     {
@@ -63,6 +111,7 @@ public class SaveLoadBoard : MonoBehaviour
             if (Keyboard.current[Key.Digit0].wasPressedThisFrame) 
             {
                 AttemptSave(0);
+                Debug.Log("Saved at 0");
             }
             if (Keyboard.current[Key.T].wasPressedThisFrame)
             {
@@ -75,39 +124,14 @@ public class SaveLoadBoard : MonoBehaviour
             if (Keyboard.current[Key.Digit0].wasPressedThisFrame)
             {
                 AttemptLoad(0);
-                Debug.Log("Loaded 0");
+                Debug.Log("Loaded at 0");
             }
             if (Keyboard.current[Key.T].wasPressedThisFrame)
             {
                 Debug.Log("load test");
-                StartCoroutine(GameController_Simple.Instance.C_LoadBoard(currentSave));
-            }
-        }
-
-        void AttemptSave(int number)
-        {
-            if (GameController_Simple.Instance.currentGameState == GameState.FreeMode)
-            {
-                SaveCurrentData(number);
-                Debug.Log("Saved at "+ number);
-            }
-        }
-        void AttemptLoad(int number)
-        {
-            if (GameController_Simple.Instance.currentGameState == GameState.FreeMode)
-            {
-                if(PlayerPrefs.HasKey("Save"+number))
-                {
-                    string savedJson = PlayerPrefs.GetString("Save" + number);
-                    currentSave = JsonUtility.FromJson<GameSaveInfo>(savedJson);
-
-                    StartCoroutine(GameController_Simple.Instance.C_LoadBoard(currentSave));
-                }
-                else
-                {
-                    Debug.LogWarning("Empty Save");
-                }
-
+                GameController_Simple game = GameController_Simple.Instance;
+                StartCoroutine(game.C_LoadBoard(currentSave));
+                game.ForceSetMoney(currentSave.money);
             }
         }
     }

@@ -10,6 +10,14 @@ public class Tile_Shuffler : TileInfo
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
     [SerializeField] float DmgPerShuffledTile = 2;
     [SerializeField] float ExtraDMGOnLanded = 2;
+
+    public override TileInfo GetCopy()
+    {
+        Tile_Shuffler newInfo = (Tile_Shuffler)CopyBaseStatsIntoOther(new Tile_Shuffler());
+        newInfo.DmgPerShuffledTile = DmgPerShuffledTile;
+        newInfo.ExtraDMGOnLanded = ExtraDMGOnLanded;
+        return newInfo;
+    }
     public override IEnumerator OnPlayerLanded()
     {
         DmgPerShuffledTile += ExtraDMGOnLanded;

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PG_Curses
   m_EditorClassIdentifier: 
   GroupName: Curses
-  tilesList: []
+  tilesList:
+  - {fileID: 11400000, guid: 2ba441e32662f2d41bbc26f552bdbd69, type: 2}

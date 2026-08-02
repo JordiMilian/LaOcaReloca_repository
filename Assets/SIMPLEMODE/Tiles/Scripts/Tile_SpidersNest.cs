@@ -4,7 +4,15 @@ using static StringTools;
 public class Tile_SpidersNest : TileInfo
 {
     [SerializeField] int spidersOnCrossed = 1, spidersOnRolledDice = 1;
-    [SerializeField] TileInfo spiderTokenTileProfile;
+    [SerializeField] TileConfig spiderTokenTileProfile;
+    public override TileInfo GetCopy()
+    {
+        Tile_SpidersNest newInfo = (Tile_SpidersNest)CopyBaseStatsIntoOther(new Tile_SpidersNest());
+        newInfo.spidersOnCrossed = spidersOnCrossed;
+        newInfo.spidersOnRolledDice = spidersOnRolledDice;
+        newInfo.spiderTokenTileProfile = spiderTokenTileProfile;
+        return newInfo;
+    }
     public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); GameController.OnRolledDice_CardEffects.AddEffect(SpawnRolledDiceSpiders); }
     public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); GameController.OnRolledDice_CardEffects.RemoveEffect(SpawnRolledDiceSpiders); }
     public override IEnumerator OnPlayerStepped() 
@@ -25,7 +33,7 @@ public class Tile_SpidersNest : TileInfo
 
     IEnumerator CreateRandomSpider()
     {
-        TileController ratTokenController = TilesFactory.instance.InstantiateTile(spiderTokenTileProfile);
+        TileController ratTokenController = TilesFactory.instance.InstantiateTile(spiderTokenTileProfile._configInfo);
         ratTokenController.transform.position = _Controller.transform.position;
 
         int randomIndex = MathJ.GetRandomIndexInBoard(true);

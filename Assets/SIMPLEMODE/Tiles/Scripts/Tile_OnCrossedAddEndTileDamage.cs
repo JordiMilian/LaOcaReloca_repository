@@ -18,6 +18,13 @@ public class Tile_OnCrossedAddEndTileDamage : TileInfo
         yield return  endTile.C_MultiplyBaseDamage(multiplierOnLanded);
         yield return base.OnPlayerLanded();
     }
+    public override TileInfo GetCopy()
+    {
+        Tile_OnCrossedAddEndTileDamage newInfo = (Tile_OnCrossedAddEndTileDamage)CopyBaseStatsIntoOther(new Tile_OnCrossedAddEndTileDamage());
+        newInfo.damageToAdd = damageToAdd;
+        newInfo.multiplierOnLanded = multiplierOnLanded;
+        return newInfo;
+    }
     public override string GetTooltipText()
     {
         return $"{OnLanded} Multiply the END TILE dmg x{multiplierOnLanded} \n{OnCrossed} Give {StringTools.AddDamageString(damageToAdd)} to the END TILE";

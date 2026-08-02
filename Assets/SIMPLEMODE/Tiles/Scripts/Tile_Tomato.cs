@@ -9,6 +9,16 @@ public class Tile_Tomato : Tile_Food
     //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
     //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
+
+    public override TileInfo GetCopy()
+    {
+        Tile_Tomato newInfo = (Tile_Tomato)CopyBaseStatsIntoOther(new Tile_Tomato());
+        newInfo.baseRot = baseRot;
+        newInfo.moneyOnEaten = moneyOnEaten;
+        newInfo.moneyOnRotten = moneyOnRotten;
+        newInfo.chanceToSpawnPlant = chanceToSpawnPlant;
+        return newInfo;
+    }
     public override string GetTooltipText() 
     {
         return base.GetTooltipText() +

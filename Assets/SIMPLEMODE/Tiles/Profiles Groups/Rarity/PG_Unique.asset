@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GroupName: 
   tilesList:
+  - {fileID: 11400000, guid: 3f233431ec1d6b64b8dba57c28bea89c, type: 2}
   - {fileID: 11400000, guid: ae3987ee5cdff2449bfe6a0c5551586d, type: 2}

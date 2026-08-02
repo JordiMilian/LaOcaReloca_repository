@@ -21,9 +21,9 @@ MonoBehaviour:
       type: {class: Tile_Matrioska, ns: , asm: Assembly-CSharp}
       data:
         BaseDamage: 10
-        Title: NO TITLE
+        Title: MATRIOSKA
         tileColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-        tileTexture: {fileID: 0}
+        tileTexture: {fileID: 2800000, guid: e9f61c087bf19b74fac9841c28d560d1, type: 3}
         rarity: 2
         tileSize: 1
         uniquePrice: 0

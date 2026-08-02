@@ -36,4 +36,11 @@ public class Tile_BloomingEmpty : TileInfo
     {
         return $"{OnLanded} Add {MathJ.AddDamage(addedDamageToEmptyTiles)} to ALL EMPTY TILES \n{OnCrossed} Add {MathJ.AddDamage(addedDamageToEmptyTiles)} to a RANDOM EMPTY TILE";
     }
+
+    public override TileInfo GetCopy()
+    {
+        Tile_BloomingEmpty newInfo = (Tile_BloomingEmpty)CopyBaseStatsIntoOther(new Tile_BloomingEmpty());
+        newInfo.addedDamageToEmptyTiles = addedDamageToEmptyTiles;
+        return newInfo;
+    }
 }

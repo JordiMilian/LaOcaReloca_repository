@@ -8,7 +8,10 @@ public class Tile_ElevatorOca : Tile_Oca
     //public override void OnRemovedFromBoard() { base.OnRemovedFromBoard(); }
 
     //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
-    
+    public override TileInfo GetCopy()
+    {
+        return (Tile_ElevatorOca)CopyBaseStatsIntoOther(new Tile_ElevatorOca());
+    }
     public override IEnumerator OnPlayerLanded() 
     { 
         yield return basePlayerLanded();

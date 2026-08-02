@@ -4,6 +4,12 @@ using static StringTools;
 public class Tile_CompostPile : TileInfo
 {
     [SerializeField] float poisonAmount = 20;
+    public override TileInfo GetCopy()
+    {
+        Tile_CompostPile newInfo = (Tile_CompostPile)CopyBaseStatsIntoOther(new Tile_CompostPile());
+        newInfo.poisonAmount = poisonAmount;
+        return newInfo;
+    }
     public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); GameController.OnRemovedTileFromBoard_CardEffect.AddEffect(OnRemovedCard); }
    public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); GameController.OnRemovedTileFromBoard_CardEffect.RemoveEffect(OnRemovedCard); }
 

@@ -19,4 +19,9 @@ public class Tile_SlowingPotion : TileInfo
         }
     }
    public override string GetTooltipText() { return $"{OnCrossed} Adjacent Tiles take +1 steps to cross"; }
+    public override TileInfo GetCopy()
+    {
+        Tile_SlowingPotion newInfo = (Tile_SlowingPotion)CopyBaseStatsIntoOther(new Tile_SlowingPotion());
+        return newInfo;
+    }
 }
