@@ -22,7 +22,7 @@ public class Tile_RatQueen : TileInfo
     }
     IEnumerator CreateRandomRat()
     {
-        TileController ratTokenController = TilesFactory.instance.InstantiateTile(ratTokenTileProfile._configInfo);
+        TileController ratTokenController = TilesFactory.instance.InstantiateTileFromConfig(ratTokenTileProfile);
         ratTokenController.transform.position = _Controller.transform.position;
         int randomIndex, ownIndex = _Controller.indexInBoard;
         do

@@ -38,6 +38,11 @@ public class ToySlot : MonoBehaviour
         }
 
     }
+    public void ForceSetAndMoveNewToy(Toy_Controller newToy) //called when loading a new board
+    {
+        SetNewSlot(newToy);
+        newToy.returnToyToOrigin();
+    }
     void SetNewSlot(Toy_Controller newToy)
     {
         currentToy = newToy;

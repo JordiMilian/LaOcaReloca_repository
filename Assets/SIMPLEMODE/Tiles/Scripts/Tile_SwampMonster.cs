@@ -12,13 +12,13 @@ public class Tile_SwampMonster : TileInfo
         yield return base.OnPlacedInBoard();
         RemoveSkill(this, GenericSkills.Unmovable);
 
-        TileController newSwamp01 = TilesFactory.instance.InstantiateTile(swampTokenProfile._configInfo);
+        TileController newSwamp01 = TilesFactory.instance.InstantiateTileFromConfig(swampTokenProfile);
         newSwamp01.transform.position = _Controller.transform.position;
 
         yield return BoardController.C_AddNewTile(newSwamp01, _Controller.indexInBoard-1);
         RemoveSkill(newSwamp01._Info, GenericSkills.Unmovable);
 
-        TileController newSwamp02 = TilesFactory.instance.InstantiateTile(swampTokenProfile._configInfo);
+        TileController newSwamp02 = TilesFactory.instance.InstantiateTileFromConfig(swampTokenProfile);
         newSwamp02.transform.position = _Controller.transform.position;
 
         yield return BoardController.C_AddNewTile(newSwamp02, _Controller.indexInBoard +1);

@@ -40,7 +40,7 @@ public class Tile_Malfunction : TileInfo
             }
             if (passedChance())
             {
-                TileController tokenCopy = TilesFactory.instance.InstantiateTile(newTile._Info);
+                TileController tokenCopy = TilesFactory.instance.InstantiateTileCopy(newTile._Info);
                 tokenCopy.transform.position = _Controller.transform.position;
                 tokenCopy.SetBaseDamage(0);
                 lastTileSpawnedByThis = tokenCopy;

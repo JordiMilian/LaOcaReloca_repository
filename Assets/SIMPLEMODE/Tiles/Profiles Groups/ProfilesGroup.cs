@@ -18,16 +18,16 @@ public class ProfilesGroup : ScriptableObject
     public string GroupName;
     public List<TileConfig> tilesList = new();
 
-    public TileInfo GetRandomProfile()
+    public TileConfig GetRandomProfile()
     {
         if(tilesList.Count == 0) { return null; }
-        return tilesList[Random.Range(0, tilesList.Count)]._configInfo;
+        return tilesList[Random.Range(0, tilesList.Count)];
     }
     public TileConfig GetConfigById(string id)
     {
         foreach(TileConfig tile in tilesList)
         {
-            if(tile._configId == id) { return tile; }
+            if(tile.name == id) { return tile; }
         }
         return  null;
     }

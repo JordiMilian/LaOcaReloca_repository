@@ -33,7 +33,7 @@ public class Tile_SpidersNest : TileInfo
 
     IEnumerator CreateRandomSpider()
     {
-        TileController ratTokenController = TilesFactory.instance.InstantiateTile(spiderTokenTileProfile._configInfo);
+        TileController ratTokenController = TilesFactory.instance.InstantiateTileFromConfig(spiderTokenTileProfile);
         ratTokenController.transform.position = _Controller.transform.position;
 
         int randomIndex = MathJ.GetRandomIndexInBoard(true);

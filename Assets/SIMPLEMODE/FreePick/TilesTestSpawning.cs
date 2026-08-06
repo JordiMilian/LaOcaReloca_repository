@@ -15,7 +15,10 @@ public class TilesTestSpawning : MonoBehaviour
     {
         
 #if UNITY_EDITOR
-        TileConfig config = null;
+
+        TileConfig config = ConfigsDatabase.GetTileConfigWithId(inputField.text);
+        freePick.SpawnTile(config);
+        /*
 
         string profileName = inputField.text + ".asset";
         
@@ -43,7 +46,8 @@ public class TilesTestSpawning : MonoBehaviour
             Debug.LogWarning("TileConfig not found: " + profileName);
             return;
         }
-        freePick.SpawnTile(config._configInfo);
+        freePick.SpawnTile(config);
+        */
 #endif
         
 
@@ -51,14 +55,17 @@ public class TilesTestSpawning : MonoBehaviour
     public void AttemptSpawn_Toy()
     {
 #if UNITY_EDITOR
-        Toy_Profile profile = null;
+        ToyConfig config = null;
+        config = ConfigsDatabase.GetToyConfigWithId(toy_inputField.text);
+        freePick.SpawnToy(config);
 
+        /*
         string profileName = "Toy_" + toy_inputField.text + ".asset";
 
         string basicFolderPath = "Assets/SIMPLEMODE/Toys/Profiles/" + profileName;
         if (AssetDatabase.AssetPathExists(basicFolderPath))
         {
-            profile = AssetDatabase.LoadAssetAtPath<Toy_Profile>(basicFolderPath);
+            config = AssetDatabase.LoadAssetAtPath<ToyConfig>(basicFolderPath);
         }
         else
         {
@@ -68,18 +75,18 @@ public class TilesTestSpawning : MonoBehaviour
                 string fullPath = subfolderPath + "/" + profileName;
                 if (AssetDatabase.AssetPathExists(fullPath))
                 {
-                    profile = AssetDatabase.LoadAssetAtPath<Toy_Profile>(fullPath);
+                    config = AssetDatabase.LoadAssetAtPath<ToyConfig>(fullPath);
                     break;
                 }
             }
         }
 
-        if (profile == null)
+        if (config == null)
         {
             Debug.LogError("Toy Profile not found: " + profileName);
             return;
         }
-        freePick.SpawnToy(profile);
+       */
 #endif
     }
 }

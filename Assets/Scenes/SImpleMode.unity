@@ -1647,18 +1647,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8648c5690b5b784984eab5156ce3092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testProfile: {fileID: 11400000, guid: 5d977e1b9ce9d3b4d9c51a0e2c946172, type: 2}
-  testProfile2: {fileID: 11400000, guid: 1e5334f08591b3546857672e7493109c, type: 2}
+  testConfig: {fileID: 0}
+  testConfig2: {fileID: 0}
   ToyPrefab: {fileID: 3468063801926346145, guid: e8da9a51bb90f4445a60a3971992606e, type: 3}
-  AllToyProfiles:
-  - {fileID: 11400000, guid: c73b0480f5cd25942a0d7c9fa3a93a34, type: 2}
-  - {fileID: 11400000, guid: 2700e6feffdca6245b975d381406f40b, type: 2}
-  - {fileID: 11400000, guid: 666c48057bbbeca448193145afd076ba, type: 2}
-  - {fileID: 11400000, guid: ba63308ba4790384492dec638ca6c7df, type: 2}
-  - {fileID: 11400000, guid: 86ba36bd8320df147ad0c12838593a2f, type: 2}
-  - {fileID: 11400000, guid: e4e1aeb201b37944685231d5a1b1694d, type: 2}
-  - {fileID: 11400000, guid: ec050a4051b09204aa4078cd436d6c97, type: 2}
-  - {fileID: 11400000, guid: 4647ba811ff28264c85cc3b7e17aad0f, type: 2}
+  slots:
+  - {fileID: 875779881}
+  - {fileID: 617572494}
+  - {fileID: 1157714617}
   instantiatedToys: []
 --- !u!4 &401242999
 Transform:
@@ -5546,9 +5541,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSave:
-    toys: []
     dices: []
     currentIndex: 0
+    money: 0
 --- !u!4 &1212200749
 Transform:
   m_ObjectHideFlags: 0
@@ -8303,6 +8298,7 @@ MonoBehaviour:
   BoardController: {fileID: 466753541}
   shopController: {fileID: 1757594647}
   dicesController: {fileID: 1386617554}
+  toysManager: {fileID: 401242998}
   OnKilledEnemy:
     m_PersistentCalls:
       m_Calls: []

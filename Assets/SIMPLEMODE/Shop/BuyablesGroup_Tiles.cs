@@ -7,7 +7,7 @@ public class BuyablesGroup_Tiles : BuyablesGroup
     [SerializeField] ProfilesGroup profilesGroup;
     public override GameObject GetRandomBuyableGO()
     {
-       return TilesFactory.instance.InstantiateTile(profilesGroup.GetRandomProfile()).gameObject;
+       return TilesFactory.instance.InstantiateTileFromConfig(profilesGroup.GetRandomProfile()).gameObject;
     }
     public override int BuyablesCount()
     {

@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
     , IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
-    public Toy_Profile _Profile;
+    public Toy_Info _Profile;
     public bool isActive;
     public ToySlot currentSlot;
     public Transform originTf;
@@ -16,9 +16,9 @@ public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
     public UnityEvent OnAddedToBoard;
     //public TileState currentState = TileState.none;
     
-    public void SetProfile(Toy_Profile profile)
+    public void SetProfile(Toy_Info profile)
     {
-        _Profile = Instantiate(profile);
+        _Profile = profile;
         _Profile.InitializeProfile(this);
 
         if(_Profile.toyMesh != null)
@@ -76,7 +76,7 @@ public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
 
     public Texture GetTooltipTexture()
     {
-        return _Profile.TooltipTexture;
+        return ConfigsDatabase.GetToyConfigWithId(_Profile.configId)._texture;
     }
     public void OnPointerEnter(PointerEventData eventData) { RequestTooltip(); }
     public void OnPointerExit(PointerEventData eventData) { StopRequestTooltip(); }

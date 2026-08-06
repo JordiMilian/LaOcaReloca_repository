@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b71f8b7b9baf745a221bd76998692b, type: 3}
+  m_Name: Perfume
+  m_EditorClassIdentifier: 
+  _configInfo:
+    rid: 5590862039855398916
+  _texture: {fileID: 2800000, guid: 99c68143107e6044fa5be9b2e5209659, type: 3}
+  references:
+    version: 2
+    RefIds:
+    - rid: 5590862039855398916
+      type: {class: Tile_Perfume, ns: , asm: Assembly-CSharp}
+      data:
+        _configId: 
+        BaseDamage: 5
+        Title: PERFUME
+        tileColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+        tileTexture: {fileID: 2800000, guid: 99c68143107e6044fa5be9b2e5209659, type: 3}
+        rarity: 3
+        tileSize: 1
+        uniquePrice: 0
+        tileTags: 
+        genericSkills: 
+        _Controller: {fileID: 0}
+        StepsToCross: 1
+        remainingSteps: 1
+        perfumeDamage: 10
+        increaseDmg: 5

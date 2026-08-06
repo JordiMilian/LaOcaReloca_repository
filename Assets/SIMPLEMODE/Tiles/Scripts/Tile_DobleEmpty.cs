@@ -9,7 +9,7 @@ public class Tile_DobleEmpty : TileInfo
    public override IEnumerator OnPlayerLanded() 
    { 
         yield return base.OnPlayerLanded();
-        TileController instantiatedEmpty =  TilesFactory.instance.InstantiateTile(emptyProfile._configInfo);
+        TileController instantiatedEmpty =  TilesFactory.instance.InstantiateTileFromConfig(emptyProfile);
         instantiatedEmpty.transform.position = _Controller.transform.position;
         int randomIndex = Random.Range(1, BoardController.TilesList.Count - 1);
         instantiatedEmpty.SetBaseDamage(BaseDamage);

@@ -41,7 +41,7 @@ public class Tile_RacoonGang : TileInfo
 
     IEnumerator CreateRandomRacoon()
     {
-        TileController ratTokenController = TilesFactory.instance.InstantiateTile(racoonToken_Config._configInfo);
+        TileController ratTokenController = TilesFactory.instance.InstantiateTileFromConfig(racoonToken_Config);
         ratTokenController.transform.position = _Controller.transform.position;
 
         int randomIndex = MathJ.GetRandomIndexInBoard(true);

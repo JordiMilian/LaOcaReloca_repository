@@ -6,7 +6,6 @@ using System.Linq;
 
 public class TilesFactory : MonoBehaviour
 {
-    
     [SerializeField] GameObject EmptyPrefab;
 
     public static TilesFactory instance;
@@ -21,23 +20,26 @@ public class TilesFactory : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public TileController InstantiateTile(TileInfo info)
+    public TileController InstantiateTileCopy(TileInfo info)
     {
         GameObject newTile = Instantiate(EmptyPrefab);
 
         TileController controller = newTile.GetComponent<TileController>();
         controller.SetTileProfile(info.GetCopy());
 
+        TileConfig thisTileConfig = ConfigsDatabase.GetTileConfigWithId(info._configId);
+        controller.tileMaterial.SetTexture("_mainTexture", thisTileConfig._texture);
+
         return controller;
     }
     public TileController InstantiateTileFromConfig(TileConfig config)
     {
-        GameObject newTile = Instantiate(EmptyPrefab);
+        GameObject newTileGO = Instantiate(EmptyPrefab);
 
-        TileController controller = newTile.GetComponent<TileController>();
+        TileController controller = newTileGO.GetComponent<TileController>();
         controller.SetTileProfile(config._configInfo.GetCopy());
         controller.tileMaterial.SetTexture("_mainTexture", config._texture); //guarro i potser podem centralitzarho millor tot aixo. Esta molt dispers el setting de una tile nova
-        controller._Info._configId = config._configId;
+        controller._Info._configId = config.name;
         return controller;
 
 

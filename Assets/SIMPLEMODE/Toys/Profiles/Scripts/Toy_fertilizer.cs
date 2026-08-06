@@ -3,7 +3,7 @@ using System.Collections;
 using static StringTools;
 using System.Collections.Generic;
 using System;
-public class Toy_fertilizer : Toy_Profile
+public class Toy_fertilizer : Toy_Info
 {
     List<Tile_Plant> subscribedPlants = new();
     [SerializeField] float growthMultiplier = 1.5f;

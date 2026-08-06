@@ -139,10 +139,13 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         _Info = info;
         _Info._Controller = this;
         tileMaterial.SetColor("_OutlineColor", _Info.tileColor);
+
+        /* TEXTURE IS NOW STORED IN THE CONFIG
         if(_Info.tileTexture != null)
         {
             tileMaterial.SetTexture("_mainTexture", _Info.tileTexture);
         }
+        */
         tileMovement.UpdateDmgDisplayText();
         _Info.Initialize();
     }
@@ -335,7 +338,8 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     }
     public Texture GetTooltipTexture()
     {
-        return _Info.tileTexture;
+        return ConfigsDatabase.GetTileConfigWithId(_Info._configId)._texture;
+        //return _Info.tileTexture;
     }
     #endregion
     #region DRAGGING

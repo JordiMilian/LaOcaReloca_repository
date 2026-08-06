@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using static StringTools;
 using System.Linq;
-public class Toy_Trebol : Toy_Profile
+public class Toy_Trebol : Toy_Info
 {
     [SerializeField] int moneyOnLandedOnEmpty = 2;
     public override void OnActivatedToy()

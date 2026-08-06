@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Toy_Ladybug : Toy_Profile
+public class Toy_Ladybug : Toy_Info
 {
    public override void OnActivatedToy()
     {

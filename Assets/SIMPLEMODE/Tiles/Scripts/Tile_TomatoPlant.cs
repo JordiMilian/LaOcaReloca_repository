@@ -11,7 +11,7 @@ public class Tile_TomatoPlant : Tile_Plant
     { 
         yield return base.OnPlayerStepped();
         _Controller.SetBaseDamage(0);
-        TileController newTomato = TilesFactory.instance.InstantiateTile(tomatoProfile._configInfo);
+        TileController newTomato = TilesFactory.instance.InstantiateTileFromConfig(tomatoProfile);
         newTomato.transform.position = _Controller.transform.position;
         yield return BoardController.C_AddNewTile(newTomato, MathJ.GetRandomIndexInBoard(true));
     }

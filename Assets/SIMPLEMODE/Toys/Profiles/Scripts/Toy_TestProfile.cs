@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "ToyProfile/TestProfile", fileName = "Toy_TestProfile")]
-public class Toy_TestProfile : Toy_Profile
+public class Toy_TestProfile : Toy_Info
 {
     public override string GetTooltipDescription()
     {

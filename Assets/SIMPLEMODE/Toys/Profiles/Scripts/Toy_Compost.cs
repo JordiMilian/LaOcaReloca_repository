@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Toy_Compost : Toy_Profile
+public class Toy_Compost : Toy_Info
 {
     [SerializeField] float poisonAmount = 5;
     public override void OnActivatedToy()

@@ -20,7 +20,7 @@ public class GameController_Simple : MonoBehaviour
     Camera mainCamera;
     public ShopController shopController;
     public Dices_Controller dicesController;
-    
+    public ToysManager toysManager;
 
 
     //COROUTINE EVENTS
@@ -131,7 +131,7 @@ public class GameController_Simple : MonoBehaviour
     {
         dicesController.EnableRollButton();
         dicesController.EnableAddExtraRollValueButton();
-        ToysManager.Instance.EnableToysDrag();
+        toysManager.EnableToysDrag();
         shopController.EnableShop();
         if(BoardController.PlayerIndex == BoardController.TilesList.Count -1)
         {
@@ -143,7 +143,7 @@ public class GameController_Simple : MonoBehaviour
         dicesController.DisableRollButton();
         dicesController.DisableAddExtraRollValueButton();
         shopController.DisableShop();
-        ToysManager.Instance.DisableToysDrag();
+        toysManager.DisableToysDrag();
     }
     #endregion
     #region ROLLING DICES
@@ -552,7 +552,7 @@ public class GameController_Simple : MonoBehaviour
         BoardController.TilesList.Clear();
         foreach(TileInfo profile in info.tiles)
         {
-            BoardController.TilesList.Add(TilesFactory.instance.InstantiateTile(profile));
+            BoardController.TilesList.Add(TilesFactory.instance.InstantiateTileCopy(profile));
         }
         foreach(TileController tile in BoardController.TilesList)
         {
@@ -563,7 +563,17 @@ public class GameController_Simple : MonoBehaviour
 
         BoardController.MoveTiles_ToTfData(false);
         yield return BoardController.L_JumpPlayerTo(info.currentIndex,false,false);
-        //TO DO TOYS
+
+
+        toysManager.DestroyAllToysInSlots();
+        for (int i = 0; i < info.toys.Count; i++)
+        {
+            Toy_Controller newToy =  toysManager.InstantiateToyCopy(info.toys[i]);
+            newToy.ActivateToy();
+            newToy.transform.position = toysManager.slots[i].transform.position;
+            toysManager.slots[i].ForceSetAndMoveNewToy(newToy);
+        }
+        
         //TO DO DICES
         //TO DO REMAINING DICEROLLS
 

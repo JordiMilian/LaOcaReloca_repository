@@ -26,7 +26,7 @@ public class Tile_Mushroom : Tile_Plant
         float randomValue = Random.Range(0f, 1f);
         if(randomValue <= changeToDuplicate)
         {
-            TileController newMushroom = TilesFactory.instance.InstantiateTile(this);
+            TileController newMushroom = TilesFactory.instance.InstantiateTileCopy(this);
             newMushroom.SetBaseDamage(baseGrowth);
             int randomIndex = MathJ.GetRandomIndexInBoard(true);
             yield return BoardController.C_AddNewTile(newMushroom, randomIndex);

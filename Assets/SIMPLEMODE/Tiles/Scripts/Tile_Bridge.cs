@@ -10,7 +10,7 @@ public class Tile_Bridge : TileInfo
         yield return base.OnPlacedInBoard();
         if (ignoreSpawnCopy) { yield break; }
 
-        TileController bridgeCopy = TilesFactory.instance.InstantiateTile(this);
+        TileController bridgeCopy = TilesFactory.instance.InstantiateTileCopy(this);
         otherBridge = bridgeCopy._Info as Tile_Bridge;
         otherBridge.otherBridge = this;
         otherBridge.ignoreSpawnCopy = true;

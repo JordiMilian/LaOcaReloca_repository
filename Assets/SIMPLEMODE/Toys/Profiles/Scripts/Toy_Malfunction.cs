@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using static StringTools;
 using System.Linq;
-public class Toy_Malfunction : Toy_Profile
+public class Toy_Malfunction : Toy_Info
 {
     [SerializeField] float chanceToTrigger = 0.3f;
     public override void OnActivatedToy()
@@ -20,7 +20,7 @@ public class Toy_Malfunction : Toy_Profile
         {
             if (passedChance())
             {
-                TileController tokenCopy = TilesFactory.instance.InstantiateTile(newTile._Info);
+                TileController tokenCopy = TilesFactory.instance.InstantiateTileCopy(newTile._Info);
                 tokenCopy.transform.position = _ToyController.transform.position;
                 tokenCopy.SetBaseDamage(0);
 

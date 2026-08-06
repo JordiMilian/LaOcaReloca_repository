@@ -11,7 +11,7 @@ public class SaveLoadBoard : MonoBehaviour
     public class GameSaveInfo
     {
         public List<TileInfo> tiles = new();
-        public List<Toy_Profile> toys = new();
+        public List<Toy_Info> toys = new();
         public List<Dice> dices = new();
         public int currentIndex;
         public int money;
@@ -36,7 +36,7 @@ public class SaveLoadBoard : MonoBehaviour
         currentSave.money = GameController_Simple.Instance.GetCurrentMoney();
 
         //TOYS (Per ara centrarse en les tiles)
-        /* 
+         
         foreach(Toy_Controller toyC in ToysManager.Instance.instantiatedToys)
         {
             if (toyC.isActive)
@@ -44,7 +44,7 @@ public class SaveLoadBoard : MonoBehaviour
                 newInfo.toys.Add(toyC._Profile);
             }
         }
-        */
+        
 
         //TO DO MISSING DICES
 

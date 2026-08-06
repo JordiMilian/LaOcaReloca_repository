@@ -3,7 +3,7 @@ using System.Collections;
 using static StringTools;
 using System.Collections.Generic;
 using System.Linq;
-public class Toy_Bread : Toy_Profile
+public class Toy_Bread : Toy_Info
 {
     List<TileController> modifiedOcas = new();
     [SerializeField] float multiplier = 2;
@@ -51,6 +51,12 @@ public class Toy_Bread : Toy_Profile
         }
     }
 
+    public override Toy_Info GetCopy()
+    {
+        Toy_Bread newInfo = (Toy_Bread)CopyBaseStatsIntoOther(new Toy_Bread());
+        newInfo.multiplier = multiplier;
+        return newInfo;
+    }
   public override string GetTooltipDescription() { return $"OCAS deal x{multiplier} DMG"; }
 
 }

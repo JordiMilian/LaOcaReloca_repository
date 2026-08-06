@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static StringTools;
-public class Toy_Stickers : Toy_Profile
+public class Toy_Stickers : Toy_Info
 {
     [SerializeField] int valueAdded = 2;
    public override void OnActivatedToy()

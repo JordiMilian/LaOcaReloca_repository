@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9a80e9b89b0fe4abe1c8c02ea21bed, type: 3}
+  m_Name: Bread
+  m_EditorClassIdentifier: 
+  _Info:
+    rid: 1233644502544547904
+  _texture: {fileID: 2800000, guid: 730f9f61013f72f4f89632134275bd2a, type: 3}
+  references:
+    version: 2
+    RefIds:
+    - rid: 1233644502544547904
+      type: {class: Toy_Bread, ns: , asm: Assembly-CSharp}
+      data:
+        Title: BREAD
+        toyMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+        TooltipTexture: {fileID: 2800000, guid: 730f9f61013f72f4f89632134275bd2a, type: 3}
+        multiplier: 2

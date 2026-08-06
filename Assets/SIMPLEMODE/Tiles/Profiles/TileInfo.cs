@@ -3,18 +3,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 using static StringTools;
 [System.Serializable]
 public abstract class TileInfo
 {
-    public string _configId;
+     [HideInInspector] public string _configId;
     public float BaseDamage = 10;
     public string Title = "NO TITLE";
     public Color tileColor = Color.gray;
-    public Texture tileTexture;
     public Rarity rarity = Rarity.none;
     public TileSize tileSize = TileSize.Medium;
     public int uniquePrice = 0; //IF rarity is Unique, use this value.
@@ -149,10 +146,11 @@ public abstract class TileInfo
 
     protected TileInfo CopyBaseStatsIntoOther(TileInfo otherState)
     {
+        otherState._configId = _configId;
         otherState.BaseDamage = BaseDamage;
         otherState.Title = Title;
         otherState.tileColor = tileColor;
-        otherState.tileTexture = tileTexture;
+        //otherState.tileTexture = tileTexture;
         otherState.rarity = rarity;
         otherState.tileSize = tileSize;
         otherState.uniquePrice = uniquePrice;
@@ -161,7 +159,6 @@ public abstract class TileInfo
         otherState.StepsToCross = StepsToCross;
         return otherState;
     }
-    //public abstract TileInfo GetCopy();
     
     public virtual TileInfo GetCopy()
     {
@@ -171,33 +168,4 @@ public abstract class TileInfo
     }
     
     #endregion
-#if UNITY_EDITOR
-    //On validate, move this profile to the proper groups according to tags and rarity
-    /*
-    private void OnValidate()
-    {
-        if(EditorUtility.IsPersistent(this)) //check if the profile is in project window or an instance in memory. Only apply to project 
-        {
-            ProfileGroups_Registry registry = TilesGroupRegistry_singleton.Instance;
-
-            //Remove from all groups
-            foreach (ProfilesGroup group in registry.GetAllGroups())
-            {
-                if (group.tilesList.Remove(this))
-                {
-                    EditorUtility.SetDirty(group);
-                }
-            }
-
-            //Add them to the proper groups
-            List<ProfilesGroup> properGroups = registry.GetProfileGroups(this);
-            foreach (ProfilesGroup group in properGroups)
-            {
-                group.tilesList.Add(this);
-                EditorUtility.SetDirty(group);
-            }
-        } 
-    }
-    */
-#endif
 }
