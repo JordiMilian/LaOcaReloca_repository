@@ -34,10 +34,12 @@ public class GameController_Simple : MonoBehaviour
     public CardEffectsDelegate OnRemovedTileFromBoard_CardEffect = new();
     public CardEffectsDelegate<int> OnAddedMoney_CardEffects = new();
     public CardEffectsDelegate<int> OnRemovedMoney_CardEffects = new();
+    public CardEffectsDelegate OnFinishedRoll_CardEffects = new(); //Called after damage has been dealt to the enemy, before entering freemode
+
 
     public UnityEvent OnKilledEnemy;
     public UnityEvent OnRolledDice; //Usefull to reset effects for each roll of dices
-
+   
     public CardEffectsDelegate OnInsectFly = new(), OnInsectsMoved_CardEffects = new();
 
     public static GameController_Simple Instance;
@@ -229,6 +231,7 @@ public class GameController_Simple : MonoBehaviour
         yield return BoardController.L_LandPlayerInCurrentPos();
         yield return DealTotalDamage();
 
+        yield return OnFinishedRoll_CardEffects.C_ActivateEffects();
         if(RollsRemaining <= 0) { ChangeGameState(GameState.PlayerDied); }
         else { ChangeGameState(GameState.FreeMode); }  
     }

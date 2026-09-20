@@ -21,5 +21,11 @@ public class Toy_Trebol : Toy_Info
             yield return new WaitForSeconds(0.5f);
         }
     }
+    public override Toy_Info GetCopy()
+    {
+        Toy_Trebol newInfo = (Toy_Trebol)CopyBaseStatsIntoOther(new Toy_Trebol());
+        newInfo.moneyOnLandedOnEmpty = moneyOnLandedOnEmpty;
+        return newInfo;
+    }
     public override string GetTooltipDescription() { return OnLandedOnTag(TileTags.Empty) + $" Add {moneyOnLandedOnEmpty} money"; }
 }

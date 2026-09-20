@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static UnityEngine.Rendering.STP;
 
@@ -43,8 +44,8 @@ public class ToysManager : MonoBehaviour
 
     public Toy_Info GetRandomToyProfile()
     {
-        int randomIndex = Random.Range(0, AllToyProfiles.Count);
-        return AllToyProfiles[randomIndex];
+        int randomIndex = Random.Range(0, ConfigsDatabase.toyConfigDictionary.Count);
+        return ConfigsDatabase.toyConfigDictionary.ElementAt(randomIndex).Value._Info; 
     }
     public void DestroyAllToysInSlots()
     {

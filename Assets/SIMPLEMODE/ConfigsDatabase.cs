@@ -36,4 +36,8 @@ public static class ConfigsDatabase
         if (toyConfigDictionary.ContainsKey(id)) { return toyConfigDictionary[id]; }
         else { Debug.LogError(id + " not found in database"); return null; }
     }
+    public static ToyConfig GetToyConfig_Random() //This is to avoid making a profile group for toys
+    {
+        return toyConfigDictionary.ElementAt(Random.Range(0,toyConfigDictionary.Count)).Value;
+    }
 }

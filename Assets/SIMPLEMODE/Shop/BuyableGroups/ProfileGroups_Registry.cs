@@ -8,6 +8,7 @@ public class ProfileGroups_Registry : ScriptableObject
     [SerializeField] ProfilesGroup Common, Rare, Legendary, Unique, Deprecated;
     [SerializeField] ProfilesGroup Curse, Tokens, Food;
     [SerializeField] ProfilesGroup Rest, All;
+
     public List<ProfilesGroup> GetProfileGroups(TileInfo profile)
     {
         List<ProfilesGroup> groups = new();

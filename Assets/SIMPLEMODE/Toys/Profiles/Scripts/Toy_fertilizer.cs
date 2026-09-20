@@ -55,6 +55,12 @@ public class Toy_fertilizer : Toy_Info
             removeModify((Tile_Plant)removedTile._Info);
         }
     }
-   
-  public override string GetTooltipDescription() { return $"All plants grow {(growthMultiplier - 1)*100}% more"; }
+    public override Toy_Info GetCopy()
+    {
+        Toy_fertilizer newInfo = (Toy_fertilizer)CopyBaseStatsIntoOther(new Toy_fertilizer());
+        newInfo.growthMultiplier = growthMultiplier;
+        return newInfo;
+    }
+
+    public override string GetTooltipDescription() { return $"All plants grow {(growthMultiplier - 1)*100}% more"; }
 }

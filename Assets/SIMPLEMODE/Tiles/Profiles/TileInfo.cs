@@ -48,7 +48,7 @@ public abstract class TileInfo
     {
         yield return GameController.OnCrossed_CardEffects.C_ActivateEffects(_Controller);
 
-        _Controller.DamagesToDeal.Add(_Controller.GetModifiedBaseDamage());
+        if (!genericSkills.Contains(GenericSkills.DisabledDmg)) { _Controller.DamagesToDeal.Add(_Controller.GetModifiedBaseDamage()); }
         _Controller.DamagesToDeal.Reverse();        
     }
     public virtual IEnumerator OnPlayerLanded()

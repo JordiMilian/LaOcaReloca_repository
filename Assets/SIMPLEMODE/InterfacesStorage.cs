@@ -44,7 +44,7 @@ public enum TileTags
 }
 public enum GenericSkills
 {
-   Fragile, Unmovable, ExtraDiceroll, Golden
+   Fragile, Unmovable, ExtraDiceroll, Golden, DisabledDmg, DisabledLogic
 }
 public enum TileSize
 {

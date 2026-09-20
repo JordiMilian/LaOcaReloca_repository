@@ -13,11 +13,11 @@ public class TilesTestSpawning : MonoBehaviour
 
     public void AttemptSpawn()
     {
-        
-#if UNITY_EDITOR
-
         TileConfig config = ConfigsDatabase.GetTileConfigWithId(inputField.text);
         freePick.SpawnTile(config);
+#if UNITY_EDITOR
+
+
         /*
 
         string profileName = inputField.text + ".asset";
@@ -49,15 +49,16 @@ public class TilesTestSpawning : MonoBehaviour
         freePick.SpawnTile(config);
         */
 #endif
-        
+
 
     }
     public void AttemptSpawn_Toy()
     {
-#if UNITY_EDITOR
         ToyConfig config = null;
         config = ConfigsDatabase.GetToyConfigWithId(toy_inputField.text);
         freePick.SpawnToy(config);
+#if UNITY_EDITOR
+
 
         /*
         string profileName = "Toy_" + toy_inputField.text + ".asset";

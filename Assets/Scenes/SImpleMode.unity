@@ -8329,6 +8329,7 @@ MonoBehaviour:
   - {fileID: 5945102369988258234, guid: aa82d8a12e82ccb49b10e3ccc9cdd04b, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 871739014061315704, guid: e2ef2f59b27a2104a8b71557efd13eec, type: 3}
+  - {fileID: 4828943553788522688, guid: 9c7fe396803f097478bc5e12c7e5eebc, type: 3}
   EnemyEncountersHP: 64000000c80000002c010000f4010000bc020000e803000014050000a406000034080000c4090000b80b000094110000
   AcumulatedDamage: 0
   Enemy_MaxHP: 100
@@ -8532,7 +8533,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 260b5cc3cb33077438442ded05723a13, type: 2}
   - {fileID: 11400000, guid: 3b2d4becb883e1e449717de5f184e593, type: 2}
   - {fileID: 11400000, guid: 97d9f2ba728af724eae3544c597d424c, type: 2}
-  - {fileID: 11400000, guid: 2029779b2f0ea474f8966fccb17e90b4, type: 2}
+  - {fileID: 11400000, guid: 88e6160df6eba9645aff2d81f4cc3873, type: 2}
   shopItems:
   - {fileID: 1309579213}
   - {fileID: 1169025460}

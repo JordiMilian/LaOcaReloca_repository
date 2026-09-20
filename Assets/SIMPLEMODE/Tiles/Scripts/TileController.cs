@@ -261,22 +261,41 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         }
         tileState = newState;
     }
+    bool isDmgDisabled() { return _Info.genericSkills.Contains(GenericSkills.DisabledDmg); }
+    bool isLogicDisabled() { return _Info.genericSkills.Contains(GenericSkills.DisabledLogic); }
     #endregion
     #region CALL PROFILE LOGIC
 
     public IEnumerator OnPlayerStepped()
     {
         //Add visual and sound feedback
-       yield return _Info.OnPlayerStepped();
+        if (_Info.genericSkills.Contains(GenericSkills.DisabledLogic)) 
+        {
+            yield break;
+        }
+        yield return _Info.OnPlayerStepped();
     }
     public IEnumerator OnPlayerLanded()
     {
         //Add more visual and sound feedback
         tileMovement.shakeTile(Intensity.mid);
 
+        if (isLogicDisabled()) { yield break; }
         yield return _Info.OnPlayerLanded(); 
     }
-    public IEnumerator OnTileFinished() { yield return _Info.OnTileFinished(); }
+    public IEnumerator OnTileFinished() 
+    { 
+        //Si esta logic disabled pero el dmg no ho esta, aplica el dmg i a dormir
+        if (isLogicDisabled()) 
+        {
+            if (!isDmgDisabled())
+            {
+                DamagesToDeal.Add(GetModifiedBaseDamage());
+                yield return C_DealAllDamageToDeal();
+            }
+            yield break; } 
+        
+        yield return _Info.OnTileFinished(); }
     public IEnumerator C_OnPlacedInBoard() { yield return _Info.OnPlacedInBoard(); OnAddedToBoard?.Invoke(); }
     public IEnumerator C_OnRemovedFromBoard() { yield return _Info.OnRemovedFromBoard(); }
 
@@ -330,6 +349,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     void StopForcingThisTooltip() { TooltipManager.Instance.StopForcingThisTooltip(this); }
     public string GetTooltipDescription()
     {
+        if (isLogicDisabled()) { return "DISABLED LOGIC"; }
         return _Info.GetGenericSkillsText()+ _Info.GetTooltipText();
     }
     public string GetTooltipTitle()

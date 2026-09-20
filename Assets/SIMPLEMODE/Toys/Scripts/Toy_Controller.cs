@@ -45,8 +45,6 @@ public class Toy_Controller : MonoBehaviour, IBuyable, ITooltip
 
     public void OnAppearInShop(ShopItem_Controller shopItemController)
     {
-        //Pick a random profile and set it
-        SetProfile(ToysManager.Instance.GetRandomToyProfile());
         originTf = shopItemController.transform;
         transform.position = originTf.position;
         isInShop = true;

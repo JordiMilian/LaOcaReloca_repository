@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9a80e9b89b0fe4abe1c8c02ea21bed, type: 3}
+  m_Name: Trebol
+  m_EditorClassIdentifier: 
+  _Info:
+    rid: 1233644505601933317
+  _texture: {fileID: 2800000, guid: 8ab1f897f7472044ba9788a5ac90a17a, type: 3}
+  references:
+    version: 2
+    RefIds:
+    - rid: 1233644505601933317
+      type: {class: Toy_Trebol, ns: , asm: Assembly-CSharp}
+      data:
+        Title: TREBOL
+        configId: 
+        toyMesh: {fileID: 0}
+        moneyOnLandedOnEmpty: 5

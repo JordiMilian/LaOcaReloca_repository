@@ -25,12 +25,11 @@ MonoBehaviour:
         BaseDamage: 10
         Title: OCA
         tileColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-        tileTexture: {fileID: 0}
         rarity: 4
         tileSize: 1
         uniquePrice: 3
         tileTags: 02000000
-        genericSkills: 
+        genericSkills: 05000000
         _Controller: {fileID: 0}
         StepsToCross: 1
         remainingSteps: 1

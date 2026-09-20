@@ -25,11 +25,10 @@ MonoBehaviour:
         BaseDamage: 10
         Title: JEALOUS OCA
         tileColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-        tileTexture: {fileID: 2800000, guid: 6e78d773e46e123418490efa76c82edb, type: 3}
         rarity: 3
         tileSize: 1
         uniquePrice: 0
-        tileTags: 03000000
+        tileTags: 02000000
         genericSkills: 
         _Controller: {fileID: 0}
         StepsToCross: 1

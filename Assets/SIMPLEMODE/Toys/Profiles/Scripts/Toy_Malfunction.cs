@@ -38,6 +38,12 @@ public class Toy_Malfunction : Toy_Info
             return false;
         }
     }
+    public override Toy_Info GetCopy()
+    {
+        Toy_Malfunction newInfo = (Toy_Malfunction)CopyBaseStatsIntoOther(new Toy_Malfunction());
+        newInfo.chanceToTrigger = chanceToTrigger;
+        return newInfo;
+    }
     public override string GetTooltipDescription() 
     {
         return $" {OnCustomMessaje("WHEN A NEW TOKEN IS SPAWNED")} If token DMG > 0,  {chanceToTrigger * 100}% chance to spawn a copy with 0 DMG.";

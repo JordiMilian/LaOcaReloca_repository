@@ -19,5 +19,12 @@ public class Toy_Stickers : Toy_Info
     {
         _gameController.dicesController.AddBoughtValue(valueAdded);
     }
-  public override string GetTooltipDescription() { return $"Roll +{valueAdded} on every dice roll"; }
+    public override Toy_Info GetCopy()
+    {
+        Toy_Stickers newInfo = (Toy_Stickers)CopyBaseStatsIntoOther(new Toy_Stickers());
+        newInfo.valueAdded = valueAdded;
+
+        return newInfo;
+    }
+    public override string GetTooltipDescription() { return $"Roll +{valueAdded} on every dice roll"; }
 }

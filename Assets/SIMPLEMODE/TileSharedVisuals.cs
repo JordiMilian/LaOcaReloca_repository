@@ -23,6 +23,7 @@ public class TileSharedVisuals : MonoBehaviour
     }
     public void UpdateDmgDisplayText()
     {
+        if (tileBase._Info.genericSkills.Contains(GenericSkills.DisabledDmg)) { TMP_DamageDisplay.text = "XXX"; return; }
         TMP_DamageDisplay.text = MathJ.FloatToString(tileBase.GetBaseDamage(), 1);
     }
     public void SetBasicPanelColor()
