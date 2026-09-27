@@ -20,7 +20,7 @@ public abstract class Encounter_SelectedTileEffect : MonoBehaviour, IEncounter, 
     {
         return tooltipTitle;
     }
-
+    public abstract bool MeetsRequirementsToSpawn();
 
 
     public IEnumerator OnEncounterEnter()

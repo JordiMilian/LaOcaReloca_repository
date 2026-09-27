@@ -17,7 +17,7 @@ public class Encounter_Gentriifier : Encounter_SelectedTileEffect
         selectedTile.SetStepsToCross(1);
         GameController_Simple.Instance.ChangeGameState(GameState.EncountersTransition);
     }
-
+    public override bool MeetsRequirementsToSpawn() { return true; }
     public override string GetButtonText()
     {
         return "GENTRIFY TILE";

@@ -25,7 +25,7 @@ public class Encounter_TileBuyer : MonoBehaviour, IEncounter, ITooltip
     }
 
 
-
+    public bool MeetsRequirementsToSpawn() { if (Board_Controller_simple.Instance.TilesList.Count > 3) { return true; } else return false; }
     public IEnumerator OnEncounterEnter()
     {
         CanvasRoot.SetActive(false);

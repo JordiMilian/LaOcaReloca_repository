@@ -1,5 +1,4 @@
 using DG.Tweening;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -226,9 +225,10 @@ public class GameController_Simple : MonoBehaviour
         }
         //handle landing
         returnToNoTileToLandVisuals();
-        yield return OnLanded_CardEffects.C_ActivateEffects(currentTile);
+        
 
         yield return BoardController.L_LandPlayerInCurrentPos();
+        yield return OnLanded_CardEffects.C_ActivateEffects(currentTile);
         yield return DealTotalDamage();
 
         yield return OnFinishedRoll_CardEffects.C_ActivateEffects();
@@ -250,6 +250,7 @@ public class GameController_Simple : MonoBehaviour
         ChangeGameState(GameState.FreeMode);
     }
     #endregion
+    #endregion
     #region ENCOUNTERS
     [SerializeField] List<GameObject> EncountersPrefabs = new List<GameObject>();
     IEncounter currentEncounter;
@@ -257,6 +258,63 @@ public class GameController_Simple : MonoBehaviour
     int currentEncounterIndex = -1;
     [SerializeField] int[] EnemyEncountersHP;
     int enemiesEncountered = 0;
+    [SerializeField] GameObject encounter_BasicCombat, encounter_end;
+    [SerializeField] List<GameObject> encountners_specialNonCombat, encounters_bossCombat;
+    float chance_nextCombatEncounter = 1, chance_nextCombatEncounter_Boss= 0;
+    GameObject GetNextEncounter()
+    {
+        if (encounters_bossCombat.Count == 0) return encounter_end; //placeholder??, Next encounter is END (defeated all bosses) 
+        float random_nextEncounterCombat = Random.Range(0f, 1f);
+        if(random_nextEncounterCombat <= chance_nextCombatEncounter) //Next encounter IS combat
+        {
+            chance_nextCombatEncounter -= 0.25f;
+            float random_nextCombatBoss = Random.Range(0f, 1f);
+            if(random_nextCombatBoss <= chance_nextCombatEncounter_Boss) //Next encounter IS BOSS
+            {
+                chance_nextCombatEncounter_Boss = 0;
+
+                if(encounters_bossCombat.Count == 0) { return encounter_BasicCombat; }
+                int randomIndex;
+                IEncounter randomBoss;
+                int attempts = 0;
+                do
+                {
+                    randomIndex = Random.Range(0, encounters_bossCombat.Count);
+                    randomBoss = encounters_bossCombat[randomIndex].GetComponent<IEncounter>();
+                    attempts++;
+                    if(attempts > 10) { return encounter_BasicCombat; }
+                }
+                while (randomBoss.MeetsRequirementsToSpawn() == false);
+
+                GameObject boss = encounters_bossCombat[randomIndex];
+                encounters_bossCombat.RemoveAt(randomIndex);
+                return boss;
+               
+            }
+            else //Next encounter is BASIC
+            { 
+                chance_nextCombatEncounter_Boss += 0.2f;
+                return encounter_BasicCombat;
+            }
+        }
+        else //Next encounter is NON COMBAT
+        {
+            chance_nextCombatEncounter = 1;
+
+            int randomIndex;
+            IEncounter randomEncounter;
+            int attempts = 0;  
+            do
+            {
+                randomIndex = Random.Range(0, encountners_specialNonCombat.Count);
+                randomEncounter = encountners_specialNonCombat[randomIndex].GetComponent<IEncounter>();
+                attempts++;
+                if (attempts > 10) { return encounter_BasicCombat; }
+            }
+            while (randomEncounter.MeetsRequirementsToSpawn() == false);
+            return encountners_specialNonCombat[randomIndex];
+        }
+    }
     IEnumerator C_LoadNextEncounter()
     {
         if (currentEncounterObject != null)
@@ -266,20 +324,26 @@ public class GameController_Simple : MonoBehaviour
             currentEncounterObject = null;
         }
         currentEncounterIndex++;
-        currentEncounterObject = Instantiate(EncountersPrefabs[currentEncounterIndex], transform.position,Quaternion.identity,transform);
+        currentEncounterObject = Instantiate(GetNextEncounter(), transform.position, Quaternion.identity, transform);
         currentEncounter = currentEncounterObject.GetComponent<IEncounter>();
 
         //Cutre cutre pls refactor
-        if(currentEncounter is Encounter_BasicEnemy)
+        Debug.Log("Current encounter type: " + currentEncounter.GetType());
+        if (currentEncounter is Encounter_BasicEnemy)
         {
             Encounter_BasicEnemy enemyEncounter = currentEncounter as Encounter_BasicEnemy;
             enemyEncounter.MaxHp = EnemyEncountersHP[enemiesEncountered];
             enemiesEncountered++;
         }
+        else if (currentEncounter is Encounter_Boss)
+        {
+            Encounter_Boss enemyEncounter = currentEncounter as Encounter_Boss;
+            enemyEncounter.MaxHp = EnemyEncountersHP[enemiesEncountered] * 2;
+            enemiesEncountered++;
+        }
 
         yield return currentEncounter.OnEncounterEnter();
     }
-    #endregion
     #endregion
     #region PLACE AND MOVE TILES
     TileController SelectedTile;

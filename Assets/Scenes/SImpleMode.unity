@@ -8311,9 +8311,9 @@ MonoBehaviour:
   addPitchPerStep: 0.05
   MoneyToRoll: 0
   EncountersPrefabs:
-  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
-  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  - {fileID: 4828943553788522688, guid: ae01a8a517defad4aaeb841c0018e343, type: 3}
   - {fileID: 4940970433914737342, guid: a9348b92562d9b4418614630df50438c, type: 3}
+  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 5945102369988258234, guid: aa82d8a12e82ccb49b10e3ccc9cdd04b, type: 3}
@@ -8330,9 +8330,19 @@ MonoBehaviour:
   - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
   - {fileID: 871739014061315704, guid: e2ef2f59b27a2104a8b71557efd13eec, type: 3}
   - {fileID: 4828943553788522688, guid: 9c7fe396803f097478bc5e12c7e5eebc, type: 3}
-  EnemyEncountersHP: 64000000c80000002c010000f4010000bc020000e803000014050000a406000034080000c4090000b80b000094110000
+  EnemyEncountersHP: 65000000c90000002c010000f4010000bc020000e803000014050000a406000034080000c4090000b80b000094110000
+  encounter_BasicCombat: {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  encounter_end: {fileID: 871739014061315704, guid: e2ef2f59b27a2104a8b71557efd13eec, type: 3}
+  encountners_specialNonCombat:
+  - {fileID: 5945102369988258234, guid: aa82d8a12e82ccb49b10e3ccc9cdd04b, type: 3}
+  - {fileID: 4940970433914737342, guid: a9348b92562d9b4418614630df50438c, type: 3}
+  - {fileID: 3768023283977433165, guid: 709f3b0af1a608747937a6059a839aa3, type: 3}
+  - {fileID: 3968545100393761173, guid: f45875c308976734a87bf34965e364a7, type: 3}
+  encounters_bossCombat:
+  - {fileID: 4828943553788522688, guid: ae01a8a517defad4aaeb841c0018e343, type: 3}
+  - {fileID: 4828943553788522688, guid: 9c7fe396803f097478bc5e12c7e5eebc, type: 3}
   AcumulatedDamage: 0
-  Enemy_MaxHP: 100
+  Enemy_MaxHP: 103
   Enemy_CurrentHP: 100
   TMP_AcumulatedDamage: {fileID: 977100660}
   healthbar: {fileID: 890606827}

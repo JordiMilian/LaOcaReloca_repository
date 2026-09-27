@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Encounter_FreeToy : MonoBehaviour, IEncounter
 {
+    public bool MeetsRequirementsToSpawn() { return true; }
     public IEnumerator OnEncounterEnter()
     {
         throw new System.NotImplementedException();

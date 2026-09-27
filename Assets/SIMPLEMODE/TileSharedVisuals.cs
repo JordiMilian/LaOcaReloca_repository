@@ -23,7 +23,11 @@ public class TileSharedVisuals : MonoBehaviour
     }
     public void UpdateDmgDisplayText()
     {
-        if (tileBase._Info.genericSkills.Contains(GenericSkills.DisabledDmg)) { TMP_DamageDisplay.text = "XXX"; return; }
+        if (tileBase._Info.genericSkills.Contains(GenericSkills.DisabledDmg)) 
+        { 
+            TMP_DamageDisplay.text = "<s>"+MathJ.FloatToString(tileBase.GetBaseDamage(), 1)+ "</s>"; 
+            return; 
+        }
         TMP_DamageDisplay.text = MathJ.FloatToString(tileBase.GetBaseDamage(), 1);
     }
     public void SetBasicPanelColor()
@@ -34,6 +38,13 @@ public class TileSharedVisuals : MonoBehaviour
     {
         tileBase.tileMaterial.SetFloat("_disabledAmount", 0.35f);
     }
+    public void SetTilePanel_BlackAndWhite(bool blackAndWhite)
+    {
+        int sat = 1;
+        if (blackAndWhite) {sat = 0;}
+        tileBase.tileMaterial.SetFloat("_saturation", sat);
+    }
+
     #region SHARED ANIMATIONS
     public void FirstAppeareanceAnim()
     {

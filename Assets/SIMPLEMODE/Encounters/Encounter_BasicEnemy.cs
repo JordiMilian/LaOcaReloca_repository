@@ -56,7 +56,7 @@ public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
         gameController.AddMoney(gameController.MoneyPerRemainignRoll * gameController.RollsRemaining);
 
     }
+    public bool MeetsRequirementsToSpawn() { return true; }
 
-    
 
 }

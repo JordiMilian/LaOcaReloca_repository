@@ -17,6 +17,8 @@ public interface IEncounter
 {
     public IEnumerator OnEncounterEnter();
     public IEnumerator OnEncounterExit();
+
+    public bool MeetsRequirementsToSpawn();
 }
 public interface ITooltip
 {

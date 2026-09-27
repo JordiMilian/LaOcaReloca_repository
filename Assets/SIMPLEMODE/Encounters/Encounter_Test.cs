@@ -5,6 +5,7 @@ public class Encounter_Test : MonoBehaviour, IEncounter
 {
     CamerasManager cameras;
     [SerializeField] GameObject canvasRoot;
+    public bool MeetsRequirementsToSpawn() { return true; }
     public IEnumerator OnEncounterEnter()
     {
         canvasRoot.SetActive(false);

@@ -25,7 +25,6 @@ MonoBehaviour:
         BaseDamage: 5
         Title: PIRATE
         tileColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-        tileTexture: {fileID: 0}
         rarity: 2
         tileSize: 1
         uniquePrice: 0

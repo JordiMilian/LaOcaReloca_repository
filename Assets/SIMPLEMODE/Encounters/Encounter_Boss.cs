@@ -18,6 +18,7 @@ public class Encounter_Boss : MonoBehaviour, IEncounter
     { }
     public virtual void DeactivateSpecialBossEffect() 
     { }
+    public virtual bool MeetsRequirementsToSpawn() { return true; }
     public IEnumerator OnEncounterEnter()
     {
         gameController = GameController_Simple.Instance;
@@ -43,6 +44,7 @@ public class Encounter_Boss : MonoBehaviour, IEncounter
         //Show UI for EnemyEncounter
 
         ActivateSpecialBossEffect();
+        gameController.SetNewEnemyMaxHP(MaxHp);
         gameController.ChangeGameState(GameState.FreeMode);
 
     }

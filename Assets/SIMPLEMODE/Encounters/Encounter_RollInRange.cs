@@ -64,4 +64,5 @@ public class Encounter_RollInRange : MonoBehaviour, IEncounter
         dicesController.Button_Rolldices.onClick.RemoveListener(Button_OnRollPressed);
         yield break;
     }
+    public bool MeetsRequirementsToSpawn() { return true; }
 }

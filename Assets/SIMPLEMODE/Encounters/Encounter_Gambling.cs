@@ -13,6 +13,11 @@ public class Encounter_Gambling : MonoBehaviour, IEncounter, ITooltip
     GameObject diceGO;
     int currentBet;
     bool hasWon = false;
+    public bool MeetsRequirementsToSpawn()
+    {
+        if(GameController_Simple.Instance.GetCurrentMoney() > 10) { return true; }
+        return false;
+    }
     public IEnumerator OnEncounterEnter()
     {
         CanvasRoot.SetActive(false);

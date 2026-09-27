@@ -1,11 +1,12 @@
-using UnityEngine;
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
-using UnityEngine.EventSystems;
 using System.Linq;
-using System;
+using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class TileController : MonoBehaviour, IBuyable, ITooltip
     ,IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
@@ -146,7 +147,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
             tileMaterial.SetTexture("_mainTexture", _Info.tileTexture);
         }
         */
-        tileMovement.UpdateDmgDisplayText();
+        UpdateTileDisabledState();
         _Info.Initialize();
     }
     #endregion
@@ -349,7 +350,7 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
     void StopForcingThisTooltip() { TooltipManager.Instance.StopForcingThisTooltip(this); }
     public string GetTooltipDescription()
     {
-        if (isLogicDisabled()) { return "DISABLED LOGIC"; }
+        if (isLogicDisabled()) { return StringTools.CustomSkill("Disabled Logic"); }
         return _Info.GetGenericSkillsText()+ _Info.GetTooltipText();
     }
     public string GetTooltipTitle()
@@ -432,5 +433,10 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         if(draggingCoroutine != null) { StopCoroutine(draggingCoroutine); }
     }
     #endregion
-    
+    //No estic segur si haurie d'estar aqui aixo
+    public void UpdateTileDisabledState()
+    {
+        tileMovement.SetTilePanel_BlackAndWhite(isLogicDisabled());
+        tileMovement.UpdateDmgDisplayText();//this is to make sure in case of DisabledDMG
+    }
 }

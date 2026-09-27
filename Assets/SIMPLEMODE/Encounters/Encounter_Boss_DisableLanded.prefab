@@ -204,9 +204,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5253643139906969529}
-  - component: {fileID: -6654338606166152210}
+  - component: {fileID: 5494066926541091683}
   m_Layer: 0
-  m_Name: BossEnemyEncounter01
+  m_Name: Encounter_Boss_DisableLanded
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -230,7 +230,7 @@ Transform:
   - {fileID: 1702455508819096422}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6654338606166152210
+--- !u!114 &5494066926541091683
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4828943553788522688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eadeb382909b1b49a876d750dafd833, type: 3}
+  m_Script: {fileID: 11500000, guid: e664551edf38dee478aa58d0073f9383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cutscene_SpawnBoss: {fileID: 5605596926375504412}

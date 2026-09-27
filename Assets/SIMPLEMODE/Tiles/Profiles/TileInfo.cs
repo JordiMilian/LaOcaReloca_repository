@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static StringTools;
 [System.Serializable]
@@ -157,6 +158,11 @@ public abstract class TileInfo
         otherState.tileTags = tileTags;
         otherState.genericSkills = genericSkills;
         otherState.StepsToCross = StepsToCross;
+        otherState.genericSkills = new();
+        otherState.genericSkills.AddRange(genericSkills);
+        List<TileTags> tags = new List<TileTags>();
+        tags.AddRange(tileTags);
+        otherState.tileTags = tags.ToArray();
         return otherState;
     }
     
@@ -164,8 +170,24 @@ public abstract class TileInfo
     {
         TileInfo newInfo = (TileInfo)Activator.CreateInstance(GetType());
         CopyBaseStatsIntoOther(newInfo);
+        
         return newInfo;
     }
     
     #endregion
+
+    public void AddGenericSkill(GenericSkills skill)
+    {
+        if (genericSkills.Contains(skill)) { return; }
+        genericSkills.Add(skill);
+        _Controller.UpdateTileDisabledState();
+    }
+    public void RemoveGenericSkill(GenericSkills skill)
+    {
+        while (genericSkills.Contains(skill))
+        {
+            genericSkills.Remove(skill);
+        }
+        _Controller.UpdateTileDisabledState();
+    }
 }

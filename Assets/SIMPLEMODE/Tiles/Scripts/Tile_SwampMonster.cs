@@ -33,12 +33,12 @@ public class Tile_SwampMonster : TileInfo
 
     public static void RemoveSkill(TileInfo profile, GenericSkills skill)
     {
-        profile.genericSkills.Add(skill);
+        profile.AddGenericSkill(skill);
 
     }
     public static void AddSkill(TileInfo profile, GenericSkills skill)
     {
-        profile.genericSkills.Remove(skill);
+        profile.RemoveGenericSkill(skill);
     }
    public override IEnumerator OnPlayerStepped() 
    { 

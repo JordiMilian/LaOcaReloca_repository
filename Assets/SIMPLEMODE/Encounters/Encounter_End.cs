@@ -36,4 +36,5 @@ public class Encounter_End : MonoBehaviour, IEncounter
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    public bool MeetsRequirementsToSpawn() { return true; }
 }

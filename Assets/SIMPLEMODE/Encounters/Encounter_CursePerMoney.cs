@@ -58,7 +58,11 @@ public class Encounter_CursePerMoney : MonoBehaviour, IEncounter, ITooltip
     {
         return Tooltip_title;
     }
+    public bool MeetsRequirementsToSpawn()
+    {
+        if(GameController_Simple.Instance.GetCurrentMoney() < 15) { return true; }
+        return false;
+    }
 
-    
 
 }
