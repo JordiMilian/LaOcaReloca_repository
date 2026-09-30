@@ -2,14 +2,12 @@ using UnityEngine;
 using System.Collections;
 public class Tile_TowerOfDices : TileInfo
 {
-   public override IEnumerator OnPlacedInBoard() 
+   public override void EnableExtraLogic()
     {
-        yield return base.OnPlacedInBoard();
         GameController.OnRolledDice_CardEffects.AddEffect(OnRolledDices);
     }
-   public override IEnumerator OnRemovedFromBoard()
+   public override void DisableExtraLogic()
     {
-        yield return base.OnRemovedFromBoard();
         GameController.OnRolledDice_CardEffects.RemoveEffect(OnRolledDices);
     }
    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }

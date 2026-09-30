@@ -16,14 +16,12 @@ public class Tile_Malfunction : TileInfo
         newInfo.lastTileSpawnedByThis = lastTileSpawnedByThis;
         return newInfo;
     }
-    public override IEnumerator OnPlacedInBoard() 
+    public override void EnableExtraLogic()
     {
-        yield return base.OnPlacedInBoard();
         GameController.OnAddedNewTileToBoard_CardEffect.AddEffect(OnAddedTile);
     }
-   public override IEnumerator OnRemovedFromBoard() 
+   public override void DisableExtraLogic()
     { 
-        yield return base.OnRemovedFromBoard(); 
         GameController.OnAddedNewTileToBoard_CardEffect.RemoveEffect(OnAddedTile); 
     }
     IEnumerator OnAddedTile(TileController newTile)

@@ -10,8 +10,14 @@ public class Tile_CompostPile : TileInfo
         newInfo.poisonAmount = poisonAmount;
         return newInfo;
     }
-    public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); GameController.OnRemovedTileFromBoard_CardEffect.AddEffect(OnRemovedCard); }
-   public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); GameController.OnRemovedTileFromBoard_CardEffect.RemoveEffect(OnRemovedCard); }
+    public override void EnableExtraLogic()
+    { 
+        GameController.OnRemovedTileFromBoard_CardEffect.AddEffect(OnRemovedCard);
+    }
+    public override void DisableExtraLogic()
+    {
+        GameController.OnRemovedTileFromBoard_CardEffect.RemoveEffect(OnRemovedCard);
+    }  
 
     IEnumerator OnRemovedCard()
     {

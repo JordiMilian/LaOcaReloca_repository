@@ -11,14 +11,12 @@ public class Tile_Mushroom : Tile_Plant
         newInfo.changeToDuplicate = changeToDuplicate;
         return newInfo;
     }
-   public override IEnumerator OnPlacedInBoard() 
+   public override void EnableExtraLogic()
     {
-        yield return base.OnPlacedInBoard();
         GameController.OnRolledDice_CardEffects.AddEffect(CheckForDuplicate);
     }
-   public override IEnumerator OnRemovedFromBoard()
+   public override void DisableExtraLogic()
     {
-        yield return base.OnRemovedFromBoard();
         GameController.OnRolledDice_CardEffects.RemoveEffect(CheckForDuplicate);
     }
     IEnumerator CheckForDuplicate()

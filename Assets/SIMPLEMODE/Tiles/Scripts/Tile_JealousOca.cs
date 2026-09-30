@@ -4,10 +4,13 @@ using static StringTools;
 using System.Linq;
 public class Tile_JealousOca : Tile_Oca
 {
-    public override IEnumerator OnPlacedInBoard() 
+    public override void EnableExtraLogic()
     {
-       yield return base.OnPlacedInBoard();
         GameController.OnLanded_CardEffects.AddEffect(OnLandedEffect);
+    }
+    public override void DisableExtraLogic()
+    {
+        GameController.OnLanded_CardEffects.RemoveEffect(OnLandedEffect);
     }
     IEnumerator OnLandedEffect(TileController landedTile)
     {

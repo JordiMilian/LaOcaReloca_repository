@@ -4,9 +4,8 @@ using System.Linq;
 public class Tile_Trebol : TileInfo
 {
     [SerializeField] int moneyOnLandedOnEmpty = 6;
-    public override IEnumerator OnPlacedInBoard() 
-   {
-        yield return base.OnPlacedInBoard();
+    public override void EnableExtraLogic()
+    {
         GameController.OnLanded_CardEffects.AddEffect(OnLandedEffect);
     }
     IEnumerator OnLandedEffect(TileController landedTile)
@@ -18,7 +17,7 @@ public class Tile_Trebol : TileInfo
             yield return new WaitForSeconds(0.5f);
         }
     }
-   public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); GameController.OnLanded_CardEffects.RemoveEffect(OnLandedEffect); }
+   public override void DisableExtraLogic() { GameController.OnLanded_CardEffects.RemoveEffect(OnLandedEffect); }
 
    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
    //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }

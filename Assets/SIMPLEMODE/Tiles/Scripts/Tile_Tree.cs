@@ -16,15 +16,13 @@ public class Tile_Tree : Tile_Plant
         newInfo.baseGrowth = baseGrowth;
         return newInfo;
     }
-    public override IEnumerator OnPlacedInBoard() 
+    public override void EnableExtraLogic()
     { 
-        yield return base.OnPlacedInBoard(); 
         BoardController.OnBoardModified.AddListener(OnModifiedBoard);
         subscribeToAdjacentPlants();
     }
-    public override IEnumerator OnRemovedFromBoard()
+    public override void DisableExtraLogic()
     {
-        yield return base.OnRemovedFromBoard();
         BoardController.OnBoardModified.RemoveListener(OnModifiedBoard);
         unsubscribeFromCurrent();
     }

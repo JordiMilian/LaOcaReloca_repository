@@ -4,9 +4,8 @@ using UnityEngine;
 
 public abstract class Tile_Plant : TileInfo
 {
-    public override IEnumerator OnPlacedInBoard()
+    public override void EnableExtraLogic()
     {
-        yield return base.OnPlacedInBoard();
 
         if(PlantsManager.Instance == null)
         { PlantsManager.Instance = new PlantsManager(); PlantsManager.Instance.Initialize(); }
@@ -14,10 +13,8 @@ public abstract class Tile_Plant : TileInfo
         PlantsManager.Instance.PlantsGrowthCoroutine.AddCoroutine(C_growPlant);
         growthModifiers = null;
     }
-    public override IEnumerator OnRemovedFromBoard()
+    public override void DisableExtraLogic()
     {
-        yield return base.OnRemovedFromBoard();
-
         PlantsManager.Instance.PlantsGrowthCoroutine.RemoveCoroutine(C_growPlant);
         //GameController.OnRolledDice_CardEffects.RemoveEffect(C_growPlant);
     }

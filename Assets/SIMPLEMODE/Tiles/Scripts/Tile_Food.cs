@@ -23,15 +23,13 @@ public class Tile_Food : TileInfo
         yield return _Controller.C_DealAllDamageToDeal();
         yield return BoardController.C_RemoveTile(_Controller.indexInBoard);
     }
-   public override IEnumerator OnPlacedInBoard()
+   public override void EnableExtraLogic()
     {
         currentRot = baseRot;
-        yield return base.OnPlacedInBoard();
         GameController.OnRolledDice_CardEffects.AddEffect(OnRolled);
     }
-   public override IEnumerator OnRemovedFromBoard()
+   public override void DisableExtraLogic()
     {
-        yield return base.OnRemovedFromBoard();
         GameController.OnRolledDice_CardEffects.RemoveEffect(OnRolled);
     } 
    public override IEnumerator OnPlayerLanded() 

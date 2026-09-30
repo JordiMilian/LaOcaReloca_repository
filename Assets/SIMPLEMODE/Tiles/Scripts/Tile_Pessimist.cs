@@ -17,14 +17,12 @@ public class Tile_Pessimist : TileInfo
         newInfo.extraDamageOnLanded = extraDamageOnLanded;
         return newInfo;
     }
-    public override IEnumerator OnPlacedInBoard() 
+    public override void EnableExtraLogic() 
     {
-        yield return base.OnPlacedInBoard();
         GameController.OnReachedEndTile_CardEffects.AddEffect(OnReachedEndEffect) ;
     }
-    public override IEnumerator OnRemovedFromBoard()
+    public override void DisableExtraLogic()
     {
-        yield return base.OnRemovedFromBoard();
         GameController.OnReachedEndTile_CardEffects.RemoveEffect(OnReachedEndEffect);
 
     }

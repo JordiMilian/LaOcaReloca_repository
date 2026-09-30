@@ -3,9 +3,8 @@ using System.Collections;
 using static StringTools;
 public class Tile_Shareholder : TileInfo
 {
-   public override IEnumerator OnPlacedInBoard() 
+   public override void EnableExtraLogic()
     {
-        yield return base.OnPlacedInBoard();
         GameController.OnAddedMoney_CardEffects.AddEffect(OnAddedMoney);
     }
     IEnumerator OnAddedMoney(int amount)
@@ -14,9 +13,8 @@ public class Tile_Shareholder : TileInfo
         yield break;
     }
 
-   public override IEnumerator OnRemovedFromBoard()
-    {
-        yield return base.OnRemovedFromBoard(); 
+   public override void DisableExtraLogic()
+    { 
         GameController.OnAddedMoney_CardEffects.RemoveEffect(OnAddedMoney);
     }
    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }

@@ -49,7 +49,7 @@ public abstract class TileInfo
     {
         yield return GameController.OnCrossed_CardEffects.C_ActivateEffects(_Controller);
 
-        if (!genericSkills.Contains(GenericSkills.DisabledDmg)) { _Controller.DamagesToDeal.Add(_Controller.GetModifiedBaseDamage()); }
+        if (!genericSkills.Contains(GenericSkills.DisabledDmg_temporal)) { _Controller.DamagesToDeal.Add(_Controller.GetModifiedBaseDamage()); }
         _Controller.DamagesToDeal.Reverse();        
     }
     public virtual IEnumerator OnPlayerLanded()
@@ -75,8 +75,10 @@ public abstract class TileInfo
     {
         remainingSteps = StepsToCross;
     }
-    public virtual IEnumerator OnPlacedInBoard() { remainingSteps = StepsToCross ; yield break; }
-    public virtual IEnumerator OnRemovedFromBoard() { yield break; }
+    public virtual IEnumerator OnPlacedInBoard() { remainingSteps = StepsToCross ; EnableExtraLogic(); yield break; }
+    public virtual IEnumerator OnRemovedFromBoard() { DisableExtraLogic(); yield break; }
+    public virtual void EnableExtraLogic() { }
+    public virtual void DisableExtraLogic() { }
     #endregion
     #region TOOLTIP TEXT
     public virtual string GetGenericSkillsText()
@@ -176,18 +178,54 @@ public abstract class TileInfo
     
     #endregion
 
-    public void AddGenericSkill(GenericSkills skill)
+    public bool AddGenericSkill(GenericSkills skill)
     {
-        if (genericSkills.Contains(skill)) { return; }
+        if (genericSkills.Contains(skill)) { return false; }
+
         genericSkills.Add(skill);
-        _Controller.UpdateTileDisabledState();
+        return true;
+        
     }
-    public void RemoveGenericSkill(GenericSkills skill)
+    public bool RemoveGenericSkill(GenericSkills skill)
     {
+        bool returner = genericSkills.Contains(skill);
         while (genericSkills.Contains(skill))
         {
             genericSkills.Remove(skill);
         }
+        return returner;
+    }
+    //TO DO, PERMANENTLY DISABLED
+    public void DisableTile(bool logic, bool dmg, bool temporal = true)
+    {
+        if (logic)
+        {
+            if (AddGenericSkill(GenericSkills.DisabledLogic_temporal))
+            {
+                DisableExtraLogic();
+            }
+        }
+        if(dmg)
+        {
+            AddGenericSkill(GenericSkills.DisabledDmg_temporal);
+        }
         _Controller.UpdateTileDisabledState();
+
+    }
+    public void EnableTile(bool logic, bool dmg)
+    {
+        if (logic)
+        {
+            if (RemoveGenericSkill(GenericSkills.DisabledLogic_temporal))
+            {
+                EnableExtraLogic();
+            }
+        }
+        if (dmg) 
+        {
+            RemoveGenericSkill(GenericSkills.DisabledDmg_temporal);
+        }
+        _Controller.UpdateTileDisabledState();
+
     }
 }

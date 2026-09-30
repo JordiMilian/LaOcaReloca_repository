@@ -15,9 +15,8 @@ public class Tile_RatKing : TileInfo
         newInfo.addedAmountOnLanded = addedAmountOnLanded;
         return newInfo;
     }
-    public override IEnumerator OnPlacedInBoard()
+    public override void EnableExtraLogic()
     {
-        yield return base.OnPlacedInBoard();
 
         List<TileController> currentRats = MathJ.GetAllTilesWithTag(TileTags.Rat, _Controller, true);
         foreach (TileController rat in currentRats)
@@ -28,10 +27,8 @@ public class Tile_RatKing : TileInfo
         BoardController.OnAddedTile.AddListener(OnAddedTile);
         BoardController.OnRemovedTile.AddListener(OnRemovedTile);
     }
-    public override IEnumerator OnRemovedFromBoard() 
+    public override void DisableExtraLogic()
     {
-        yield return base.OnRemovedFromBoard();
-
         for (int i = modifiedRats.Count -1; i <= 0; i--)
         {
             unmodifyRat(modifiedRats[i]);

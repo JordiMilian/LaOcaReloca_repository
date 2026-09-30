@@ -12,9 +12,8 @@ public class Tile_RatPrincess : TileInfo
         newInfo.moneyOnRat = moneyOnRat;
         return newInfo;
     }
-    public override IEnumerator OnPlacedInBoard() 
+    public override void EnableExtraLogic()
     {
-        yield return base.OnPlacedInBoard();
         GameController.OnCrossed_CardEffects.AddEffect(onCrossedTile);
     }
     IEnumerator onCrossedTile(TileController tile)
@@ -25,9 +24,8 @@ public class Tile_RatPrincess : TileInfo
             yield break;
         }
     }
-   public override IEnumerator OnRemovedFromBoard() 
+   public override void DisableExtraLogic()
     {
-        yield return base.OnRemovedFromBoard();
         GameController.OnCrossed_CardEffects.RemoveEffect(onCrossedTile);
     }
    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }

@@ -5,10 +5,13 @@ using System.Collections.Generic;
 public class Tile_Bee : Tile_Insect
 {
     List<Tile_Plant> modifiedPlants = new();
-    public override IEnumerator OnPlacedInBoard()
+    public override void EnableExtraLogic()
     {
-        yield return base.OnPlacedInBoard();
         BoardController.OnBoardModified.AddListener(OnBoardModified);
+    }
+    public override void DisableExtraLogic()
+    {
+        BoardController.OnBoardModified.RemoveListener(OnBoardModified);
     }
     //public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); }
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }

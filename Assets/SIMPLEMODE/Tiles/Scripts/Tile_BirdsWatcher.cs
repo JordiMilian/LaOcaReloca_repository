@@ -16,11 +16,9 @@ public class Tile_BirdsWatcher : TileInfo
         newInfo.dmgOnLandedAdjacentOca = dmgOnLandedAdjacentOca;
         return newInfo;
     }
-    public override IEnumerator OnPlacedInBoard()
+    public override void EnableExtraLogic()
     { 
-        yield return base.OnPlacedInBoard();
         GameController.OnLanded_CardEffects.AddEffect(C_CheckForAdjacentOcas);
-
     }
     IEnumerator C_CheckForAdjacentOcas(TileController landedTile)
     {
@@ -34,9 +32,8 @@ public class Tile_BirdsWatcher : TileInfo
         }
     }
 
-    public override IEnumerator OnRemovedFromBoard()
+    public override void DisableExtraLogic()
     {
-        yield return base.OnRemovedFromBoard();
         GameController.OnLanded_CardEffects.RemoveEffect(C_CheckForAdjacentOcas);
     }
     //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }

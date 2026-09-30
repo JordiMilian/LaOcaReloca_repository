@@ -5,9 +5,8 @@ using System.Linq;
 public class Tile_RatPrince : TileInfo
 {
     [SerializeField] float DmgOnCrossedRat = 5;
-   public override IEnumerator OnPlacedInBoard() 
+   public override void EnableExtraLogic()
     {
-        yield return base.OnPlacedInBoard();
         GameController.OnCrossed_CardEffects.AddEffect(onCrossedTile);
     }
     IEnumerator onCrossedTile(TileController tile)
@@ -17,9 +16,8 @@ public class Tile_RatPrince : TileInfo
             yield return _Controller.AddBaseDamage(DmgOnCrossedRat);
         }
     }
-   public override IEnumerator OnRemovedFromBoard() 
+   public override void DisableExtraLogic()
     {
-        yield return base.OnRemovedFromBoard();
         GameController.OnCrossed_CardEffects.RemoveEffect(onCrossedTile);
     }
    //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }

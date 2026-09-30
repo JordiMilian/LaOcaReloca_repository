@@ -23,4 +23,12 @@ public class Encounter_Boss_RandomMover : Encounter_Boss
         base.DeactivateSpecialBossEffect();
         gameController.OnFinishedRoll_CardEffects.RemoveEffect(C_jumpPlayerToRandomPos);
     }
+    public override float GetBossHealth(float baseHP)
+    {
+        return baseHP * 2.5f;
+    }
+    public override string GetTooltipDescription()
+    {
+        return "Jump to another random tile after every roll";
+    }
 }

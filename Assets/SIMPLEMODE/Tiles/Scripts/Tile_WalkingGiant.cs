@@ -4,9 +4,8 @@ using static StringTools;
 public class Tile_WalkingGiant : TileInfo
 {
     [SerializeField] float addedDamageOnStepped = 25;
-   public override IEnumerator OnPlacedInBoard()
+   public override void EnableExtraLogic()
     { 
-        yield return base.OnPlacedInBoard();
         GameController.OnCrossed_CardEffects.AddEffect(OnCrossedTile);
     }
     IEnumerator OnCrossedTile(TileController tile)
@@ -18,7 +17,7 @@ public class Tile_WalkingGiant : TileInfo
             yield return new WaitForSeconds(0.3f);
         }
     }
-   public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); GameController.OnCrossed_CardEffects.RemoveEffect(OnCrossedTile); }
+   public override void DisableExtraLogic() { GameController.OnCrossed_CardEffects.RemoveEffect(OnCrossedTile); }
    //public override IEnumerator OnPlayerLanded() { yield return base.OnPlayerLanded(); }
    //public override IEnumerator OnPlayerStepped() { yield return base.OnPlayerStepped(); }
    public override string GetTooltipText() { return $"{OnCustomMessaje("WHEN CROSSED A TILE WITH 0 DMG")} Increase {StringTools.AddDamageString(addedDamageOnStepped)} this Tile"; }

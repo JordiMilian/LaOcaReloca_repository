@@ -15,14 +15,12 @@ public class Tile_Perfume : TileInfo
         newInfo.isPerfumed = isPerfumed;
         return newInfo;
     }
-    public override IEnumerator OnPlacedInBoard() 
+    public override void EnableExtraLogic() 
     { 
-        yield return base.OnPlacedInBoard();
         GameController.OnRolledDice.AddListener(UnsubscribeToCrossed);
     }
-   public override IEnumerator OnRemovedFromBoard() 
+   public override void DisableExtraLogic()
     { 
-        yield return base.OnRemovedFromBoard();
         GameController.OnRolledDice.RemoveListener(UnsubscribeToCrossed);
     }
    public override IEnumerator OnPlayerLanded() 

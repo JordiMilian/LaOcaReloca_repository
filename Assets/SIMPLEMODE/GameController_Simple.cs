@@ -46,7 +46,10 @@ public class GameController_Simple : MonoBehaviour
     {
         Instance = this;
         mainCamera = Camera.main;
+        OnKilledEnemy.AddListener(EnableTemporallyDisabledTiles);
     }
+
+   
     private IEnumerator Start()
     {
         UpdateMoneyUI();
@@ -225,10 +228,10 @@ public class GameController_Simple : MonoBehaviour
         }
         //handle landing
         returnToNoTileToLandVisuals();
-        
 
-        yield return BoardController.L_LandPlayerInCurrentPos();
         yield return OnLanded_CardEffects.C_ActivateEffects(currentTile);
+        yield return BoardController.L_LandPlayerInCurrentPos();
+        
         yield return DealTotalDamage();
 
         yield return OnFinishedRoll_CardEffects.C_ActivateEffects();
@@ -256,6 +259,7 @@ public class GameController_Simple : MonoBehaviour
     IEncounter currentEncounter;
     GameObject currentEncounterObject;
     int currentEncounterIndex = -1;
+    [SerializeField] bool useListEncounters = false;
     [SerializeField] int[] EnemyEncountersHP;
     int enemiesEncountered = 0;
     [SerializeField] GameObject encounter_BasicCombat, encounter_end;
@@ -324,25 +328,30 @@ public class GameController_Simple : MonoBehaviour
             currentEncounterObject = null;
         }
         currentEncounterIndex++;
-        currentEncounterObject = Instantiate(GetNextEncounter(), transform.position, Quaternion.identity, transform);
+        if (useListEncounters) { currentEncounterObject = Instantiate(EncountersPrefabs[currentEncounterIndex]); }
+        else { currentEncounterObject = Instantiate(GetNextEncounter(), transform.position, Quaternion.identity, transform); }
         currentEncounter = currentEncounterObject.GetComponent<IEncounter>();
 
         //Cutre cutre pls refactor
         Debug.Log("Current encounter type: " + currentEncounter.GetType());
+        ShowHealthUI();
         if (currentEncounter is Encounter_BasicEnemy)
         {
             Encounter_BasicEnemy enemyEncounter = currentEncounter as Encounter_BasicEnemy;
             enemyEncounter.MaxHp = EnemyEncountersHP[enemiesEncountered];
+            SetNewEnemyMaxHP(enemyEncounter.MaxHp);
             enemiesEncountered++;
         }
         else if (currentEncounter is Encounter_Boss)
         {
             Encounter_Boss enemyEncounter = currentEncounter as Encounter_Boss;
-            enemyEncounter.MaxHp = EnemyEncountersHP[enemiesEncountered] * 2;
+            enemyEncounter.MaxHp = enemyEncounter.GetBossHealth(EnemyEncountersHP[enemiesEncountered]);
+            SetNewEnemyMaxHP(enemyEncounter.MaxHp);
             enemiesEncountered++;
         }
+        else { HideHealthUI(); }
 
-        yield return currentEncounter.OnEncounterEnter();
+            yield return currentEncounter.OnEncounterEnter();
     }
     #endregion
     #region PLACE AND MOVE TILES
@@ -452,6 +461,7 @@ public class GameController_Simple : MonoBehaviour
     [SerializeField] float Enemy_MaxHP;
     [SerializeField] float Enemy_CurrentHP;
     [SerializeField] TextMeshProUGUI TMP_AcumulatedDamage;
+    [SerializeField] GameObject GO_Healthbar_Root;
     [SerializeField] Healthbar healthbar;
     public IEnumerator C_AddAcumulatedDamage(float amount)
     {
@@ -511,6 +521,16 @@ public class GameController_Simple : MonoBehaviour
         Enemy_CurrentHP = MaxHP;
         UpdateEnemyHPBar();
     }
+    public void HideHealthUI()
+    {
+        GO_Healthbar_Root.SetActive(false);
+        TMP_AcumulatedDamage.gameObject.SetActive(false);
+    }
+    public void ShowHealthUI()
+    {
+        GO_Healthbar_Root.SetActive(true);
+        TMP_AcumulatedDamage.gameObject.SetActive(true);
+    }
     #endregion
     #region POISON
     [Header("Poison")]
@@ -552,6 +572,22 @@ public class GameController_Simple : MonoBehaviour
     void UpdateMoneyUI()
     {
         TMP_CurrentMoney.text = currentMoney.ToString();
+    }
+    #endregion
+    #region TEMPORALLY DISABLED TILES
+    void EnableTemporallyDisabledTiles()
+    {
+        foreach (TileController tile in BoardController.TilesList)
+        {
+            bool logic = false; bool dmg = false;
+            if (tile._Info.genericSkills.Contains(GenericSkills.DisabledLogic_temporal))
+            {
+                logic = true;
+            }
+            if (tile._Info.genericSkills.Contains(GenericSkills.DisabledDmg_temporal)) { dmg = true; }
+
+            tile._Info.EnableTile(logic, dmg);
+        }
     }
     #endregion
     #region TILE TO LAND VISUALS

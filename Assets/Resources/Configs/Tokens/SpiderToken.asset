@@ -25,13 +25,12 @@ MonoBehaviour:
         BaseDamage: 10
         Title: SPIDER TOKEN
         tileColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-        tileTexture: {fileID: 2800000, guid: e1829b689b788d04c9764baafcf539de, type: 3}
         rarity: 0
         tileSize: 0
         uniquePrice: 0
         tileTags: 04000000
         genericSkills: 00000000
         _Controller: {fileID: 0}
-        StepsToCross: 1
+        StepsToCross: 0
         remainingSteps: 1
         poison: 5

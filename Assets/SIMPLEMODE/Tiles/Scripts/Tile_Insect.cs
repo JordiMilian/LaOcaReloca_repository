@@ -2,19 +2,15 @@ using UnityEngine;
 using System.Collections;
 public class Tile_Insect : TileInfo
 {
-   public override IEnumerator OnPlacedInBoard()
+   public override void EnableExtraLogic()
     {
-        base.OnPlacedInBoard();
         GameController.OnInsectFly.AddEffect(Fly);
         GameController.OnInsectsMoved_CardEffects.AddEffect(OnLandedFly);
-        yield break;
     }
-   public override IEnumerator OnRemovedFromBoard() 
+   public override void DisableExtraLogic()
     {
-        base.OnRemovedFromBoard();
         GameController.OnInsectFly.RemoveEffect(Fly);
         GameController.OnInsectsMoved_CardEffects.RemoveEffect(OnLandedFly);
-        yield break;
     }
 
     public virtual IEnumerator Fly()

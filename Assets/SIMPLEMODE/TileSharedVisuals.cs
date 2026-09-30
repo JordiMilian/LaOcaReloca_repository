@@ -23,7 +23,7 @@ public class TileSharedVisuals : MonoBehaviour
     }
     public void UpdateDmgDisplayText()
     {
-        if (tileBase._Info.genericSkills.Contains(GenericSkills.DisabledDmg)) 
+        if (tileBase._Info.genericSkills.Contains(GenericSkills.DisabledDmg_temporal)) 
         { 
             TMP_DamageDisplay.text = "<s>"+MathJ.FloatToString(tileBase.GetBaseDamage(), 1)+ "</s>"; 
             return; 

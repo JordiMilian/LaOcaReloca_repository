@@ -262,15 +262,15 @@ public class TileController : MonoBehaviour, IBuyable, ITooltip
         }
         tileState = newState;
     }
-    bool isDmgDisabled() { return _Info.genericSkills.Contains(GenericSkills.DisabledDmg); }
-    bool isLogicDisabled() { return _Info.genericSkills.Contains(GenericSkills.DisabledLogic); }
+    bool isDmgDisabled() { return _Info.genericSkills.Contains(GenericSkills.DisabledDmg_temporal); }
+    bool isLogicDisabled() { return _Info.genericSkills.Contains(GenericSkills.DisabledLogic_temporal); }
     #endregion
     #region CALL PROFILE LOGIC
 
     public IEnumerator OnPlayerStepped()
     {
         //Add visual and sound feedback
-        if (_Info.genericSkills.Contains(GenericSkills.DisabledLogic)) 
+        if (_Info.genericSkills.Contains(GenericSkills.DisabledLogic_temporal)) 
         {
             yield break;
         }

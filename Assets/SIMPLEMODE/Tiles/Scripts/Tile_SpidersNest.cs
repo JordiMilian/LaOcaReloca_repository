@@ -13,8 +13,14 @@ public class Tile_SpidersNest : TileInfo
         newInfo.spiderTokenTileProfile = spiderTokenTileProfile;
         return newInfo;
     }
-    public override IEnumerator OnPlacedInBoard() { yield return base.OnPlacedInBoard(); GameController.OnRolledDice_CardEffects.AddEffect(SpawnRolledDiceSpiders); }
-    public override IEnumerator OnRemovedFromBoard() { yield return base.OnRemovedFromBoard(); GameController.OnRolledDice_CardEffects.RemoveEffect(SpawnRolledDiceSpiders); }
+    public override void EnableExtraLogic()
+    { 
+        GameController.OnRolledDice_CardEffects.AddEffect(SpawnRolledDiceSpiders); 
+    }
+    public override void DisableExtraLogic() 
+    { 
+        GameController.OnRolledDice_CardEffects.RemoveEffect(SpawnRolledDiceSpiders);
+    }
     public override IEnumerator OnPlayerStepped() 
     { 
         yield return base.OnPlayerStepped();
