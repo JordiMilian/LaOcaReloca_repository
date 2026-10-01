@@ -13,10 +13,12 @@ public class Tile_Mushroom : Tile_Plant
     }
    public override void EnableExtraLogic()
     {
+        base.EnableExtraLogic();
         GameController.OnRolledDice_CardEffects.AddEffect(CheckForDuplicate);
     }
    public override void DisableExtraLogic()
     {
+        base.DisableExtraLogic();
         GameController.OnRolledDice_CardEffects.RemoveEffect(CheckForDuplicate);
     }
     IEnumerator CheckForDuplicate()

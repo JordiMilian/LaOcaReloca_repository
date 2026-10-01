@@ -62,10 +62,6 @@ public class Encounter_TileBuyer : MonoBehaviour, IEncounter, ITooltip
         //
         IEnumerator C_sellButtonPressed()
         {
-            if (boardController.TilesList.Count <= 2)
-            {
-                yield break;
-            }
             TileController soldTile = tileSelector.GetClosestTileInRange();
             if(soldTile == null || soldTile._Info is Tile_Start || soldTile._Info is Tile_End)
             {

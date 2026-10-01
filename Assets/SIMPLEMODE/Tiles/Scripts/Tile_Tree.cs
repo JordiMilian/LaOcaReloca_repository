@@ -4,6 +4,7 @@ using static StringTools;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening.Core;
 public class Tile_Tree : Tile_Plant
 {
     List<Tile_Plant> subscribedPlants = new();
@@ -18,11 +19,13 @@ public class Tile_Tree : Tile_Plant
     }
     public override void EnableExtraLogic()
     { 
+        base.EnableExtraLogic();
         BoardController.OnBoardModified.AddListener(OnModifiedBoard);
         subscribeToAdjacentPlants();
     }
     public override void DisableExtraLogic()
     {
+        base.DisableExtraLogic();
         BoardController.OnBoardModified.RemoveListener(OnModifiedBoard);
         unsubscribeFromCurrent();
     }

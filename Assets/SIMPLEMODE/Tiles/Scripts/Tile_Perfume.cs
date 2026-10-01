@@ -52,7 +52,7 @@ public class Tile_Perfume : TileInfo
     }
 
    public override string GetTooltipText() {
-        return $"{OnCrossed} Every Tile crossed afterwards gets {StringTools.AddDamageString(perfumeDamage)}" +
+        return $"{OnCrossed} Every Tile crossed afterwards gets {StringTools.AddDamageString(perfumeDamage)} this roll" +
             $"\n{OnLanded} Increase that amount by {increaseDmg}";
     }
 }

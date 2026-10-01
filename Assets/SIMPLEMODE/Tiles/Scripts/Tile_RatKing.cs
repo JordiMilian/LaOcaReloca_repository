@@ -29,7 +29,7 @@ public class Tile_RatKing : TileInfo
     }
     public override void DisableExtraLogic()
     {
-        for (int i = modifiedRats.Count -1; i <= 0; i--)
+        for (int i = modifiedRats.Count -1; i >= 0; i--)
         {
             unmodifyRat(modifiedRats[i]);
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Singletons/TilesGroupRegistry")]
 public class ProfileGroups_Registry : ScriptableObject
 {
-    [SerializeField] ProfilesGroup Common, Rare, Legendary, Unique, Deprecated;
+    [SerializeField] ProfilesGroup Common, Rare, Legendary, Unique, Deprecated, None;
     [SerializeField] ProfilesGroup Curse, Tokens, Food;
     [SerializeField] ProfilesGroup Rest, All;
 
@@ -15,6 +15,7 @@ public class ProfileGroups_Registry : ScriptableObject
         groups.Add(All);
         switch (profile.rarity)
         {
+            case Rarity.none: groups.Add(None); break;
             case Rarity.Common: groups.Add(Common); break;
             case Rarity.Rare: groups.Add(Rare); break;
             case Rarity.Legendary: groups.Add(Legendary); break;

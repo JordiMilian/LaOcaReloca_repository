@@ -6,12 +6,11 @@ public abstract class Tile_Plant : TileInfo
 {
     public override void EnableExtraLogic()
     {
-
         if(PlantsManager.Instance == null)
         { PlantsManager.Instance = new PlantsManager(); PlantsManager.Instance.Initialize(); }
 
         PlantsManager.Instance.PlantsGrowthCoroutine.AddCoroutine(C_growPlant);
-        growthModifiers = null;
+        //growthModifiers = null;
     }
     public override void DisableExtraLogic()
     {
@@ -25,7 +24,6 @@ public abstract class Tile_Plant : TileInfo
 
     IEnumerator C_growPlant()
     {
-        Debug.Log("plants 02.25 grow plant");
         yield return _Controller.AddBaseDamage(GetFinalGrowth());
         yield break;
     }
@@ -55,5 +53,4 @@ public class PlantsManager
         PlantsGrowthCoroutine = new SImultaneousCoroutine();
         GameController_Simple.Instance.OnRolledDice_CardEffects.AddEffect(PlantsGrowthCoroutine.C_ExecuteCoroutines);
     }
-
 }

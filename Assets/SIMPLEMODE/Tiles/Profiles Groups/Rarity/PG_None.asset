@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3cdbcdcae3c20f4e99a22ab78a75e68, type: 3}
-  m_Name: PG_Unique
+  m_Name: PG_None
   m_EditorClassIdentifier: 
   GroupName: 
-  tilesList:
-  - {fileID: 11400000, guid: ae3987ee5cdff2449bfe6a0c5551586d, type: 2}
-  - {fileID: 11400000, guid: 3f233431ec1d6b64b8dba57c28bea89c, type: 2}
+  tilesList: []
