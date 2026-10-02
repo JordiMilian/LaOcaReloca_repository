@@ -15,7 +15,7 @@ public class Tile_SwampMonster : TileInfo
         TileController newSwamp01 = TilesFactory.instance.InstantiateTileFromConfig(swampTokenProfile);
         newSwamp01.transform.position = _Controller.transform.position;
 
-        yield return BoardController.C_AddNewTile(newSwamp01, _Controller.indexInBoard-1);
+        yield return BoardController.C_AddNewTile(newSwamp01, _Controller.indexInBoard);
         RemoveSkill(newSwamp01._Info, GenericSkills.Unmovable);
 
         TileController newSwamp02 = TilesFactory.instance.InstantiateTileFromConfig(swampTokenProfile);
@@ -33,12 +33,12 @@ public class Tile_SwampMonster : TileInfo
 
     public static void RemoveSkill(TileInfo profile, GenericSkills skill)
     {
-        profile.AddGenericSkill(skill);
+        Debug.Log("removed "+profile.RemoveGenericSkill(skill));
 
     }
     public static void AddSkill(TileInfo profile, GenericSkills skill)
     {
-        profile.RemoveGenericSkill(skill);
+        Debug.Log( "added "+ profile.AddGenericSkill(skill));
     }
    public override IEnumerator OnPlayerStepped() 
    { 
