@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 
-public class Encounter_Gambling : MonoBehaviour, IEncounter, ITooltip
+public class Encounter_Gambling : Encounter
 {
     [SerializeField] GameObject CanvasRoot;
     [SerializeField] GameObject DicePrefab;
@@ -13,13 +13,15 @@ public class Encounter_Gambling : MonoBehaviour, IEncounter, ITooltip
     GameObject diceGO;
     int currentBet;
     bool hasWon = false;
-    public bool MeetsRequirementsToSpawn()
+    public override bool MeetsRequirementsToSpawn()
     {
         if(GameController_Simple.Instance.GetCurrentMoney() > 10) { return true; }
         return false;
     }
-    public IEnumerator OnEncounterEnter()
+    public override IEnumerator OnEncounterEnter()
     {
+        yield return base.OnEncounterEnter();
+
         CanvasRoot.SetActive(false);
         Board_Controller_simple boardController = Board_Controller_simple.Instance;
         if(boardController.isBoardAssembled)
@@ -82,8 +84,10 @@ public class Encounter_Gambling : MonoBehaviour, IEncounter, ITooltip
         }
     }
 
-    public IEnumerator OnEncounterExit()
+    public override IEnumerator OnEncounterExit()
     {
+        yield return base.OnEncounterExit();
+
         Dices_Controller.Instance.Button_Rolldices.onClick.RemoveListener(Button_FinishBet);
         TooltipManager.Instance.StopForcingThisTooltip(this);
         CanvasRoot.SetActive(false);
@@ -103,17 +107,8 @@ public class Encounter_Gambling : MonoBehaviour, IEncounter, ITooltip
         cameras.SetCameraPriority("CinemachineCamera_Goose", 0);    
     }
 
-    public string GetTooltipDescription()
+    public override string GetTooltipDescription()
     {
         return "Gambling is encouraged";
-    }
-
-    public string GetTooltipTitle()
-    {
-        return "GAMBLE ENCOUNTER";
-    }
-    public Texture GetTooltipTexture()
-    {
-        return null;
     }
 }

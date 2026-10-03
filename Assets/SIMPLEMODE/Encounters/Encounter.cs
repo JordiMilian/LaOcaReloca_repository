@@ -21,7 +21,6 @@ public abstract class Encounter : MonoBehaviour, ITooltip
         TooltipManager.Instance.RemoveRequest(this);
         yield break;
     }
-
     public abstract bool MeetsRequirementsToSpawn();
 
 }

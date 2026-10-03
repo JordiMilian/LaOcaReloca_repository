@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Encounter_CursePerMoney : MonoBehaviour, IEncounter, ITooltip
+public class Encounter_CursePerMoney : Encounter
 {
 
     Board_Controller_simple boardController;
@@ -11,8 +11,10 @@ public class Encounter_CursePerMoney : MonoBehaviour, IEncounter, ITooltip
     [SerializeField] int moneyOnCurse = 15;
     [SerializeField] Texture Tooltip_texture;
     [SerializeField] string Tooltip_title;
-    public IEnumerator OnEncounterEnter()
+    public override IEnumerator OnEncounterEnter()
     {
+        yield return base.OnEncounterEnter();
+
         boardController = Board_Controller_simple.Instance;
 
         if (!boardController.isBoardAssembled)
@@ -39,26 +41,13 @@ public class Encounter_CursePerMoney : MonoBehaviour, IEncounter, ITooltip
         Destroy(curseTile.gameObject);
         GameController_Simple.Instance.ChangeGameState(GameState.EncountersTransition);
     }
-    public IEnumerator OnEncounterExit()
-    {
-        TooltipManager.Instance.RemoveRequest(this);
-        yield break;
-    }
-    public string GetTooltipDescription()
+
+    public override string GetTooltipDescription()
     {
         return $"Take this tile and get {moneyOnCurse} money";
     }
 
-    public Texture GetTooltipTexture()
-    {
-        return Tooltip_texture;
-    }
-
-    public string GetTooltipTitle()
-    {
-        return Tooltip_title;
-    }
-    public bool MeetsRequirementsToSpawn()
+    public override bool MeetsRequirementsToSpawn()
     {
         if(GameController_Simple.Instance.GetCurrentMoney() < 15) { return true; }
         return false;

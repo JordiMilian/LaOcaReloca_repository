@@ -55,8 +55,6 @@ public class Encounter_Boss_FreezeBoard : Encounter_Boss
 
     public override string GetTooltipDescription()
     {
-        return "All board gets frozen";
+        return "Randomize and freeze board before starting";
     }
-
-
 }

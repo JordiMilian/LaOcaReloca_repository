@@ -6351,22 +6351,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1336696109 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4915395928871981067, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-  m_PrefabInstance: {fileID: 1697603787}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fd4c9b84871cc541a1877e402dad2aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1336696111 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5063001915850145008, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-  m_PrefabInstance: {fileID: 1697603787}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1337221862
 GameObject:
   m_ObjectHideFlags: 0
@@ -6695,7 +6679,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availableDices:
   - {fileID: 1554250999}
-  - {fileID: 1336696109}
+  - {fileID: 0}
   LastRolledValue: 0
   LastRolledDicesCount: 0
   diceSpawnPoint: {fileID: 228586240}
@@ -6720,7 +6704,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 21995972}
-  - {fileID: 1336696111}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1388464545
@@ -7498,11 +7481,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
       propertyPath: m_Name
-      value: 'Dice_6F '
+      value: Dice_6F
       objectReference: {fileID: 0}
     - target: {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4468399929280487407, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
       propertyPath: m_Mass
@@ -8166,67 +8149,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1689807169}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &1697603787
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1386617555}
-    m_Modifications:
-    - target: {fileID: 3033933879432237550, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-      propertyPath: m_Name
-      value: Dice_6F_Weirdo
-      objectReference: {fileID: 0}
-    - target: {fileID: 4915395928871981067, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-      propertyPath: isSelectedForRoll
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5063001915850145008, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.77204716
-      objectReference: {fileID: 0}
-    - target: {fileID: 5063001915850145008, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.6499999
-      objectReference: {fileID: 0}
-    - target: {fileID: 5063001915850145008, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.27792645
-      objectReference: {fileID: 0}
-    - target: {fileID: 5063001915850145008, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5063001915850145008, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5063001915850145008, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5063001915850145008, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5063001915850145008, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5063001915850145008, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5063001915850145008, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4aa2fa442b357ad48a7c9c838dca33b7, type: 3}
 --- !u!1 &1713846429
 GameObject:
   m_ObjectHideFlags: 0
@@ -8394,7 +8316,7 @@ MonoBehaviour:
   addPitchPerStep: 0.05
   MoneyToRoll: 0
   EncountersPrefabs:
-  - {fileID: 4828943553788522688, guid: 2e9ffceb9c1faa54ea153ecba0474e2d, type: 3}
+  - {fileID: 4940970433914737342, guid: 9650977b8dd8ea4418a0733b001c99ef, type: 3}
   - {fileID: 4828943553788522688, guid: 4ce6ed2e2df31b64c85e28d64874d8b4, type: 3}
   - {fileID: 3968545100393761173, guid: ebaadbabf9d4d1d4787201a129027f3e, type: 3}
   - {fileID: 3768023283977433165, guid: 709f3b0af1a608747937a6059a839aa3, type: 3}

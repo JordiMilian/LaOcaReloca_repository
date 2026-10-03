@@ -3,7 +3,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public abstract class Encounter_Boss : MonoBehaviour, IEncounter, ITooltip
+public abstract class Encounter_Boss : Encounter
 {
     [SerializeField] PlayableDirector cutscene_SpawnBoss, cutscene_KilledBoss;
     protected GameController_Simple gameController;
@@ -18,10 +18,11 @@ public abstract class Encounter_Boss : MonoBehaviour, IEncounter, ITooltip
     { }
     public virtual void DeactivateSpecialBossEffect() 
     { }
-    public virtual bool MeetsRequirementsToSpawn() { return true; }
     public abstract float GetBossHealth(float baseHP);
-    public IEnumerator OnEncounterEnter()
+    public override IEnumerator OnEncounterEnter()
     {
+        yield return base.OnEncounterEnter();
+
         gameController = GameController_Simple.Instance;
         cameras = CamerasManager.instance;
 
@@ -51,8 +52,9 @@ public abstract class Encounter_Boss : MonoBehaviour, IEncounter, ITooltip
         
         gameController.ChangeGameState(GameState.FreeMode);
     }
-    public IEnumerator OnEncounterExit()
+    public override IEnumerator OnEncounterExit()
     {
+        yield return base.OnEncounterExit();
         Dices_Controller.Instance.Button_Rolldices.onClick.RemoveListener(GameController_Simple.Instance.ChangeStateToRollingDice);
         //Dices_Controller.Instance.DisableRollButtons();
 
@@ -72,16 +74,8 @@ public abstract class Encounter_Boss : MonoBehaviour, IEncounter, ITooltip
         gameController.AddMoney(gameController.MoneyPerRemainignRoll * gameController.RollsRemaining);
     }
 
-    public abstract string GetTooltipDescription();
-
-
-    public string GetTooltipTitle()
+    public override bool MeetsRequirementsToSpawn()
     {
-        return gameObject.name;
-    }
-
-    public Texture GetTooltipTexture()
-    {
-        return null;
+        return true;
     }
 }

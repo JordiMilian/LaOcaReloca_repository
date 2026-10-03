@@ -1,12 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class Encounter_GiveExtraDiceroll : Encounter_SelectedTileEffect, IEncounter
+public class Encounter_GiveExtraDiceroll : Encounter_SelectedTileEffect
 {
-    public override void Button_OnMainButtonPressed()
+    public override void OnSelectedTileAction(TileController selectedTile)
     {
-
-        TileController selectedTile = tileSelector.GetClosestTileInRange();
         if (selectedTile == null || selectedTile._Info is Tile_Start || selectedTile._Info is Tile_End)
         {
             return;
@@ -17,7 +15,7 @@ public class Encounter_GiveExtraDiceroll : Encounter_SelectedTileEffect, IEncoun
    
     }
 
-    public override string GetButtonText()
+    public override string GetMainButtonText()
     {
         return "Give Tile +ExtraDiceroll";
     }

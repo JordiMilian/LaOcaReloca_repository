@@ -2,15 +2,17 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
+public class Encounter_BasicEnemy : Encounter
 {
     [SerializeField] PlayableDirector cutscene_SpawnEnemy, cutscene_KilledEnemy;
     protected GameController_Simple gameController;
     CamerasManager cameras;
-    public float MaxHp;
+    [HideInInspector]public float MaxHp;
     public int MoneyReward;
-    public IEnumerator OnEncounterEnter()
+    public override IEnumerator OnEncounterEnter()
     {
+        yield return base.OnEncounterEnter();
+
         gameController = GameController_Simple.Instance;
         cameras = CamerasManager.instance;
 
@@ -37,8 +39,10 @@ public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
        gameController.ChangeGameState(GameState.FreeMode);
             
     }
-    public IEnumerator OnEncounterExit()
+    public override IEnumerator OnEncounterExit()
     {
+        yield return base.OnEncounterExit();
+
         Dices_Controller.Instance.Button_Rolldices.onClick.RemoveListener(GameController_Simple.Instance.ChangeStateToRollingDice);
         //Dices_Controller.Instance.DisableRollButtons();
 
@@ -56,7 +60,10 @@ public class Encounter_BasicEnemy : MonoBehaviour, IEncounter
         gameController.AddMoney(gameController.MoneyPerRemainignRoll * gameController.RollsRemaining);
 
     }
-    public bool MeetsRequirementsToSpawn() { return true; }
+    public override bool MeetsRequirementsToSpawn() { return true; }
 
-
+    public override string GetTooltipDescription()
+    {
+        return "basic enemy, no special skills";
+    }
 }

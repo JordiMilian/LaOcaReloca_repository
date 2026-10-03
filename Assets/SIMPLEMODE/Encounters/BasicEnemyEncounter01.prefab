@@ -242,6 +242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a596095a22c3a804399803f6a9ec1a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tooltipTexture: {fileID: 0}
+  tooltipTitle: BASIC ENEMY
   cutscene_SpawnEnemy: {fileID: 5605596926375504412}
   cutscene_KilledEnemy: {fileID: 7456175356226893891}
   MaxHp: 100

@@ -256,7 +256,7 @@ public class GameController_Simple : MonoBehaviour
     #endregion
     #region ENCOUNTERS
     [SerializeField] List<GameObject> EncountersPrefabs = new List<GameObject>();
-    IEncounter currentEncounter;
+    Encounter currentEncounter;
     GameObject currentEncounterObject;
     int currentEncounterIndex = -1;
     [SerializeField] bool useListEncounters = false;
@@ -279,12 +279,12 @@ public class GameController_Simple : MonoBehaviour
 
                 if(encounters_bossCombat.Count == 0) { return encounter_BasicCombat; }
                 int randomIndex;
-                IEncounter randomBoss;
+                Encounter randomBoss;
                 int attempts = 0;
                 do
                 {
                     randomIndex = Random.Range(0, encounters_bossCombat.Count);
-                    randomBoss = encounters_bossCombat[randomIndex].GetComponent<IEncounter>();
+                    randomBoss = encounters_bossCombat[randomIndex].GetComponent<Encounter>();
                     attempts++;
                     if(attempts > 10) { return encounter_BasicCombat; }
                 }
@@ -306,12 +306,12 @@ public class GameController_Simple : MonoBehaviour
             chance_nextCombatEncounter = 1;
 
             int randomIndex;
-            IEncounter randomEncounter;
+            Encounter randomEncounter;
             int attempts = 0;  
             do
             {
                 randomIndex = Random.Range(0, encountners_specialNonCombat.Count);
-                randomEncounter = encountners_specialNonCombat[randomIndex].GetComponent<IEncounter>();
+                randomEncounter = encountners_specialNonCombat[randomIndex].GetComponent<Encounter>();
                 attempts++;
                 if (attempts > 10) { return encounter_BasicCombat; }
             }
@@ -330,7 +330,7 @@ public class GameController_Simple : MonoBehaviour
         currentEncounterIndex++;
         if (useListEncounters) { currentEncounterObject = Instantiate(EncountersPrefabs[currentEncounterIndex]); }
         else { currentEncounterObject = Instantiate(GetNextEncounter(), transform.position, Quaternion.identity, transform); }
-        currentEncounter = currentEncounterObject.GetComponent<IEncounter>();
+        currentEncounter = currentEncounterObject.GetComponent<Encounter>();
 
         //Cutre cutre pls refactor
         Debug.Log("Current encounter type: " + currentEncounter.GetType());

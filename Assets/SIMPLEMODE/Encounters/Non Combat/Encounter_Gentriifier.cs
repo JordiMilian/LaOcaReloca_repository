@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class Encounter_Gentriifier : Encounter_SelectedTileEffect
 {
-    public override void Button_OnMainButtonPressed()
+    public override void OnSelectedTileAction(TileController controler)
     {
-        TileController controler = tileSelector.GetClosestTileInRange();
         if (controler == null) { return; }
         if(controler._Info is Tile_Start || controler._Info is Tile_End) { return; }
 
@@ -18,7 +17,7 @@ public class Encounter_Gentriifier : Encounter_SelectedTileEffect
         GameController_Simple.Instance.ChangeGameState(GameState.EncountersTransition);
     }
     public override bool MeetsRequirementsToSpawn() { return true; }
-    public override string GetButtonText()
+    public override string GetMainButtonText()
     {
         return "GENTRIFY TILE";
     }

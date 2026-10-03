@@ -1,13 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class Encounter_MultiplySelectedTile : Encounter_SelectedTileEffect, IEncounter
+public class Encounter_MultiplySelectedTile : Encounter_SelectedTileEffect
 {
     [SerializeField] float multiplier = 1.5f;
-    public override void Button_OnMainButtonPressed()
+    public override void OnSelectedTileAction(TileController selectedTile)
     {
         
-        TileController selectedTile = tileSelector.GetClosestTileInRange();
         if (selectedTile == null)
         {
             return;
@@ -19,13 +18,9 @@ public class Encounter_MultiplySelectedTile : Encounter_SelectedTileEffect, IEnc
             yield return selectedTile.C_MultiplyBaseDamage(multiplier);
             GameController_Simple.Instance.ChangeGameState(GameState.EncountersTransition);
         }
-       
-
-        
-
     }
 
-    public override string GetButtonText()
+    public override string GetMainButtonText()
     {
         return "X "+ multiplier;
     }

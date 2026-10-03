@@ -1,30 +1,19 @@
 using System.Collections;
 using UnityEngine;
 
-public abstract class Encounter_SelectedTileEffect : MonoBehaviour, IEncounter, ITooltip
+public abstract class Encounter_SelectedTileEffect : Encounter
 {
     Board_Controller_simple boardController;
     [SerializeField] GameObject TileSelectoPrefab;
     GameObject TileSelectorInstanceGO;
-    protected TilesSelector tileSelector;
-    [SerializeField] Texture tooltipTexture;
-    [SerializeField] string tooltipTitle;
-    
+    TilesSelector tileSelector;
+   
 
-    public Texture GetTooltipTexture()
+
+    public override IEnumerator OnEncounterEnter()
     {
-        return tooltipTexture;
-    }
+        yield return base.OnEncounterEnter();
 
-    public string GetTooltipTitle()
-    {
-        return tooltipTitle;
-    }
-    public abstract bool MeetsRequirementsToSpawn();
-
-
-    public IEnumerator OnEncounterEnter()
-    {
         boardController = Board_Controller_simple.Instance;
 
         if (!boardController.isBoardAssembled)
@@ -34,19 +23,25 @@ public abstract class Encounter_SelectedTileEffect : MonoBehaviour, IEncounter, 
         TooltipManager.Instance.RequestTooltip(this);
         TileSelectorInstanceGO = Instantiate(TileSelectoPrefab, Vector3.zero, Quaternion.identity);
         tileSelector = TileSelectorInstanceGO.GetComponent<TilesSelector>();
-        Dices_Controller.Instance.Button_Rolldices.onClick.AddListener(Button_OnMainButtonPressed);
-        Dices_Controller.Instance.SetMainButtonText(GetButtonText());
+        Dices_Controller.Instance.Button_Rolldices.onClick.AddListener(onButtonPressed);
+        Dices_Controller.Instance.SetMainButtonText(GetMainButtonText());
         Dices_Controller.Instance.Button_Rolldices.interactable = true;
 
     }
 
-    public IEnumerator OnEncounterExit()
+    public override IEnumerator OnEncounterExit()
     {
+        yield return base .OnEncounterExit();
+
         TooltipManager.Instance.RemoveRequest(this);
         Destroy(TileSelectorInstanceGO);
         yield break;
     }
-    public abstract void Button_OnMainButtonPressed();
-    public abstract string GetButtonText();
-    public abstract string GetTooltipDescription();
+    void onButtonPressed()
+    {
+        OnSelectedTileAction(tileSelector.GetClosestTileInRange());
+    }
+    public abstract void OnSelectedTileAction(TileController selectedTile);
+
+    public abstract string GetMainButtonText();
 }

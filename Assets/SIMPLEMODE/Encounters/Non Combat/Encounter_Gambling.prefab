@@ -899,6 +899,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e648080f607119f4fa768bea42f5fdfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tooltipTexture: {fileID: 0}
+  tooltipTitle: GAMBLING FROG
   CanvasRoot: {fileID: 2354902124999291852}
   DicePrefab: {fileID: 3033933879432237550, guid: dd24a75f1b9d8a148a1ecee9d22977f9, type: 3}
   button_AddBet: {fileID: 3755478220774092946}

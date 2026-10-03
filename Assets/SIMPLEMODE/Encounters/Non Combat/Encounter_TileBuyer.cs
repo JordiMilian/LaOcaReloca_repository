@@ -1,33 +1,26 @@
 using System.Collections;
 using UnityEngine;
 
-public class Encounter_TileBuyer : MonoBehaviour, IEncounter, ITooltip
+public class Encounter_TileBuyer : Encounter_SelectedTileEffect
 {
     [SerializeField] GameObject CanvasRoot;
     Board_Controller_simple boardController;
-    [SerializeField] GameObject TileSelectoPrefab ;
-     GameObject  TileSelectorInstanceGO;
-    TilesSelector tileSelector;
-    [SerializeField] Texture tooltipTexture;
-    public string GetTooltipDescription()
+
+    public override string GetMainButtonText()
+    {
+        return "SELL TILE";
+    }
+
+    public override string GetTooltipDescription()
     {
         return "Place the finger over a tile to sell it and gain money equal to its base damage.";
     }
 
-    public Texture GetTooltipTexture()
+    public override bool MeetsRequirementsToSpawn() { if (Board_Controller_simple.Instance.TilesList.Count > 3) { return true; } else return false; }
+    public override IEnumerator OnEncounterEnter()
     {
-        return tooltipTexture;
-    }
+        yield return base.OnEncounterEnter();
 
-    public string GetTooltipTitle()
-    {
-        return "TILES BUYER";
-    }
-
-
-    public bool MeetsRequirementsToSpawn() { if (Board_Controller_simple.Instance.TilesList.Count > 3) { return true; } else return false; }
-    public IEnumerator OnEncounterEnter()
-    {
         CanvasRoot.SetActive(false);
         boardController = Board_Controller_simple.Instance;
 
@@ -35,35 +28,24 @@ public class Encounter_TileBuyer : MonoBehaviour, IEncounter, ITooltip
         {
             yield return boardController.C_AsembleBoard();
         }
-        TooltipManager.Instance.RequestTooltip(this);
-        TileSelectorInstanceGO = Instantiate(TileSelectoPrefab, Vector3.zero, Quaternion.identity);
-        tileSelector = TileSelectorInstanceGO.GetComponent<TilesSelector>();
-        Dices_Controller.Instance.Button_Rolldices.onClick.AddListener(Button_OnSellPressed);
-        Dices_Controller.Instance.SetMainButtonText("Sell selected tile");
-        Dices_Controller.Instance.Button_Rolldices.interactable = true;
-
         CanvasRoot.SetActive(true);
-
-        
     }
 
-    public IEnumerator OnEncounterExit()
+    public override IEnumerator OnEncounterExit()
     {
-        TooltipManager.Instance.RemoveRequest(this);
-        Destroy(TileSelectorInstanceGO);
+        yield return base.OnEncounterExit();
+
         CanvasRoot.SetActive(false);
         yield break;
     }
-    void Button_OnSellPressed()
+    public override void OnSelectedTileAction(TileController soldTile)
     {
-       
         StartCoroutine(C_sellButtonPressed());
 
         //
         IEnumerator C_sellButtonPressed()
         {
-            TileController soldTile = tileSelector.GetClosestTileInRange();
-            if(soldTile == null || soldTile._Info is Tile_Start || soldTile._Info is Tile_End)
+            if (soldTile == null || soldTile._Info is Tile_Start || soldTile._Info is Tile_End)
             {
                 yield break;
             }

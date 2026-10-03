@@ -3,13 +3,14 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
-public class Encounter_End : MonoBehaviour, IEncounter
+public class Encounter_End : Encounter
 {
     [SerializeField] PlayableDirector timeline_Enter;
     [SerializeField] GameObject CanvasRoot;
     Dices_Controller dicesController;
-    public IEnumerator OnEncounterEnter()
+    public override IEnumerator OnEncounterEnter()
     {
+        yield return base.OnEncounterEnter();
         CanvasRoot.SetActive(false);
         CamerasManager.instance.SetCameraPriority("CinemachineCamera_Board", 99);
         timeline_Enter.Play();
@@ -24,8 +25,10 @@ public class Encounter_End : MonoBehaviour, IEncounter
 
     }
 
-    public IEnumerator OnEncounterExit()
+    public override IEnumerator OnEncounterExit()
     {
+        yield return base.OnEncounterExit();
+
         CanvasRoot.SetActive(false);
         dicesController.Button_Rolldices.onClick.RemoveListener(button_Restart);
         CamerasManager.instance.SetCameraPriority("CinemachineCamera_Board", 0);
@@ -36,5 +39,10 @@ public class Encounter_End : MonoBehaviour, IEncounter
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    public bool MeetsRequirementsToSpawn() { return true; }
+    public override bool MeetsRequirementsToSpawn() { return true; }
+
+    public override string GetTooltipDescription()
+    {
+        return "congratulations!";
+    }
 }
