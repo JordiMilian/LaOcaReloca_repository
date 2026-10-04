@@ -276,6 +276,7 @@ public class GameController_Simple : MonoBehaviour
             if(random_nextCombatBoss <= chance_nextCombatEncounter_Boss) //Next encounter IS BOSS
             {
                 chance_nextCombatEncounter_Boss = 0;
+                chance_nextCombatEncounter = 0;
 
                 if(encounters_bossCombat.Count == 0) { return encounter_BasicCombat; }
                 int randomIndex;

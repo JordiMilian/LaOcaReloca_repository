@@ -38,6 +38,10 @@ public class CardEffectsDelegate<T>
     {
         CardsCoroutines.Remove(enumerator);
     }
+    public void RemoveAllEffects(Func<T, IEnumerator> enumerator)
+    {
+        CardsCoroutines.RemoveAll(x => x == enumerator);
+    }
 
     public IEnumerator C_ActivateEffects(T arg)
     {

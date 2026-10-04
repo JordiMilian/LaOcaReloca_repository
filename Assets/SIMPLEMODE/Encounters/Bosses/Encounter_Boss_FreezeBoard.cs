@@ -24,6 +24,8 @@ public class Encounter_Boss_FreezeBoard : Encounter_Boss
         }
         board.UpdateStructData();
         board.MoveTiles_ToTfData(true);
+       StartCoroutine( board.L_JumpPlayerTo(board.GetCurrentPlayerTile().indexInBoard, false, false));
+        
 
         foreach (TileController tile in board.TilesList)
         {

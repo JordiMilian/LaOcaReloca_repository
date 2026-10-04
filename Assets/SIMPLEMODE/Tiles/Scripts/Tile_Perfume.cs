@@ -46,7 +46,7 @@ public class Tile_Perfume : TileInfo
     {
         if (isPerfumed)
         {
-            GameController.OnCrossed_CardEffects.RemoveEffect(OnCrossedTileWhilePerfumed);
+            GameController.OnCrossed_CardEffects.RemoveAllEffects(OnCrossedTileWhilePerfumed); //Remove all per si de cas crossed multiple times
             isPerfumed = false;
         }
     }
